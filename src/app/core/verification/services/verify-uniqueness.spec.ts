@@ -1,4 +1,4 @@
-import { VerifyUniqueness } from '@app/core/verify/verify-uniqueness';
+import { VerifyUniqueness } from '@app/core/verification/services/verify-uniqueness';
 import { PuzzleSimple } from '@app/test/puzzles/puzzle-simple';
 
 describe(VerifyUniqueness.name, () => {

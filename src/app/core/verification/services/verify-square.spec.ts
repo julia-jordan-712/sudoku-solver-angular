@@ -1,4 +1,4 @@
-import { VerifySquare } from '@app/core/verify/verify-square';
+import { VerifySquare } from '@app/core/verification/services/verify-square';
 import { PuzzleSimple } from '@app/test/puzzles/puzzle-simple';
 
 describe(VerifySquare.name, () => {

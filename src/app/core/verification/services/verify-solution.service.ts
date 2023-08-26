@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { VerifySquare } from "@app/core/verify/verify-square";
-import { VerifyUniqueness } from "@app/core/verify/verify-uniqueness";
+import { VerifySquare } from "@app/core/verification/services/verify-square";
+import { VerifyUniqueness } from "@app/core/verification/services/verify-uniqueness";
 
 @Injectable({
   providedIn: 'root',

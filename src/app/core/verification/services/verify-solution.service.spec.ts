@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { VerifySolutionService } from '@app/core/verify/verify-solution.service';
+import { VerifySolutionService } from '@app/core/verification/services/verify-solution.service';
 import { PuzzleSimple } from '@app/test/puzzles/puzzle-simple';
 
 describe(VerifySolutionService.name, () => {

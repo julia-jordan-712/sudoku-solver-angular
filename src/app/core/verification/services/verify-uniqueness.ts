@@ -1,4 +1,4 @@
-import { VerifyI18nKey } from '@app/core/verify/types/verify-i18n-keys';
+import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
 
 export class VerifyUniqueness {
   constructor(private candidate: number[][], private size: number) {}
