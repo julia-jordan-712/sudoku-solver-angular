@@ -10,7 +10,14 @@ describe(VerifySolutionService.name, () => {
     service = TestBed.inject(VerifySolutionService);
   });
 
-  it('should recognize a valid solution', () => {
-    expect(service.verify(PuzzleSimple.PUZZLE_1.solution)).toBeTrue();
+  [
+    {
+      input: PuzzleSimple.PUZZLE_1.solution,
+      desc: 'PuzzleSimple.PUZZLE_1.solution',
+    },
+  ].forEach((params) => {
+    it(`should recognize a valid solution: ${params.desc}`, () => {
+      expect(service.verify(params.input)).toBeTrue();
+    });
   });
 });

@@ -1,25 +1,41 @@
-import { VerifyI18nKey } from "@app/core/verify/types/verify-i18n-keys";
+import { VerifyI18nKey } from '@app/core/verify/types/verify-i18n-keys';
 
 export class VerifyUniqueness {
   constructor(private candidate: number[][], private size: number) {}
 
   verify(): boolean {
-    this.verifyRowsAndColumns(this.candidate, this.size);
+    this.verifyRowsAndColumnsAndSquares(this.candidate, this.size);
     return true;
   }
 
-  private verifyRowsAndColumns(area: number[][], size: number): void {
-    let rows: Set<number> = new Set();
-    let columns: Set<number> = new Set();
+  private verifyRowsAndColumnsAndSquares(area: number[][], size: number): void {
+    let currentRow: Set<number> = new Set();
+    let currentColumn: Set<number> = new Set();
+    let currentSquare: Set<number> = new Set();
+    const sqrt: number = Math.sqrt(size);
+    let k: number = 0;
+
     for (let i: number = 0; i < size; i++) {
-      rows.clear();
-      columns.clear();
-      for (let j: number = 0; j < size; j++) {
-        rows.add(area[i][j]);
-        columns.add(area[j][i]);
+      currentRow.clear();
+      currentColumn.clear();
+      currentSquare.clear();
+
+      if (i > 0 && i % sqrt === 0) {
+        k += sqrt;
       }
-      this.verifyUniqueness(rows, size);
-      this.verifyUniqueness(columns, size);
+
+      for (let j: number = 0; j < size; j++) {
+        currentRow.add(area[i][j]);
+        currentColumn.add(area[j][i]);
+
+        const squareA: number = k + Math.ceil((1 + j - sqrt) / sqrt);
+        const squareB: number = (i % sqrt) * sqrt + (j % sqrt);
+        currentSquare.add(area[squareA][squareB]);
+      }
+
+      this.verifyUniqueness(currentRow, size);
+      this.verifyUniqueness(currentColumn, size);
+      this.verifyUniqueness(currentSquare, size);
     }
   }
 
