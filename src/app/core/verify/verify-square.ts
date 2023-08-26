@@ -5,7 +5,9 @@ export class VerifySquare {
   constructor(private candidate: number[][]) {}
 
   verifyAndGetSize(): number {
-    return this.verifyIsSquare(this.candidate);
+    const length: number = this.verifyIsSquare(this.candidate);
+    this.verifyConsistsOfSquares(length);
+    return length;
   }
 
   private verifyIsSquare(area: number[][]): number {
@@ -19,5 +21,11 @@ export class VerifySquare {
       }
     });
     return length;
+  }
+
+  private verifyConsistsOfSquares(length: number): void {
+    if (!Number.isInteger(Math.sqrt(length))) {
+      throw new Error(`${VerifyI18nKey.VERIFY_UNSUPPORTED}.NOT_QUADRATIC`);
+    }
   }
 }
