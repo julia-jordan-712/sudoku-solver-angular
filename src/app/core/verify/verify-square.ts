@@ -24,7 +24,7 @@ export class VerifySquare {
   }
 
   private verifyConsistsOfSquares(length: number): void {
-    if (!Number.isInteger(Math.sqrt(length))) {
+    if (length === 1 || !Number.isInteger(Math.sqrt(length))) {
       throw new Error(`${VerifyI18nKey.VERIFY_UNSUPPORTED}.NOT_QUADRATIC`);
     }
   }
