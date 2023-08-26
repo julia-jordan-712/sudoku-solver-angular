@@ -1,14 +1,20 @@
+import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
 
 export class VerifyUniqueness {
   constructor(private candidate: number[][], private size: number) {}
 
-  verify(): boolean {
-    this.verifyRowsAndColumnsAndSquares(this.candidate, this.size);
-    return true;
+  verify(): VerificationResult {
+    const result: VerificationResult = VerificationResult.createValid();
+    this.verifyRowsAndColumnsAndSquares(this.candidate, this.size, result);
+    return result;
   }
 
-  private verifyRowsAndColumnsAndSquares(area: number[][], size: number): void {
+  private verifyRowsAndColumnsAndSquares(
+    area: number[][],
+    size: number,
+    result: VerificationResult
+  ): void {
     let currentRow: Set<number> = new Set();
     let currentColumn: Set<number> = new Set();
     let currentSquare: Set<number> = new Set();
@@ -33,18 +39,19 @@ export class VerifyUniqueness {
         currentSquare.add(area[squareA][squareB]);
       }
 
-      this.verifyUniqueness(currentRow, size);
-      this.verifyUniqueness(currentColumn, size);
-      this.verifyUniqueness(currentSquare, size);
+      this.verifyUniqueness(currentRow, size, result);
+      this.verifyUniqueness(currentColumn, size, result);
+      this.verifyUniqueness(currentSquare, size, result);
     }
   }
 
   private verifyUniqueness(
     elements: Set<number>,
-    numberOfElements: number
+    numberOfElements: number,
+    result: VerificationResult
   ): void {
     if (elements.size !== numberOfElements) {
-      throw new Error(`${VerifyI18nKey.VERIFY_ERROR}.DUPLICATE_ELEMENTS`);
+      result.addError(VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS);
     }
   }
 }

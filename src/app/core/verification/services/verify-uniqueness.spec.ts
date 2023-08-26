@@ -1,4 +1,5 @@
 import { VerifyUniqueness } from '@app/core/verification/services/verify-uniqueness';
+import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
 import { PuzzleSimple } from '@app/test/puzzles/puzzle-simple';
 
 describe(VerifyUniqueness.name, () => {
@@ -21,23 +22,28 @@ describe(VerifyUniqueness.name, () => {
         params.desc ? params.desc : JSON.stringify(params.input)
       }`, () => {
         expect(
-          new VerifyUniqueness(params.input, params.input.length).verify()
+          new VerifyUniqueness(params.input, params.input.length)
+            .verify()
+            .isValid()
         ).toBeTrue();
       });
     });
 
     it('should recognize duplicate elements', () => {
-      expect(() =>
-        new VerifyUniqueness(
-          [
-            [1, 2, 3, 4],
-            [3, 4, 1, 2],
-            [2, 3, 4, 1],
-            [4, 1, 2, 4],
-          ],
-          4
-        ).verify()
-      ).toThrowError('VERIFY.ERROR.DUPLICATE_ELEMENTS');
+      const result = new VerifyUniqueness(
+        [
+          [1, 2, 3, 4],
+          [3, 4, 1, 2],
+          [2, 3, 4, 1],
+          [4, 1, 2, 4],
+        ],
+        4
+      ).verify();
+      expect(result.isValid()).toBeFalse();
+      expect(result.getErrors().length).toEqual(1);
+      expect(result.getErrors()[0]).toEqual(
+        VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS
+      );
     });
   });
 });

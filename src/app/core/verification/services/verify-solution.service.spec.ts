@@ -17,7 +17,7 @@ describe(VerifySolutionService.name, () => {
     },
   ].forEach((params) => {
     it(`should recognize a valid solution: ${params.desc}`, () => {
-      expect(service.verify(params.input)).toBeTrue();
+      expect(service.verify(params.input).isValid()).toBeTrue();
     });
   });
 });
