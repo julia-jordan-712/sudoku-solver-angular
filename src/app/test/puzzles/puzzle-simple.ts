@@ -3,15 +3,15 @@ import { TestPuzzle } from '@app/test/puzzles/test-puzzle';
 export class PuzzleSimple {
   public static readonly PUZZLE_1: TestPuzzle = {
     puzzle: [
-      [, 8, , 4, , 9, 6, 5, 3],
-      [6, 4, 2, 8, , , , 7],
-      [, , , , , , 8, ,],
-      [, , 7, , , 5, , 4, 2],
-      [, , , 7, , 1, , ,],
-      [8, 5, , 6, , , 1, ,],
-      [, , 6, , , , , ,],
-      [, 1, , , , 4, 7, 3, 6],
-      [2, 7, 3, 5, , 8, , 1],
+      [undefined,8,undefined,4,undefined,9,6,5,3],
+      [6,4,2,8,undefined,undefined,undefined,7,undefined],
+      [undefined,undefined,undefined,undefined,undefined,undefined,8,undefined,undefined],
+      [undefined,undefined,7,undefined,undefined,5,undefined,4,2],
+      [undefined,undefined,undefined,7,undefined,1,undefined,undefined,undefined],
+      [8,5,undefined,6,undefined,undefined,1,undefined,undefined],
+      [undefined,undefined,6,undefined,undefined,undefined,undefined,undefined,undefined],
+      [undefined,1,undefined,undefined,undefined,4,7,3,6],
+      [2,7,3,5,undefined,8,undefined,1,undefined]
     ],
     solution: [
       [7, 8, 1, 4, 2, 9, 6, 5, 3],

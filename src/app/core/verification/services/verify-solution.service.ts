@@ -3,6 +3,7 @@ import { VerifySquare } from '@app/core/verification/services/verify-square';
 import { VerifyUniqueness } from '@app/core/verification/services/verify-uniqueness';
 import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { VerifySquareResult } from '@app/core/verification/types/verify-square-result';
+import { Nullable } from '@app/shared/types/nullable';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { VerifySquareResult } from '@app/core/verification/types/verify-square-r
 export class VerifySolutionService {
   constructor() {}
 
-  verify(candidate: number[][]): VerificationResult {
+  verify(candidate: Nullable<number>[][]): VerificationResult {
     const verifySquareResult: VerifySquareResult = new VerifySquare(
       candidate
     ).verifyAndGetSize();

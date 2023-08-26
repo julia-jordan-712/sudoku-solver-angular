@@ -1,8 +1,10 @@
 import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
+import { Nullable } from '@app/shared/types/nullable';
+import { isDefined } from '@app/shared/util/is-defined';
 
 export class VerifyUniqueness {
-  constructor(private candidate: number[][], private size: number) {}
+  constructor(private candidate: Nullable<number>[][], private size: number) {}
 
   verify(): VerificationResult {
     const result: VerificationResult = VerificationResult.createValid();
@@ -11,46 +13,43 @@ export class VerifyUniqueness {
   }
 
   private verifyRowsAndColumnsAndSquares(
-    area: number[][],
+    area: Nullable<number>[][],
     size: number,
     result: VerificationResult
   ): void {
-    let currentRow: Set<number> = new Set();
-    let currentColumn: Set<number> = new Set();
-    let currentSquare: Set<number> = new Set();
     const sqrt: number = Math.sqrt(size);
     let k: number = 0;
 
     for (let i: number = 0; i < size; i++) {
-      currentRow.clear();
-      currentColumn.clear();
-      currentSquare.clear();
+      const currentRow: Nullable<number>[] = [];
+      const currentColumn: Nullable<number>[] = [];
+      const currentSquare: Nullable<number>[] = [];
 
       if (i > 0 && i % sqrt === 0) {
         k += sqrt;
       }
 
       for (let j: number = 0; j < size; j++) {
-        currentRow.add(area[i][j]);
-        currentColumn.add(area[j][i]);
+        currentRow.push(area[i][j]);
+        currentColumn.push(area[j][i]);
 
         const squareA: number = k + Math.ceil((1 + j - sqrt) / sqrt);
         const squareB: number = (i % sqrt) * sqrt + (j % sqrt);
-        currentSquare.add(area[squareA][squareB]);
+        currentSquare.push(area[squareA][squareB]);
       }
 
-      this.verifyUniqueness(currentRow, size, result);
-      this.verifyUniqueness(currentColumn, size, result);
-      this.verifyUniqueness(currentSquare, size, result);
+      this.verifyUniqueness(currentRow, result);
+      this.verifyUniqueness(currentColumn, result);
+      this.verifyUniqueness(currentSquare, result);
     }
   }
 
   private verifyUniqueness(
-    elements: Set<number>,
-    numberOfElements: number,
+    elements: Nullable<number>[],
     result: VerificationResult
   ): void {
-    if (elements.size !== numberOfElements) {
+    const definedElements: number[] = elements.filter(isDefined);
+    if (definedElements.length !== new Set(definedElements).size) {
       result.addError(VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS);
     }
   }
