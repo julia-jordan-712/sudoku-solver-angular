@@ -1,0 +1,67 @@
+import { Index } from '@app/shared/types';
+import { Nullable } from '@app/shared/types/nullable';
+import { isDefined } from '@app/shared/util/is-defined';
+
+export class Objects {
+  public static arrayToArrayIndex<T, R>(
+    array: T[],
+    keyMapper: (e: T) => Nullable<string>,
+    valueMapper: (e: T) => R
+  ): Index<R[]> {
+    return array.reduce((index: Index<R[]>, element: T) => {
+      const key = keyMapper(element);
+      if (isDefined(key)) {
+        index[key] = [...(index[key] ?? []), valueMapper(element)];
+      }
+      return index;
+    }, {});
+  }
+
+  public static filterIndex<T>(
+    index: Index<T>,
+    predicate: (key: string, value: T) => boolean
+  ): Index<T> {
+    const result: Index<T> = {};
+    Object.entries(index).forEach(([key, value]) => {
+      if (predicate(key, value)) {
+        result[key] = value;
+      }
+    });
+    return result;
+  }
+
+  public static mergeArrayIndex<T>(
+    index1: Index<T[]>,
+    index2: Index<T[]>
+  ): Index<T[]> {
+    const result: Index<T[]> = { ...index1 };
+    Object.entries(index2).forEach(([key, value]) => {
+      result[key] = [...(result[key] ?? []), ...value];
+    });
+    return result;
+  }
+
+  public static uniqueArrayIndex<T>(
+    index: Index<T[]>,
+    equals: (a: T, b: T) => boolean
+  ): Index<T[]> {
+    const result: Index<T[]> = {};
+    Object.entries(index).forEach(([key, values]) => {
+      result[key] = Objects.uniqueArray(values, equals);
+    });
+    return result;
+  }
+
+  public static uniqueArray<T>(
+    array: T[],
+    equals: (a: T, b: T) => boolean
+  ): T[] {
+    const result: T[] = [];
+    array.forEach((value) => {
+      if (!result.some((filtered: T) => equals(value, filtered))) {
+        result.push(value);
+      }
+    });
+    return result;
+  }
+}
