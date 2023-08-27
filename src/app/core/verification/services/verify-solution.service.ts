@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { VerifySquare } from '@app/core/verification/services/verify-square';
 import { VerifyUniqueness } from '@app/core/verification/services/verify-uniqueness';
+import { VerificationOptions } from '@app/core/verification/types/verification-options';
 import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { VerifySquareResult } from '@app/core/verification/types/verify-square-result';
 import { Nullable } from '@app/shared/types/nullable';
@@ -11,12 +12,12 @@ import { Nullable } from '@app/shared/types/nullable';
 export class VerifySolutionService {
   constructor() {}
 
-  verify(candidate: Nullable<number>[][]): VerificationResult {
+  verify(candidate: Nullable<number>[][], options: VerificationOptions = {}): VerificationResult {
     const verifySquareResult: VerifySquareResult = new VerifySquare(
       candidate
     ).verifyAndGetSize();
     if (verifySquareResult.result.isValid()) {
-      return new VerifyUniqueness(candidate, verifySquareResult.size).verify();
+      return new VerifyUniqueness(candidate, verifySquareResult.size).verify(options);
     } else {
       return verifySquareResult.result;
     }
