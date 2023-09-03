@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable({
   providedIn: 'root'
 })
-export class SudokuSelectionService {
+export class SudokuSelectionComponentService {
 
   constructor(private translate: TranslateService) {}
 
@@ -17,7 +17,7 @@ export class SudokuSelectionService {
       {
         id: 'None',
         name: this.translate.stream("PUZZLE.NONE"),
-        grid: [],
+        grid: undefined,
       },
       {
         id: 'Puzzle4x4.EMPTY',
@@ -54,5 +54,5 @@ export class SudokuSelectionService {
 }
 
 export interface SudokuSelectionItem extends DropdownInputOption {
-  grid: SudokuGrid;
+  grid: SudokuGrid | undefined;
 }

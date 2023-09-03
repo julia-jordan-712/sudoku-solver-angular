@@ -2,8 +2,7 @@
   <ng-container *ngFor="let row of _grid; let i = index; trackBy: trackByFn">
     <app-sudoku-grid-row
       [row]="row"
-      [sqrt]="sqrt"
-      [isEndOfSquare]="(i + 1) % sqrt === 0"
+      [isEndOfSquare]="sqrt ? (i + 1) % sqrt === 0 : false"
     ></app-sudoku-grid-row>
   </ng-container>
 </ng-container>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Nullable } from '@app/shared/types/nullable';
 
 @Component({
@@ -9,4 +9,15 @@ import { Nullable } from '@app/shared/types/nullable';
 export class NumberInputComponent {
   @Input()
   label: Nullable<string>;
+
+  @Input()
+  value: Nullable<number>;
+
+  @Output()
+  valueChange: EventEmitter<number> = new EventEmitter();
+
+  onChange(value: number): void {
+    this.valueChange.emit(value);
+  }
+
 }

@@ -10,14 +10,7 @@ import { PuzzleSimple } from '@app/test/puzzles/puzzle-simple';
 describe(VerifyUniqueness.name, () => {
   describe('complete solution', () => {
     [
-      {
-        input: [
-          [1, 2, 3, 4],
-          [3, 4, 1, 2],
-          [2, 3, 4, 1],
-          [4, 1, 2, 3],
-        ],
-      },
+      { input: Puzzle4x4.COMPLETE, desc: 'Puzzle4x4.COMPLETE' },
       {
         input: PuzzleSimple.PUZZLE_1.solution,
         desc: 'PuzzleSimple.PUZZLE_1.solution',
@@ -62,7 +55,8 @@ describe(VerifyUniqueness.name, () => {
         expect(result.getErrors()[0]).toEqual(
           VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS
         );
-        const duplicates: Index<CellPosition[]> = uniqueCellPositionIndex(result)
+        const duplicates: Index<CellPosition[]> =
+          uniqueCellPositionIndex(result);
         expect(Object.keys(duplicates).length).toEqual(1);
         expect(duplicates['3'].length).toEqual(3);
         expect(duplicates['3']).toContain(new CellPosition(2, 1));
@@ -118,17 +112,17 @@ describe(VerifyUniqueness.name, () => {
       {
         input: Puzzle4x4.INCOMPLETE_INVALID_ROW,
         title: 'should recognize duplicate elements in rows',
-        positions: [new CellPosition(0,0), new CellPosition(0,3)]
+        positions: [new CellPosition(0, 0), new CellPosition(0, 3)],
       },
       {
         input: Puzzle4x4.INCOMPLETE_INVALID_COLUMN,
         title: 'should recognize duplicate elements in columns',
-        positions: [new CellPosition(0,0), new CellPosition(3,0)]
+        positions: [new CellPosition(0, 0), new CellPosition(3, 0)],
       },
       {
         input: Puzzle4x4.INCOMPLETE_INVALID_SQUARE,
         title: 'should recognize duplicate elements in squares',
-        positions: [new CellPosition(2,1), new CellPosition(3,0)]
+        positions: [new CellPosition(2, 1), new CellPosition(3, 0)],
       },
     ].forEach((params) => {
       it(`${params.title} when duplicates are not tracked`, () => {
@@ -147,27 +141,29 @@ describe(VerifyUniqueness.name, () => {
         const result = new VerifyUniqueness(
           params.input,
           params.input.length
-        ).verify({trackUniquenessViolations: true});
+        ).verify({ trackUniquenessViolations: true });
         expect(result.isValid()).toBeFalse();
         expect(result.getErrors().length).toEqual(1);
         expect(result.getErrors()[0]).toEqual(
           VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS
         );
 
-        const duplicates: Index<CellPosition[]> = uniqueCellPositionIndex(result)
+        const duplicates: Index<CellPosition[]> =
+          uniqueCellPositionIndex(result);
         expect(Object.keys(duplicates).length).toEqual(1);
         expect(duplicates['4'].length).toEqual(params.positions.length);
-        params.positions.forEach(position => {
-          expect(duplicates["4"]).toContain(position)
-        })
+        params.positions.forEach((position) => {
+          expect(duplicates['4']).toContain(position);
+        });
       });
     });
   });
 
-  function uniqueCellPositionIndex(result: VerificationResult): Index<CellPosition[]> {
-    return Objects.uniqueArrayIndex(
-      result.getDuplicates(),
-      (a, b) => a.equals(b)
+  function uniqueCellPositionIndex(
+    result: VerificationResult
+  ): Index<CellPosition[]> {
+    return Objects.uniqueArrayIndex(result.getDuplicates(), (a, b) =>
+      a.equals(b)
     );
   }
 });

@@ -43,4 +43,10 @@ export class Puzzle4x4 {
     [2, 4, , 1],
     [4, 1, 2, 3],
   ];
+  public static readonly COMPLETE: SudokuGrid = [
+    [1, 2, 3, 4],
+    [3, 4, 1, 2],
+    [2, 3, 4, 1],
+    [4, 1, 2, 3],
+  ];
 }

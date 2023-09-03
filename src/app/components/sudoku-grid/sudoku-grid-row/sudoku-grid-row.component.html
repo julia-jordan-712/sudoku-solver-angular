@@ -1,4 +1,4 @@
-<ng-container *ngFor="let cell of row; let i = index; trackBy: trackByFn">
+<ng-container *ngFor="let cell of _row; let i = index; trackBy: trackByFn">
   <app-sudoku-grid-cell
     [cell]="cell"
     [isEndOfSquare]="sqrt ? ((i + 1) % sqrt === 0) : false"

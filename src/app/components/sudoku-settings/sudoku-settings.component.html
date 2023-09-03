@@ -7,9 +7,15 @@
 <ng-template #editSettings>
   <div class="settings">
     <app-sudoku-selection (selected)="onSelect($event)"></app-sudoku-selection>
-    <app-number-input [label]="'SETTINGS.WIDTH' | translate"></app-number-input>
     <app-number-input
       [label]="'SETTINGS.HEIGHT' | translate"
+      [value]="height"
+      (valueChange)="setHeight($event)"
+    ></app-number-input>
+    <app-number-input
+      [label]="'SETTINGS.WIDTH' | translate"
+      [value]="width"
+      (valueChange)="setWidth($event)"
     ></app-number-input>
   </div>
   <app-sudoku-grid [grid]="grid$ | async"></app-sudoku-grid>

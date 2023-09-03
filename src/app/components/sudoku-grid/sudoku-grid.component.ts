@@ -14,7 +14,7 @@ export class SudokuGridComponent {
   @Input({ required: true })
   set grid(grid: Nullable<SudokuGrid>) {
     this._grid = grid;
-    this.sqrt = grid ? Math.sqrt(grid.length) : null;
+    this.sqrt = grid ? Math.round(Math.sqrt(grid.length)) : null;
   }
 
   trackByFn(index: number): number {

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   SudokuSelectionItem,
-  SudokuSelectionService,
-} from '@app/components/sudoku-settings/sudoku-selection/sudoku-selection.service';
+  SudokuSelectionComponentService,
+} from '@app/components/sudoku-settings/sudoku-selection/sudoku-selection-component.service';
 
 @Component({
   selector: 'app-sudoku-selection',
@@ -15,7 +15,7 @@ export class SudokuSelectionComponent implements OnInit {
 
   items: SudokuSelectionItem[] = [];
 
-  constructor(private service: SudokuSelectionService) {}
+  constructor(private service: SudokuSelectionComponentService) {}
 
   ngOnInit(): void {
     this.items = this.service.getItems();
