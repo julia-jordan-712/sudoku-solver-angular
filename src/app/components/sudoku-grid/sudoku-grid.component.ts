@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Nullable } from '@app/shared/types/nullable';
 import { SudokuGrid } from '@app/shared/types/sudoku-grid';
 
 @Component({
@@ -7,13 +8,13 @@ import { SudokuGrid } from '@app/shared/types/sudoku-grid';
   styleUrls: ['./sudoku-grid.component.scss'],
 })
 export class SudokuGridComponent {
-  _grid: SudokuGrid | undefined;
-  sqrt: number|undefined;
+  _grid: Nullable<SudokuGrid>;
+  sqrt: Nullable<number>;
 
   @Input({ required: true })
-  set grid(grid: SudokuGrid) {
+  set grid(grid: Nullable<SudokuGrid>) {
     this._grid = grid;
-    this.sqrt = Math.sqrt(grid.length);
+    this.sqrt = grid ? Math.sqrt(grid.length) : null;
   }
 
   trackByFn(index: number): number {

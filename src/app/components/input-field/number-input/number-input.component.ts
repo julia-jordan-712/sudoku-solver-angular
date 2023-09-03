@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Nullable } from '@app/shared/types/nullable';
 
 @Component({
   selector: 'app-number-input',
@@ -7,5 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 export class NumberInputComponent {
   @Input()
-  label: string | undefined;
+  label: Nullable<string>;
 }

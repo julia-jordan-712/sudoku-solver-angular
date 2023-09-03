@@ -1,4 +1,5 @@
 <app-dropdown-input
   [label]="'SETTINGS.SELECT' | translate"
   [items]="items"
+  (selected)="onSelect($event)"
 ></app-dropdown-input>

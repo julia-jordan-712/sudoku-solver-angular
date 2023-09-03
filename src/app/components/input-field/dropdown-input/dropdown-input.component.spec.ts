@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DropdownInputComponent } from './dropdown-input.component';
-import { ObjectWithId } from '@app/shared/types/object-with-id';
+import {
+  DropdownInputComponent,
+  DropdownInputOption,
+} from './dropdown-input.component';
 
 describe(DropdownInputComponent.name, () => {
-  let component: DropdownInputComponent<ObjectWithId>;
-  let fixture: ComponentFixture<DropdownInputComponent<ObjectWithId>>;
+  let component: DropdownInputComponent<DropdownInputOption>;
+  let fixture: ComponentFixture<DropdownInputComponent<DropdownInputOption>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

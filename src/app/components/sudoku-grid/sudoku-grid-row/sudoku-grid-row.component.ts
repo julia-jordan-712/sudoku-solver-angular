@@ -1,4 +1,5 @@
 import { Component, HostBinding, Input } from '@angular/core';
+import { Nullable } from '@app/shared/types/nullable';
 import { SudokuGridRow } from '@app/shared/types/sudoku-grid';
 
 @Component({
@@ -11,7 +12,7 @@ export class SudokuGridRowComponent {
   row: SudokuGridRow = [];
 
   @Input()
-  sqrt: number | undefined;
+  sqrt: Nullable<number>;
 
   @Input()
   @HostBinding('class.end-of-square')

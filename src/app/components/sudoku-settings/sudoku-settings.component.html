@@ -1,9 +1,17 @@
 <h2>{{ "SETTINGS.TITLE" | translate }}</h2>
-<button>{{"SETTINGS.CHANGE"|translate}}</button>
-<div class="settings">
-  <app-sudoku-selection></app-sudoku-selection>
-  <app-number-input [label]="'SETTINGS.WIDTH' | translate"></app-number-input>
-  <app-number-input [label]="'SETTINGS.HEIGHT' | translate"></app-number-input>
-</div>
-<app-sudoku-grid *ngIf="grid" [grid]="grid"></app-sudoku-grid>
-<button>{{ "SETTINGS.DONE" | translate }}</button>
+<ng-container *ngIf="confirmed; else editSettings">
+  <button (click)="changeSettings()">
+    {{ "SETTINGS.CHANGE" | translate }}
+  </button>
+</ng-container>
+<ng-template #editSettings>
+  <div class="settings">
+    <app-sudoku-selection (selected)="onSelect($event)"></app-sudoku-selection>
+    <app-number-input [label]="'SETTINGS.WIDTH' | translate"></app-number-input>
+    <app-number-input
+      [label]="'SETTINGS.HEIGHT' | translate"
+    ></app-number-input>
+  </div>
+  <app-sudoku-grid [grid]="grid$ | async"></app-sudoku-grid>
+  <button (click)="submit()">{{ "SETTINGS.DONE" | translate }}</button>
+</ng-template>
