@@ -4,7 +4,7 @@ import { VerifyUniquenessService } from '@app/core/verification/services/verify-
 import { VerificationOptions } from '@app/core/verification/types/verification-options';
 import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { VerifySquareResult } from '@app/core/verification/types/verify-square-result';
-import { Nullable } from '@app/shared/types/nullable';
+import { SudokuGrid } from '@app/shared/types/sudoku-grid';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class VerifySolutionService {
   ) {}
 
   verify(
-    candidate: Nullable<number>[][],
+    candidate: SudokuGrid,
     options: VerificationOptions = {}
   ): VerificationResult {
     if (options.size != undefined) {
@@ -27,7 +27,7 @@ export class VerifySolutionService {
   }
 
   private verifyFull(
-    candidate: Nullable<number>[][],
+    candidate: SudokuGrid,
     options: VerificationOptions = {}
   ): VerificationResult {
     const verifySquareResult: VerifySquareResult =

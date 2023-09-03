@@ -4,11 +4,12 @@ import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
 import { Index } from '@app/shared/types';
 import { CellPosition } from '@app/shared/types/cell-position';
 import { Nullable } from '@app/shared/types/nullable';
+import { SudokuGrid, SudokuGridRow } from '@app/shared/types/sudoku-grid';
 import { isDefined } from '@app/shared/util/is-defined';
 import { Objects } from '@app/shared/util/objects';
 
 export class VerifyUniqueness {
-  constructor(private candidate: Nullable<number>[][], private size: number) {}
+  constructor(private candidate: SudokuGrid, private size: number) {}
 
   verify(
     options: VerificationOptions = { trackUniquenessViolations: false }
@@ -25,7 +26,7 @@ export class VerifyUniqueness {
 
   private verifyRowsAndColumnsAndSquares(
     options: VerificationOptions,
-    area: Nullable<number>[][],
+    area: SudokuGrid,
     size: number,
     result: VerificationResult
   ): void {
@@ -48,7 +49,7 @@ export class VerifyUniqueness {
   }
 
   private verifyRowsAndColumnsAndSquaresTracked(
-    area: Nullable<number>[][],
+    area: SudokuGrid,
     size: number,
     sqrt: number,
     result: VerificationResult
@@ -104,7 +105,7 @@ export class VerifyUniqueness {
   }
 
   private verifyRowsAndColumnsAndSquaresUntracked(
-    area: Nullable<number>[][],
+    area: SudokuGrid,
     size: number,
     sqrt: number,
     result: VerificationResult
@@ -112,9 +113,9 @@ export class VerifyUniqueness {
     let squareBaseX = 0;
 
     for (let i = 0; i < size; i++) {
-      const currentRow: Nullable<number>[] = [];
-      const currentColumn: Nullable<number>[] = [];
-      const currentSquare: Nullable<number>[] = [];
+      const currentRow: SudokuGridRow = [];
+      const currentColumn: SudokuGridRow = [];
+      const currentSquare: SudokuGridRow = [];
 
       squareBaseX = this.calculateNewSquareBase(i, sqrt, squareBaseX);
 
@@ -134,7 +135,7 @@ export class VerifyUniqueness {
   }
 
   private verifyUniquenessUntracked(
-    elements: Nullable<number>[],
+    elements: SudokuGridRow,
     result: VerificationResult
   ): void {
     const definedElements: number[] = elements.filter(isDefined);

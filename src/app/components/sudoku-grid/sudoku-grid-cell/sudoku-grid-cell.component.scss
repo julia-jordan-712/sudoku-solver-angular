@@ -1,0 +1,13 @@
+$cell-size: 2em;
+
+:host {
+  display: flex;
+  align-items: center;
+  width: $cell-size;
+  height: $cell-size;
+  border: 1px solid black;
+}
+
+span {
+  margin: auto;
+}
