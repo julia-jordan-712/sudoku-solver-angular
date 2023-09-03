@@ -1,9 +1,9 @@
-<h2>Settings</h2>
-<button>Change settings</button>
+<h2>{{ "SETTINGS.TITLE" | translate }}</h2>
+<button>{{"SETTINGS.CHANGE"|translate}}</button>
 <app-sudoku-selection></app-sudoku-selection>
 <div>
-  <app-number-input [label]="'Width'"></app-number-input>
-  <app-number-input [label]="'Height'"></app-number-input>
+  <app-number-input [label]="'SETTINGS.WIDTH' | translate"></app-number-input>
+  <app-number-input [label]="'SETTINGS.HEIGHT' | translate"></app-number-input>
 </div>
 <app-sudoku-grid [grid]="grid"></app-sudoku-grid>
-<button>Done</button>
+<button>{{ "SETTINGS.DONE" | translate }}</button>

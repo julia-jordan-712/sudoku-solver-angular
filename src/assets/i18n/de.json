@@ -1,0 +1,13 @@
+{
+  "GENERAL": {
+    "TITLE": "Sudoku lösen"
+  },
+  "SETTINGS": {
+    "CHANGE": "Einstellungen ändern",
+    "DONE": "Fertig",
+    "HEIGHT": "Höhe",
+    "SELECT": "Wählen Sie ein vorhandenes Sudoku aus",
+    "TITLE": "Einstellungen",
+    "WIDTH": "Breite"
+  }
+}
