@@ -53,16 +53,16 @@ export class VerifyUniqueness {
     sqrt: number,
     result: VerificationResult
   ): void {
-    let squareBaseX: number = 0;
+    let squareBaseX = 0;
 
-    for (let i: number = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
       const currentRow: CellValueWithPosition[] = [];
       const currentColumn: CellValueWithPosition[] = [];
       const currentSquare: CellValueWithPosition[] = [];
 
       squareBaseX = this.calculateNewSquareBase(i, sqrt, squareBaseX);
 
-      for (let j: number = 0; j < size; j++) {
+      for (let j = 0; j < size; j++) {
         currentRow.push({ x: i, y: j, value: area[i][j] });
         currentColumn.push({ x: j, y: i, value: area[j][i] });
 
@@ -109,16 +109,16 @@ export class VerifyUniqueness {
     sqrt: number,
     result: VerificationResult
   ): void {
-    let squareBaseX: number = 0;
+    let squareBaseX = 0;
 
-    for (let i: number = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
       const currentRow: Nullable<number>[] = [];
       const currentColumn: Nullable<number>[] = [];
       const currentSquare: Nullable<number>[] = [];
 
       squareBaseX = this.calculateNewSquareBase(i, sqrt, squareBaseX);
 
-      for (let j: number = 0; j < size; j++) {
+      for (let j = 0; j < size; j++) {
         currentRow.push(area[i][j]);
         currentColumn.push(area[j][i]);
 
