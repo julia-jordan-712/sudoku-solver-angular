@@ -1,5 +1,9 @@
-<ng-container *ngIf="grid">
-  <ng-container *ngFor="let row of grid; trackBy:trackByFn">
-    <app-sudoku-grid-row [row]="row"></app-sudoku-grid-row>
+<ng-container *ngIf="_grid && sqrt">
+  <ng-container *ngFor="let row of _grid; let i = index; trackBy: trackByFn">
+    <app-sudoku-grid-row
+      [row]="row"
+      [sqrt]="sqrt"
+      [isEndOfSquare]="(i + 1) % sqrt === 0"
+    ></app-sudoku-grid-row>
   </ng-container>
 </ng-container>

@@ -7,8 +7,14 @@ import { SudokuGrid } from '@app/shared/types/sudoku-grid';
   styleUrls: ['./sudoku-grid.component.scss'],
 })
 export class SudokuGridComponent {
+  _grid: SudokuGrid | undefined;
+  sqrt: number|undefined;
+
   @Input({ required: true })
-  grid: SudokuGrid | undefined;
+  set grid(grid: SudokuGrid) {
+    this._grid = grid;
+    this.sqrt = Math.sqrt(grid.length);
+  }
 
   trackByFn(index: number): number {
     return index;

@@ -5,7 +5,15 @@ $cell-size: 2em;
   align-items: center;
   width: $cell-size;
   height: $cell-size;
-  border: 1px solid black;
+
+  border-right: 1px solid gray;
+  &:first-of-type {
+    border-left: 3px solid gray;
+  }
+  &:last-of-type,
+  &.end-of-square {
+    border-right: 3px solid gray;
+  }
 }
 
 span {

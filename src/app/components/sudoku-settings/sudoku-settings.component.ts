@@ -7,5 +7,5 @@ import { SudokuGrid } from '@app/shared/types/sudoku-grid';
   styleUrls: ['./sudoku-settings.component.scss'],
 })
 export class SudokuSettingsComponent {
-  grid: SudokuGrid = [];
+  grid: SudokuGrid|undefined = undefined;
 }

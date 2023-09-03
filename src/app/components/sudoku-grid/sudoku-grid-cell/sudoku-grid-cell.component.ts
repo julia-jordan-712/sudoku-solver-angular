@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { SudokuGridCell } from '@app/shared/types/sudoku-grid';
 
 @Component({
@@ -9,4 +9,9 @@ import { SudokuGridCell } from '@app/shared/types/sudoku-grid';
 export class SudokuGridCellComponent {
   @Input({ required: true })
   cell: SudokuGridCell;
+
+  @Input()
+  @HostBinding("class.end-of-square")
+  isEndOfSquare = false;
+
 }

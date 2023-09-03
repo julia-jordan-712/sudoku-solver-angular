@@ -1,0 +1,40 @@
+@use "_constants" as *;
+
+:host {
+  display: flex;
+}
+
+.main {
+  display: flex;
+  height: 100vh;
+  flex-grow: 1;
+  overflow: auto;
+
+  .content {
+    display: flex;
+    padding: 1em;
+    flex-direction: column;
+    gap: 1em;
+  }
+}
+
+.sidebar {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  flex-shrink: 1;
+  align-items: flex-end;
+  border-left: $border;
+
+  .languages {
+    display: flex;
+    margin: 1em;
+    gap: 0.5em;
+    flex-direction: column;
+
+    button {
+      width: unset;
+    }
+  }
+}
