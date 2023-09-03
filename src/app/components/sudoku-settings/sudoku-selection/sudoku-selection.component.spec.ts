@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 import { SudokuSelectionComponent } from './sudoku-selection.component';
 
 describe(SudokuSelectionComponent.name, () => {
@@ -8,6 +9,7 @@ describe(SudokuSelectionComponent.name, () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SudokuSelectionComponent],
+      imports: [TranslateTestingModule.withTranslations({})],
     }).compileComponents();
   });
 

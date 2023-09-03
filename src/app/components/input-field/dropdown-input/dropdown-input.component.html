@@ -1,4 +1,4 @@
 <label for="inputField">{{label}}</label>
 <select>
-  <option *ngFor="let item of items; trackBy:trackByFn"></option>
+  <option *ngFor="let item of items; trackBy:trackByFn">{{item.name | async}}</option>
 </select>
