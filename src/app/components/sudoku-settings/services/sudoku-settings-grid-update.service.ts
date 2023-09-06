@@ -10,7 +10,7 @@ import { SudokuGridUtil } from '@app/shared/util/sudoku-grid-util';
 @Injectable({
   providedIn: 'root',
 })
-export class SudokuSettingsComponentService {
+export class SudokuSettingsGridUpdateService {
   updateGrid(
     value: SudokuGrid,
     height: Nullable<number>,

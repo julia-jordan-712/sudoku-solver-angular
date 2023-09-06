@@ -1,20 +1,25 @@
 <h2>{{ "SETTINGS.TITLE" | translate }}</h2>
-<ng-container *ngIf="confirmed; else editSettings">
+<ng-container *ngIf="confirmed$ | async; else editSettings">
   <button (click)="changeSettings()">
     {{ "SETTINGS.CHANGE" | translate }}
   </button>
 </ng-container>
 <ng-template #editSettings>
   <div class="settings">
-    <app-sudoku-selection (selected)="onSelect($event)"></app-sudoku-selection>
+    <app-dropdown-input
+      [label]="'SETTINGS.SELECT' | translate"
+      [items]="selectionItems"
+      [selectedItem]="selectedItem$ | async"
+      (selected)="onSelect($event)"
+    ></app-dropdown-input>
     <app-number-input
       [label]="'SETTINGS.HEIGHT' | translate"
-      [value]="height"
+      [value]="height$ | async"
       (valueChange)="setHeight($event)"
     ></app-number-input>
     <app-number-input
       [label]="'SETTINGS.WIDTH' | translate"
-      [value]="width"
+      [value]="width$ | async"
       (valueChange)="setWidth($event)"
     ></app-number-input>
   </div>

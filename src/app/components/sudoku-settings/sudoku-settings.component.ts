@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { SudokuSelectionItem } from '@app/components/sudoku-settings/sudoku-selection/sudoku-selection-component.service';
-import { SudokuSettingsComponentService } from '@app/components/sudoku-settings/sudoku-settings-component.service';
+import { Component, inject } from '@angular/core';
+import { SudokuDropdownSelectionItem } from '@app/components/sudoku-settings/services/sudoku-dropdown-selection.service';
+import { SudokuSettingsStateService } from '@app/components/sudoku-settings/services/sudoku-settings-state.service';
 import { Nullable } from '@app/shared/types/nullable';
 import { SudokuGrid } from '@app/shared/types/sudoku-grid';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sudoku-settings',
@@ -11,41 +11,32 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./sudoku-settings.component.scss'],
 })
 export class SudokuSettingsComponent {
-  confirmed = false;
-  width: Nullable<number>;
-  height: Nullable<number>;
-  grid$ = new BehaviorSubject<SudokuGrid>([]);
+  private state = inject(SudokuSettingsStateService);
 
-  constructor(private service: SudokuSettingsComponentService) {}
+  confirmed$: Observable<boolean> = this.state.isConfirmed();
+  height$: Observable<Nullable<number>> = this.state.getHeight();
+  width$: Observable<Nullable<number>> = this.state.getWidth();
+  grid$: Observable<Nullable<SudokuGrid>> = this.state.getGrid();
+  selectionItems = this.state.getSelectionItems();
+  selectedItem$ = this.state.getSelectedItem();
 
   changeSettings(): void {
-    this.confirmed = false;
+    this.state.setConfirmed(false);
   }
 
   submit(): void {
-    this.confirmed = true;
+    this.state.setConfirmed(true);
   }
 
-  onSelect(option: SudokuSelectionItem): void {
-    this.grid$.next(option.grid ?? []);
-    this.height = option.grid?.length;
-    this.width = option.grid?.[0]?.length;
-    this.updateGrid();
+  onSelect(option: SudokuDropdownSelectionItem): void {
+    this.state.setSelection(option);
   }
 
-  setWidth(value: number): void {
-    this.width = value;
-    this.updateGrid();
+  setWidth(width: number): void {
+    this.state.setWidth(width);
   }
 
-  setHeight(value: number): void {
-    this.height = value;
-    this.updateGrid();
-  }
-
-  private updateGrid(): void {
-    this.grid$.next(
-      this.service.updateGrid(this.grid$.value, this.width, this.height)
-    );
+  setHeight(height: number): void {
+    this.state.setHeight(height);
   }
 }

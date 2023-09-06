@@ -6,17 +6,16 @@ import { PuzzleSimple } from '@app/test/puzzles/puzzle-simple';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class SudokuSelectionComponentService {
-
+export class SudokuDropdownSelectionService {
   constructor(private translate: TranslateService) {}
 
-  getItems(): SudokuSelectionItem[] {
+  getItems(): SudokuDropdownSelectionItem[] {
     return [
       {
         id: 'None',
-        name: this.translate.stream("PUZZLE.NONE"),
+        name: this.translate.stream('PUZZLE.NONE'),
         grid: undefined,
       },
       {
@@ -53,6 +52,6 @@ export class SudokuSelectionComponentService {
   }
 }
 
-export interface SudokuSelectionItem extends DropdownInputOption {
+export interface SudokuDropdownSelectionItem extends DropdownInputOption {
   grid: SudokuGrid | undefined;
 }

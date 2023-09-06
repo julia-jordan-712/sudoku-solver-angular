@@ -12,21 +12,16 @@ export class DropdownInputComponent<T extends DropdownInputOption> {
   @Input()
   label: Nullable<string>;
 
+  @Input({required: true})
   selectedItem: Nullable<T>;
-  _items: T[] = [];
-  @Input({ required: true })
-  set items(items: T[]) {
-    this._items = items;
-    if (items.length > 0) {
-      this.onChange(items[0]);
-    }
-  }
+
+  @Input({required: true})
+  items: Nullable<T[]>;
 
   @Output()
   selected: EventEmitter<T> = new EventEmitter();
 
   onChange(option: T): void {
-    this.selectedItem = option;
     this.selected.emit(option);
   }
 
