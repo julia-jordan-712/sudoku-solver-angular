@@ -3,6 +3,7 @@
     <app-sudoku-grid-row
       [row]="row"
       [isEndOfSquare]="sqrt ? (i + 1) % sqrt === 0 : false"
-    ></app-sudoku-grid-row>
+      (valueChange)="onRowChanged($event, i)"
+      ></app-sudoku-grid-row>
   </ng-container>
 </ng-container>

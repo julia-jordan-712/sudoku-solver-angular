@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Nullable } from '@app/shared/types/nullable';
-import { SudokuGrid } from '@app/shared/types/sudoku-grid';
+import { SudokuGrid, SudokuGridRow } from '@app/shared/types/sudoku-grid';
+import { SudokuGridUtil } from '@app/shared/util/sudoku-grid-util';
 
 @Component({
   selector: 'app-sudoku-grid',
@@ -15,6 +16,17 @@ export class SudokuGridComponent {
   set grid(grid: Nullable<SudokuGrid>) {
     this._grid = grid;
     this.sqrt = grid ? Math.round(Math.sqrt(grid.length)) : null;
+  }
+
+  @Output()
+  valueChange: EventEmitter<SudokuGrid> = new EventEmitter();
+
+  onRowChanged(row: SudokuGridRow, index: number): void {
+    if (this._grid && index >= 0 && index < this._grid.length) {
+      const newGrid = SudokuGridUtil.clone(this._grid);
+      newGrid[index] = row;
+      this.valueChange.emit(newGrid);
+    }
   }
 
   trackByFn(index: number): number {

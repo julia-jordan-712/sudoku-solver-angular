@@ -32,6 +32,10 @@ export class SudokuSettingsComponent {
     this.state.setSelection(option);
   }
 
+  onGridChange(grid: SudokuGrid): void {
+    this.state.setGrid(grid);
+  }
+
   setWidth(width: number): void {
     this.state.setWidth(width);
   }

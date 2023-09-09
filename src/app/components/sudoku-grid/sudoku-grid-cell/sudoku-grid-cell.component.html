@@ -1,3 +1,9 @@
-<span>
-  {{cell}}
-</span>
+<input
+  #cellInput
+  type="text"
+  [(ngModel)]="cell"
+  (ngModelChange)="onChange($event)"
+  (click)="cellInput.select()"
+  (focus)="setFocus(true)"
+  (blur)="setFocus(false)"
+>

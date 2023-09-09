@@ -1,6 +1,12 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+} from '@angular/core';
 import { Nullable } from '@app/shared/types/nullable';
-import { SudokuGridRow } from '@app/shared/types/sudoku-grid';
+import { SudokuGridCell, SudokuGridRow } from '@app/shared/types/sudoku-grid';
 
 @Component({
   selector: 'app-sudoku-grid-row',
@@ -8,7 +14,6 @@ import { SudokuGridRow } from '@app/shared/types/sudoku-grid';
   styleUrls: ['./sudoku-grid-row.component.scss'],
 })
 export class SudokuGridRowComponent {
-
   _row: Nullable<SudokuGridRow>;
   sqrt: Nullable<number>;
 
@@ -21,6 +26,17 @@ export class SudokuGridRowComponent {
   @Input()
   @HostBinding('class.end-of-square')
   isEndOfSquare = false;
+
+  @Output()
+  valueChange: EventEmitter<SudokuGridRow> = new EventEmitter();
+
+  onCellChanged(cell: SudokuGridCell, index: number): void {
+    if (this._row && index >= 0 && index < this._row.length) {
+      const newRow = [...this._row];
+      newRow[index] = cell;
+      this.valueChange.emit(newRow)
+    }
+  }
 
   trackByFn(index: number): number {
     return index;

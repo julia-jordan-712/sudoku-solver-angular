@@ -23,6 +23,6 @@
       (valueChange)="setWidth($event)"
     ></app-number-input>
   </div>
-  <app-sudoku-grid [grid]="grid$ | async"></app-sudoku-grid>
+  <app-sudoku-grid [grid]="grid$ | async" (valueChange)="onGridChange($event)"></app-sudoku-grid>
   <button (click)="submit()">{{ "SETTINGS.DONE" | translate }}</button>
 </ng-template>

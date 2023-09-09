@@ -1,4 +1,4 @@
-$cell-size: 2em;
+@use "_constants" as *;
 
 :host {
   display: flex;
@@ -14,8 +14,29 @@ $cell-size: 2em;
   &.end-of-square {
     border-right: 3px solid gray;
   }
+
+  &.focused {
+    background-color: $secondary-color;
+    color: $on-secondary-color;
+  }
 }
 
-span {
-  margin: auto;
+input {
+  display: flex;
+  width: $cell-size;
+  height: $cell-size;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  caret-color: transparent;
+
+  cursor: pointer;
+  &:hover, &:focus {
+    cursor: pointer;
+  }
+
+  &::selection {
+    background-color: transparent;
+  }
 }

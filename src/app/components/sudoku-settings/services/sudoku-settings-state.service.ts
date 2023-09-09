@@ -62,10 +62,14 @@ export class SudokuSettingsStateService implements OnDestroy {
   }
 
   setSelection(item: SudokuDropdownSelectionItem): void {
-    this.grid$.next(item.grid);
-    this.height$.next(item.grid?.length);
-    this.width$.next(item.grid?.[0]?.length);
+    this.setGrid(item.grid);
     this.dropdownSelectionItem$.next(item);
+  }
+
+  setGrid(grid: Nullable<SudokuGrid>): void {
+    this.grid$.next(grid);
+    this.height$.next(grid?.length);
+    this.width$.next(grid?.[0]?.length);
     this.updateGrid();
   }
 

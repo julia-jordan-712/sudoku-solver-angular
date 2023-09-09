@@ -2,5 +2,6 @@
   <app-sudoku-grid-cell
     [cell]="cell"
     [isEndOfSquare]="sqrt ? ((i + 1) % sqrt === 0) : false"
+    (valueChange)="onCellChanged($event, i)"
   ></app-sudoku-grid-cell>
 </ng-container>

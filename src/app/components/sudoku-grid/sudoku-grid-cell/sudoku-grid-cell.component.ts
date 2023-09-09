@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { SudokuGridCell } from '@app/shared/types/sudoku-grid';
 
 @Component({
@@ -13,5 +13,19 @@ export class SudokuGridCellComponent {
   @Input()
   @HostBinding("class.end-of-square")
   isEndOfSquare = false;
+
+  @HostBinding("class.focused")
+  isFocused = false;
+
+  @Output()
+  valueChange: EventEmitter<number> = new EventEmitter();
+
+  onChange(value: number): void {
+    this.valueChange.emit(value);
+  }
+
+  setFocus(focused: boolean): void {
+    this.isFocused = focused;
+  }
 
 }
