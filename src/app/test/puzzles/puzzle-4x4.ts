@@ -26,21 +26,21 @@ export class Puzzle4x4 {
     [undefined, undefined, 2, 3],
   ];
   public static readonly INCOMPLETE_INVALID_ROW: SudokuGrid = [
-    [4, , 3, 4],
-    [3, , 1, 2],
+    [4, undefined, 3, 4],
+    [3, undefined, 1, 2],
     [2, 3, 4, 1],
-    [, 1, 2, 3],
+    [undefined, 1, 2, 3],
   ];
   public static readonly INCOMPLETE_INVALID_COLUMN: SudokuGrid = [
-    [4, 2, 3],
-    [, , 1, 2],
+    [4, 2, 3, undefined],
+    [undefined, undefined, 1, 2],
     [2, 3, 4, 1],
     [4, 1, 2, 3],
   ];
   public static readonly INCOMPLETE_INVALID_SQUARE: SudokuGrid = [
     [1, 2, 3, 4],
-    [3, , 1, 2],
-    [2, 4, , 1],
+    [3, undefined, 1, 2],
+    [2, 4, undefined, 1],
     [4, 1, 2, 3],
   ];
   public static readonly COMPLETE: SudokuGrid = [
