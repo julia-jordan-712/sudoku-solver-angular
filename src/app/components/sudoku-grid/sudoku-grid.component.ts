@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DuplicationColumnIndicesToRowIndices } from '@app/components/sudoku-settings/services/sudoku-settings-state.service';
-import { VerificationResult } from '@app/core/verification/types/verification-result';
-import { Nullable } from '@app/shared/types/nullable';
-import { SudokuGrid, SudokuGridRow } from '@app/shared/types/sudoku-grid';
-import { SudokuGridUtil } from '@app/shared/util/sudoku-grid-util';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { DuplicationColumnIndicesToRowIndices } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { Nullable } from "@app/shared/types/nullable";
+import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
 @Component({
-  selector: 'app-sudoku-grid',
-  templateUrl: './sudoku-grid.component.html',
-  styleUrls: ['./sudoku-grid.component.scss'],
+  selector: "app-sudoku-grid",
+  templateUrl: "./sudoku-grid.component.html",
+  styleUrls: ["./sudoku-grid.component.scss"],
 })
 export class SudokuGridComponent {
   _grid: Nullable<SudokuGrid>;

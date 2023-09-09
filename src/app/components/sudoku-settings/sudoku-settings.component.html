@@ -28,11 +28,9 @@
     [verification]="verification$ | async"
     [duplications]="duplications$ | async"
     (valueChange)="onGridChange($event)"
-    >
+  >
   </app-sudoku-grid>
-  <button
-    [disabled]="!(verification$ | async)?.isValid()"
-    (click)="submit()">
+  <button [disabled]="!(verification$ | async)?.isValid()" (click)="submit()">
     {{ "SETTINGS.DONE" | translate }}
   </button>
 </ng-template>

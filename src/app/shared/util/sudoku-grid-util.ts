@@ -2,7 +2,7 @@ import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
-} from '@app/shared/types/sudoku-grid';
+} from "@app/shared/types/sudoku-grid";
 
 export class SudokuGridUtil {
   static clone(grid: SudokuGrid): SudokuGrid {

@@ -1,10 +1,10 @@
-import { VerifySquare } from '@app/core/verification/services/verify-square';
-import { VerificationResult } from '@app/core/verification/types/verification-result';
-import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
-import { PuzzleSimple } from '@app/test/puzzles/puzzle-simple';
+import { VerifySquare } from "@app/core/verification/services/verify-square";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
+import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 
 describe(VerifySquare.name, () => {
-  it('should recognize a valid solution and return its size', () => {
+  it("should recognize a valid solution and return its size", () => {
     const valid = PuzzleSimple.PUZZLE_1.puzzle;
     expect(new VerifySquare(valid).verifyAndGetSize()).toEqual({
       result: VerificationResult.createValid(),
@@ -12,20 +12,22 @@ describe(VerifySquare.name, () => {
     });
   });
 
-  it('should find error for empty input', () => {
+  it("should find error for empty input", () => {
     expect(new VerifySquare([]).verifyAndGetSize()).toEqual({
       result: VerificationResult.createFromErrors([VerifyI18nKey.ERROR_EMPTY]),
       size: 0,
     });
   });
 
-  it('should find error for input which is not a square', () => {
+  it("should find error for input which is not a square", () => {
     const notSquare = [
       [1, 2, 3],
       [4, 5, 6],
     ];
     expect(new VerifySquare(notSquare).verifyAndGetSize()).toEqual({
-      result: VerificationResult.createFromErrors([VerifyI18nKey.ERROR_NOT_A_SQUARE]),
+      result: VerificationResult.createFromErrors([
+        VerifyI18nKey.ERROR_NOT_A_SQUARE,
+      ]),
       size: 2,
     });
   });
@@ -48,10 +50,10 @@ describe(VerifySquare.name, () => {
     { size: 15, error: true },
     { size: 16, error: false },
   ].forEach((params: { size: number; error: boolean }) => {
-    it(`should ${params.error ? 'find error' : 'be valid'} for size ${
+    it(`should ${params.error ? "find error" : "be valid"} for size ${
       params.size
     } because it ${
-      params.error ? 'does not' : 'does'
+      params.error ? "does not" : "does"
     } consist of squares`, () => {
       const candidate: number[][] = [];
       for (let i = 0; i < params.size; i++) {

@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SudokuGridCellComponent } from './sudoku-grid-cell.component';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { SudokuGridCellComponent } from "./sudoku-grid-cell.component";
 
 describe(SudokuGridCellComponent.name, () => {
   let component: SudokuGridCellComponent;
@@ -14,7 +14,7 @@ describe(SudokuGridCellComponent.name, () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

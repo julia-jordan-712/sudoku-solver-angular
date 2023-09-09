@@ -1,7 +1,7 @@
-import { VerificationDuplicates } from '@app/core/verification/types/verification-duplicates';
-import { I18nKey } from '@app/shared/types/i18n-key';
-import { Nullable } from '@app/shared/types/nullable';
-import { Objects } from '@app/shared/util/objects';
+import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
+import { I18nKey } from "@app/shared/types/i18n-key";
+import { Nullable } from "@app/shared/types/nullable";
+import { Objects } from "@app/shared/util/objects";
 
 export class VerificationResult {
   public static createValid(): VerificationResult {
@@ -36,7 +36,7 @@ export class VerificationResult {
   addDuplicates(duplicates: VerificationDuplicates): void {
     this.duplicates = Objects.mergeArrayIndex(
       this.duplicates ?? {},
-      duplicates
+      duplicates,
     );
   }
 

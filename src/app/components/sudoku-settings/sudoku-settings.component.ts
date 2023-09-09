@@ -1,18 +1,18 @@
-import { Component, inject } from '@angular/core';
-import { SudokuDropdownSelectionItem } from '@app/components/sudoku-settings/services/sudoku-dropdown-selection.service';
+import { Component, inject } from "@angular/core";
+import { SudokuDropdownSelectionItem } from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
 import {
   DuplicationColumnIndicesToRowIndices,
   SudokuSettingsStateService,
-} from '@app/components/sudoku-settings/services/sudoku-settings-state.service';
-import { VerificationResult } from '@app/core/verification/types/verification-result';
-import { Nullable } from '@app/shared/types/nullable';
-import { SudokuGrid } from '@app/shared/types/sudoku-grid';
-import { Observable } from 'rxjs';
+} from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { Nullable } from "@app/shared/types/nullable";
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { Observable } from "rxjs";
 
 @Component({
-  selector: 'app-sudoku-settings',
-  templateUrl: './sudoku-settings.component.html',
-  styleUrls: ['./sudoku-settings.component.scss'],
+  selector: "app-sudoku-settings",
+  templateUrl: "./sudoku-settings.component.html",
+  styleUrls: ["./sudoku-settings.component.scss"],
 })
 export class SudokuSettingsComponent {
   private state = inject(SudokuSettingsStateService);

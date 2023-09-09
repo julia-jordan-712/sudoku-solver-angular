@@ -1,21 +1,21 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Nullable } from '@app/shared/types/nullable';
-import { ObjectWithId } from '@app/shared/types/object-with-id';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Nullable } from "@app/shared/types/nullable";
+import { ObjectWithId } from "@app/shared/types/object-with-id";
+import { Observable } from "rxjs";
 
 @Component({
-  selector: 'app-dropdown-input',
-  templateUrl: './dropdown-input.component.html',
-  styleUrls: ['./dropdown-input.component.scss'],
+  selector: "app-dropdown-input",
+  templateUrl: "./dropdown-input.component.html",
+  styleUrls: ["./dropdown-input.component.scss"],
 })
 export class DropdownInputComponent<T extends DropdownInputOption> {
   @Input()
   label: Nullable<string>;
 
-  @Input({required: true})
+  @Input({ required: true })
   selectedItem: Nullable<T>;
 
-  @Input({required: true})
+  @Input({ required: true })
   items: Nullable<T[]>;
 
   @Output()

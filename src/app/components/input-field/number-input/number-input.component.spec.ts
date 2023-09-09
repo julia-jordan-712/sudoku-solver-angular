@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NumberInputComponent } from './number-input.component';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { NumberInputComponent } from "./number-input.component";
 
 describe(NumberInputComponent.name, () => {
   let component: NumberInputComponent;
@@ -17,7 +17,7 @@ describe(NumberInputComponent.name, () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

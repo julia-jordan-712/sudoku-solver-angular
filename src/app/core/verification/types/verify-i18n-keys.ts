@@ -1,8 +1,8 @@
-import { I18nKey } from '@app/shared/types/i18n-key';
+import { I18nKey } from "@app/shared/types/i18n-key";
 
 export class VerifyI18nKey {
-  private static readonly VERIFY_ERROR: string = 'VERIFY.ERROR';
-  private static readonly VERIFY_UNSUPPORTED: string = 'VERIFY.UNSUPPORTED';
+  private static readonly VERIFY_ERROR: string = "VERIFY.ERROR";
+  private static readonly VERIFY_UNSUPPORTED: string = "VERIFY.UNSUPPORTED";
 
   public static readonly ERROR_DUPLICATE_ELEMENTS: I18nKey = {
     key: `${VerifyI18nKey.VERIFY_ERROR}.DUPLICATE_ELEMENTS`,

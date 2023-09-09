@@ -1,4 +1,4 @@
-import { SudokuGrid } from '@app/shared/types/sudoku-grid';
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
 export class Puzzle4x4 {
   public static readonly EMPTY: SudokuGrid = [

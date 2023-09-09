@@ -1,3 +1,3 @@
 export interface ObjectWithId {
-  id: string
+  id: string;
 }

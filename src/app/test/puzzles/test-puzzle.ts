@@ -1,4 +1,4 @@
-import { SudokuGrid } from '@app/shared/types/sudoku-grid';
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
 export interface TestPuzzle {
   puzzle: SudokuGrid;

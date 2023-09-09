@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { SudokuSettingsGridUpdateService } from './sudoku-settings-grid-update.service';
-import { SudokuGrid } from '@app/shared/types/sudoku-grid';
-import { Puzzle4x4 } from '@app/test/puzzles/puzzle-4x4';
+import { SudokuSettingsGridUpdateService } from "./sudoku-settings-grid-update.service";
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 
 describe(SudokuSettingsGridUpdateService.name, () => {
   let service: SudokuSettingsGridUpdateService;
@@ -14,7 +14,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
 
   [
     {
-      title: 'should increase empty grid in height only',
+      title: "should increase empty grid in height only",
       input: {
         grid: [],
         height: 3,
@@ -25,7 +25,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should NOT increase empty grid in width only',
+      title: "should NOT increase empty grid in width only",
       input: {
         grid: [],
         width: 3,
@@ -36,7 +36,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should increase empty grid in height AND width',
+      title: "should increase empty grid in height AND width",
       input: {
         grid: [],
         height: 3,
@@ -48,7 +48,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should increase existing grid in height only',
+      title: "should increase existing grid in height only",
       input: {
         grid: Puzzle4x4.EMPTY,
         height: 6,
@@ -59,7 +59,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should increase existing grid in width only',
+      title: "should increase existing grid in width only",
       input: {
         grid: Puzzle4x4.EMPTY,
         width: 6,
@@ -70,7 +70,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should increase existing grid in height AND width',
+      title: "should increase existing grid in height AND width",
       input: {
         grid: Puzzle4x4.EMPTY,
         height: 6,
@@ -82,7 +82,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should reduce existing grid in height only',
+      title: "should reduce existing grid in height only",
       input: {
         grid: Puzzle4x4.EMPTY,
         height: 1,
@@ -93,7 +93,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should reduce existing grid in width only',
+      title: "should reduce existing grid in width only",
       input: {
         grid: Puzzle4x4.EMPTY,
         width: 2,
@@ -104,7 +104,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should reduce existing grid in height AND width',
+      title: "should reduce existing grid in height AND width",
       input: {
         grid: Puzzle4x4.EMPTY,
         height: 3,
@@ -116,7 +116,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should be able to reduce height (and thus width as well) to zero',
+      title: "should be able to reduce height (and thus width as well) to zero",
       input: {
         grid: Puzzle4x4.EMPTY,
         height: 0,
@@ -127,7 +127,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       },
     },
     {
-      title: 'should be able to reduce width only to zero',
+      title: "should be able to reduce width only to zero",
       input: {
         grid: Puzzle4x4.EMPTY,
         width: 0,
@@ -142,7 +142,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
       const result: SudokuGrid = service.updateGrid(
         params.input.grid,
         params.input.height,
-        params.input.width
+        params.input.width,
       );
       expect(result.length).toEqual(params.expected.height);
       for (let i = 0; i < params.expected.height; i++) {
@@ -151,7 +151,7 @@ describe(SudokuSettingsGridUpdateService.name, () => {
     });
   });
 
-  it('should add new rows and columns to the end and not change existing cell values', () => {
+  it("should add new rows and columns to the end and not change existing cell values", () => {
     const result: SudokuGrid = service.updateGrid(Puzzle4x4.COMPLETE, 5, 5);
     const expected: SudokuGrid = [
       [1, 2, 3, 4, undefined],

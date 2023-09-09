@@ -1,12 +1,12 @@
-import { Index } from '@app/shared/types';
-import { Nullable } from '@app/shared/types/nullable';
-import { isDefined } from '@app/shared/util/is-defined';
+import { Index } from "@app/shared/types";
+import { Nullable } from "@app/shared/types/nullable";
+import { isDefined } from "@app/shared/util/is-defined";
 
 export class Objects {
   public static arrayToArrayIndex<T, R>(
     array: T[],
     keyMapper: (e: T) => Nullable<string>,
-    valueMapper: (e: T) => R
+    valueMapper: (e: T) => R,
   ): Index<R[]> {
     return array.reduce((index: Index<R[]>, element: T) => {
       const key = keyMapper(element);
@@ -19,7 +19,7 @@ export class Objects {
 
   public static filterIndex<T>(
     index: Index<T>,
-    predicate: (key: string, value: T) => boolean
+    predicate: (key: string, value: T) => boolean,
   ): Index<T> {
     const result: Index<T> = {};
     Object.entries(index).forEach(([key, value]) => {
@@ -32,7 +32,7 @@ export class Objects {
 
   public static mergeArrayIndex<T>(
     index1: Index<T[]>,
-    index2: Index<T[]>
+    index2: Index<T[]>,
   ): Index<T[]> {
     const result: Index<T[]> = { ...index1 };
     Object.entries(index2).forEach(([key, value]) => {
@@ -43,7 +43,7 @@ export class Objects {
 
   public static uniqueArrayIndex<T>(
     index: Index<T[]>,
-    equals: (a: T, b: T) => boolean
+    equals: (a: T, b: T) => boolean,
   ): Index<T[]> {
     const result: Index<T[]> = {};
     Object.entries(index).forEach(([key, values]) => {
@@ -54,7 +54,7 @@ export class Objects {
 
   public static uniqueArray<T>(
     array: T[],
-    equals: (a: T, b: T) => boolean
+    equals: (a: T, b: T) => boolean,
   ): T[] {
     const result: T[] = [];
     array.forEach((value) => {

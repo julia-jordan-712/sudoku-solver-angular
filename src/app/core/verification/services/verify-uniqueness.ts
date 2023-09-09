@@ -1,26 +1,29 @@
-import { VerificationDuplicates } from '@app/core/verification/types/verification-duplicates';
-import { VerificationOptions } from '@app/core/verification/types/verification-options';
-import { VerificationResult } from '@app/core/verification/types/verification-result';
-import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
-import { Index } from '@app/shared/types';
-import { CellPosition } from '@app/shared/types/cell-position';
-import { Nullable } from '@app/shared/types/nullable';
-import { SudokuGrid, SudokuGridRow } from '@app/shared/types/sudoku-grid';
-import { isDefined } from '@app/shared/util/is-defined';
-import { Objects } from '@app/shared/util/objects';
+import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
+import { VerificationOptions } from "@app/core/verification/types/verification-options";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
+import { Index } from "@app/shared/types";
+import { CellPosition } from "@app/shared/types/cell-position";
+import { Nullable } from "@app/shared/types/nullable";
+import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
+import { isDefined } from "@app/shared/util/is-defined";
+import { Objects } from "@app/shared/util/objects";
 
 export class VerifyUniqueness {
-  constructor(private candidate: SudokuGrid, private size: number) {}
+  constructor(
+    private candidate: SudokuGrid,
+    private size: number,
+  ) {}
 
   verify(
-    options: VerificationOptions = { trackUniquenessViolations: false }
+    options: VerificationOptions = { trackUniquenessViolations: false },
   ): VerificationResult {
     const result: VerificationResult = VerificationResult.createValid();
     this.verifyRowsAndColumnsAndSquares(
       options,
       this.candidate,
       this.size,
-      result
+      result,
     );
     return result;
   }
@@ -29,7 +32,7 @@ export class VerifyUniqueness {
     options: VerificationOptions,
     area: SudokuGrid,
     size: number,
-    result: VerificationResult
+    result: VerificationResult,
   ): void {
     const sqrt: number = Math.sqrt(size);
     if (options.trackUniquenessViolations) {
@@ -37,14 +40,14 @@ export class VerifyUniqueness {
         area,
         size,
         sqrt,
-        result
+        result,
       );
     } else {
       return this.verifyRowsAndColumnsAndSquaresUntracked(
         area,
         size,
         sqrt,
-        result
+        result,
       );
     }
   }
@@ -53,7 +56,7 @@ export class VerifyUniqueness {
     area: SudokuGrid,
     size: number,
     sqrt: number,
-    result: VerificationResult
+    result: VerificationResult,
   ): void {
     let squareBaseX = 0;
 
@@ -85,18 +88,18 @@ export class VerifyUniqueness {
 
   private verifyUniquenessTracked(
     elements: CellValueWithPosition[],
-    result: VerificationResult
+    result: VerificationResult,
   ): void {
     const index: Index<CellPosition[]> = Objects.arrayToArrayIndex(
       elements,
       (e) => e.value?.toString(),
       (e) => {
         return new CellPosition(e.x, e.y);
-      }
+      },
     );
     const duplicates: VerificationDuplicates = Objects.filterIndex(
       index,
-      (_, v) => v.length > 1
+      (_, v) => v.length > 1,
     );
 
     if (Object.keys(duplicates).length > 0) {
@@ -109,7 +112,7 @@ export class VerifyUniqueness {
     area: SudokuGrid,
     size: number,
     sqrt: number,
-    result: VerificationResult
+    result: VerificationResult,
   ): void {
     let squareBaseX = 0;
 
@@ -137,7 +140,7 @@ export class VerifyUniqueness {
 
   private verifyUniquenessUntracked(
     elements: SudokuGridRow,
-    result: VerificationResult
+    result: VerificationResult,
   ): void {
     const definedElements: number[] = elements.filter(isDefined);
     if (definedElements.length !== new Set(definedElements).size) {
@@ -145,7 +148,11 @@ export class VerifyUniqueness {
     }
   }
 
-  private calculateNewSquareBase(i: number, sqrt: number, squareBaseX: number): number {
+  private calculateNewSquareBase(
+    i: number,
+    sqrt: number,
+    squareBaseX: number,
+  ): number {
     if (i > 0 && i % sqrt === 0) {
       squareBaseX += sqrt;
     }
@@ -155,7 +162,7 @@ export class VerifyUniqueness {
   private calculateSquareA(
     squareBaseX: number,
     j: number,
-    sqrt: number
+    sqrt: number,
   ): number {
     return squareBaseX + Math.ceil((1 + j - sqrt) / sqrt);
   }

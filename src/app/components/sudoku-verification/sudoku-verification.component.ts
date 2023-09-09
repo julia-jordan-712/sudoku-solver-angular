@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { VerificationResult } from '@app/core/verification/types/verification-result';
-import { I18nKey } from '@app/shared/types/i18n-key';
-import { Nullable } from '@app/shared/types/nullable';
+import { Component, Input } from "@angular/core";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { I18nKey } from "@app/shared/types/i18n-key";
+import { Nullable } from "@app/shared/types/nullable";
 
 @Component({
-  selector: 'app-sudoku-verification',
-  templateUrl: './sudoku-verification.component.html',
-  styleUrls: ['./sudoku-verification.component.scss'],
+  selector: "app-sudoku-verification",
+  templateUrl: "./sudoku-verification.component.html",
+  styleUrls: ["./sudoku-verification.component.scss"],
 })
 export class SudokuVerificationComponent {
   @Input({ required: true })

@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Nullable } from '@app/shared/types/nullable';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Nullable } from "@app/shared/types/nullable";
 
 @Component({
-  selector: 'app-number-input',
-  templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.scss'],
+  selector: "app-number-input",
+  templateUrl: "./number-input.component.html",
+  styleUrls: ["./number-input.component.scss"],
 })
 export class NumberInputComponent {
   @Input()
@@ -19,5 +19,4 @@ export class NumberInputComponent {
   onChange(value: number): void {
     this.valueChange.emit(value);
   }
-
 }

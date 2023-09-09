@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import {
   DropdownInputComponent,
   DropdownInputOption,
-} from './dropdown-input.component';
+} from "./dropdown-input.component";
 
 describe(DropdownInputComponent.name, () => {
   let component: DropdownInputComponent<DropdownInputOption>;
@@ -20,7 +20,7 @@ describe(DropdownInputComponent.name, () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

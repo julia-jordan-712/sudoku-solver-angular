@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Nullable } from '@app/shared/types/nullable';
+import { Injectable } from "@angular/core";
+import { Nullable } from "@app/shared/types/nullable";
 import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
-} from '@app/shared/types/sudoku-grid';
-import { SudokuGridUtil } from '@app/shared/util/sudoku-grid-util';
+} from "@app/shared/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class SudokuSettingsGridUpdateService {
   updateGrid(
     value: SudokuGrid,
     height: Nullable<number>,
-    width: Nullable<number>
+    width: Nullable<number>,
   ): SudokuGrid {
     if (value.length <= 0) {
       if (width === 0 && height === 0) {
@@ -34,7 +34,7 @@ export class SudokuSettingsGridUpdateService {
   private updateGrid_(
     value: SudokuGrid,
     height: Nullable<number>,
-    width: Nullable<number>
+    width: Nullable<number>,
   ): SudokuGrid {
     const result: SudokuGrid = SudokuGridUtil.clone(value);
     this.updateHeight(result, height ?? value.length);
@@ -48,14 +48,14 @@ export class SudokuSettingsGridUpdateService {
 
   private updateWidth(value: SudokuGrid, width: number): void {
     value.forEach((row: SudokuGridRow) =>
-      this.update(row, width, () => undefined)
+      this.update(row, width, () => undefined),
     );
   }
 
   private update(
     value: SudokuGrid | SudokuGridRow,
     limit: number,
-    empty: () => SudokuGridRow | SudokuGridCell
+    empty: () => SudokuGridRow | SudokuGridCell,
   ): void {
     if (value.length < limit) {
       const missingElements = limit - value.length;

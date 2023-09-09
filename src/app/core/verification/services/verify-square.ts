@@ -1,7 +1,7 @@
-import { VerificationResult } from '@app/core/verification/types/verification-result';
-import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
-import { VerifySquareResult } from '@app/core/verification/types/verify-square-result';
-import { SudokuGrid, SudokuGridRow } from '@app/shared/types/sudoku-grid';
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
+import { VerifySquareResult } from "@app/core/verification/types/verify-square-result";
+import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 
 export class VerifySquare {
   constructor(private candidate: SudokuGrid) {}
@@ -30,7 +30,7 @@ export class VerifySquare {
 
   private verifyConsistsOfSquares(
     size: number,
-    result: VerificationResult
+    result: VerificationResult,
   ): void {
     if (size === 1 || !Number.isInteger(Math.sqrt(size))) {
       result.addError(VerifyI18nKey.UNSUPPORTED_NOT_QUADRATIC);

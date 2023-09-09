@@ -6,17 +6,17 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Output
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { SudokuGridCellValidator } from '@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.validator';
-import { SudokuGridCell } from '@app/shared/types/sudoku-grid';
-import { Subscription } from 'rxjs';
+  Output,
+} from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { SudokuGridCellValidator } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.validator";
+import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-sudoku-grid-cell',
-  templateUrl: './sudoku-grid-cell.component.html',
-  styleUrls: ['./sudoku-grid-cell.component.scss'],
+  selector: "app-sudoku-grid-cell",
+  templateUrl: "./sudoku-grid-cell.component.html",
+  styleUrls: ["./sudoku-grid-cell.component.scss"],
 })
 export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   @Input({ required: true })
@@ -26,14 +26,14 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   maxValue = 1;
 
   @Input()
-  @HostBinding('class.end-of-square')
+  @HostBinding("class.end-of-square")
   isEndOfSquare = false;
 
   @Input()
-  @HostBinding('class.duplicate')
+  @HostBinding("class.duplicate")
   isDuplicate = false;
 
-  @HostBinding('class.focused')
+  @HostBinding("class.focused")
   isFocused = false;
   setFocus(focused: boolean): void {
     this.isFocused = focused;
@@ -44,11 +44,12 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
 
   readonly inputField = new FormControl();
   private readonly subscriptions: Subscription[] = [];
-  private readonly validator: SudokuGridCellValidator = new SudokuGridCellValidator();
+  private readonly validator: SudokuGridCellValidator =
+    new SudokuGridCellValidator();
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.inputField.valueChanges.subscribe((value) => this.onChange(value))
+      this.inputField.valueChanges.subscribe((value) => this.onChange(value)),
     );
     this.inputField.addValidators(this.validator.validator);
   }

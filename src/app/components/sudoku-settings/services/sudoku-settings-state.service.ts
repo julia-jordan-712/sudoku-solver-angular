@@ -1,22 +1,22 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from "@angular/core";
 import {
   SudokuDropdownSelectionItem,
   SudokuDropdownSelectionService,
-} from '@app/components/sudoku-settings/services/sudoku-dropdown-selection.service';
-import { SudokuSettingsGridUpdateService } from '@app/components/sudoku-settings/services/sudoku-settings-grid-update.service';
-import { VerifySolutionService } from '@app/core/verification/services/verify-solution.service';
-import { VerificationDuplicates } from '@app/core/verification/types/verification-duplicates';
-import { VerificationResult } from '@app/core/verification/types/verification-result';
-import { Index } from '@app/shared/types';
-import { CellPosition } from '@app/shared/types/cell-position';
-import { Nullable } from '@app/shared/types/nullable';
-import { SudokuGrid } from '@app/shared/types/sudoku-grid';
-import { isDefined } from '@app/shared/util/is-defined';
-import { Objects } from '@app/shared/util/objects';
-import { BehaviorSubject, Observable, filter, map } from 'rxjs';
+} from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
+import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
+import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
+import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { Index } from "@app/shared/types";
+import { CellPosition } from "@app/shared/types/cell-position";
+import { Nullable } from "@app/shared/types/nullable";
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { isDefined } from "@app/shared/util/is-defined";
+import { Objects } from "@app/shared/util/objects";
+import { BehaviorSubject, Observable, filter, map } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class SudokuSettingsStateService implements OnDestroy {
   private gridUpdate = inject(SudokuSettingsGridUpdateService);
@@ -31,23 +31,22 @@ export class SudokuSettingsStateService implements OnDestroy {
   private dropdownSelectionItems = [...this.dropdownSelection.getItems()];
   private dropdownSelectionItem$ =
     new BehaviorSubject<SudokuDropdownSelectionItem>(
-      this.dropdownSelectionItems[0]
+      this.dropdownSelectionItems[0],
     );
 
   public readonly verification$: Observable<VerificationResult> =
     this.grid$.pipe(
       filter(isDefined),
       map((grid: SudokuGrid) =>
-        this.verify.verify(grid, { trackUniquenessViolations: true })
-      )
+        this.verify.verify(grid, { trackUniquenessViolations: true }),
+      ),
     );
-  public readonly duplicationColumnIndicesToRowIndices$: Observable<
-  DuplicationColumnIndicesToRowIndices
-  > = this.verification$.pipe(
-    map((result: VerificationResult) =>
-      this.convertDuplicates(result.getDuplicatesPerValue())
-    )
-  );
+  public readonly duplicationColumnIndicesToRowIndices$: Observable<DuplicationColumnIndicesToRowIndices> =
+    this.verification$.pipe(
+      map((result: VerificationResult) =>
+        this.convertDuplicates(result.getDuplicatesPerValue()),
+      ),
+    );
 
   ngOnDestroy(): void {
     this.confirmed$.complete();
@@ -112,23 +111,23 @@ export class SudokuSettingsStateService implements OnDestroy {
         this.gridUpdate.updateGrid(
           this.grid$.value,
           this.height$.value,
-          this.width$.value
-        )
+          this.width$.value,
+        ),
       );
     }
   }
 
   private convertDuplicates(
-    duplicates: VerificationDuplicates
+    duplicates: VerificationDuplicates,
   ): DuplicationColumnIndicesToRowIndices {
     const cellPositions: CellPosition[] = Objects.uniqueArray(
       Object.values(duplicates).flat(),
-      (a, b) => a.equals(b)
+      (a, b) => a.equals(b),
     );
     return Objects.arrayToArrayIndex(
       cellPositions,
       (c) => c.x.toString(),
-      (c) => c.y
+      (c) => c.y,
     );
   }
 }

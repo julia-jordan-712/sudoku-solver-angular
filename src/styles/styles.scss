@@ -7,10 +7,12 @@ body {
   padding: 0px;
 
   * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     display: block;
     margin: 0px;
   }
@@ -29,7 +31,8 @@ body {
     outline: none;
     transition: background-color 100ms;
 
-    &:hover,&:focus {
+    &:hover,
+    &:focus {
       background-color: $primary-hover-color;
     }
 
