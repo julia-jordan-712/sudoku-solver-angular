@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 export class MainComponent {
   constructor(private translate: TranslateService) {}
 
-  changeLanguage(langTag: string) {
+  changeLanguage(langTag: string): void {
     this.translate.use(langTag);
   }
 }

@@ -144,7 +144,7 @@ export class VerifyUniqueness {
     }
   }
 
-  private calculateNewSquareBase(i: number, sqrt: number, squareBaseX: number) {
+  private calculateNewSquareBase(i: number, sqrt: number, squareBaseX: number): number {
     if (i > 0 && i % sqrt === 0) {
       squareBaseX += sqrt;
     }

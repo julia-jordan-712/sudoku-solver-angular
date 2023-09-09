@@ -30,8 +30,10 @@
             "style": "kebab-case"
           }
         ],
-        "@typescript-eslint/no-inferrable-types": "warn",
-        "@typescript-eslint/ban-ts-comment": "off"
+        "no-console": "warn",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-inferrable-types": "warn"
       }
     },
     {
