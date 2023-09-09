@@ -1,6 +1,6 @@
 <h2>{{ "SETTINGS.TITLE" | translate }}</h2>
 <ng-container *ngIf="confirmed$ | async; else editSettings">
-  <button (click)="changeSettings()">
+  <button id="changeSettings" (click)="changeSettings()">
     {{ "SETTINGS.CHANGE" | translate }}
   </button>
 </ng-container>
@@ -13,11 +13,13 @@
       (selected)="onSelect($event)"
     ></app-dropdown-input>
     <app-number-input
+      id="heightInput"
       [label]="'SETTINGS.HEIGHT' | translate"
       [value]="height$ | async"
       (valueChange)="setHeight($event)"
     ></app-number-input>
     <app-number-input
+      id="widthInput"
       [label]="'SETTINGS.WIDTH' | translate"
       [value]="width$ | async"
       (valueChange)="setWidth($event)"
@@ -30,7 +32,11 @@
     (valueChange)="onGridChange($event)"
   >
   </app-sudoku-grid>
-  <button [disabled]="!(verification$ | async)?.isValid()" (click)="submit()">
+  <button
+    id="confirmSettings"
+    [disabled]="!(verification$ | async)?.isValid()"
+    (click)="submit()"
+  >
     {{ "SETTINGS.DONE" | translate }}
   </button>
 </ng-template>

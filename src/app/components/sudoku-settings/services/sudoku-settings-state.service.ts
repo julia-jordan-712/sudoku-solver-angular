@@ -85,6 +85,7 @@ export class SudokuSettingsStateService implements OnDestroy {
 
   setSelection(item: SudokuDropdownSelectionItem): void {
     this.setGrid(item.grid);
+    this.updateGrid();
     this.dropdownSelectionItem$.next(item);
   }
 
@@ -92,7 +93,6 @@ export class SudokuSettingsStateService implements OnDestroy {
     this.grid$.next(grid);
     this.height$.next(grid?.length);
     this.width$.next(grid?.[0]?.length);
-    this.updateGrid();
   }
 
   setHeight(height: number): void {
@@ -106,15 +106,13 @@ export class SudokuSettingsStateService implements OnDestroy {
   }
 
   private updateGrid(): void {
-    if (this.grid$.value) {
-      this.grid$.next(
-        this.gridUpdate.updateGrid(
-          this.grid$.value,
-          this.height$.value,
-          this.width$.value,
-        ),
-      );
-    }
+    this.grid$.next(
+      this.gridUpdate.updateGrid(
+        this.grid$.value ?? [],
+        this.height$.value,
+        this.width$.value,
+      ),
+    );
   }
 
   private convertDuplicates(
