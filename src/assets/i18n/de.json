@@ -59,7 +59,7 @@
       "DUPLICATE_ELEMENTS": "Das Sudoku enthält Duplikate."
     },
     "UNSUPPORTED": {
-      "NOT_QUADRATIC": "Es werden nur Sudokus unterstützt, die sich aus Quadraten zusammensetzen."
+      "NOT_QUADRATIC": "Sudokus dieser Größe werden nicht unterstützt."
     },
     "RESULT": {
       "VALID": "Gültig",

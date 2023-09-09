@@ -60,7 +60,7 @@
       "NOT_A_SQUARE": "The height of the Sudoku has to equal its width."
     },
     "UNSUPPORTED": {
-      "NOT_QUADRATIC": "Only Sudokus composed of squares are supported."
+      "NOT_QUADRATIC": "Sudokus of this size are not supported."
     },
     "RESULT": {
       "VALID": "Valid",
