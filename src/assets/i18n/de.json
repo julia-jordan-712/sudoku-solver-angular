@@ -50,7 +50,8 @@
         "PUZZLE": "9x9 | Einfach | Rätsel 1",
         "SOLVED": "9x9 | Einfach | Rätsel 1 - gelöst"
       }
-    }
+    },
+    "NONE": "-"
   },
   "VERIFY": {
     "ERROR": {
