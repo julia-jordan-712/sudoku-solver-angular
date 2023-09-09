@@ -51,5 +51,19 @@
         "SOLVED": "9x9 | Einfach | Rätsel 1 - gelöst"
       }
     }
+  },
+  "VERIFY": {
+    "ERROR": {
+      "EMPTY": "Das Sudoku ist leer.",
+      "NOT_A_SQUARE": "Die Höhe des Sudokus muss seiner Breite entsprechen.",
+      "DUPLICATE_ELEMENTS": "Das Sudoku enthält Duplikate."
+    },
+    "UNSUPPORTED": {
+      "NOT_QUADRATIC": "Es werden nur Sudokus unterstützt, die sich aus Quadraten zusammensetzen."
+    },
+    "RESULT": {
+      "VALID": "Gültig",
+      "INVALID": "Ungültig"
+    }
   }
 }

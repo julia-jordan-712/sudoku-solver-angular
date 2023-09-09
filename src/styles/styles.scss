@@ -32,5 +32,9 @@ body {
     &:hover,&:focus {
       background-color: $primary-hover-color;
     }
+
+    &:disabled {
+      opacity: 0.5;
+    }
   }
 }

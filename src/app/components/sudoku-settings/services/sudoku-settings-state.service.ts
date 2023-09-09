@@ -4,9 +4,12 @@ import {
   SudokuDropdownSelectionService,
 } from '@app/components/sudoku-settings/services/sudoku-dropdown-selection.service';
 import { SudokuSettingsGridUpdateService } from '@app/components/sudoku-settings/services/sudoku-settings-grid-update.service';
+import { VerifySolutionService } from '@app/core/verification/services/verify-solution.service';
+import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { Nullable } from '@app/shared/types/nullable';
 import { SudokuGrid } from '@app/shared/types/sudoku-grid';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { isDefined } from '@app/shared/util/is-defined';
+import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +17,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class SudokuSettingsStateService implements OnDestroy {
   private gridUpdate = inject(SudokuSettingsGridUpdateService);
   private dropdownSelection = inject(SudokuDropdownSelectionService);
+  private verify = inject(VerifySolutionService);
 
   private confirmed$ = new BehaviorSubject<boolean>(false);
   private height$ = new BehaviorSubject<Nullable<number>>(undefined);
@@ -25,6 +29,13 @@ export class SudokuSettingsStateService implements OnDestroy {
     new BehaviorSubject<SudokuDropdownSelectionItem>(
       this.dropdownSelectionItems[0]
     );
+
+  private verification$: Observable<VerificationResult> = this.grid$.pipe(
+    filter(isDefined),
+    map((grid: SudokuGrid) =>
+      this.verify.verify(grid, { trackUniquenessViolations: true })
+    )
+  );
 
   ngOnDestroy(): void {
     this.confirmed$.complete();
@@ -55,6 +66,10 @@ export class SudokuSettingsStateService implements OnDestroy {
 
   getSelectedItem(): Observable<SudokuDropdownSelectionItem> {
     return this.dropdownSelectionItem$.asObservable();
+  }
+
+  getVerification(): Observable<Nullable<VerificationResult>> {
+    return this.verification$;
   }
 
   setConfirmed(confirmed: boolean): void {

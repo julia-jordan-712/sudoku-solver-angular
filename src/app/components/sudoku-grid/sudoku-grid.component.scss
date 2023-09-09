@@ -1,4 +1,8 @@
 :host {
+  display: contents;
+}
+
+.grid {
   display: flex;
   flex-direction: column;
   width: max-content;

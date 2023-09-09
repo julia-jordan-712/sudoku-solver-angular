@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { SudokuDropdownSelectionItem } from '@app/components/sudoku-settings/services/sudoku-dropdown-selection.service';
 import { SudokuSettingsStateService } from '@app/components/sudoku-settings/services/sudoku-settings-state.service';
+import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { Nullable } from '@app/shared/types/nullable';
 import { SudokuGrid } from '@app/shared/types/sudoku-grid';
 import { Observable } from 'rxjs';
@@ -17,8 +18,12 @@ export class SudokuSettingsComponent {
   height$: Observable<Nullable<number>> = this.state.getHeight();
   width$: Observable<Nullable<number>> = this.state.getWidth();
   grid$: Observable<Nullable<SudokuGrid>> = this.state.getGrid();
-  selectionItems = this.state.getSelectionItems();
-  selectedItem$ = this.state.getSelectedItem();
+  selectionItems: SudokuDropdownSelectionItem[] =
+    this.state.getSelectionItems();
+  selectedItem$: Observable<SudokuDropdownSelectionItem> =
+    this.state.getSelectedItem();
+  verification$: Observable<Nullable<VerificationResult>> =
+    this.state.getVerification();
 
   changeSettings(): void {
     this.state.setConfirmed(false);

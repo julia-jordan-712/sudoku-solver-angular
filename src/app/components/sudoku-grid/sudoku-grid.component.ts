@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { Nullable } from '@app/shared/types/nullable';
 import { SudokuGrid, SudokuGridRow } from '@app/shared/types/sudoku-grid';
 import { SudokuGridUtil } from '@app/shared/util/sudoku-grid-util';
@@ -17,6 +18,9 @@ export class SudokuGridComponent {
     this._grid = grid;
     this.sqrt = grid ? Math.round(Math.sqrt(grid.length)) : null;
   }
+
+  @Input()
+  verification: Nullable<VerificationResult>;
 
   @Output()
   valueChange: EventEmitter<SudokuGrid> = new EventEmitter();

@@ -1,0 +1,29 @@
+@use "_constants" as *;
+
+:host {
+  display: contents;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+  gap: 0.5em;
+  border-radius: 0.25em;
+  width: max-content;
+  min-width: 10em;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+.valid {
+  background-color: $valid-background-color;
+  color: $valid-color;
+}
+
+.invalid {
+  background-color: $invalid-background-color;
+  color: $invalid-color;
+}

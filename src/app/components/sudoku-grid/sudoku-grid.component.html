@@ -1,9 +1,11 @@
 <ng-container *ngIf="_grid && sqrt">
-  <ng-container *ngFor="let row of _grid; let i = index; trackBy: trackByFn">
+  <div class="grid">
     <app-sudoku-grid-row
+      *ngFor="let row of _grid; let i = index; trackBy: trackByFn"
       [row]="row"
       [isEndOfSquare]="sqrt ? (i + 1) % sqrt === 0 : false"
       (valueChange)="onRowChanged($event, i)"
-      ></app-sudoku-grid-row>
-  </ng-container>
+    ></app-sudoku-grid-row>
+  </div>
+  <app-sudoku-verification [verification]="verification"></app-sudoku-verification>
 </ng-container>
