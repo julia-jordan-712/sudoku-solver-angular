@@ -15,7 +15,35 @@
       "EMPTY": "4x4 | Leer",
       "EMPTY_COLUMN": "4x4 | Leere Spalte",
       "EMPTY_ROW": "4x4 | Leere Zeile",
-      "EMPTY_SQUARE": "4x4 | Leeres Quadrat"
+      "EMPTY_SQUARE": "4x4 | Leeres Quadrat",
+      "COMPLETE": "4x4 | Gelöst",
+      "INCOMPLETE_INVALID_COLUMN": "4x4 | Ungültige Spalte",
+      "INCOMPLETE_INVALID_ROW": "4x4 | Ungültige Zeile",
+      "INCOMPLETE_INVALID_SQUARE": "4x4 | Ungültiges Quadrat"
+    },
+    "ADVANCED": {
+      "1": {
+        "PUZZLE": "9x9 | Fortgeschritten | Rätsel 1",
+        "SOLVED": "9x9 | Fortgeschritten | Rätsel 1 - gelöst"
+      }
+    },
+    "EXTREME": {
+      "1": {
+        "PUZZLE": "9x9 | Extrem | Rätsel 1",
+        "SOLVED": "9x9 | Extrem | Rätsel 1 - gelöst"
+      }
+    },
+    "HARD": {
+      "1": {
+        "PUZZLE": "9x9 | Schwer | Rätsel 1",
+        "SOLVED": "9x9 | Schwer | Rätsel 1 - gelöst"
+      }
+    },
+    "MEDIUM": {
+      "1": {
+        "PUZZLE": "9x9 | Mittel | Rätsel 1",
+        "SOLVED": "9x9 | Mittel | Rätsel 1 - gelöst"
+      }
     },
     "SIMPLE": {
       "1": {
