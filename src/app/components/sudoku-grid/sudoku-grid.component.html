@@ -3,6 +3,7 @@
     <app-sudoku-grid-row
       *ngFor="let row of _grid; let i = index; trackBy: trackByFn"
       [row]="row"
+      [columnsWithDuplicates]="duplications?.[i]"
       [isEndOfSquare]="sqrt ? (i + 1) % sqrt === 0 : false"
       (valueChange)="onRowChanged($event, i)"
     ></app-sudoku-grid-row>

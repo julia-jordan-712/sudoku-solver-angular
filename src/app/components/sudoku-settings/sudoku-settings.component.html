@@ -26,6 +26,7 @@
   <app-sudoku-grid
     [grid]="grid$ | async"
     [verification]="verification$ | async"
+    [duplications]="duplications$ | async"
     (valueChange)="onGridChange($event)"
     >
   </app-sudoku-grid>

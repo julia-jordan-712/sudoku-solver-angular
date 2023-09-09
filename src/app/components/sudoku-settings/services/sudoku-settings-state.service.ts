@@ -5,10 +5,14 @@ import {
 } from '@app/components/sudoku-settings/services/sudoku-dropdown-selection.service';
 import { SudokuSettingsGridUpdateService } from '@app/components/sudoku-settings/services/sudoku-settings-grid-update.service';
 import { VerifySolutionService } from '@app/core/verification/services/verify-solution.service';
+import { VerificationDuplicates } from '@app/core/verification/types/verification-duplicates';
 import { VerificationResult } from '@app/core/verification/types/verification-result';
+import { Index } from '@app/shared/types';
+import { CellPosition } from '@app/shared/types/cell-position';
 import { Nullable } from '@app/shared/types/nullable';
 import { SudokuGrid } from '@app/shared/types/sudoku-grid';
 import { isDefined } from '@app/shared/util/is-defined';
+import { Objects } from '@app/shared/util/objects';
 import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 
 @Injectable({
@@ -30,10 +34,18 @@ export class SudokuSettingsStateService implements OnDestroy {
       this.dropdownSelectionItems[0]
     );
 
-  private verification$: Observable<VerificationResult> = this.grid$.pipe(
-    filter(isDefined),
-    map((grid: SudokuGrid) =>
-      this.verify.verify(grid, { trackUniquenessViolations: true })
+  public readonly verification$: Observable<VerificationResult> =
+    this.grid$.pipe(
+      filter(isDefined),
+      map((grid: SudokuGrid) =>
+        this.verify.verify(grid, { trackUniquenessViolations: true })
+      )
+    );
+  public readonly duplicationColumnIndicesToRowIndices$: Observable<
+  DuplicationColumnIndicesToRowIndices
+  > = this.verification$.pipe(
+    map((result: VerificationResult) =>
+      this.convertDuplicates(result.getDuplicatesPerValue())
     )
   );
 
@@ -66,10 +78,6 @@ export class SudokuSettingsStateService implements OnDestroy {
 
   getSelectedItem(): Observable<SudokuDropdownSelectionItem> {
     return this.dropdownSelectionItem$.asObservable();
-  }
-
-  getVerification(): Observable<Nullable<VerificationResult>> {
-    return this.verification$;
   }
 
   setConfirmed(confirmed: boolean): void {
@@ -109,4 +117,24 @@ export class SudokuSettingsStateService implements OnDestroy {
       );
     }
   }
+
+  private convertDuplicates(
+    duplicates: VerificationDuplicates
+  ): DuplicationColumnIndicesToRowIndices {
+    const cellPositions: CellPosition[] = Objects.uniqueArray(
+      Object.values(duplicates).flat(),
+      (a, b) => a.equals(b)
+    );
+    return Objects.arrayToArrayIndex(
+      cellPositions,
+      (c) => c.x.toString(),
+      (c) => c.y
+    );
+  }
 }
+
+/**
+ * The column indices of cells which contain a duplicate mapped
+ * to the row index of these cells.
+ */
+export type DuplicationColumnIndicesToRowIndices = Index<number[]>;

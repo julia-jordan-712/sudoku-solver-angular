@@ -27,6 +27,9 @@ export class SudokuGridRowComponent {
   @HostBinding('class.end-of-square')
   isEndOfSquare = false;
 
+  @Input()
+  columnsWithDuplicates: Nullable<number[]>
+
   @Output()
   valueChange: EventEmitter<SudokuGridRow> = new EventEmitter();
 

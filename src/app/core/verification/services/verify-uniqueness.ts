@@ -1,3 +1,4 @@
+import { VerificationDuplicates } from '@app/core/verification/types/verification-duplicates';
 import { VerificationOptions } from '@app/core/verification/types/verification-options';
 import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
@@ -93,7 +94,7 @@ export class VerifyUniqueness {
         return new CellPosition(e.x, e.y);
       }
     );
-    const duplicates: Index<CellPosition[]> = Objects.filterIndex(
+    const duplicates: VerificationDuplicates = Objects.filterIndex(
       index,
       (_, v) => v.length > 1
     );

@@ -29,6 +29,10 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   @HostBinding('class.end-of-square')
   isEndOfSquare = false;
 
+  @Input()
+  @HostBinding('class.duplicate')
+  isDuplicate = false;
+
   @HostBinding('class.focused')
   isFocused = false;
   setFocus(focused: boolean): void {

@@ -1,7 +1,7 @@
 import { VerifyUniqueness } from '@app/core/verification/services/verify-uniqueness';
+import { VerificationDuplicates } from '@app/core/verification/types/verification-duplicates';
 import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { VerifyI18nKey } from '@app/core/verification/types/verify-i18n-keys';
-import { Index } from '@app/shared/types';
 import { CellPosition } from '@app/shared/types/cell-position';
 import { Objects } from '@app/shared/util/objects';
 import { Puzzle4x4 } from '@app/test/puzzles/puzzle-4x4';
@@ -43,7 +43,7 @@ describe(VerifyUniqueness.name, () => {
           VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS
         );
         expect(result.hasTrackedDuplicates()).toBeFalse();
-        expect(result.getDuplicates()).toEqual({});
+        expect(result.getDuplicatesPerValue()).toEqual({});
       });
 
       it('should find duplicate element positions when they are tracked', () => {
@@ -55,7 +55,7 @@ describe(VerifyUniqueness.name, () => {
         expect(result.getErrors()[0]).toEqual(
           VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS
         );
-        const duplicates: Index<CellPosition[]> =
+        const duplicates: VerificationDuplicates =
           uniqueCellPositionIndex(result);
         expect(Object.keys(duplicates).length).toEqual(1);
         expect(duplicates['3'].length).toEqual(3);
@@ -148,7 +148,7 @@ describe(VerifyUniqueness.name, () => {
           VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS
         );
 
-        const duplicates: Index<CellPosition[]> =
+        const duplicates: VerificationDuplicates =
           uniqueCellPositionIndex(result);
         expect(Object.keys(duplicates).length).toEqual(1);
         expect(duplicates['4'].length).toEqual(params.positions.length);
@@ -161,8 +161,8 @@ describe(VerifyUniqueness.name, () => {
 
   function uniqueCellPositionIndex(
     result: VerificationResult
-  ): Index<CellPosition[]> {
-    return Objects.uniqueArrayIndex(result.getDuplicates(), (a, b) =>
+  ): VerificationDuplicates {
+    return Objects.uniqueArrayIndex(result.getDuplicatesPerValue(), (a, b) =>
       a.equals(b)
     );
   }

@@ -1,6 +1,6 @@
-import { Index } from '@app/shared/types';
-import { CellPosition } from '@app/shared/types/cell-position';
+import { VerificationDuplicates } from '@app/core/verification/types/verification-duplicates';
 import { I18nKey } from '@app/shared/types/i18n-key';
+import { Nullable } from '@app/shared/types/nullable';
 import { Objects } from '@app/shared/util/objects';
 
 export class VerificationResult {
@@ -14,7 +14,7 @@ export class VerificationResult {
     return result;
   }
 
-  private duplicates: Index<CellPosition[]> | undefined;
+  private duplicates: Nullable<VerificationDuplicates>;
 
   private constructor(private errors: Set<I18nKey>) {}
 
@@ -33,7 +33,7 @@ export class VerificationResult {
     return Array.from(this.errors.values());
   }
 
-  addDuplicates(duplicates: Index<CellPosition[]>): void {
+  addDuplicates(duplicates: VerificationDuplicates): void {
     this.duplicates = Objects.mergeArrayIndex(
       this.duplicates ?? {},
       duplicates
@@ -44,7 +44,7 @@ export class VerificationResult {
     return this.errors.size !== 0 && this.duplicates != undefined;
   }
 
-  getDuplicates(): Index<CellPosition[]> {
+  getDuplicatesPerValue(): VerificationDuplicates {
     return this.duplicates ?? {};
   }
 }

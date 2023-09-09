@@ -15,6 +15,11 @@
     border-right: 3px solid gray;
   }
 
+  &.duplicate {
+    background-color: $invalid-background-color;
+    color: $invalid-color;
+  }
+
   &.focused {
     background-color: $secondary-color;
     color: $on-secondary-color;
@@ -26,11 +31,13 @@ input {
   width: $cell-size;
   height: $cell-size;
   background-color: transparent;
+  color: inherit;
   border: none;
   outline: none;
   text-align: center;
   caret-color: transparent;
 
+  appearance: textfield;
   -moz-appearance: textfield;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {

@@ -1,6 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { SudokuDropdownSelectionItem } from '@app/components/sudoku-settings/services/sudoku-dropdown-selection.service';
-import { SudokuSettingsStateService } from '@app/components/sudoku-settings/services/sudoku-settings-state.service';
+import {
+  DuplicationColumnIndicesToRowIndices,
+  SudokuSettingsStateService,
+} from '@app/components/sudoku-settings/services/sudoku-settings-state.service';
 import { VerificationResult } from '@app/core/verification/types/verification-result';
 import { Nullable } from '@app/shared/types/nullable';
 import { SudokuGrid } from '@app/shared/types/sudoku-grid';
@@ -22,8 +25,9 @@ export class SudokuSettingsComponent {
     this.state.getSelectionItems();
   selectedItem$: Observable<SudokuDropdownSelectionItem> =
     this.state.getSelectedItem();
-  verification$: Observable<Nullable<VerificationResult>> =
-    this.state.getVerification();
+  verification$: Observable<VerificationResult> = this.state.verification$;
+  duplications$: Observable<DuplicationColumnIndicesToRowIndices> =
+    this.state.duplicationColumnIndicesToRowIndices$;
 
   changeSettings(): void {
     this.state.setConfirmed(false);
