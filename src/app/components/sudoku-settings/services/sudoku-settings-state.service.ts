@@ -84,8 +84,8 @@ export class SudokuSettingsStateService implements OnDestroy {
       this.grid$.next(
         this.gridUpdate.updateGrid(
           this.grid$.value,
-          this.width$.value,
-          this.height$.value
+          this.height$.value,
+          this.width$.value
         )
       );
     }
