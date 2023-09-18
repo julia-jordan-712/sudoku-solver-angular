@@ -13,16 +13,10 @@
       (selected)="onSelect($event)"
     ></app-dropdown-input>
     <app-number-input
-      id="heightInput"
-      [label]="'SETTINGS.HEIGHT' | translate"
-      [value]="height$ | async"
-      (valueChange)="setHeight($event)"
-    ></app-number-input>
-    <app-number-input
-      id="widthInput"
-      [label]="'SETTINGS.WIDTH' | translate"
-      [value]="width$ | async"
-      (valueChange)="setWidth($event)"
+      id="sizeInput"
+      [label]="'SETTINGS.SIZE' | translate"
+      [value]="size$ | async"
+      (valueChange)="setSize($event)"
     ></app-number-input>
   </div>
   <app-sudoku-grid

@@ -18,8 +18,7 @@ export class SudokuSettingsComponent {
   private state = inject(SudokuSettingsStateService);
 
   confirmed$: Observable<boolean> = this.state.isConfirmed();
-  height$: Observable<Nullable<number>> = this.state.getHeight();
-  width$: Observable<Nullable<number>> = this.state.getWidth();
+  size$: Observable<Nullable<number>> = this.state.getHeight();
   grid$: Observable<Nullable<SudokuGrid>> = this.state.getGrid();
   selectionItems: SudokuDropdownSelectionItem[] =
     this.state.getSelectionItems();
@@ -45,11 +44,8 @@ export class SudokuSettingsComponent {
     this.state.setGrid(grid);
   }
 
-  setWidth(width: number): void {
-    this.state.setWidth(width);
-  }
-
-  setHeight(height: number): void {
-    this.state.setHeight(height);
+  setSize(size: number): void {
+    this.state.setHeight(size);
+    this.state.setWidth(size);
   }
 }

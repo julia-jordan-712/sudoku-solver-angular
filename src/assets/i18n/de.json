@@ -8,7 +8,8 @@
     "HEIGHT": "Höhe",
     "SELECT": "vorhandenes Sudoku",
     "TITLE": "Einstellungen",
-    "WIDTH": "Breite"
+    "WIDTH": "Breite",
+    "SIZE": "Größe"
   },
   "PUZZLE": {
     "4x4": {

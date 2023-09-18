@@ -8,7 +8,8 @@
     "DONE": "Done",
     "WIDTH": "Width",
     "HEIGHT": "Height",
-    "SELECT": "Select existing Sudoku"
+    "SELECT": "Select existing Sudoku",
+    "SIZE": "Size"
   },
   "PUZZLE": {
     "4x4": {

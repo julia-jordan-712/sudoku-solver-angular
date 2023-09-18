@@ -30,8 +30,7 @@ describe(SudokuSettingsComponent.name, () => {
 
   it("should have dropdown, two input fields and confirm button initially", () => {
     expect(queryDropdown()).not.toBeNull();
-    expect(queryHeight()).not.toBeNull();
-    expect(queryWidth()).not.toBeNull();
+    expect(querySize()).not.toBeNull();
     expect(queryGrid()).not.toBeNull();
     expect(queryConfirm()).not.toBeNull();
 
@@ -40,8 +39,7 @@ describe(SudokuSettingsComponent.name, () => {
 
   it("should update the grid when selection changes", () => {
     const dropdown: DropdownInputTestComponent = getDropdown();
-    const height: NumberInputTestComponent = getHeightInput();
-    const width: NumberInputTestComponent = getWidthInput();
+    const size: NumberInputTestComponent = getSizeInput();
     const grid: SudokuGridTestComponent = getSudokuGrid();
 
     dropdown.change({
@@ -53,8 +51,7 @@ describe(SudokuSettingsComponent.name, () => {
     expect(grid.grid).toEqual(Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
-    expect(queryHeight().innerText).toEqual("4");
-    expect(queryWidth().innerText).toEqual("4");
+    expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
     expect(queryConfirm().disabled).toEqual(false);
 
@@ -73,13 +70,11 @@ describe(SudokuSettingsComponent.name, () => {
       2: [2], // third row, third column
       3: [0, 3], // last row, first and last column
     });
-    expect(queryHeight().innerText).toEqual("4");
-    expect(queryWidth().innerText).toEqual("4");
+    expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
     expect(queryConfirm().disabled).toEqual(true);
 
-    height.change(3);
-    width.change(3);
+    size.change(3);
     fixture.detectChanges();
     expect(grid.grid).toEqual([
       [1, 2, 3],
@@ -88,13 +83,11 @@ describe(SudokuSettingsComponent.name, () => {
     ]);
     expect(grid.verification?.isValid()).toEqual(false);
     expect(grid.duplications).toEqual({});
-    expect(queryHeight().innerText).toEqual("3");
-    expect(queryWidth().innerText).toEqual("3");
+    expect(querySize().innerText).toEqual("3");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
     expect(queryConfirm().disabled).toEqual(true);
 
-    height.change(4);
-    width.change(4);
+    size.change(4);
     fixture.detectChanges();
     expect(grid.grid).toEqual([
       [1, 2, 3, undefined],
@@ -104,8 +97,7 @@ describe(SudokuSettingsComponent.name, () => {
     ]);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
-    expect(queryHeight().innerText).toEqual("4");
-    expect(queryWidth().innerText).toEqual("4");
+    expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
     expect(queryConfirm().disabled).toEqual(false);
   });
@@ -124,16 +116,14 @@ describe(SudokuSettingsComponent.name, () => {
     expect(grid.grid).toEqual(Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
-    expect(queryHeight().innerText).toEqual("4");
-    expect(queryWidth().innerText).toEqual("4");
+    expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
 
     queryConfirm().click();
     fixture.detectChanges();
 
     expect(queryDropdown()).toBeNull();
-    expect(queryHeight()).toBeNull();
-    expect(queryWidth()).toBeNull();
+    expect(querySize()).toBeNull();
     expect(queryGrid()).toBeNull();
     expect(queryConfirm()).toBeNull();
     expect(queryChangeSettings()).not.toBeNull();
@@ -146,19 +136,15 @@ describe(SudokuSettingsComponent.name, () => {
     expect(grid.grid).toEqual(Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
-    expect(queryHeight().innerText).toEqual("4");
-    expect(queryWidth().innerText).toEqual("4");
+    expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
   });
 
   function queryDropdown(): any {
     return fixture.nativeElement.querySelector("app-dropdown-input");
   }
-  function queryHeight(): any {
-    return fixture.nativeElement.querySelector("#heightInput");
-  }
-  function queryWidth(): any {
-    return fixture.nativeElement.querySelector("#widthInput");
+  function querySize(): any {
+    return fixture.nativeElement.querySelector("#sizeInput");
   }
   function queryGrid(): any {
     return fixture.nativeElement.querySelector("app-sudoku-grid");
@@ -174,11 +160,8 @@ describe(SudokuSettingsComponent.name, () => {
     return fixture.debugElement.query(By.css("app-dropdown-input"))
       .componentInstance;
   }
-  function getHeightInput(): NumberInputTestComponent {
-    return fixture.debugElement.query(By.css("#heightInput")).componentInstance;
-  }
-  function getWidthInput(): NumberInputTestComponent {
-    return fixture.debugElement.query(By.css("#widthInput")).componentInstance;
+  function getSizeInput(): NumberInputTestComponent {
+    return fixture.debugElement.query(By.css("#sizeInput")).componentInstance;
   }
   function getSudokuGrid(): SudokuGridTestComponent {
     return fixture.debugElement.query(By.css("app-sudoku-grid"))
