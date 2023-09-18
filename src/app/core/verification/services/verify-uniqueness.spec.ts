@@ -3,7 +3,9 @@ import { VerificationDuplicates } from "@app/core/verification/types/verificatio
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
 import { CellPosition } from "@app/shared/types/cell-position";
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { Objects } from "@app/shared/util/objects";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 
@@ -156,6 +158,34 @@ describe(VerifyUniqueness.name, () => {
           expect(duplicates["4"]).toContain(position);
         });
       });
+    });
+  });
+
+  [-10, -9, -5, -1, 0, 10, 11].forEach((invalidNumber) => {
+    it(`should recognize invalid number ${invalidNumber} in a 4x4 Sudoku when tracking uniqueness`, () => {
+      const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
+      grid[0][0] = invalidNumber;
+
+      const result = new VerifyUniqueness(grid, 4).verify({
+        trackUniquenessViolations: true,
+      });
+      expect(result.isValid()).toBeFalse();
+      expect(result.getErrors()[0]).toEqual(
+        VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
+      );
+    });
+
+    it(`should recognize invalid number ${invalidNumber} in a 4x4 Sudoku when not tracking uniqueness`, () => {
+      const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
+      grid[0][0] = invalidNumber;
+
+      const result = new VerifyUniqueness(grid, 4).verify({
+        trackUniquenessViolations: false,
+      });
+      expect(result.isValid()).toBeFalse();
+      expect(result.getErrors()[0]).toEqual(
+        VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
+      );
     });
   });
 

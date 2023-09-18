@@ -12,7 +12,7 @@
         {{ "VERIFY.RESULT.INVALID" | translate }}
       </span>
       <span *ngFor="let error of verification.getErrors(); trackBy: trackByFn">
-        {{ error.key | translate }}
+        {{ error.key | translate: error.params }}
       </span>
     </div>
   </ng-template>

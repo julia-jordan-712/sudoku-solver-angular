@@ -68,6 +68,7 @@ export class VerifyUniqueness {
       squareBaseX = this.calculateNewSquareBase(i, sqrt, squareBaseX);
 
       for (let j = 0; j < size; j++) {
+        this.verifyValidNumber(area[i][j], size, result);
         currentRow.push({ x: i, y: j, value: area[i][j] });
         currentColumn.push({ x: j, y: i, value: area[j][i] });
 
@@ -124,6 +125,7 @@ export class VerifyUniqueness {
       squareBaseX = this.calculateNewSquareBase(i, sqrt, squareBaseX);
 
       for (let j = 0; j < size; j++) {
+        this.verifyValidNumber(area[i][j], size, result);
         currentRow.push(area[i][j]);
         currentColumn.push(area[j][i]);
 
@@ -135,6 +137,18 @@ export class VerifyUniqueness {
       this.verifyUniquenessUntracked(currentRow, result);
       this.verifyUniquenessUntracked(currentColumn, result);
       this.verifyUniquenessUntracked(currentSquare, result);
+    }
+  }
+
+  private verifyValidNumber(
+    value: Nullable<number>,
+    size: number,
+    result: VerificationResult,
+  ): void {
+    if (value != null) {
+      if (value <= 0 || value > size) {
+        result.addError(VerifyI18nKey.ERROR_INVALID_NUMBERS(size));
+      }
     }
   }
 
