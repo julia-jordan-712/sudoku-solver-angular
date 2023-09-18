@@ -170,6 +170,9 @@ describe(VerifyUniqueness.name, () => {
         trackUniquenessViolations: true,
       });
       expect(result.isValid()).toBeFalse();
+      expect(result.getErrors()[0]).toEqual(
+        VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
+      );
     });
 
     it(`should recognize invalid number ${invalidNumber} in a 4x4 Sudoku when not tracking uniqueness`, () => {
@@ -180,6 +183,9 @@ describe(VerifyUniqueness.name, () => {
         trackUniquenessViolations: false,
       });
       expect(result.isValid()).toBeFalse();
+      expect(result.getErrors()[0]).toEqual(
+        VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
+      );
     });
   });
 

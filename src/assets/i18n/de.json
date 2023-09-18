@@ -58,7 +58,8 @@
     "ERROR": {
       "EMPTY": "Das Sudoku ist leer.",
       "NOT_A_SQUARE": "Die Höhe des Sudokus muss seiner Breite entsprechen.",
-      "DUPLICATE_ELEMENTS": "Das Sudoku enthält Duplikate."
+      "DUPLICATE_ELEMENTS": "Das Sudoku enthält Duplikate.",
+      "INVALID_NUMBERS": "Alle Zahlen müssen größer oder gleich 1 sein. Alle Zahlen müssen kleiner oder gleich {{limit}} sein."
     },
     "UNSUPPORTED": {
       "NOT_QUADRATIC": "Sudokus dieser Größe werden nicht unterstützt."
