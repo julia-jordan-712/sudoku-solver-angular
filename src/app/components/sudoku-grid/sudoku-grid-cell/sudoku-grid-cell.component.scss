@@ -1,0 +1,57 @@
+@use "_constants" as *;
+
+:host {
+  display: flex;
+  align-items: center;
+  width: $cell-size;
+  height: $cell-size;
+
+  border-right: 1px solid gray;
+  &:first-of-type {
+    border-left: 3px solid gray;
+  }
+  &:last-of-type,
+  &.end-of-square {
+    border-right: 3px solid gray;
+  }
+
+  &.duplicate {
+    background-color: $invalid-background-color;
+    color: $invalid-color;
+  }
+
+  &.focused {
+    background-color: $secondary-color;
+    color: $on-secondary-color;
+  }
+}
+
+input {
+  display: flex;
+  width: $cell-size;
+  height: $cell-size;
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  outline: none;
+  text-align: center;
+  caret-color: transparent;
+
+  appearance: textfield;
+  -moz-appearance: textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  cursor: pointer;
+  &:hover,
+  &:focus {
+    cursor: pointer;
+  }
+
+  &::selection {
+    background-color: transparent;
+  }
+}

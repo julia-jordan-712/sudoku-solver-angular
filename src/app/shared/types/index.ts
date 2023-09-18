@@ -1,1 +1,1 @@
-export type Index<T> = Record<string, T>
+export type Index<T> = Record<string, T>;

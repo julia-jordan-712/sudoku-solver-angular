@@ -1,0 +1,11 @@
+<ng-container *ngIf="_row">
+  <ng-container *ngFor="let cell of _row; let i = index; trackBy: trackByFn">
+    <app-sudoku-grid-cell
+      [cell]="cell"
+      [isDuplicate]="columnsWithDuplicates?.includes(i) ?? false"
+      [isEndOfSquare]="sqrt ? (i + 1) % sqrt === 0 : false"
+      [maxValue]="_row.length"
+      (valueChange)="onCellChanged($event, i)"
+    ></app-sudoku-grid-cell>
+  </ng-container>
+</ng-container>

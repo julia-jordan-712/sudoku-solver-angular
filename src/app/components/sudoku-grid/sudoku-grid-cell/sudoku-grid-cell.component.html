@@ -1,0 +1,8 @@
+<input
+  #cellInput
+  type="number"
+  [formControl]="inputField"
+  (click)="cellInput.select()"
+  (focus)="setFocus(true)"
+  (blur)="setFocus(false)"
+/>

@@ -1,0 +1,71 @@
+{
+  "GENERAL": {
+    "TITLE": "Solve Sudoku"
+  },
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "CHANGE": "Change settings",
+    "DONE": "Done",
+    "WIDTH": "Width",
+    "HEIGHT": "Height",
+    "SELECT": "Select existing Sudoku",
+    "SIZE": "Size"
+  },
+  "PUZZLE": {
+    "4x4": {
+      "EMPTY": "4x4 | Empty",
+      "EMPTY_ROW": "4x4 | Empty row",
+      "EMPTY_COLUMN": "4x4 | Empty column",
+      "EMPTY_SQUARE": "4x4 | Empty square",
+      "COMPLETE": "4x4 | Solved",
+      "INCOMPLETE_INVALID_COLUMN": "4x4 | Invalid column",
+      "INCOMPLETE_INVALID_ROW": "4x4 | Invalid row",
+      "INCOMPLETE_INVALID_SQUARE": "4x4 | Invalid square"
+    },
+    "ADVANCED": {
+      "1": {
+        "PUZZLE": "9x9 | Advanced | Puzzle 1",
+        "SOLVED": "9x9 | Advanced | Puzzle 1 - Solved"
+      }
+    },
+    "EXTREME": {
+      "1": {
+        "PUZZLE": "9x9 | Extreme | Puzzle 1",
+        "SOLVED": "9x9 | Extreme | Puzzle 1 - Solved"
+      }
+    },
+    "HARD": {
+      "1": {
+        "PUZZLE": "9x9 | Hard | Puzzle 1",
+        "SOLVED": "9x9 | Hard | Puzzle 1 - Solved"
+      }
+    },
+    "MEDIUM": {
+      "1": {
+        "PUZZLE": "9x9 | Medium | Puzzle 1",
+        "SOLVED": "9x9 | Medium | Puzzle 1 - Solved"
+      }
+    },
+    "SIMPLE": {
+      "1": {
+        "PUZZLE": "9x9 | Simple | Puzzle 1",
+        "SOLVED": "9x9 | Simple | Puzzle 1 - Solved"
+      }
+    },
+    "NONE": "-"
+  },
+  "VERIFY": {
+    "ERROR": {
+      "DUPLICATE_ELEMENTS": "The Sudoku contains duplicates.",
+      "EMPTY": "The Sudoku is empty.",
+      "NOT_A_SQUARE": "The height of the Sudoku has to equal its width."
+    },
+    "UNSUPPORTED": {
+      "NOT_QUADRATIC": "Sudokus of this size are not supported."
+    },
+    "RESULT": {
+      "VALID": "Valid",
+      "INVALID": "Invalid"
+    }
+  }
+}

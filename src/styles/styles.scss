@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+@use "_constants" as *;
+@import "_constants";
+
+body {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+
+  * {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3 {
+    display: block;
+    margin: 0px;
+  }
+
+  button {
+    display: inline-block;
+    background-color: $primary-color;
+    color: $on-primary-color;
+    border-style: none;
+    border-radius: 0.25em;
+    box-sizing: border-box;
+    cursor: pointer;
+    line-height: 2em;
+    width: max-content;
+    padding: 0 1em;
+    outline: none;
+    transition: background-color 100ms;
+
+    &:hover,
+    &:focus {
+      background-color: $primary-hover-color;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+}

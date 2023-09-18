@@ -1,0 +1,36 @@
+<h2>{{ "SETTINGS.TITLE" | translate }}</h2>
+<ng-container *ngIf="confirmed$ | async; else editSettings">
+  <button id="changeSettings" (click)="changeSettings()">
+    {{ "SETTINGS.CHANGE" | translate }}
+  </button>
+</ng-container>
+<ng-template #editSettings>
+  <div class="settings">
+    <app-dropdown-input
+      [label]="'SETTINGS.SELECT' | translate"
+      [items]="selectionItems"
+      [selectedItem]="selectedItem$ | async"
+      (selected)="onSelect($event)"
+    ></app-dropdown-input>
+    <app-number-input
+      id="sizeInput"
+      [label]="'SETTINGS.SIZE' | translate"
+      [value]="size$ | async"
+      (valueChange)="setSize($event)"
+    ></app-number-input>
+  </div>
+  <app-sudoku-grid
+    [grid]="grid$ | async"
+    [verification]="verification$ | async"
+    [duplications]="duplications$ | async"
+    (valueChange)="onGridChange($event)"
+  >
+  </app-sudoku-grid>
+  <button
+    id="confirmSettings"
+    [disabled]="!(verification$ | async)?.isValid()"
+    (click)="submit()"
+  >
+    {{ "SETTINGS.DONE" | translate }}
+  </button>
+</ng-template>

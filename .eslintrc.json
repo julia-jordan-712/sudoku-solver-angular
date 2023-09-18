@@ -30,7 +30,18 @@
             "style": "kebab-case"
           }
         ],
+        "no-console": "warn",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/explicit-function-return-type": "warn",
         "@typescript-eslint/no-inferrable-types": "warn"
+      }
+    },
+    {
+      "files": ["*.spec.ts"],
+      "extends": ["plugin:@typescript-eslint/recommended"],
+      "rules": {
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-explicit-any": "off"
       }
     },
     {

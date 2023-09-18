@@ -1,0 +1,25 @@
+@use "_constants" as *;
+
+:host {
+  display: flex;
+  gap: 0.25em;
+}
+
+input {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid $primary-color;
+  width: 3em;
+
+  &::before,
+  &::after {
+    background-color: $primary-color;
+    color: $on-primary-color;
+    display: none;
+  }
+
+  &:hover,
+  &:focus {
+    border-bottom-color: $primary-hover-color;
+  }
+}

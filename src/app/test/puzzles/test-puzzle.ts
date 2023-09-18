@@ -1,6 +1,6 @@
-import { Nullable } from "@app/shared/types/nullable";
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
 export interface TestPuzzle {
-  puzzle: Nullable<number>[][];
+  puzzle: SudokuGrid;
   solution: number[][];
 }
