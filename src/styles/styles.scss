@@ -1,4 +1,6 @@
 @use "_constants" as *;
+@use "@angular/material" as mat;
+@include mat.core();
 @import "_constants";
 
 body {
@@ -18,7 +20,9 @@ body {
   }
 
   button {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
     background-color: $primary-color;
     color: $on-primary-color;
     border-style: none;
@@ -40,4 +44,13 @@ body {
       opacity: 0.5;
     }
   }
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

@@ -1,6 +1,7 @@
 <h2>{{ "SETTINGS.TITLE" | translate }}</h2>
 <ng-container *ngIf="confirmed$ | async; else editSettings">
   <button id="changeSettings" (click)="changeSettings()">
+    <app-icon>edit</app-icon>
     {{ "SETTINGS.CHANGE" | translate }}
   </button>
 </ng-container>
@@ -31,6 +32,7 @@
     [disabled]="!(verification$ | async)?.isValid()"
     (click)="submit()"
   >
+    <app-icon>done</app-icon>
     {{ "SETTINGS.DONE" | translate }}
   </button>
 </ng-template>
