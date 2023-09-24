@@ -68,5 +68,8 @@
       "VALID": "Gültig",
       "INVALID": "Ungültig"
     }
+  },
+  "SOLVER": {
+    "TITLE": "Lösen"
   }
 }

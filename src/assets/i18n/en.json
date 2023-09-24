@@ -68,5 +68,8 @@
       "VALID": "Valid",
       "INVALID": "Invalid"
     }
+  },
+  "SOLVER": {
+    "TITLE": "Solver"
   }
 }
