@@ -1,7 +1,9 @@
-<ng-container *ngIf="ready$ | async">
-  <h2>{{ "SOLVER.TITLE" | translate }}</h2>
-  <app-sudoku-solver-actions></app-sudoku-solver-actions>
-  <ng-container *ngIf="puzzle$ | async as puzzle">
-    <app-sudoku-grid [grid]="puzzle"></app-sudoku-grid>
+<ng-container *ngIf="branches$ | async as branches">
+  <ng-container *ngIf="branches.length > 0">
+    <h2>{{ "SOLVER.TITLE" | translate }}</h2>
+    <app-sudoku-solver-actions></app-sudoku-solver-actions>
+    <div class="branch" *ngFor="let branch of branches; trackBy: trackByFn">
+      <app-sudoku-grid [grid]="branch"></app-sudoku-grid>
+    </div>
   </ng-container>
 </ng-container>
