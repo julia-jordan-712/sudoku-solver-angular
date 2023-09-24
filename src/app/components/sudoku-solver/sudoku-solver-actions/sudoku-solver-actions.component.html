@@ -1,0 +1,24 @@
+<button
+  id="start"
+  class="icon"
+  [disabled]="(canStart$ | async) === false"
+  (click)="start()"
+>
+  <app-icon>play_arrow</app-icon>
+</button>
+<button
+  id="pause"
+  class="icon"
+  [disabled]="(canPause$ | async) === false"
+  (click)="pause()"
+>
+  <app-icon>pause</app-icon>
+</button>
+<button
+  id="next"
+  class="icon"
+  [disabled]="(canGoToNext$ | async) === false"
+  (click)="next()"
+>
+  <app-icon>skip_next</app-icon>
+</button>

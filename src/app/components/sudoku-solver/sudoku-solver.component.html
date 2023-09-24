@@ -1,5 +1,6 @@
 <ng-container *ngIf="ready$ | async">
   <h2>{{ "SOLVER.TITLE" | translate }}</h2>
+  <app-sudoku-solver-actions></app-sudoku-solver-actions>
   <ng-container *ngIf="puzzle$ | async as puzzle">
     <app-sudoku-grid [grid]="puzzle"></app-sudoku-grid>
   </ng-container>

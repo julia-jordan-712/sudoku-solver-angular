@@ -1,0 +1,16 @@
+$icon-size: 24px;
+
+:host {
+  display: flex;
+  gap: 1em;
+}
+
+.icon {
+  padding: 4px;
+
+  app-icon {
+    font-size: $icon-size;
+    height: $icon-size;
+    width: $icon-size;
+  }
+}
