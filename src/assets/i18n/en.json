@@ -17,10 +17,7 @@
       "EMPTY_ROW": "4x4 | Empty row",
       "EMPTY_COLUMN": "4x4 | Empty column",
       "EMPTY_SQUARE": "4x4 | Empty square",
-      "COMPLETE": "4x4 | Solved",
-      "INCOMPLETE_INVALID_COLUMN": "4x4 | Invalid column",
-      "INCOMPLETE_INVALID_ROW": "4x4 | Invalid row",
-      "INCOMPLETE_INVALID_SQUARE": "4x4 | Invalid square"
+      "COMPLETE": "4x4 | Solved"
     },
     "ADVANCED": {
       "1": {

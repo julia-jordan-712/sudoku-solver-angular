@@ -17,10 +17,7 @@
       "EMPTY_COLUMN": "4x4 | Leere Spalte",
       "EMPTY_ROW": "4x4 | Leere Zeile",
       "EMPTY_SQUARE": "4x4 | Leeres Quadrat",
-      "COMPLETE": "4x4 | Gelöst",
-      "INCOMPLETE_INVALID_COLUMN": "4x4 | Ungültige Spalte",
-      "INCOMPLETE_INVALID_ROW": "4x4 | Ungültige Zeile",
-      "INCOMPLETE_INVALID_SQUARE": "4x4 | Ungültiges Quadrat"
+      "COMPLETE": "4x4 | Gelöst"
     },
     "ADVANCED": {
       "1": {
