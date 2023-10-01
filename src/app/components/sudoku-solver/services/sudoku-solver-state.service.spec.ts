@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { SudokuSolverStateService } from './sudoku-solver-state.service';
+import { SudokuSolverStateService } from "./sudoku-solver-state.service";
 
-describe('SudokuSolverStateService', () => {
+describe("SudokuSolverStateService", () => {
   let service: SudokuSolverStateService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('SudokuSolverStateService', () => {
     service = TestBed.inject(SudokuSolverStateService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
