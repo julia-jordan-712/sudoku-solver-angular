@@ -1,3 +1,4 @@
+import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { SudokuGridCellComponent } from "./sudoku-grid-cell.component";
@@ -15,7 +16,7 @@ describe(SudokuGridCellComponent.name, () => {
     component = fixture.componentInstance;
     component.maxValue = 9;
     component.ngOnInit();
-    component.ngOnChanges();
+    component.ngOnChanges({ maxValue: { currentValue: 9 } as SimpleChange });
     fixture.detectChanges();
   });
 
@@ -25,7 +26,7 @@ describe(SudokuGridCellComponent.name, () => {
 
   it("should set the input field value to the component input", () => {
     component.cell = 4;
-    component.ngOnChanges();
+    component.ngOnChanges({ cell: { currentValue: 4 } as SimpleChange });
     fixture.detectChanges();
 
     expect(component.inputField.value).toEqual(4);
@@ -34,7 +35,7 @@ describe(SudokuGridCellComponent.name, () => {
 
   it("should have errors if the input is invalid", () => {
     component.cell = 12;
-    component.ngOnChanges();
+    component.ngOnChanges({ cell: { currentValue: 12 } as SimpleChange });
     fixture.detectChanges();
 
     expect(component.inputField.value).toEqual(12);
@@ -56,7 +57,7 @@ describe(SudokuGridCellComponent.name, () => {
 
   it("should reset to the input value if change is invalid", () => {
     component.cell = 5;
-    component.ngOnChanges();
+    component.ngOnChanges({ cell: { currentValue: 5 } as SimpleChange });
     fixture.detectChanges();
 
     component.inputField.setValue(7);

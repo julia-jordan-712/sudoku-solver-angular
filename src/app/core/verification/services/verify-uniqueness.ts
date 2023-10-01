@@ -4,8 +4,12 @@ import { VerificationResult } from "@app/core/verification/types/verification-re
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
 import { Index } from "@app/shared/types";
 import { CellPosition } from "@app/shared/types/cell-position";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
+import {
+  SudokuGrid,
+  SudokuGridCell,
+  SudokuGridRow,
+} from "@app/shared/types/sudoku-grid";
+import { isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 import { Objects } from "@app/shared/util/objects";
 
@@ -93,7 +97,7 @@ export class VerifyUniqueness {
   ): void {
     const index: Index<CellPosition[]> = Objects.arrayToArrayIndex(
       elements,
-      (e) => e.value?.toString(),
+      (e) => (isNotArray(e.value) ? e.value?.toString() : undefined),
       (e) => {
         return new CellPosition(e.x, e.y);
       },
@@ -141,11 +145,11 @@ export class VerifyUniqueness {
   }
 
   private verifyValidNumber(
-    value: Nullable<number>,
+    value: SudokuGridCell,
     size: number,
     result: VerificationResult,
   ): void {
-    if (value != null) {
+    if (isNotArray(value) && isDefined(value)) {
       if (value <= 0 || value > size) {
         result.addError(VerifyI18nKey.ERROR_INVALID_NUMBERS(size));
       }
@@ -156,7 +160,9 @@ export class VerifyUniqueness {
     elements: SudokuGridRow,
     result: VerificationResult,
   ): void {
-    const definedElements: number[] = elements.filter(isDefined);
+    const definedElements: number[] = elements
+      .filter(isNotArray)
+      .filter(isDefined);
     if (definedElements.length !== new Set(definedElements).size) {
       result.addError(VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS);
     }
@@ -189,5 +195,5 @@ export class VerifyUniqueness {
 interface CellValueWithPosition {
   x: number;
   y: number;
-  value: Nullable<number>;
+  value: SudokuGridCell;
 }
