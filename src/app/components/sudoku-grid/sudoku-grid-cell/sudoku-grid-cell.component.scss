@@ -6,13 +6,18 @@
   width: $cell-size;
   height: $cell-size;
 
-  border-right: 1px solid gray;
-  &:first-of-type {
-    border-left: 3px solid gray;
+  border: 1px solid gray;
+  &.border-right {
+    border-right-width: 3px;
   }
-  &:last-of-type,
-  &.end-of-square {
-    border-right: 3px solid gray;
+  &.border-left {
+    border-left-width: 3px;
+  }
+  &.border-top {
+    border-top-width: 3px;
+  }
+  &.border-bottom {
+    border-bottom-width: 3px;
   }
 
   &.duplicate {

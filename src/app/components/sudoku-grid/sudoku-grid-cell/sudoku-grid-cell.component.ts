@@ -31,8 +31,20 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   maxValue = 1;
 
   @Input()
-  @HostBinding("class.end-of-square")
-  isEndOfSquare = false;
+  @HostBinding("class.border-top")
+  borderTop = false;
+
+  @Input()
+  @HostBinding("class.border-right")
+  borderRight = false;
+
+  @Input()
+  @HostBinding("class.border-bottom")
+  borderBottom = false;
+
+  @Input()
+  @HostBinding("class.border-left")
+  borderLeft = false;
 
   @Input()
   @HostBinding("class.duplicate")
