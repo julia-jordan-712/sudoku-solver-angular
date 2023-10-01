@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
+import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { BehaviorSubject, Observable, map } from "rxjs";
@@ -7,6 +8,8 @@ import { BehaviorSubject, Observable, map } from "rxjs";
   providedIn: "root",
 })
 export class SudokuSolverStateService {
+  private solver: SudokuSolverService = inject(SudokuSolverService);
+
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
   private branches$ = new BehaviorSubject<SudokuGrid[]>([]);
 
@@ -29,7 +32,7 @@ export class SudokuSolverStateService {
   }
 
   executeNextStep(): void {
-    // TODO implement
+    this.branches$.next(this.solver.solveNextStep(this.branches$.getValue()));
   }
 
   setInitialPuzzle(puzzle: SudokuGrid): void {
@@ -38,6 +41,14 @@ export class SudokuSolverStateService {
 
   startExecuting(): void {
     this.execution$.next("RUNNING");
+    this.scheduleNextStep();
+  }
+
+  private scheduleNextStep(): void {
+    if (this.execution$.getValue() === "RUNNING") {
+      this.executeNextStep();
+    }
+    setTimeout(() => this.scheduleNextStep(), 0);
   }
 
   pauseExecuting(): void {

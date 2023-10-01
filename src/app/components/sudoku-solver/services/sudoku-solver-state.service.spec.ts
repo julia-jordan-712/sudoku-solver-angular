@@ -1,8 +1,7 @@
 import { TestBed } from "@angular/core/testing";
-
 import { SudokuSolverStateService } from "./sudoku-solver-state.service";
 
-describe("SudokuSolverStateService", () => {
+describe(SudokuSolverStateService.name, () => {
   let service: SudokuSolverStateService;
 
   beforeEach(() => {

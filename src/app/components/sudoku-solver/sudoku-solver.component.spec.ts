@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { SudokuSolverComponent } from "./sudoku-solver.component";
 
