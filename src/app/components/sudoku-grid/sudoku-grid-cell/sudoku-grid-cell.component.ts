@@ -24,6 +24,11 @@ import { Subscription } from "rxjs";
 export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   value: Nullable<number>;
 
+  notes: Nullable<number[]>;
+  numbers: number[] = [];
+  noteGridColumns = "";
+  size = 32;
+
   @Input({ required: true })
   cell: SudokuGridCell;
 
@@ -72,10 +77,21 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes["maxValue"]) {
+      this.numbers = Array(this.maxValue)
+        .fill(0)
+        .map((_, i) => i + 1);
+      const sqrt = Math.ceil(Math.sqrt(this.maxValue));
+      this.noteGridColumns = `repeat(${sqrt}, auto)`;
+      this.size = Math.max(32, 16 + 10 * sqrt);
+    }
+
     if (changes["cell"]) {
       if (isArray(this.cell)) {
+        this.notes = this.cell;
         this.value = null;
       } else if (isNotArray(this.cell)) {
+        this.notes = null;
         this.value = this.cell;
       }
     }
@@ -98,5 +114,9 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
 
   private resetValue(): void {
     this.inputField.setValue(this.value, { onlySelf: true, emitEvent: false });
+  }
+
+  trackByFn(index: number): number {
+    return index;
   }
 }

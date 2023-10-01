@@ -1,8 +1,24 @@
-<input
-  #cellInput
-  type="number"
-  [formControl]="inputField"
-  (click)="cellInput.select()"
-  (focus)="setFocus(true)"
-  (blur)="setFocus(false)"
-/>
+<ng-container *ngIf="notes; else inputTemplate">
+  <div
+    class="notes"
+    [style.grid-template-columns]="noteGridColumns"
+    [style.width]="size + 'px'"
+    [style.height]="size + 'px'"
+  >
+    <span class="note" *ngFor="let number of numbers; trackBy: trackByFn">{{
+      notes.includes(number) ? number : ""
+    }}</span>
+  </div>
+</ng-container>
+<ng-template #inputTemplate>
+  <input
+    #cellInput
+    type="number"
+    [style.width]="size + 'px'"
+    [style.height]="size + 'px'"
+    [formControl]="inputField"
+    (click)="cellInput.select()"
+    (focus)="setFocus(true)"
+    (blur)="setFocus(false)"
+  />
+</ng-template>
