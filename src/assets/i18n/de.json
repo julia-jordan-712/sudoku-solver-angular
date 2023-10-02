@@ -72,6 +72,15 @@
       "PAUSE": "Lösen des Sudokus pausieren",
       "START": "Lösen des Sudokus starten",
       "NEXT": "Nächsten Schritt lösen"
-    }
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "DONE": "Lösung wurde gefunden",
+      "FAILED": "Lösung konnte nicht gefunden werden",
+      "NOT_STARTED": "Bereit zum Starten",
+      "PAUSED": "Pausiert",
+      "RUNNING": "Lösung wird berechnet..."
+    },
+    "STEPS": "Berechnete Schritte"
   }
 }

@@ -19,6 +19,10 @@ export class SudokuSolverStateService {
     return this.branches$.asObservable();
   }
 
+  getExecutionState(): Observable<SolverExecution> {
+    return this.execution$.asObservable();
+  }
+
   getStepsExecuted(): Observable<number> {
     return this.stepsExecuted$.asObservable();
   }

@@ -72,6 +72,15 @@
       "START": "Start solving the Sudoku",
       "PAUSE": "Pause solving the Sudoku",
       "NEXT": "Solve next step"
-    }
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "RUNNING": "Calculating solution...",
+      "PAUSED": "Paused",
+      "NOT_STARTED": "Ready to start",
+      "DONE": "Solution was found",
+      "FAILED": "Could not find solution"
+    },
+    "STEPS": "Calculated steps"
   }
 }

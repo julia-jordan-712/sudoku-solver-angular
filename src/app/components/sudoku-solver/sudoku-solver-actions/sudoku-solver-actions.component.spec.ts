@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { IconModule } from "@app/components/icon/icon.module";
+import { TranslateTestingModule } from "ngx-translate-testing";
 import { SudokuSolverActionsComponent } from "./sudoku-solver-actions.component";
 
 describe(SudokuSolverActionsComponent.name, () => {
@@ -8,7 +9,7 @@ describe(SudokuSolverActionsComponent.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SudokuSolverActionsComponent],
-      imports: [IconModule],
+      imports: [IconModule, TranslateTestingModule.withTranslations({})],
     });
     fixture = TestBed.createComponent(SudokuSolverActionsComponent);
     fixture.detectChanges();
@@ -18,6 +19,8 @@ describe(SudokuSolverActionsComponent.name, () => {
     expect(getStart().disabled).toEqual(false);
     expect(getPause().disabled).toEqual(true);
     expect(getNext().disabled).toEqual(true);
+
+    expect(getStates().innerText).toContain("SOLVER.STATUS.NOT_STARTED");
   });
 
   it("should allow to pause but not to go to next step while running", () => {
@@ -27,6 +30,8 @@ describe(SudokuSolverActionsComponent.name, () => {
     expect(getStart().disabled).toEqual(true);
     expect(getPause().disabled).toEqual(false);
     expect(getNext().disabled).toEqual(true);
+
+    expect(getStates().innerText).toContain("SOLVER.STATUS.RUNNING");
   });
 
   it("should allow to continue and to go to next step while paused", () => {
@@ -38,6 +43,8 @@ describe(SudokuSolverActionsComponent.name, () => {
     expect(getStart().disabled).toEqual(false);
     expect(getPause().disabled).toEqual(true);
     expect(getNext().disabled).toEqual(false);
+
+    expect(getStates().innerText).toContain("SOLVER.STATUS.PAUSED");
   });
 
   it("should allow to continue and to go to next step after going to next step", () => {
@@ -51,6 +58,8 @@ describe(SudokuSolverActionsComponent.name, () => {
     expect(getStart().disabled).toEqual(false);
     expect(getPause().disabled).toEqual(true);
     expect(getNext().disabled).toEqual(false);
+
+    expect(getStates().innerText).toContain("SOLVER.STATUS.PAUSED");
   });
 
   it("should allow to pause again but not to go to next step after continuing", () => {
@@ -64,6 +73,8 @@ describe(SudokuSolverActionsComponent.name, () => {
     expect(getStart().disabled).toEqual(true);
     expect(getPause().disabled).toEqual(false);
     expect(getNext().disabled).toEqual(true);
+
+    expect(getStates().innerText).toContain("SOLVER.STATUS.RUNNING");
   });
 
   function getStart(): any {
@@ -76,5 +87,9 @@ describe(SudokuSolverActionsComponent.name, () => {
 
   function getNext(): any {
     return fixture.nativeElement.querySelector("#next");
+  }
+
+  function getStates(): any {
+    return fixture.nativeElement.querySelector(".states");
   }
 });
