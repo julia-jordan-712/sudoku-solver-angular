@@ -10,11 +10,17 @@ import { BehaviorSubject, Observable, map } from "rxjs";
 export class SudokuSolverStateService {
   private solver: SudokuSolverService = inject(SudokuSolverService);
 
-  private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
   private branches$ = new BehaviorSubject<SudokuGrid[]>([]);
+  private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
+  private maxSteps = 1_000_000;
+  private stepsExecuted$ = new BehaviorSubject<number>(0);
 
   getBranches(): Observable<SudokuGrid[]> {
     return this.branches$.asObservable();
+  }
+
+  getStepsExecuted(): Observable<number> {
+    return this.stepsExecuted$.asObservable();
   }
 
   canGoToNextStep(): Observable<boolean> {
@@ -33,10 +39,29 @@ export class SudokuSolverStateService {
 
   executeNextStep(): void {
     this.branches$.next(this.solver.solveNextStep(this.branches$.getValue()));
+    this.stepsExecuted$.next(this.stepsExecuted$.getValue() + 1);
+  }
+
+  finishExecuting(state: Extract<SolverExecution, "DONE" | "FAILED">): void {
+    this.execution$.next(state);
+  }
+
+  pauseExecuting(): void {
+    this.execution$.next("PAUSED");
+  }
+
+  reset(): void {
+    this.execution$.next("NOT_STARTED");
+    this.branches$.next([]);
+    this.stepsExecuted$.next(0);
   }
 
   setInitialPuzzle(puzzle: SudokuGrid): void {
     this.branches$.next([puzzle]);
+  }
+
+  setMaxSteps(max: number): void {
+    this.maxSteps = max;
   }
 
   startExecuting(): void {
@@ -45,22 +70,12 @@ export class SudokuSolverStateService {
   }
 
   private scheduleNextStep(): void {
+    if (this.stepsExecuted$.getValue() > this.maxSteps) {
+      this.execution$.next("FAILED");
+    }
     if (this.execution$.getValue() === "RUNNING") {
       this.executeNextStep();
+      setTimeout(() => this.scheduleNextStep(), 0);
     }
-    setTimeout(() => this.scheduleNextStep(), 0);
-  }
-
-  pauseExecuting(): void {
-    this.execution$.next("PAUSED");
-  }
-
-  finishExecuting(state: Extract<SolverExecution, "DONE" | "FAILED">): void {
-    this.execution$.next(state);
-  }
-
-  reset(): void {
-    this.execution$.next("NOT_STARTED");
-    this.branches$.next([]);
   }
 }
