@@ -9,7 +9,8 @@
     "WIDTH": "Width",
     "HEIGHT": "Height",
     "SELECT": "Select existing Sudoku",
-    "SIZE": "Size"
+    "SIZE": "Size",
+    "HINTS": "Values can be entered by clicking on a cell and typing on the keyboard."
   },
   "PUZZLE": {
     "4x4": {

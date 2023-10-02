@@ -9,7 +9,8 @@
     "SELECT": "vorhandenes Sudoku",
     "TITLE": "Einstellungen",
     "WIDTH": "Breite",
-    "SIZE": "Größe"
+    "SIZE": "Größe",
+    "HINTS": "Werte können eingegeben werden, indem man auf eine Zelle klickt und sie auf der Tastatur eingibt."
   },
   "PUZZLE": {
     "4x4": {

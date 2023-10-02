@@ -20,6 +20,9 @@
       (valueChange)="setSize($event)"
     ></app-number-input>
   </div>
+  <div *ngIf="((grid$ | async)?.length ?? 0) > 0">
+    {{ "SETTINGS.HINTS" | translate }}
+  </div>
   <app-sudoku-grid
     [grid]="grid$ | async"
     [verification]="verification$ | async"
