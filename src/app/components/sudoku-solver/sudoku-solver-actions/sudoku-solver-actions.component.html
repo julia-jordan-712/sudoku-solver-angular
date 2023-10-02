@@ -46,4 +46,10 @@
     <ng-container *ngSwitchDefault></ng-container>
   </ng-container>
 </div>
-<div>{{ "SOLVER.STEPS" | translate }}: {{ steps$ | async }}</div>
+<div>{{ "SOLVER.STEPS.CALCULATED" | translate }}: {{ steps$ | async }}</div>
+<app-number-input
+  id="maxSteps"
+  [label]="'SOLVER.STEPS.MAX' | translate"
+  [value]="maxSteps$ | async"
+  (valueChange)="setMaxSteps($event)"
+></app-number-input>

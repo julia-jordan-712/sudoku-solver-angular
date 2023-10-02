@@ -82,6 +82,9 @@
       "DONE": "Solution was found",
       "FAILED": "Could not find solution"
     },
-    "STEPS": "Calculated steps"
+    "STEPS": {
+      "CALCULATED": "Calculated steps",
+      "MAX": "Maximum calculation steps"
+    }
   }
 }

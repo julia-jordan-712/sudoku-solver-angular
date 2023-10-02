@@ -82,6 +82,9 @@
       "PAUSED": "Pausiert",
       "RUNNING": "Lösung wird berechnet..."
     },
-    "STEPS": "Berechnete Schritte"
+    "STEPS": {
+      "CALCULATED": "Berechnete Schritte",
+      "MAX": "Maximale Berechnungsschritte"
+    }
   }
 }

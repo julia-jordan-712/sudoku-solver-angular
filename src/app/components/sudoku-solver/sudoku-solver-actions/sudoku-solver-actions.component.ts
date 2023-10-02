@@ -14,6 +14,7 @@ export class SudokuSolverActionsComponent {
   canPause$: Observable<boolean> = this.state.canPauseExecuting();
   canGoToNext$: Observable<boolean> = this.state.canGoToNextStep();
   state$: Observable<SolverExecution> = this.state.getExecutionState();
+  maxSteps$: Observable<number> = this.state.getMaximumSteps();
   steps$: Observable<number> = this.state.getStepsExecuted();
 
   start(): void {
@@ -26,5 +27,9 @@ export class SudokuSolverActionsComponent {
 
   next(): void {
     this.state.executeNextStep();
+  }
+
+  setMaxSteps(max: number): void {
+    this.state.setMaxSteps(max);
   }
 }

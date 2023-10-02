@@ -40,3 +40,11 @@ $icon-size: 24px;
     color: $invalid-color;
   }
 }
+
+#maxSteps {
+  ::ng-deep {
+    input {
+      width: 7em;
+    }
+  }
+}

@@ -13,7 +13,7 @@ export class SudokuSolverStateService {
 
   private branches$ = new BehaviorSubject<SudokuGrid[]>([]);
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
-  private maxSteps = 10_000;
+  private maxSteps$ = new BehaviorSubject<number>(10_000);
   private stepsExecuted$ = new BehaviorSubject<number>(0);
 
   getBranches(): Observable<SudokuGrid[]> {
@@ -22,6 +22,10 @@ export class SudokuSolverStateService {
 
   getExecutionState(): Observable<SolverExecution> {
     return this.execution$.asObservable();
+  }
+
+  getMaximumSteps(): Observable<number> {
+    return this.maxSteps$.asObservable();
   }
 
   getStepsExecuted(): Observable<number> {
@@ -68,7 +72,7 @@ export class SudokuSolverStateService {
   }
 
   setMaxSteps(max: number): void {
-    this.maxSteps = max;
+    this.maxSteps$.next(Math.max(0, max));
   }
 
   startExecuting(): void {
@@ -77,7 +81,7 @@ export class SudokuSolverStateService {
   }
 
   private scheduleNextStep(): void {
-    if (this.stepsExecuted$.getValue() > this.maxSteps) {
+    if (this.stepsExecuted$.getValue() >= this.maxSteps$.getValue()) {
       this.execution$.next("FAILED");
     }
     if (this.execution$.getValue() === "RUNNING") {
