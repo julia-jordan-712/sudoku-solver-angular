@@ -67,6 +67,11 @@
     }
   },
   "SOLVER": {
-    "TITLE": "Solver"
+    "TITLE": "Solver",
+    "ACTIONS": {
+      "START": "Start solving the Sudoku",
+      "PAUSE": "Pause solving the Sudoku",
+      "NEXT": "Solve next step"
+    }
   }
 }

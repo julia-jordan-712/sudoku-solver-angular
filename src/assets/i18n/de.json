@@ -67,6 +67,11 @@
     }
   },
   "SOLVER": {
-    "TITLE": "Lösen"
+    "TITLE": "Lösen",
+    "ACTIONS": {
+      "PAUSE": "Lösen des Sudokus pausieren",
+      "START": "Lösen des Sudokus starten",
+      "NEXT": "Nächsten Schritt lösen"
+    }
   }
 }
