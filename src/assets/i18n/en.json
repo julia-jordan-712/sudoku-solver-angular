@@ -9,7 +9,8 @@
     "WIDTH": "Width",
     "HEIGHT": "Height",
     "SELECT": "Select existing Sudoku",
-    "SIZE": "Size"
+    "SIZE": "Size",
+    "HINTS": "Values can be entered by clicking on a cell and typing on the keyboard."
   },
   "PUZZLE": {
     "4x4": {
@@ -17,10 +18,7 @@
       "EMPTY_ROW": "4x4 | Empty row",
       "EMPTY_COLUMN": "4x4 | Empty column",
       "EMPTY_SQUARE": "4x4 | Empty square",
-      "COMPLETE": "4x4 | Solved",
-      "INCOMPLETE_INVALID_COLUMN": "4x4 | Invalid column",
-      "INCOMPLETE_INVALID_ROW": "4x4 | Invalid row",
-      "INCOMPLETE_INVALID_SQUARE": "4x4 | Invalid square"
+      "COMPLETE": "4x4 | Solved"
     },
     "ADVANCED": {
       "1": {
@@ -67,6 +65,26 @@
     "RESULT": {
       "VALID": "Valid",
       "INVALID": "Invalid"
+    }
+  },
+  "SOLVER": {
+    "TITLE": "Solver",
+    "ACTIONS": {
+      "START": "Start solving the Sudoku",
+      "PAUSE": "Pause solving the Sudoku",
+      "NEXT": "Solve next step"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "RUNNING": "Calculating solution...",
+      "PAUSED": "Paused",
+      "NOT_STARTED": "Ready to start",
+      "DONE": "Solution was found",
+      "FAILED": "Could not find solution"
+    },
+    "STEPS": {
+      "CALCULATED": "Calculated steps",
+      "MAX": "Maximum calculation steps"
     }
   }
 }

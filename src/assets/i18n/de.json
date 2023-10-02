@@ -9,7 +9,8 @@
     "SELECT": "vorhandenes Sudoku",
     "TITLE": "Einstellungen",
     "WIDTH": "Breite",
-    "SIZE": "Größe"
+    "SIZE": "Größe",
+    "HINTS": "Werte können eingegeben werden, indem man auf eine Zelle klickt und sie auf der Tastatur eingibt."
   },
   "PUZZLE": {
     "4x4": {
@@ -17,10 +18,7 @@
       "EMPTY_COLUMN": "4x4 | Leere Spalte",
       "EMPTY_ROW": "4x4 | Leere Zeile",
       "EMPTY_SQUARE": "4x4 | Leeres Quadrat",
-      "COMPLETE": "4x4 | Gelöst",
-      "INCOMPLETE_INVALID_COLUMN": "4x4 | Ungültige Spalte",
-      "INCOMPLETE_INVALID_ROW": "4x4 | Ungültige Zeile",
-      "INCOMPLETE_INVALID_SQUARE": "4x4 | Ungültiges Quadrat"
+      "COMPLETE": "4x4 | Gelöst"
     },
     "ADVANCED": {
       "1": {
@@ -67,6 +65,26 @@
     "RESULT": {
       "VALID": "Gültig",
       "INVALID": "Ungültig"
+    }
+  },
+  "SOLVER": {
+    "TITLE": "Lösen",
+    "ACTIONS": {
+      "PAUSE": "Lösen des Sudokus pausieren",
+      "START": "Lösen des Sudokus starten",
+      "NEXT": "Nächsten Schritt lösen"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "DONE": "Lösung wurde gefunden",
+      "FAILED": "Lösung konnte nicht gefunden werden",
+      "NOT_STARTED": "Bereit zum Starten",
+      "PAUSED": "Pausiert",
+      "RUNNING": "Lösung wird berechnet..."
+    },
+    "STEPS": {
+      "CALCULATED": "Berechnete Schritte",
+      "MAX": "Maximale Berechnungsschritte"
     }
   }
 }

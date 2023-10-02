@@ -2,11 +2,16 @@
   <div class="content">
     <h1>{{ "GENERAL.TITLE" | translate }}</h1>
     <app-sudoku-settings></app-sudoku-settings>
+    <app-sudoku-solver></app-sudoku-solver>
   </div>
 </div>
 <div class="sidebar">
   <div class="languages">
-    <button (click)="changeLanguage('en')">English</button>
-    <button (click)="changeLanguage('de')">Deutsch</button>
+    <button (click)="changeLanguage('en')">
+      <app-icon>language</app-icon> English
+    </button>
+    <button (click)="changeLanguage('de')">
+      <app-icon>language</app-icon> Deutsch
+    </button>
   </div>
 </div>

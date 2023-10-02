@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { IconModule } from "@app/components/icon/icon.module";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
 import { TranslateTestingModule } from "ngx-translate-testing";
@@ -21,6 +22,7 @@ describe(SudokuVerificationComponent.name, () => {
       declarations: [SudokuVerificationComponent],
       imports: [
         TranslateTestingModule.withTranslations({ en: testTranslations }),
+        IconModule,
       ],
     });
     fixture = TestBed.createComponent(SudokuVerificationComponent);
@@ -60,7 +62,7 @@ describe(SudokuVerificationComponent.name, () => {
       component.verification = verification;
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.innerText).toEqual("Valid");
+      expect(fixture.nativeElement.innerText).toEqual("check_circle\nValid");
       expect(fixture.nativeElement.innerText).not.toContain("Sudoku is empty");
     });
   });
@@ -80,12 +82,12 @@ describe(SudokuVerificationComponent.name, () => {
       expect(fixture.nativeElement.innerText).toContain("Invalid");
     });
 
-    it("should display errors if verification is invalid", () => {
+    it("should display icon and errors if verification is invalid", () => {
       component.verification = verification;
       fixture.detectChanges();
 
       expect(fixture.nativeElement.innerText).toEqual(
-        "Invalid\nSudoku is empty\nSudoku is not supported",
+        "report\nInvalid\nSudoku is empty\nSudoku is not supported",
       );
     });
   });

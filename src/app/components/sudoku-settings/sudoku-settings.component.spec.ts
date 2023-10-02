@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { IconModule } from "@app/components/icon/icon.module";
 import { DropdownInputTestComponent } from "@app/test/components/dropdown-input-test.component";
 import { NumberInputTestComponent } from "@app/test/components/number-input-test.component";
 import { SudokuGridTestComponent } from "@app/test/components/sudoku-grid-test.component";
@@ -19,7 +20,7 @@ describe(SudokuSettingsComponent.name, () => {
         NumberInputTestComponent,
         SudokuGridTestComponent,
       ],
-      imports: [TranslateTestingModule.withTranslations({})],
+      imports: [TranslateTestingModule.withTranslations({}), IconModule],
     }).compileComponents();
   });
 

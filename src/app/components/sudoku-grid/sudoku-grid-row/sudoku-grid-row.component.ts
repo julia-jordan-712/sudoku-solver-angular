@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-} from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridCell, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 
@@ -24,8 +18,10 @@ export class SudokuGridRowComponent {
   }
 
   @Input()
-  @HostBinding("class.end-of-square")
-  isEndOfSquare = false;
+  borderTop = false;
+
+  @Input()
+  borderBottom = false;
 
   @Input()
   columnsWithDuplicates: Nullable<number[]>;

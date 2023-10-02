@@ -13,11 +13,13 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 export class SudokuGridComponent {
   _grid: Nullable<SudokuGrid>;
   sqrt: Nullable<number>;
+  gridColumns = "";
 
   @Input({ required: true })
   set grid(grid: Nullable<SudokuGrid>) {
     this._grid = grid;
     this.sqrt = grid ? Math.round(Math.sqrt(grid.length)) : null;
+    this.gridColumns = `repeat(${grid?.length ?? 1}, max-content)`;
   }
 
   @Input()

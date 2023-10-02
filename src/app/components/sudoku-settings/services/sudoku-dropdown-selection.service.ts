@@ -48,21 +48,6 @@ export class SudokuDropdownSelectionService {
         grid: Puzzle4x4.COMPLETE,
       },
       {
-        id: "Puzzle4x4.INCOMPLETE_INVALID_COLUMN",
-        name: this.translate.stream("PUZZLE.4x4.INCOMPLETE_INVALID_COLUMN"),
-        grid: Puzzle4x4.INCOMPLETE_INVALID_COLUMN,
-      },
-      {
-        id: "Puzzle4x4.INCOMPLETE_INVALID_ROW",
-        name: this.translate.stream("PUZZLE.4x4.INCOMPLETE_INVALID_ROW"),
-        grid: Puzzle4x4.INCOMPLETE_INVALID_ROW,
-      },
-      {
-        id: "Puzzle4x4.INCOMPLETE_INVALID_SQUARE",
-        name: this.translate.stream("PUZZLE.4x4.INCOMPLETE_INVALID_SQUARE"),
-        grid: Puzzle4x4.INCOMPLETE_INVALID_SQUARE,
-      },
-      {
         id: "PuzzleSimple.PUZZLE_1.puzzle",
         name: this.translate.stream("PUZZLE.SIMPLE.1.PUZZLE"),
         grid: PuzzleSimple.PUZZLE_1.puzzle,

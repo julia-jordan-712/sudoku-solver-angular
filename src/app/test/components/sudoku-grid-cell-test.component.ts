@@ -13,7 +13,16 @@ export class SudokuGridCellTestComponent {
   maxValue = 1;
 
   @Input()
-  isEndOfSquare = false;
+  borderTop = false;
+
+  @Input()
+  borderRight = false;
+
+  @Input()
+  borderBottom = false;
+
+  @Input()
+  borderLeft = false;
 
   @Input()
   isDuplicate = false;

@@ -1,12 +1,3 @@
 :host {
-  display: flex;
-  border-bottom: 1px solid gray;
-
-  &:first-of-type {
-    border-top: 3px solid gray;
-  }
-  &:last-of-type,
-  &.end-of-square {
-    border-bottom: 3px solid gray;
-  }
+  display: contents;
 }

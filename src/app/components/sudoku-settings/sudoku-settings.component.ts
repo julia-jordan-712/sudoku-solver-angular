@@ -4,10 +4,12 @@ import {
   DuplicationColumnIndicesToRowIndices,
   SudokuSettingsStateService,
 } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
+import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { Observable } from "rxjs";
+import { isDefined } from "@app/shared/util/is-defined";
+import { Observable, filter, take } from "rxjs";
 
 @Component({
   selector: "app-sudoku-settings",
@@ -15,37 +17,44 @@ import { Observable } from "rxjs";
   styleUrls: ["./sudoku-settings.component.scss"],
 })
 export class SudokuSettingsComponent {
-  private state = inject(SudokuSettingsStateService);
+  private settingState = inject(SudokuSettingsStateService);
+  private solverState = inject(SudokuSolverStateService);
 
-  confirmed$: Observable<boolean> = this.state.isConfirmed();
-  size$: Observable<Nullable<number>> = this.state.getHeight();
-  grid$: Observable<Nullable<SudokuGrid>> = this.state.getGrid();
+  confirmed$: Observable<boolean> = this.settingState.isConfirmed();
+  size$: Observable<Nullable<number>> = this.settingState.getHeight();
+  grid$: Observable<Nullable<SudokuGrid>> = this.settingState.getGrid();
   selectionItems: SudokuDropdownSelectionItem[] =
-    this.state.getSelectionItems();
+    this.settingState.getSelectionItems();
   selectedItem$: Observable<SudokuDropdownSelectionItem> =
-    this.state.getSelectedItem();
-  verification$: Observable<VerificationResult> = this.state.verification$;
+    this.settingState.getSelectedItem();
+  verification$: Observable<VerificationResult> =
+    this.settingState.verification$;
   duplications$: Observable<DuplicationColumnIndicesToRowIndices> =
-    this.state.duplicationColumnIndicesToRowIndices$;
+    this.settingState.duplicationColumnIndicesToRowIndices$;
 
   changeSettings(): void {
-    this.state.setConfirmed(false);
+    this.settingState.setConfirmed(false);
+    this.solverState.reset();
   }
 
   submit(): void {
-    this.state.setConfirmed(true);
+    this.settingState.setConfirmed(true);
+    this.settingState
+      .getGrid()
+      .pipe(take(1), filter(isDefined))
+      .subscribe((puzzle) => this.solverState.setInitialPuzzle(puzzle));
   }
 
   onSelect(option: SudokuDropdownSelectionItem): void {
-    this.state.setSelection(option);
+    this.settingState.setSelection(option);
   }
 
   onGridChange(grid: SudokuGrid): void {
-    this.state.setGrid(grid);
+    this.settingState.setGrid(grid);
   }
 
   setSize(size: number): void {
-    this.state.setHeight(size);
-    this.state.setWidth(size);
+    this.settingState.setHeight(size);
+    this.settingState.setWidth(size);
   }
 }

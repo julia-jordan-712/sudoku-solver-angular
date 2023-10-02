@@ -99,14 +99,26 @@ describe(VerifyUniqueness.name, () => {
         desc: "PuzzleSimple.PUZZLE_1.puzzle",
       },
     ].forEach((params) => {
-      it(`should recognize a valid solution: ${
+      it(`should recognize a valid solution when duplicates are not tracked: ${
         params.desc ? params.desc : JSON.stringify(params.input)
       }`, () => {
-        expect(
-          new VerifyUniqueness(params.input, params.input.length)
-            .verify()
-            .isValid(),
-        ).toBeTrue();
+        const result = new VerifyUniqueness(
+          params.input,
+          params.input.length,
+        ).verify();
+        expect(result.isValid()).toBeTrue();
+        expect(result.getErrors()).toEqual([]);
+      });
+
+      it(`should recognize a valid solution when duplicates are tracked: ${
+        params.desc ? params.desc : JSON.stringify(params.input)
+      }`, () => {
+        const result = new VerifyUniqueness(
+          params.input,
+          params.input.length,
+        ).verify({ trackUniquenessViolations: true });
+        expect(result.isValid()).toBeTrue();
+        expect(result.getErrors()).toEqual([]);
       });
     });
 
@@ -161,31 +173,62 @@ describe(VerifyUniqueness.name, () => {
     });
   });
 
-  [-10, -9, -5, -1, 0, 10, 11].forEach((invalidNumber) => {
-    it(`should recognize invalid number ${invalidNumber} in a 4x4 Sudoku when tracking uniqueness`, () => {
-      const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
-      grid[0][0] = invalidNumber;
+  describe("invalid numbers", () => {
+    [-10, -9, -5, -1, 0, 10, 11].forEach((invalidNumber) => {
+      it(`should recognize invalid number ${invalidNumber} in a 4x4 Sudoku when tracking uniqueness`, () => {
+        const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
+        grid[0][0] = invalidNumber;
+        grid[3][3] = invalidNumber;
 
-      const result = new VerifyUniqueness(grid, 4).verify({
+        const result = new VerifyUniqueness(grid, 4).verify({
+          trackUniquenessViolations: true,
+        });
+        expect(result.isValid()).toBeFalse();
+        expect(result.getErrors().length).toEqual(1);
+        expect(result.getErrors()[0]).toEqual(
+          VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
+        );
+      });
+
+      it(`should recognize invalid number ${invalidNumber} in a 4x4 Sudoku when not tracking uniqueness`, () => {
+        const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
+        grid[0][0] = invalidNumber;
+        grid[3][3] = invalidNumber;
+
+        const result = new VerifyUniqueness(grid, 4).verify({
+          trackUniquenessViolations: false,
+        });
+        expect(result.isValid()).toBeFalse();
+        expect(result.getErrors().length).toEqual(1);
+        expect(result.getErrors()[0]).toEqual(
+          VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
+        );
+      });
+    });
+  });
+
+  describe("number notes", () => {
+    const invalid = [
+      [[-5, -4 - 1, 0, 5, 6], 2, 3, 4],
+      [3, 4, 1, 2],
+      [2, 3, 4, 1],
+      [4, 1, 2, [3, 4]],
+    ];
+
+    it("should ignore invalid numbers and duplicates in notes when tracking uniqueness", () => {
+      const result = new VerifyUniqueness(invalid, 4).verify({
         trackUniquenessViolations: true,
       });
-      expect(result.isValid()).toBeFalse();
-      expect(result.getErrors()[0]).toEqual(
-        VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
-      );
+      expect(result.isValid()).toBeTrue();
+      expect(result.getErrors()).toEqual([]);
     });
 
-    it(`should recognize invalid number ${invalidNumber} in a 4x4 Sudoku when not tracking uniqueness`, () => {
-      const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
-      grid[0][0] = invalidNumber;
-
-      const result = new VerifyUniqueness(grid, 4).verify({
+    it("should ignore invalid numbers and duplicates in notes when not tracking uniqueness", () => {
+      const result = new VerifyUniqueness(invalid, 4).verify({
         trackUniquenessViolations: false,
       });
-      expect(result.isValid()).toBeFalse();
-      expect(result.getErrors()[0]).toEqual(
-        VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
-      );
+      expect(result.isValid()).toBeTrue();
+      expect(result.getErrors()).toEqual([]);
     });
   });
 

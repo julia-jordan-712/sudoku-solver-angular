@@ -1,0 +1,55 @@
+<button
+  id="start"
+  class="icon"
+  [disabled]="(canStart$ | async) === false"
+  [title]="'SOLVER.ACTIONS.START' | translate"
+  (click)="start()"
+>
+  <app-icon>play_arrow</app-icon>
+</button>
+<button
+  id="pause"
+  class="icon"
+  [disabled]="(canPause$ | async) === false"
+  [title]="'SOLVER.ACTIONS.PAUSE' | translate"
+  (click)="pause()"
+>
+  <app-icon>pause</app-icon>
+</button>
+<button
+  id="next"
+  class="icon"
+  [disabled]="(canGoToNext$ | async) === false"
+  [title]="'SOLVER.ACTIONS.NEXT' | translate"
+  (click)="next()"
+>
+  <app-icon>skip_next</app-icon>
+</button>
+<div class="states">
+  {{ "SOLVER.STATUS.TITLE" | translate }}:
+  <ng-container [ngSwitch]="state$ | async">
+    <div class="state" *ngSwitchCase="'NOT_STARTED'">
+      {{ "SOLVER.STATUS.NOT_STARTED" | translate }}
+    </div>
+    <div class="state" *ngSwitchCase="'RUNNING'">
+      {{ "SOLVER.STATUS.RUNNING" | translate }}
+    </div>
+    <div class="state" *ngSwitchCase="'PAUSED'">
+      {{ "SOLVER.STATUS.PAUSED" | translate }}
+    </div>
+    <div class="state success" *ngSwitchCase="'DONE'">
+      {{ "SOLVER.STATUS.DONE" | translate }}
+    </div>
+    <div class="state failure" *ngSwitchCase="'FAILED'">
+      {{ "SOLVER.STATUS.FAILED" | translate }}
+    </div>
+    <ng-container *ngSwitchDefault></ng-container>
+  </ng-container>
+</div>
+<div>{{ "SOLVER.STEPS.CALCULATED" | translate }}: {{ steps$ | async }}</div>
+<app-number-input
+  id="maxSteps"
+  [label]="'SOLVER.STEPS.MAX' | translate"
+  [value]="maxSteps$ | async"
+  (valueChange)="setMaxSteps($event)"
+></app-number-input>

@@ -16,6 +16,9 @@
 
 .bold {
   font-weight: bolder;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .valid {

@@ -3,16 +3,19 @@
 :host {
   display: flex;
   align-items: center;
-  width: $cell-size;
-  height: $cell-size;
 
-  border-right: 1px solid gray;
-  &:first-of-type {
-    border-left: 3px solid gray;
+  border: 1px solid gray;
+  &.border-right {
+    border-right-width: 3px;
   }
-  &:last-of-type,
-  &.end-of-square {
-    border-right: 3px solid gray;
+  &.border-left {
+    border-left-width: 3px;
+  }
+  &.border-top {
+    border-top-width: 3px;
+  }
+  &.border-bottom {
+    border-bottom-width: 3px;
   }
 
   &.duplicate {
@@ -28,8 +31,6 @@
 
 input {
   display: flex;
-  width: $cell-size;
-  height: $cell-size;
   background-color: transparent;
   color: inherit;
   border: none;
@@ -53,5 +54,17 @@ input {
 
   &::selection {
     background-color: transparent;
+  }
+}
+
+.notes {
+  font-size: 50%;
+  display: grid;
+  gap: 2px;
+  padding: 2px;
+  opacity: 70%;
+
+  .note {
+    text-align: center;
   }
 }

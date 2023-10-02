@@ -7,10 +7,13 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { SudokuGridCellValidator } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.validator";
+import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -19,6 +22,13 @@ import { Subscription } from "rxjs";
   styleUrls: ["./sudoku-grid-cell.component.scss"],
 })
 export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
+  value: Nullable<number>;
+
+  notes: Nullable<number[]>;
+  numbers: number[] = [];
+  noteGridColumns = "";
+  size = 32;
+
   @Input({ required: true })
   cell: SudokuGridCell;
 
@@ -26,8 +36,20 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   maxValue = 1;
 
   @Input()
-  @HostBinding("class.end-of-square")
-  isEndOfSquare = false;
+  @HostBinding("class.border-top")
+  borderTop = false;
+
+  @Input()
+  @HostBinding("class.border-right")
+  borderRight = false;
+
+  @Input()
+  @HostBinding("class.border-bottom")
+  borderBottom = false;
+
+  @Input()
+  @HostBinding("class.border-left")
+  borderLeft = false;
 
   @Input()
   @HostBinding("class.duplicate")
@@ -54,7 +76,26 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
     this.inputField.addValidators(this.validator.validator);
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["maxValue"]) {
+      this.numbers = Array(this.maxValue)
+        .fill(0)
+        .map((_, i) => i + 1);
+      const sqrt = Math.ceil(Math.sqrt(this.maxValue));
+      this.noteGridColumns = `repeat(${sqrt}, auto)`;
+      this.size = Math.max(32, 16 + 10 * sqrt);
+    }
+
+    if (changes["cell"]) {
+      if (isArray(this.cell)) {
+        this.notes = this.cell;
+        this.value = null;
+      } else if (isNotArray(this.cell)) {
+        this.notes = null;
+        this.value = this.cell;
+      }
+    }
+
     this.validator.setMaxValue(this.maxValue);
     this.resetValue();
   }
@@ -72,6 +113,10 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private resetValue(): void {
-    this.inputField.setValue(this.cell, { onlySelf: true, emitEvent: false });
+    this.inputField.setValue(this.value, { onlySelf: true, emitEvent: false });
+  }
+
+  trackByFn(index: number): number {
+    return index;
   }
 }
