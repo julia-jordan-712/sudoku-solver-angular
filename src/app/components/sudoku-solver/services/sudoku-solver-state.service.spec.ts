@@ -21,6 +21,20 @@ describe(SudokuSolverStateService.name, () => {
 
   describe("start/pause/next", () => {
     describe("initially", () => {
+      beforeEach(() => {
+        spyOn(solver, "solveNextStep").and.callFake((b) => b);
+      });
+
+      it("should have state NOT_STARTED", (done) => {
+        service
+          .getExecutionState()
+          .pipe(first())
+          .subscribe((state) => {
+            expect(state).toEqual("NOT_STARTED");
+            done();
+          });
+      });
+
       it("should allow to start initially", (done) => {
         service
           .canStartExecuting()
@@ -54,7 +68,18 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("running", () => {
       beforeEach(() => {
+        spyOn(solver, "solveNextStep").and.callFake((b) => b);
         service.startExecuting();
+      });
+
+      it("should have state RUNNING", (done) => {
+        service
+          .getExecutionState()
+          .pipe(first())
+          .subscribe((state) => {
+            expect(state).toEqual("RUNNING");
+            done();
+          });
       });
 
       it("should not allow to start while running (because it is already started)", (done) => {
@@ -90,8 +115,19 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("paused", () => {
       beforeEach(() => {
+        spyOn(solver, "solveNextStep").and.callFake((b) => b);
         service.startExecuting();
         service.pauseExecuting();
+      });
+
+      it("should have state PAUSED", (done) => {
+        service
+          .getExecutionState()
+          .pipe(first())
+          .subscribe((state) => {
+            expect(state).toEqual("PAUSED");
+            done();
+          });
       });
 
       it("should allow to start while paused", (done) => {
@@ -127,9 +163,20 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("go to next step", () => {
       beforeEach(() => {
+        spyOn(solver, "solveNextStep").and.callFake((b) => b);
         service.startExecuting();
         service.pauseExecuting();
         service.executeNextStep();
+      });
+
+      it("should have state PAUSED", (done) => {
+        service
+          .getExecutionState()
+          .pipe(first())
+          .subscribe((state) => {
+            expect(state).toEqual("PAUSED");
+            done();
+          });
       });
 
       it("should allow to start after going to next step", (done) => {
@@ -155,9 +202,20 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("continuing after paused", () => {
       beforeEach(() => {
+        spyOn(solver, "solveNextStep").and.callFake((b) => b);
         service.startExecuting();
         service.pauseExecuting();
         service.startExecuting();
+      });
+
+      it("should have state RUNNING", (done) => {
+        service
+          .getExecutionState()
+          .pipe(first())
+          .subscribe((state) => {
+            expect(state).toEqual("RUNNING");
+            done();
+          });
       });
 
       it("should not allow to start after continuing (because it is already running)", (done) => {
@@ -194,8 +252,19 @@ describe(SudokuSolverStateService.name, () => {
     describe("finished", () => {
       describe("success", () => {
         beforeEach(() => {
+          spyOn(solver, "solveNextStep").and.callFake((b) => b);
           service.startExecuting();
           service.finishExecuting("DONE");
+        });
+
+        it("should have state DONE", (done) => {
+          service
+            .getExecutionState()
+            .pipe(first())
+            .subscribe((state) => {
+              expect(state).toEqual("DONE");
+              done();
+            });
         });
 
         it("should not allow to start when done", (done) => {
@@ -231,8 +300,19 @@ describe(SudokuSolverStateService.name, () => {
 
       describe("failure", () => {
         beforeEach(() => {
+          spyOn(solver, "solveNextStep").and.callFake((b) => b);
           service.startExecuting();
           service.finishExecuting("FAILED");
+        });
+
+        it("should have state FAILED", (done) => {
+          service
+            .getExecutionState()
+            .pipe(first())
+            .subscribe((state) => {
+              expect(state).toEqual("FAILED");
+              done();
+            });
         });
 
         it("should not allow to start when failed", (done) => {
@@ -275,9 +355,10 @@ describe(SudokuSolverStateService.name, () => {
       expect(solver.solveNextStep).not.toHaveBeenCalled();
 
       service.startExecuting();
-      expect(solver.solveNextStep).toHaveBeenCalledWith([
-        PuzzleSimple.PUZZLE_1.puzzle,
-      ]);
+      expect(solver.solveNextStep).toHaveBeenCalledWith(
+        [PuzzleSimple.PUZZLE_1.puzzle],
+        jasmine.anything(),
+      );
     });
 
     it("should call solver again with puzzle from last step while running", fakeAsync(() => {
@@ -292,12 +373,14 @@ describe(SudokuSolverStateService.name, () => {
       service.startExecuting();
       tick(1);
 
-      expect(solver.solveNextStep).toHaveBeenCalledWith([
-        PuzzleSimple.PUZZLE_1.puzzle,
-      ]);
-      expect(solver.solveNextStep).toHaveBeenCalledWith([
-        PuzzleAdvanced.PUZZLE_1.puzzle,
-      ]);
+      expect(solver.solveNextStep).toHaveBeenCalledWith(
+        [PuzzleSimple.PUZZLE_1.puzzle],
+        jasmine.anything(),
+      );
+      expect(solver.solveNextStep).toHaveBeenCalledWith(
+        [PuzzleAdvanced.PUZZLE_1.puzzle],
+        jasmine.anything(),
+      );
     }));
 
     it("should call solver with puzzle to solve when going to next step", () => {
@@ -313,16 +396,31 @@ describe(SudokuSolverStateService.name, () => {
       expect(solverSpy).not.toHaveBeenCalled();
 
       service.executeNextStep();
-      expect(solverSpy).toHaveBeenCalledWith([PuzzleSimple.PUZZLE_1.puzzle]);
+      expect(solverSpy).toHaveBeenCalledWith(
+        [PuzzleSimple.PUZZLE_1.puzzle],
+        jasmine.anything(),
+      );
     });
   });
 
   describe("reset", () => {
     beforeEach(() => {
+      spyOn(solver, "solveNextStep").and.callFake((b) => b);
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
       service.startExecuting();
       service.pauseExecuting();
       service.executeNextStep();
+    });
+
+    it("should have state NOT_STARTED", (done) => {
+      service.reset();
+      service
+        .getExecutionState()
+        .pipe(first())
+        .subscribe((state) => {
+          expect(state).toEqual("NOT_STARTED");
+          done();
+        });
     });
 
     it("should allow to start after reset", (done) => {

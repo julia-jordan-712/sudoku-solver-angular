@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { IconModule } from "@app/components/icon/icon.module";
+import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { SudokuSolverActionsComponent } from "./sudoku-solver-actions.component";
 
@@ -13,6 +14,9 @@ describe(SudokuSolverActionsComponent.name, () => {
     });
     fixture = TestBed.createComponent(SudokuSolverActionsComponent);
     fixture.detectChanges();
+    spyOn(TestBed.inject(SudokuSolverService), "solveNextStep").and.callFake(
+      (b) => b,
+    );
   });
 
   it("should allow to start initially", () => {

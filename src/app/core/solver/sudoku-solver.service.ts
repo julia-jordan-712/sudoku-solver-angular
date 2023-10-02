@@ -1,4 +1,7 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
+import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
+import { SolverBruteForce } from "@app/core/solver/solver-brute-force";
+import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
@@ -6,7 +9,14 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
   providedIn: "root",
 })
 export class SudokuSolverService {
-  solveNextStep(branches: SudokuGrid[]): SudokuGrid[] {
+  private verify: VerifySolutionService = inject(VerifySolutionService);
+
+  solveNextStep(
+    branches: SudokuGrid[],
+    solverState: SudokuSolverStateService,
+  ): SudokuGrid[] {
+    const grid: Nullable<SudokuGrid> = this.getCurrentBranch(branches);
+    new SolverBruteForce(this.verify, solverState).execute(grid);
     return branches;
   }
 

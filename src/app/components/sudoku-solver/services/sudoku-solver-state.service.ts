@@ -2,6 +2,7 @@ import { Injectable, inject } from "@angular/core";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { BehaviorSubject, Observable, map } from "rxjs";
 
 @Injectable({
@@ -12,7 +13,7 @@ export class SudokuSolverStateService {
 
   private branches$ = new BehaviorSubject<SudokuGrid[]>([]);
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
-  private maxSteps = 1_000_000;
+  private maxSteps = 10_000;
   private stepsExecuted$ = new BehaviorSubject<number>(0);
 
   getBranches(): Observable<SudokuGrid[]> {
@@ -42,7 +43,9 @@ export class SudokuSolverStateService {
   }
 
   executeNextStep(): void {
-    this.branches$.next(this.solver.solveNextStep(this.branches$.getValue()));
+    this.branches$.next(
+      this.solver.solveNextStep(this.branches$.getValue(), this),
+    );
     this.stepsExecuted$.next(this.stepsExecuted$.getValue() + 1);
   }
 
@@ -61,7 +64,7 @@ export class SudokuSolverStateService {
   }
 
   setInitialPuzzle(puzzle: SudokuGrid): void {
-    this.branches$.next([puzzle]);
+    this.branches$.next([SudokuGridUtil.clone(puzzle)]);
   }
 
   setMaxSteps(max: number): void {
