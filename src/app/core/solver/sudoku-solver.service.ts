@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { Solver } from "@app/core/solver/solver";
-import { SolverBruteForce } from "@app/core/solver/solver-brute-force/solver-brute-force";
+import { SolverEliminate } from "@app/core/solver/solver-eliminate/solver-eliminate";
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -15,7 +15,7 @@ export class SudokuSolverService {
   private solver: Solver;
 
   constructor() {
-    this.solver = new SolverBruteForce(this.verify);
+    this.solver = new SolverEliminate(this.verify);
   }
 
   reset(): void {
