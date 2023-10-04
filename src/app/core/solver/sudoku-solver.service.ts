@@ -4,7 +4,6 @@ import { Solver } from "@app/core/solver/solver";
 import { SolverBruteForce } from "@app/core/solver/solver-brute-force/solver-brute-force";
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { Index } from "@app/shared/types";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
 @Injectable({
@@ -13,18 +12,21 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 export class SudokuSolverService {
   private verify: VerifySolutionService = inject(VerifySolutionService);
 
-  private solver: Index<Solver>;
+  private solver: Solver;
 
   constructor() {
-    this.solver = { BRUTE_FORCE: new SolverBruteForce(this.verify) };
+    this.solver = new SolverBruteForce(this.verify);
+  }
+
+  reset(): void {
+    this.solver.reset();
   }
 
   solveNextStep(
     branches: SudokuGrid[],
     solverState: SudokuSolverStateService,
   ): SudokuGrid[] {
-    const response: SolverResponse =
-      this.solver["BRUTE_FORCE"].executeNextStep(branches);
+    const response: SolverResponse = this.solver.executeNextStep(branches);
     if (response.status === "COMPLETE") {
       solverState.finishExecuting("DONE");
     } else if (response.status === "FAILED") {

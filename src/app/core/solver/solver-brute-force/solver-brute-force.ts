@@ -8,12 +8,15 @@ import { isDefined } from "@app/shared/util/is-defined";
 export class SolverBruteForce extends Solver {
   private failedAttempts = 0;
 
+  override reset(): void {
+    this.failedAttempts = 0;
+  }
+
   override executeNextStep(branches: SudokuGrid[]): SolverResponse {
     const isDone = this.execute(this.getCurrentBranch(branches));
     if (isDone) {
       return { branches, status: "COMPLETE" };
     } else if (this.failedAttempts >= 100) {
-      this.failedAttempts = 0;
       return { branches, status: "FAILED" };
     } else {
       return { branches, status: "INCOMPLETE" };

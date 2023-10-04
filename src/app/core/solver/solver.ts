@@ -6,6 +6,8 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 export abstract class Solver {
   constructor(protected verify: VerifySolutionService) {}
 
+  abstract reset(): void;
+
   protected getCurrentBranch(branches: SudokuGrid[]): Nullable<SudokuGrid> {
     return branches?.slice(-1)?.[0];
   }
