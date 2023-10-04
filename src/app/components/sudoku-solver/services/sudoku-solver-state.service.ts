@@ -1,5 +1,8 @@
 import { Injectable, inject } from "@angular/core";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
@@ -10,11 +13,15 @@ import { BehaviorSubject, Observable, map } from "rxjs";
 })
 export class SudokuSolverStateService {
   private solver: SudokuSolverService = inject(SudokuSolverService);
+  private verify: VerifySolutionService = inject(VerifySolutionService);
 
   private branches$ = new BehaviorSubject<SudokuGrid[]>([]);
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
   private maxSteps$ = new BehaviorSubject<number>(10_000);
   private stepsExecuted$ = new BehaviorSubject<number>(0);
+  private verificationResults$ = new BehaviorSubject<
+    Nullable<VerificationResult[]>
+  >(undefined);
 
   getBranches(): Observable<SudokuGrid[]> {
     return this.branches$.asObservable();
@@ -32,6 +39,10 @@ export class SudokuSolverStateService {
     return this.stepsExecuted$.asObservable();
   }
 
+  getVerificationResults(): Observable<Nullable<VerificationResult[]>> {
+    return this.verificationResults$.asObservable();
+  }
+
   canGoToNextStep(): Observable<boolean> {
     return this.execution$.asObservable().pipe(map((e) => e === "PAUSED"));
   }
@@ -47,6 +58,7 @@ export class SudokuSolverStateService {
   }
 
   executeNextStep(): void {
+    this.verificationResults$.next(undefined);
     this.branches$.next(
       this.solver.solveNextStep(this.branches$.getValue(), this),
     );
@@ -55,6 +67,9 @@ export class SudokuSolverStateService {
 
   finishExecuting(state: Extract<SolverExecution, "DONE" | "FAILED">): void {
     this.execution$.next(state);
+    if (state === "DONE") {
+      this.updateVerificationResults();
+    }
   }
 
   pauseExecuting(): void {
@@ -88,5 +103,11 @@ export class SudokuSolverStateService {
       this.executeNextStep();
       setTimeout(() => this.scheduleNextStep(), 0);
     }
+  }
+
+  updateVerificationResults(): void {
+    this.verificationResults$.next(
+      this.branches$.getValue().map((grid) => this.verify.verify(grid)),
+    );
   }
 }
