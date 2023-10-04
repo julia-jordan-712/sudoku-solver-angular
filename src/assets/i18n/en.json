@@ -57,7 +57,7 @@
       "DUPLICATE_ELEMENTS": "The Sudoku contains duplicates.",
       "EMPTY": "The Sudoku is empty.",
       "NOT_A_SQUARE": "The height of the Sudoku has to equal its width.",
-      "INVALID_NUMBERS": "All numbers have to be greater or equal than 1. All numbers have to be less or equal than {{limit}}."
+      "INVALID_NUMBERS": "All numbers have to be ≥ 1 and ≤ {{limit}}."
     },
     "UNSUPPORTED": {
       "NOT_QUADRATIC": "Sudokus of this size are not supported."
