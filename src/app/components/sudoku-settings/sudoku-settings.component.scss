@@ -8,3 +8,9 @@
   display: flex;
   gap: 1em;
 }
+
+app-sudoku-grid {
+  display: flex;
+  gap: 1em;
+  align-items: flex-end;
+}
