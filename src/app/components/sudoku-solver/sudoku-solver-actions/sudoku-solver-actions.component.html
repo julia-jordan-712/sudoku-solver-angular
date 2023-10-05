@@ -1,6 +1,6 @@
 <button
   id="start"
-  class="icon"
+  class="icon primary"
   [disabled]="(canStart$ | async) === false"
   [title]="'SOLVER.ACTIONS.START' | translate"
   (click)="start()"
@@ -9,7 +9,7 @@
 </button>
 <button
   id="pause"
-  class="icon"
+  class="icon primary"
   [disabled]="(canPause$ | async) === false"
   [title]="'SOLVER.ACTIONS.PAUSE' | translate"
   (click)="pause()"
@@ -18,7 +18,7 @@
 </button>
 <button
   id="next"
-  class="icon"
+  class="icon primary"
   [disabled]="(canGoToNext$ | async) === false"
   [title]="'SOLVER.ACTIONS.NEXT' | translate"
   (click)="next()"

@@ -32,6 +32,7 @@
   </app-sudoku-grid>
   <button
     id="confirmSettings"
+    class="primary"
     [disabled]="!(verification$ | async)?.isValid()"
     (click)="submit()"
   >
