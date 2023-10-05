@@ -15,40 +15,27 @@
   "PUZZLE": {
     "4x4": {
       "EMPTY": "4x4 | Empty",
-      "EMPTY_ROW": "4x4 | Empty row",
-      "EMPTY_COLUMN": "4x4 | Empty column",
-      "EMPTY_SQUARE": "4x4 | Empty square",
       "COMPLETE": "4x4 | Solved"
     },
     "ADVANCED": {
-      "1": {
-        "PUZZLE": "9x9 | Advanced | Puzzle 1",
-        "SOLVED": "9x9 | Advanced | Puzzle 1 - Solved"
-      }
+      "PUZZLE": "9x9 | Advanced | Puzzle {{number}}",
+      "SOLVED": "9x9 | Advanced | Puzzle {{number}} - Solved"
     },
     "EXTREME": {
-      "1": {
-        "PUZZLE": "9x9 | Extreme | Puzzle 1",
-        "SOLVED": "9x9 | Extreme | Puzzle 1 - Solved"
-      }
+      "PUZZLE": "9x9 | Extreme | Puzzle {{number}}",
+      "SOLVED": "9x9 | Extreme | Puzzle {{number}} - Solved"
     },
     "HARD": {
-      "1": {
-        "PUZZLE": "9x9 | Hard | Puzzle 1",
-        "SOLVED": "9x9 | Hard | Puzzle 1 - Solved"
-      }
+      "PUZZLE": "9x9 | Hard | Puzzle {{number}}",
+      "SOLVED": "9x9 | Hard | Puzzle {{number}} - Solved"
     },
     "MEDIUM": {
-      "1": {
-        "PUZZLE": "9x9 | Medium | Puzzle 1",
-        "SOLVED": "9x9 | Medium | Puzzle 1 - Solved"
-      }
+      "PUZZLE": "9x9 | Medium | Puzzle {{number}}",
+      "SOLVED": "9x9 | Medium | Puzzle {{number}} - Solved"
     },
     "SIMPLE": {
-      "1": {
-        "PUZZLE": "9x9 | Simple | Puzzle 1",
-        "SOLVED": "9x9 | Simple | Puzzle 1 - Solved"
-      }
+      "PUZZLE": "9x9 | Simple | Puzzle {{number}}",
+      "SOLVED": "9x9 | Simple | Puzzle {{number}} - Solved"
     },
     "NONE": "-"
   },
@@ -57,7 +44,7 @@
       "DUPLICATE_ELEMENTS": "The Sudoku contains duplicates.",
       "EMPTY": "The Sudoku is empty.",
       "NOT_A_SQUARE": "The height of the Sudoku has to equal its width.",
-      "INVALID_NUMBERS": "All numbers have to be greater or equal than 1. All numbers have to be less or equal than {{limit}}."
+      "INVALID_NUMBERS": "All numbers have to be ≥ 1 and ≤ {{limit}}."
     },
     "UNSUPPORTED": {
       "NOT_QUADRATIC": "Sudokus of this size are not supported."
@@ -79,7 +66,7 @@
       "RUNNING": "Calculating solution...",
       "PAUSED": "Paused",
       "NOT_STARTED": "Ready to start",
-      "DONE": "Solution was found",
+      "DONE": "Solution was found in {{time}} s",
       "FAILED": "Could not find solution"
     },
     "STEPS": {

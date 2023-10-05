@@ -1,6 +1,10 @@
 import { Injectable, inject } from "@angular/core";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
+import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { BehaviorSubject, Observable, map } from "rxjs";
@@ -10,11 +14,17 @@ import { BehaviorSubject, Observable, map } from "rxjs";
 })
 export class SudokuSolverStateService {
   private solver: SudokuSolverService = inject(SudokuSolverService);
+  private verify: VerifySolutionService = inject(VerifySolutionService);
 
   private branches$ = new BehaviorSubject<SudokuGrid[]>([]);
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
   private maxSteps$ = new BehaviorSubject<number>(10_000);
   private stepsExecuted$ = new BehaviorSubject<number>(0);
+  private verificationResults$ = new BehaviorSubject<
+    Nullable<VerificationResult[]>
+  >(undefined);
+
+  private stopWatch: StopWatch = new StopWatch();
 
   getBranches(): Observable<SudokuGrid[]> {
     return this.branches$.asObservable();
@@ -32,6 +42,14 @@ export class SudokuSolverStateService {
     return this.stepsExecuted$.asObservable();
   }
 
+  getTimeElapsed(): number {
+    return this.stopWatch.timeElapsed();
+  }
+
+  getVerificationResults(): Observable<Nullable<VerificationResult[]>> {
+    return this.verificationResults$.asObservable();
+  }
+
   canGoToNextStep(): Observable<boolean> {
     return this.execution$.asObservable().pipe(map((e) => e === "PAUSED"));
   }
@@ -47,6 +65,7 @@ export class SudokuSolverStateService {
   }
 
   executeNextStep(): void {
+    this.verificationResults$.next(undefined);
     this.branches$.next(
       this.solver.solveNextStep(this.branches$.getValue(), this),
     );
@@ -54,6 +73,10 @@ export class SudokuSolverStateService {
   }
 
   finishExecuting(state: Extract<SolverExecution, "DONE" | "FAILED">): void {
+    if (state === "DONE") {
+      this.updateVerificationResults();
+    }
+    this.stopWatch.stop();
     this.execution$.next(state);
   }
 
@@ -65,6 +88,8 @@ export class SudokuSolverStateService {
     this.execution$.next("NOT_STARTED");
     this.branches$.next([]);
     this.stepsExecuted$.next(0);
+    this.solver.reset();
+    this.stopWatch.reset();
   }
 
   setInitialPuzzle(puzzle: SudokuGrid): void {
@@ -76,6 +101,7 @@ export class SudokuSolverStateService {
   }
 
   startExecuting(): void {
+    this.stopWatch.start();
     this.execution$.next("RUNNING");
     this.scheduleNextStep();
   }
@@ -88,5 +114,11 @@ export class SudokuSolverStateService {
       this.executeNextStep();
       setTimeout(() => this.scheduleNextStep(), 0);
     }
+  }
+
+  updateVerificationResults(): void {
+    this.verificationResults$.next(
+      this.branches$.getValue().map((grid) => this.verify.verify(grid)),
+    );
   }
 }

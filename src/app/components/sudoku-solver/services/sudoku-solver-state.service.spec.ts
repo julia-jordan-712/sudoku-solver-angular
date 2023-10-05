@@ -250,6 +250,10 @@ describe(SudokuSolverStateService.name, () => {
     });
 
     describe("finished", () => {
+      beforeEach(() => {
+        service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.solution);
+      });
+
       describe("success", () => {
         beforeEach(() => {
           spyOn(solver, "solveNextStep").and.callFake((b) => b);
@@ -293,6 +297,17 @@ describe(SudokuSolverStateService.name, () => {
             .pipe(first())
             .subscribe((canGoToNext) => {
               expect(canGoToNext).toBeFalse();
+              done();
+            });
+        });
+
+        it("should determine verification result", (done) => {
+          service
+            .getVerificationResults()
+            .pipe(first())
+            .subscribe((result) => {
+              expect(result?.length).toEqual(1);
+              expect(result?.[0].isValid()).toBeTrue();
               done();
             });
         });
@@ -341,6 +356,16 @@ describe(SudokuSolverStateService.name, () => {
             .pipe(first())
             .subscribe((canGoToNext) => {
               expect(canGoToNext).toBeFalse();
+              done();
+            });
+        });
+
+        it("should NOT determine verification result", (done) => {
+          service
+            .getVerificationResults()
+            .pipe(first())
+            .subscribe((result) => {
+              expect(result).toBeUndefined();
               done();
             });
         });
@@ -406,6 +431,7 @@ describe(SudokuSolverStateService.name, () => {
   describe("reset", () => {
     beforeEach(() => {
       spyOn(solver, "solveNextStep").and.callFake((b) => b);
+      spyOn(solver, "reset").and.callFake(() => {});
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
       service.startExecuting();
       service.pauseExecuting();
@@ -487,5 +513,53 @@ describe(SudokuSolverStateService.name, () => {
           done();
         });
     });
+
+    it("should reset the solver", () => {
+      service.reset();
+      expect(solver.reset).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("stopping time for executing the solver", () => {
+    beforeEach(() => {
+      spyOn(solver, "solveNextStep").and.callFake((b) => b);
+      service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
+    });
+
+    it("should not have any time passed before it is started", fakeAsync(() => {
+      tick(100);
+      expect(service.getTimeElapsed()).toEqual(0);
+
+      service.startExecuting();
+      tick(100);
+      expect(service.getTimeElapsed()).toEqual(100);
+
+      tick(100);
+      expect(service.getTimeElapsed()).toEqual(200);
+    }));
+
+    it("should stop when state DONE is reached", fakeAsync(() => {
+      service.startExecuting();
+      tick(100);
+      service.finishExecuting("DONE");
+      tick(100);
+      expect(service.getTimeElapsed()).toEqual(100);
+    }));
+
+    it("should stop when state FAILED is reached", fakeAsync(() => {
+      service.startExecuting();
+      tick(100);
+      service.finishExecuting("FAILED");
+      tick(100);
+      expect(service.getTimeElapsed()).toEqual(100);
+    }));
+
+    it("should NOT stop when paused", fakeAsync(() => {
+      service.startExecuting();
+      tick(100);
+      service.pauseExecuting();
+      tick(100);
+      expect(service.getTimeElapsed()).toEqual(200);
+    }));
   });
 });

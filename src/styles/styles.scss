@@ -23,9 +23,6 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5em;
-    background-color: $primary-color;
-    color: $on-primary-color;
-    border-style: none;
     border-radius: 0.25em;
     box-sizing: border-box;
     cursor: pointer;
@@ -35,13 +32,29 @@ body {
     outline: none;
     transition: background-color 100ms;
 
+    background-color: white;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+
     &:hover,
     &:focus {
-      background-color: $primary-hover-color;
+      color: $primary-hover-color;
+      border-color: $primary-hover-color;
     }
 
     &:disabled {
       opacity: 0.5;
+    }
+
+    &.primary {
+      background-color: $primary-color;
+      color: $on-primary-color;
+      border-style: none;
+
+      &:hover,
+      &:focus {
+        background-color: $primary-hover-color;
+      }
     }
   }
 }

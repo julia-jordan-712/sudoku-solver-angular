@@ -1,6 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { SolverExecution } from "@app/shared/types/solver-execution";
+import { TranslateService } from "@ngx-translate/core";
 import { Observable } from "rxjs";
 
 @Component({
@@ -9,6 +10,8 @@ import { Observable } from "rxjs";
   styleUrls: ["./sudoku-solver-actions.component.scss"],
 })
 export class SudokuSolverActionsComponent {
+  translate = inject(TranslateService);
+
   private state = inject(SudokuSolverStateService);
   canStart$: Observable<boolean> = this.state.canStartExecuting();
   canPause$: Observable<boolean> = this.state.canPauseExecuting();
@@ -31,5 +34,9 @@ export class SudokuSolverActionsComponent {
 
   setMaxSteps(max: number): void {
     this.state.setMaxSteps(max);
+  }
+
+  getTime(): number {
+    return this.state.getTimeElapsed() / 1000;
   }
 }
