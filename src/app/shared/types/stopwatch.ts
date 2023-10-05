@@ -11,6 +11,11 @@ export class StopWatch {
     this.stopped = Date.now();
   }
 
+  reset(): void {
+    this.started = undefined;
+    this.stopped = undefined;
+  }
+
   timeElapsed(): number {
     return this.started == undefined
       ? 0

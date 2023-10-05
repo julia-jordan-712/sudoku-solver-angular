@@ -89,6 +89,7 @@ export class SudokuSolverStateService {
     this.branches$.next([]);
     this.stepsExecuted$.next(0);
     this.solver.reset();
+    this.stopWatch.reset();
   }
 
   setInitialPuzzle(puzzle: SudokuGrid): void {
