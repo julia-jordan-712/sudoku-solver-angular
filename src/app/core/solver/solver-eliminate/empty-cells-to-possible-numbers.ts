@@ -25,7 +25,7 @@ export class EmptyCellsToPossibleNumbers {
     return false;
   }
 
-  convertEmptyCellToPossibleValues(
+  private convertEmptyCellToPossibleValues(
     grid: SudokuGrid,
     rowIndex: number,
     columnIndex: number,
