@@ -76,7 +76,7 @@
     },
     "STATUS": {
       "TITLE": "Status",
-      "DONE": "Lösung wurde gefunden",
+      "DONE": "Lösung wurde in {{time}} s gefunden",
       "FAILED": "Lösung konnte nicht gefunden werden",
       "NOT_STARTED": "Bereit zum Starten",
       "PAUSED": "Pausiert",

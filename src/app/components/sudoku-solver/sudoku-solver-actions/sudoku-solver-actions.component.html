@@ -38,7 +38,11 @@
       {{ "SOLVER.STATUS.PAUSED" | translate }}
     </div>
     <div class="state success" *ngSwitchCase="'DONE'">
-      {{ "SOLVER.STATUS.DONE" | translate }}
+      {{
+        "SOLVER.STATUS.DONE"
+          | translate
+            : { time: getTime() | number: "1.1-1" : this.translate.currentLang }
+      }}
     </div>
     <div class="state failure" *ngSwitchCase="'FAILED'">
       {{ "SOLVER.STATUS.FAILED" | translate }}

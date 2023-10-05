@@ -79,7 +79,7 @@
       "RUNNING": "Calculating solution...",
       "PAUSED": "Paused",
       "NOT_STARTED": "Ready to start",
-      "DONE": "Solution was found",
+      "DONE": "Solution was found in {{time}} s",
       "FAILED": "Could not find solution"
     },
     "STEPS": {

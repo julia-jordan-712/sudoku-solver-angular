@@ -4,6 +4,7 @@ import { VerifySolutionService } from "@app/core/verification/services/verify-so
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
+import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { BehaviorSubject, Observable, map } from "rxjs";
@@ -23,6 +24,8 @@ export class SudokuSolverStateService {
     Nullable<VerificationResult[]>
   >(undefined);
 
+  private stopWatch: StopWatch = new StopWatch();
+
   getBranches(): Observable<SudokuGrid[]> {
     return this.branches$.asObservable();
   }
@@ -37,6 +40,10 @@ export class SudokuSolverStateService {
 
   getStepsExecuted(): Observable<number> {
     return this.stepsExecuted$.asObservable();
+  }
+
+  getTimeElapsed(): number {
+    return this.stopWatch.timeElapsed();
   }
 
   getVerificationResults(): Observable<Nullable<VerificationResult[]>> {
@@ -66,10 +73,11 @@ export class SudokuSolverStateService {
   }
 
   finishExecuting(state: Extract<SolverExecution, "DONE" | "FAILED">): void {
-    this.execution$.next(state);
     if (state === "DONE") {
       this.updateVerificationResults();
     }
+    this.stopWatch.stop();
+    this.execution$.next(state);
   }
 
   pauseExecuting(): void {
@@ -92,6 +100,7 @@ export class SudokuSolverStateService {
   }
 
   startExecuting(): void {
+    this.stopWatch.start();
     this.execution$.next("RUNNING");
     this.scheduleNextStep();
   }
