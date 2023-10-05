@@ -436,6 +436,7 @@ describe(SudokuSolverStateService.name, () => {
       service.startExecuting();
       service.pauseExecuting();
       service.executeNextStep();
+      service.updateVerificationResults();
     });
 
     it("should have state NOT_STARTED", (done) => {
@@ -489,6 +490,17 @@ describe(SudokuSolverStateService.name, () => {
         .pipe(first())
         .subscribe((branches) => {
           expect(branches).toEqual([]);
+          done();
+        });
+    });
+
+    it("should have no verification result after reset", (done) => {
+      service.reset();
+      service
+        .getVerificationResults()
+        .pipe(first())
+        .subscribe((verification) => {
+          expect(verification).toBeUndefined();
           done();
         });
     });

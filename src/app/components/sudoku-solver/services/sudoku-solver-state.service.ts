@@ -87,6 +87,7 @@ export class SudokuSolverStateService {
   reset(): void {
     this.execution$.next("NOT_STARTED");
     this.branches$.next([]);
+    this.verificationResults$.next(undefined);
     this.stepsExecuted$.next(0);
     this.solver.reset();
     this.stopWatch.reset();
