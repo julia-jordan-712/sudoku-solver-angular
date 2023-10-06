@@ -4,3 +4,8 @@ export interface SolverResponse {
   branches: SudokuGrid[];
   status: "COMPLETE" | "INCOMPLETE" | "FAILED";
 }
+
+export interface SolverStepResponse {
+  branches: SudokuGrid[];
+  failed: boolean;
+}
