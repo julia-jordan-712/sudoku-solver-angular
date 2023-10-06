@@ -1,37 +1,48 @@
-import { Injectable, inject } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { Solver } from "@app/core/solver/solver";
-import { SolverEliminate } from "@app/core/solver/solver-eliminate/solver-eliminate";
 import { SolverResponse } from "@app/core/solver/solver-response";
-import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
+import { SOLVER_TOKEN } from "@app/core/solver/sudoku-solver.provider";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
 @Injectable({
   providedIn: "root",
 })
 export class SudokuSolverService {
-  private verify: VerifySolutionService = inject(VerifySolutionService);
+  private solvers: Solver[];
 
-  private solver: Solver;
-
-  constructor() {
-    this.solver = new SolverEliminate(this.verify);
+  constructor(@Inject(SOLVER_TOKEN) solvers: Solver[]) {
+    this.solvers = solvers.sort(
+      (a, b) => a.getExecutionOrder() - b.getExecutionOrder(),
+    );
   }
 
   reset(): void {
-    this.solver.reset();
+    this.solvers.forEach((solver) => solver.reset());
   }
 
   solveNextStep(
     branches: SudokuGrid[],
     solverState: SudokuSolverStateService,
   ): SudokuGrid[] {
-    const response: SolverResponse = this.solver.executeNextStep(branches);
+    const response: SolverResponse = this.executeSolvers(branches);
     if (response.status === "COMPLETE") {
+      solverState.updateVerificationResults();
       solverState.finishExecuting("DONE");
     } else if (response.status === "FAILED") {
       solverState.finishExecuting("FAILED");
     }
     return response.branches;
+  }
+
+  private executeSolvers(branches: SudokuGrid[]): SolverResponse {
+    let response: SolverResponse = { branches, status: "FAILED" };
+    for (const solver of this.solvers) {
+      response = solver.executeNextStep(branches);
+      if (response.status !== "FAILED") {
+        break;
+      }
+    }
+    return response;
   }
 }

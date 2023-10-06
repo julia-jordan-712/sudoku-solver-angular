@@ -5,6 +5,7 @@ import { DropdownInputTestComponent } from "@app/test/components/dropdown-input-
 import { NumberInputTestComponent } from "@app/test/components/number-input-test.component";
 import { SudokuGridTestComponent } from "@app/test/components/sudoku-grid-test.component";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
+import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { of } from "rxjs";
 import { SudokuSettingsComponent } from "./sudoku-settings.component";
@@ -21,6 +22,7 @@ describe(SudokuSettingsComponent.name, () => {
         SudokuGridTestComponent,
       ],
       imports: [TranslateTestingModule.withTranslations({}), IconModule],
+      providers: SOLVER_TEST_PROVIDERS,
     }).compileComponents();
   });
 

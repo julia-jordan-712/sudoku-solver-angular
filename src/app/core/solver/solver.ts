@@ -1,14 +1,26 @@
-import { SolverResponse } from "@app/core/solver/solver-response";
-import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
+import {
+  SolverResponse,
+  SolverStepResponse,
+} from "@app/core/solver/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 
 export abstract class Solver {
-  constructor(protected verify: VerifySolutionService) {}
+  abstract getExecutionOrder(): number;
 
-  abstract executeNextStep(branches: SudokuGrid[]): SolverResponse;
+  executeNextStep(branches: SudokuGrid[]): SolverResponse {
+    if (this.isDone(this.getCurrentBranch(branches))) {
+      return { branches, status: "COMPLETE" };
+    }
+    const response: SolverStepResponse = this.executeSingleStep(branches);
+    return { branches, status: response.failed ? "FAILED" : "INCOMPLETE" };
+  }
+
+  protected abstract executeSingleStep(
+    branches: SudokuGrid[],
+  ): SolverStepResponse;
 
   abstract reset(): void;
 

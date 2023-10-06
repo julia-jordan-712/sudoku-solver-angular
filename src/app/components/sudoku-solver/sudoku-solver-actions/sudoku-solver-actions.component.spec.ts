@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { IconModule } from "@app/components/icon/icon.module";
 import { NumberInputModule } from "@app/components/input-field/number-input/number-input.module";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { SudokuSolverActionsComponent } from "./sudoku-solver-actions.component";
 
@@ -16,6 +17,7 @@ describe(SudokuSolverActionsComponent.name, () => {
         NumberInputModule,
         TranslateTestingModule.withTranslations({}),
       ],
+      providers: SOLVER_TEST_PROVIDERS,
     });
     fixture = TestBed.createComponent(SudokuSolverActionsComponent);
     fixture.detectChanges();

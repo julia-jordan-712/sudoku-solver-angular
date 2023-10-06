@@ -42,7 +42,7 @@ describe(SolverEliminate.name, () => {
   ].forEach((params) => {
     it(`should solve ${params.name} in ${params.steps} steps`, () => {
       let puzzle: SudokuGrid[] = [params.puzzle];
-      const solver = new SolverEliminate(verify);
+      const solver = new SolverEliminate();
       for (let i = 1; i <= params.steps; i++) {
         const response = solver.executeNextStep(puzzle);
         puzzle = response.branches;
@@ -59,7 +59,7 @@ describe(SolverEliminate.name, () => {
 
   it("should solve 111 steps of medium puzzle 1 and then fail", () => {
     let puzzle: SudokuGrid[] = [PuzzleMedium.PUZZLE_1.puzzle];
-    const solver = new SolverEliminate(verify);
+    const solver = new SolverEliminate();
     for (let i = 1; i <= 111; i++) {
       const response = solver.executeNextStep(puzzle);
       puzzle = response.branches;

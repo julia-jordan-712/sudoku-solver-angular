@@ -2,6 +2,7 @@ import { TestBed, fakeAsync, tick } from "@angular/core/testing";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { first } from "rxjs";
 import { SudokuSolverStateService } from "./sudoku-solver-state.service";
 
@@ -10,7 +11,9 @@ describe(SudokuSolverStateService.name, () => {
   let solver: SudokuSolverService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [SudokuSolverService] });
+    TestBed.configureTestingModule({
+      providers: [SudokuSolverService, ...SOLVER_TEST_PROVIDERS],
+    });
     service = TestBed.inject(SudokuSolverStateService);
     solver = TestBed.inject(SudokuSolverService);
   });
@@ -300,17 +303,6 @@ describe(SudokuSolverStateService.name, () => {
               done();
             });
         });
-
-        it("should determine verification result", (done) => {
-          service
-            .getVerificationResults()
-            .pipe(first())
-            .subscribe((result) => {
-              expect(result?.length).toEqual(1);
-              expect(result?.[0].isValid()).toBeTrue();
-              done();
-            });
-        });
       });
 
       describe("failure", () => {
@@ -356,16 +348,6 @@ describe(SudokuSolverStateService.name, () => {
             .pipe(first())
             .subscribe((canGoToNext) => {
               expect(canGoToNext).toBeFalse();
-              done();
-            });
-        });
-
-        it("should NOT determine verification result", (done) => {
-          service
-            .getVerificationResults()
-            .pipe(first())
-            .subscribe((result) => {
-              expect(result).toBeUndefined();
               done();
             });
         });
@@ -436,6 +418,7 @@ describe(SudokuSolverStateService.name, () => {
       service.startExecuting();
       service.pauseExecuting();
       service.executeNextStep();
+      service.updateVerificationResults();
     });
 
     it("should have state NOT_STARTED", (done) => {
@@ -489,6 +472,17 @@ describe(SudokuSolverStateService.name, () => {
         .pipe(first())
         .subscribe((branches) => {
           expect(branches).toEqual([]);
+          done();
+        });
+    });
+
+    it("should have no verification result after reset", (done) => {
+      service.reset();
+      service
+        .getVerificationResults()
+        .pipe(first())
+        .subscribe((verification) => {
+          expect(verification).toBeUndefined();
           done();
         });
     });
