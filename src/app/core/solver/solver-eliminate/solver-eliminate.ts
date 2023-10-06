@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { CleanupPossibleNumbers } from "@app/core/solver/solver-eliminate/cleanup-possible-numbers";
 import { EmptyCellsToPossibleNumbers } from "@app/core/solver/solver-eliminate/empty-cells-to-possible-numbers";
-import { OnlyPossibleNumber } from "@app/core/solver/solver-eliminate/only-possible-number";
+import { SinglePossibleValue } from "@app/core/solver/solver-eliminate/single-possible-value";
 import { SolverStepResponse } from "@app/core/solver/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -40,7 +40,7 @@ export class SolverEliminate extends Solver {
       changedSomething = foundNewPossibleValues;
     }
     if (!changedSomething) {
-      changedSomething = new OnlyPossibleNumber().run(grid);
+      changedSomething = new SinglePossibleValue().run(grid);
     }
     if (!changedSomething) {
       changedSomething = new CleanupPossibleNumbers().run(grid);
