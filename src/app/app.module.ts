@@ -4,6 +4,7 @@ import localeDe from "@angular/common/locales/de";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { MainModule } from "@app/components/main/main.module";
+import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { TranslateHttpLoaderFactory } from "@app/core/translate/translate-loader-factory";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { AppRoutingModule } from "./app-routing.module";
@@ -27,7 +28,7 @@ registerLocaleData(localeDe);
     }),
     MainModule,
   ],
-  providers: [],
+  providers: [SOLVER_PROVIDERS],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

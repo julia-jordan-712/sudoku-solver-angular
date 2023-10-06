@@ -1,12 +1,23 @@
+import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { SolverResponse } from "@app/core/solver/solver-response";
+import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 
+@Injectable()
 export class SolverBruteForce extends Solver {
+  constructor(private verify: VerifySolutionService) {
+    super();
+  }
+
   private failedAttempts = 0;
+
+  override getExecutionOrder(): number {
+    return 1000;
+  }
 
   override reset(): void {
     this.failedAttempts = 0;

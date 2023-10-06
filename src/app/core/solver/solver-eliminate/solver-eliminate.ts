@@ -1,3 +1,4 @@
+import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { CleanupPossibleNumbers } from "@app/core/solver/solver-eliminate/cleanup-possible-numbers";
 import { EmptyCellsToPossibleNumbers } from "@app/core/solver/solver-eliminate/empty-cells-to-possible-numbers";
@@ -7,8 +8,13 @@ import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
 
+@Injectable()
 export class SolverEliminate extends Solver {
   private allCellsContainValuesOrPossibleValues = false;
+
+  override getExecutionOrder(): number {
+    return 1;
+  }
 
   override reset(): void {
     this.allCellsContainValuesOrPossibleValues = false;
