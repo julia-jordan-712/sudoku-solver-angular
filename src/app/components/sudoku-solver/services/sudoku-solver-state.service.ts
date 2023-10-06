@@ -73,9 +73,6 @@ export class SudokuSolverStateService {
   }
 
   finishExecuting(state: Extract<SolverExecution, "DONE" | "FAILED">): void {
-    if (state === "DONE") {
-      this.updateVerificationResults();
-    }
     this.stopWatch.stop();
     this.execution$.next(state);
   }

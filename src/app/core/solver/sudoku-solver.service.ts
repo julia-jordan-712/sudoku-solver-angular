@@ -27,6 +27,7 @@ export class SudokuSolverService {
   ): SudokuGrid[] {
     const response: SolverResponse = this.executeSolvers(branches);
     if (response.status === "COMPLETE") {
+      solverState.updateVerificationResults();
       solverState.finishExecuting("DONE");
     } else if (response.status === "FAILED") {
       solverState.finishExecuting("FAILED");
