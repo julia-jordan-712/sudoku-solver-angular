@@ -19,21 +19,23 @@ export class SolverPossibleOnce extends Solver {
   }
 
   override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
-    const changedSomething: boolean = this.execute(
+    const response: Omit<SolverStepResponse, "branches"> = this.execute(
       this.getCurrentBranch(branches),
     );
-    return { branches, failed: !changedSomething };
+    return { ...response, branches };
   }
 
-  private execute(grid: Nullable<SudokuGrid>): boolean {
+  private execute(
+    grid: Nullable<SudokuGrid>,
+  ): Omit<SolverStepResponse, "branches"> {
     if (!isDefined(grid)) {
-      return false;
+      return { stepId: "SEARCH", failed: true };
     }
 
     if (this.valuesPossibleOnce.run(grid)) {
-      return true;
+      return { stepId: "VALUES_POSSIBLE_ONCE", failed: false };
     }
 
-    return false;
+    return { stepId: "SEARCH", failed: true };
   }
 }

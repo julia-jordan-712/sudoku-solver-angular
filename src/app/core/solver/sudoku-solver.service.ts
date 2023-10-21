@@ -36,7 +36,11 @@ export class SudokuSolverService {
   }
 
   private executeSolvers(branches: SudokuGrid[]): SolverResponse {
-    let response: SolverResponse = { branches, status: "FAILED" };
+    let response: SolverResponse = {
+      branches,
+      stepId: "INITIAL",
+      status: "FAILED",
+    };
     for (const solver of this.solvers) {
       response = solver.executeNextStep(branches);
       if (response.status !== "FAILED") {

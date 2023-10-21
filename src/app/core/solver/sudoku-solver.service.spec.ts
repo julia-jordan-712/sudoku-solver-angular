@@ -44,6 +44,7 @@ describe(SudokuSolverService.name, () => {
       beforeEach(() => {
         testSolver.executeNextStep.and.returnValue({
           branches: [Puzzle4x4.COMPLETE],
+          stepId: "TEST",
           status: "COMPLETE",
         });
       });
@@ -58,6 +59,7 @@ describe(SudokuSolverService.name, () => {
       beforeEach(() => {
         testSolver.executeNextStep.and.returnValue({
           branches: [Puzzle4x4.INCOMPLETE_INVALID_COLUMN],
+          stepId: "TEST",
           status: "FAILED",
         });
       });

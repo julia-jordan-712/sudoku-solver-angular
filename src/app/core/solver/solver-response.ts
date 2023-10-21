@@ -2,10 +2,12 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
 export interface SolverResponse {
   branches: SudokuGrid[];
+  stepId: string;
   status: "COMPLETE" | "INCOMPLETE" | "FAILED";
 }
 
 export interface SolverStepResponse {
-  branches: SudokuGrid[];
+  branches: SolverResponse["branches"];
+  stepId: SolverResponse["stepId"];
   failed: boolean;
 }

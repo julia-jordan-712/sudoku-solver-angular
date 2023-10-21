@@ -25,7 +25,11 @@ export class SolverBruteForce extends Solver {
 
   override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
     this.execute(this.getCurrentBranch(branches));
-    return { branches, failed: this.failedAttempts >= 100 };
+    return {
+      branches,
+      stepId: "BRUTE_FORCE",
+      failed: this.failedAttempts >= 100,
+    };
   }
 
   private execute(grid: Nullable<SudokuGrid>): void {
