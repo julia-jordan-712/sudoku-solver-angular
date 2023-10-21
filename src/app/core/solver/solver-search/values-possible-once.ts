@@ -1,4 +1,4 @@
-import { ValuePossibleOnce } from "@app/core/solver/solver-possible-once/value-possible-once";
+import { ValuePossibleOnce } from "@app/core/solver/solver-search/value-possible-once";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
 import { Nullable } from "@app/shared/types/nullable";
