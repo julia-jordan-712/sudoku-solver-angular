@@ -1,7 +1,10 @@
 <ng-container *ngIf="branches$ | async as branches">
   <ng-container *ngIf="branches.length > 0">
-    <h2>{{ "SOLVER.TITLE" | translate }}</h2>
-    <app-sudoku-solver-actions></app-sudoku-solver-actions>
+    <div class="top">
+      <app-sudoku-solver-actions></app-sudoku-solver-actions>
+      <app-sudoku-solver-status></app-sudoku-solver-status>
+      <app-sudoku-solver-steps></app-sudoku-solver-steps>
+    </div>
     <div
       class="branch"
       *ngFor="let branch of branches; let i = index; trackBy: trackByFn"

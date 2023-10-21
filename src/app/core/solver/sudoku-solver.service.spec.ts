@@ -128,7 +128,7 @@ describe(SudokuSolverService.name, () => {
 
         let puzzle: SudokuGrid[] = [SudokuGridUtil.clone(params.puzzle)];
         for (let step = 1; step <= params.steps; step++) {
-          puzzle = service.solveNextStep(puzzle, solverState);
+          puzzle = service.solveNextStep(puzzle, solverState).branches;
 
           if (step < params.steps) {
             expect(solverState.finishExecuting).not.toHaveBeenCalled();

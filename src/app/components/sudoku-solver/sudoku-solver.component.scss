@@ -4,6 +4,12 @@
   gap: 1em;
 }
 
+.top {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
 .branch {
   display: flex;
   align-items: flex-end;

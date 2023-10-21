@@ -3,7 +3,7 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 export interface SolverResponse {
   branches: SudokuGrid[];
   stepId: string;
-  status: "COMPLETE" | "INCOMPLETE" | "FAILED";
+  status: "COMPLETE" | "INCOMPLETE" | "FAILED" | "UNKNOWN";
 }
 
 export interface SolverStepResponse {

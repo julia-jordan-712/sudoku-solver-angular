@@ -20,11 +20,12 @@
 
 .sidebar {
   display: flex;
+  flex-direction: column;
   height: 100vh;
+  justify-content: space-between;
   overflow: hidden;
 
   flex-shrink: 1;
-  align-items: flex-end;
   border-left: $border;
 
   .languages {
@@ -32,9 +33,5 @@
     margin: 1em;
     gap: 0.5em;
     flex-direction: column;
-
-    button {
-      width: unset;
-    }
   }
 }

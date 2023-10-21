@@ -5,10 +5,17 @@ import { NumberInputModule } from "@app/components/input-field/number-input/numb
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { SudokuSolverActionsComponent } from "./sudoku-solver-actions/sudoku-solver-actions.component";
+import { SudokuSolverStatusComponent } from "./sudoku-solver-status/sudoku-solver-status.component";
 import { SudokuSolverComponent } from "./sudoku-solver.component";
+import { SudokuSolverStepsComponent } from "./sudoku-solver-steps/sudoku-solver-steps.component";
 
 @NgModule({
-  declarations: [SudokuSolverComponent, SudokuSolverActionsComponent],
+  declarations: [
+    SudokuSolverComponent,
+    SudokuSolverActionsComponent,
+    SudokuSolverStatusComponent,
+    SudokuSolverStepsComponent,
+  ],
   imports: [
     CommonModule,
     IconModule,

@@ -24,7 +24,7 @@ export class SudokuSolverService {
   solveNextStep(
     branches: SudokuGrid[],
     solverState: SudokuSolverStateService,
-  ): SudokuGrid[] {
+  ): SolverResponse {
     const response: SolverResponse = this.executeSolvers(branches);
     if (response.status === "COMPLETE") {
       solverState.updateVerificationResults();
@@ -32,7 +32,7 @@ export class SudokuSolverService {
     } else if (response.status === "FAILED") {
       solverState.finishExecuting("FAILED");
     }
-    return response.branches;
+    return response;
   }
 
   private executeSolvers(branches: SudokuGrid[]): SolverResponse {

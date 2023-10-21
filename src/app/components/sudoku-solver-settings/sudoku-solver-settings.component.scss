@@ -1,0 +1,16 @@
+:host {
+  padding: 0.5em;
+}
+
+.inputs {
+  margin-top: 0.5em;
+
+  display: grid;
+  grid-template-columns: auto auto max-content;
+  gap: 0.5em;
+  align-items: center;
+
+  app-number-input {
+    display: contents;
+  }
+}

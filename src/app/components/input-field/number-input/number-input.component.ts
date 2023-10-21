@@ -11,7 +11,13 @@ export class NumberInputComponent {
   label: Nullable<string>;
 
   @Input()
+  tooltip: Nullable<string>;
+
+  @Input()
   value: Nullable<number>;
+
+  @Input()
+  inputWidth: Nullable<string>;
 
   @Output()
   valueChange: EventEmitter<number> = new EventEmitter();

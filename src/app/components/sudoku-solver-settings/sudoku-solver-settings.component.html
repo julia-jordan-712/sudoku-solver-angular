@@ -1,0 +1,21 @@
+<ng-container *ngIf="show$ | async">
+  <h2>{{ "SETTINGS.TITLE" | translate }}</h2>
+  <div class="inputs">
+    <app-number-input
+      id="delay"
+      [label]="'SOLVER.DELAY.DELAY' | translate"
+      [value]="delay$ | async"
+      inputWidth="5em"
+      [tooltip]="'SOLVER.DELAY.TOOLTIP' | translate"
+      (valueChange)="setDelay($event)"
+    ></app-number-input>
+    <app-number-input
+      id="maxSteps"
+      [label]="'SOLVER.STEPS.MAX.MAX' | translate"
+      [value]="maxSteps$ | async"
+      inputWidth="5em"
+      [tooltip]="'SOLVER.STEPS.MAX.TOOLTIP' | translate"
+      (valueChange)="setMaxSteps($event)"
+    ></app-number-input>
+  </div>
+</ng-container>

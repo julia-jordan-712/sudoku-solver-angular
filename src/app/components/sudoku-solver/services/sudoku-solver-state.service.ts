@@ -1,4 +1,5 @@
 import { Injectable, inject } from "@angular/core";
+import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
@@ -16,22 +17,42 @@ export class SudokuSolverStateService {
   private solver: SudokuSolverService = inject(SudokuSolverService);
   private verify: VerifySolutionService = inject(VerifySolutionService);
 
-  private branches$ = new BehaviorSubject<SudokuGrid[]>([]);
+  private delay = new BehaviorSubject<number>(0);
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
+  private initialPuzzle: SudokuGrid = [];
   private maxSteps$ = new BehaviorSubject<number>(10_000);
+  private response$ = new BehaviorSubject<SolverResponse>(
+    this.createInitialSolverResponse(),
+  );
   private stepsExecuted$ = new BehaviorSubject<number>(0);
   private verificationResults$ = new BehaviorSubject<
     Nullable<VerificationResult[]>
   >(undefined);
 
+  private createInitialSolverResponse(): SolverResponse {
+    return { branches: [], status: "UNKNOWN", stepId: "" };
+  }
+
   private stopWatch: StopWatch = new StopWatch();
 
   getBranches(): Observable<SudokuGrid[]> {
-    return this.branches$.asObservable();
+    return this.response$
+      .asObservable()
+      .pipe(map((response) => response.branches));
+  }
+
+  getDelay(): Observable<number> {
+    return this.delay.asObservable();
   }
 
   getExecutionState(): Observable<SolverExecution> {
     return this.execution$.asObservable();
+  }
+
+  getLastStep(): Observable<string> {
+    return this.response$
+      .asObservable()
+      .pipe(map((response) => response.stepId));
   }
 
   getMaximumSteps(): Observable<number> {
@@ -51,7 +72,15 @@ export class SudokuSolverStateService {
   }
 
   canGoToNextStep(): Observable<boolean> {
-    return this.execution$.asObservable().pipe(map((e) => e === "PAUSED"));
+    return this.execution$
+      .asObservable()
+      .pipe(map((e) => e === "PAUSED" || e === "NOT_STARTED"));
+  }
+
+  canRestart(): Observable<boolean> {
+    return this.execution$
+      .asObservable()
+      .pipe(map((e) => e === "DONE" || e === "FAILED"));
   }
 
   canStartExecuting(): Observable<boolean> {
@@ -65,11 +94,21 @@ export class SudokuSolverStateService {
   }
 
   executeNextStep(): void {
+    if (!this.stopWatch.isStarted()) {
+      this.stopWatch.start();
+    }
+    if (this.execution$.getValue() === "NOT_STARTED") {
+      this.execution$.next("PAUSED");
+    }
     this.verificationResults$.next(undefined);
-    this.branches$.next(
-      this.solver.solveNextStep(this.branches$.getValue(), this),
+    this.response$.next(
+      this.solver.solveNextStep(this.getResponseBranches(), this),
     );
     this.stepsExecuted$.next(this.stepsExecuted$.getValue() + 1);
+  }
+
+  private getResponseBranches(): SudokuGrid[] {
+    return this.response$.getValue().branches;
   }
 
   finishExecuting(state: Extract<SolverExecution, "DONE" | "FAILED">): void {
@@ -82,16 +121,33 @@ export class SudokuSolverStateService {
   }
 
   reset(): void {
+    this.resetAllExceptSolution();
+    this.response$.next(this.createInitialSolverResponse());
+  }
+
+  restart(): void {
+    this.resetAllExceptSolution();
+    this.setInitialPuzzle(this.initialPuzzle);
+  }
+
+  private resetAllExceptSolution(): void {
     this.execution$.next("NOT_STARTED");
-    this.branches$.next([]);
     this.verificationResults$.next(undefined);
     this.stepsExecuted$.next(0);
     this.solver.reset();
     this.stopWatch.reset();
   }
 
+  setDelay(ms: number): void {
+    this.delay.next(ms);
+  }
+
   setInitialPuzzle(puzzle: SudokuGrid): void {
-    this.branches$.next([SudokuGridUtil.clone(puzzle)]);
+    this.initialPuzzle = SudokuGridUtil.clone(puzzle);
+    this.response$.next({
+      ...this.createInitialSolverResponse(),
+      branches: [SudokuGridUtil.clone(puzzle)],
+    });
   }
 
   setMaxSteps(max: number): void {
@@ -99,7 +155,6 @@ export class SudokuSolverStateService {
   }
 
   startExecuting(): void {
-    this.stopWatch.start();
     this.execution$.next("RUNNING");
     this.scheduleNextStep();
   }
@@ -110,13 +165,13 @@ export class SudokuSolverStateService {
     }
     if (this.execution$.getValue() === "RUNNING") {
       this.executeNextStep();
-      setTimeout(() => this.scheduleNextStep(), 0);
+      setTimeout(() => this.scheduleNextStep(), this.delay.getValue());
     }
   }
 
   updateVerificationResults(): void {
     this.verificationResults$.next(
-      this.branches$.getValue().map((grid) => this.verify.verify(grid)),
+      this.getResponseBranches().map((grid) => this.verify.verify(grid)),
     );
   }
 }

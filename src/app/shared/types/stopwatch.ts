@@ -2,6 +2,14 @@ export class StopWatch {
   private started: number | undefined;
   private stopped: number | undefined;
 
+  isStarted(): boolean {
+    return this.started != undefined;
+  }
+
+  isStopped(): boolean {
+    return this.started != undefined;
+  }
+
   start(): void {
     this.started = Date.now();
     this.stopped = undefined;
