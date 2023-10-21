@@ -1,0 +1,7 @@
+<div>{{ "SOLVER.STEPS.CALCULATED" | translate }}: {{ steps$ | async }}</div>
+<ng-container *ngIf="!!(lastStep$ | async)">
+  <div *ngIf="lastStepI18nKey$ | async as lastStepI18nKey">
+    {{ "SOLVER.STEPS.LAST" | translate }}:
+    {{ lastStepI18nKey | translate }}
+  </div>
+</ng-container>

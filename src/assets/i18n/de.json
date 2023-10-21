@@ -3,14 +3,17 @@
     "TITLE": "Sudoku lösen"
   },
   "SETTINGS": {
-    "CHANGE": "Einstellungen ändern",
+    "CHANGE": "Rätsel ändern",
     "DONE": "Fertig",
     "HEIGHT": "Höhe",
     "SELECT": "vorhandenes Sudoku",
     "TITLE": "Einstellungen",
     "WIDTH": "Breite",
     "SIZE": "Größe",
-    "HINTS": "Werte können eingegeben werden, indem man auf eine Zelle klickt und sie auf der Tastatur eingibt."
+    "HINTS": {
+      "ENTER_VALUES": "Werte können eingegeben werden, indem man auf eine Zelle klickt und sie auf der Tastatur eingibt.",
+      "SELECT_OR_SIZE": "Wählen Sie ein bestehendes Sudoku aus, das gelöst werden soll, oder geben Sie eine Größe ein. Anschließend können die Werte der Zellen eingegeben werden."
+    }
   },
   "PUZZLE": {
     "4x4": {
@@ -59,7 +62,8 @@
     "ACTIONS": {
       "PAUSE": "Lösen des Sudokus pausieren",
       "START": "Lösen des Sudokus starten",
-      "NEXT": "Nächsten Schritt lösen"
+      "NEXT": "Nächsten Schritt lösen",
+      "RESTART": "Sudoku erneut lösen"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -70,8 +74,25 @@
       "RUNNING": "Lösung wird berechnet..."
     },
     "STEPS": {
-      "CALCULATED": "Berechnete Schritte",
-      "MAX": "Maximale Berechnungsschritte"
+      "CALCULATED": "Schritte",
+      "MAX": {
+        "MAX": "Maximale Schritte",
+        "TOOLTIP": "Maximale Schritte, die der Solver ausführt, bevor er beendet wird. Dies verhindert eine Endlosschleife, wenn keine Lösung gefunden wird."
+      },
+      "LAST": "Letzter Schritt",
+      "STEP": {
+        "CLEANUP_POSSIBLE_VALUES": "Gefundene Werte aus möglichen Werten entfernen",
+        "ELIMINATE": "Werte durch Eliminierung finden",
+        "SEARCH": "Werte über die Suche finden",
+        "EMPTY_CELLS_TO_POSSIBLE_VALUES": "Mögliche Werte in leeren Zellen bestimmen",
+        "SINGLE_POSSIBLE_VALUE": "Zellen, in denen nur ein Wert möglich ist, konvertieren",
+        "VALUES_POSSIBLE_ONCE": "Suche nach Werten, die nur einmal möglich sind",
+        "COMPLETE": "Überprüfe, ob das Sudoku vollständig ist"
+      }
+    },
+    "DELAY": {
+      "DELAY": "Verzögerung",
+      "TOOLTIP": "Wartezeit in Millisekunden zwischen den Schritten beim Lösen des Sudokus"
     }
   }
 }

@@ -1,7 +1,7 @@
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { OnlyPossibleNumber } from "./only-possible-number";
+import { SinglePossibleValue } from "./single-possible-value";
 
-describe(OnlyPossibleNumber.name, () => {
+describe(SinglePossibleValue.name, () => {
   it("should always convert the next cell with only one possible value left", () => {
     const grid: SudokuGrid = [
       [1, [2], 3, 4],
@@ -9,7 +9,7 @@ describe(OnlyPossibleNumber.name, () => {
       [2, undefined, [4], 1],
       [4, undefined, 2, 3],
     ];
-    let result = new OnlyPossibleNumber().run(grid);
+    let result = new SinglePossibleValue().run(grid);
 
     expect(result).toBeTrue();
     expect(grid).toEqual([
@@ -19,7 +19,7 @@ describe(OnlyPossibleNumber.name, () => {
       [4, undefined, 2, 3],
     ]);
 
-    result = new OnlyPossibleNumber().run(grid);
+    result = new SinglePossibleValue().run(grid);
     expect(result).toBeTrue();
     expect(grid).toEqual([
       [1, 2, 3, 4],
@@ -41,7 +41,7 @@ describe(OnlyPossibleNumber.name, () => {
         [1, 2, 3, 4],
       ],
     ];
-    const result = new OnlyPossibleNumber().run(grid);
+    const result = new SinglePossibleValue().run(grid);
     expect(result).toBeFalse();
   });
 });

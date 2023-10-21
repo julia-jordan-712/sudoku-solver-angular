@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { CleanupPossibleNumbers } from "@app/core/solver/solver-eliminate/cleanup-possible-numbers";
 import { EmptyCellsToPossibleNumbers } from "@app/core/solver/solver-eliminate/empty-cells-to-possible-numbers";
-import { OnlyPossibleNumber } from "@app/core/solver/solver-eliminate/only-possible-number";
+import { SinglePossibleValue } from "@app/core/solver/solver-eliminate/single-possible-value";
 import { SolverStepResponse } from "@app/core/solver/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -21,31 +21,34 @@ export class SolverEliminate extends Solver {
   }
 
   override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
-    const changedSomething: boolean = this.execute(
+    const response: Omit<SolverStepResponse, "branches"> = this.execute(
       this.getCurrentBranch(branches),
     );
-    return { branches, failed: !changedSomething };
+    return { ...response, branches };
   }
 
-  private execute(grid: Nullable<SudokuGrid>): boolean {
+  private execute(
+    grid: Nullable<SudokuGrid>,
+  ): Omit<SolverStepResponse, "branches"> {
     if (!isDefined(grid)) {
-      return false;
+      return { stepId: "ELIMINATE", failed: true };
     }
-    let changedSomething = false;
 
     if (!this.allCellsContainValuesOrPossibleValues) {
       const foundNewPossibleValues: boolean =
         new EmptyCellsToPossibleNumbers().run(grid);
       this.allCellsContainValuesOrPossibleValues = !foundNewPossibleValues;
-      changedSomething = foundNewPossibleValues;
+      if (foundNewPossibleValues) {
+        return { stepId: "EMPTY_CELLS_TO_POSSIBLE_VALUES", failed: false };
+      }
     }
-    if (!changedSomething) {
-      changedSomething = new OnlyPossibleNumber().run(grid);
+    if (new SinglePossibleValue().run(grid)) {
+      return { stepId: "SINGLE_POSSIBLE_VALUE", failed: false };
     }
-    if (!changedSomething) {
-      changedSomething = new CleanupPossibleNumbers().run(grid);
+    if (new CleanupPossibleNumbers().run(grid)) {
+      return { stepId: "CLEANUP_POSSIBLE_VALUES", failed: false };
     }
 
-    return changedSomething;
+    return { stepId: "ELIMINATE", failed: true };
   }
 }

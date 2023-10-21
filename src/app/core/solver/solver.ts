@@ -12,10 +12,14 @@ export abstract class Solver {
 
   executeNextStep(branches: SudokuGrid[]): SolverResponse {
     if (this.isDone(this.getCurrentBranch(branches))) {
-      return { branches, status: "COMPLETE" };
+      return { branches, stepId: "COMPLETE", status: "COMPLETE" };
     }
     const response: SolverStepResponse = this.executeSingleStep(branches);
-    return { branches, status: response.failed ? "FAILED" : "INCOMPLETE" };
+    return {
+      branches: response.branches,
+      stepId: response.stepId,
+      status: response.failed ? "FAILED" : "INCOMPLETE",
+    };
   }
 
   protected abstract executeSingleStep(

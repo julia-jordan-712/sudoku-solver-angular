@@ -1,0 +1,23 @@
+{{ "SOLVER.STATUS.TITLE" | translate }}:
+<ng-container [ngSwitch]="state$ | async">
+  <div class="state" *ngSwitchCase="'NOT_STARTED'">
+    {{ "SOLVER.STATUS.NOT_STARTED" | translate }}
+  </div>
+  <div class="state" *ngSwitchCase="'RUNNING'">
+    {{ "SOLVER.STATUS.RUNNING" | translate }}
+  </div>
+  <div class="state" *ngSwitchCase="'PAUSED'">
+    {{ "SOLVER.STATUS.PAUSED" | translate }}
+  </div>
+  <div class="state success" *ngSwitchCase="'DONE'">
+    {{
+      "SOLVER.STATUS.DONE"
+        | translate
+          : { time: getTime() | number: "1.1-1" : this.translate.currentLang }
+    }}
+  </div>
+  <div class="state failure" *ngSwitchCase="'FAILED'">
+    {{ "SOLVER.STATUS.FAILED" | translate }}
+  </div>
+  <ng-container *ngSwitchDefault></ng-container>
+</ng-container>

@@ -3,7 +3,7 @@ import { TestPuzzle } from "@app/test/puzzles/test-puzzle";
 export class PuzzleHard {
   public static readonly PUZZLE_1: TestPuzzle = {
     puzzle: [
-      [undefined, 4, , 1, 5, undefined, undefined, 8, 3],
+      [undefined, 4, undefined, 1, 5, undefined, undefined, 8, 3],
       [
         undefined,
         3,

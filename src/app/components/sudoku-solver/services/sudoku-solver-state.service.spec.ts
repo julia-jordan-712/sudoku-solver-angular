@@ -1,5 +1,7 @@
 import { TestBed, fakeAsync, tick } from "@angular/core/testing";
+import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
@@ -25,7 +27,7 @@ describe(SudokuSolverStateService.name, () => {
   describe("start/pause/next", () => {
     describe("initially", () => {
       beforeEach(() => {
-        spyOn(solver, "solveNextStep").and.callFake((b) => b);
+        spyOnSolveNextStepAndReturn();
       });
 
       it("should have state NOT_STARTED", (done) => {
@@ -58,12 +60,22 @@ describe(SudokuSolverStateService.name, () => {
           });
       });
 
-      it("should not allow to go to next step initially", (done) => {
+      it("should allow to go to next step initially", (done) => {
         service
           .canGoToNextStep()
           .pipe(first())
           .subscribe((canGoToNext) => {
-            expect(canGoToNext).toBeFalse();
+            expect(canGoToNext).toBeTrue();
+            done();
+          });
+      });
+
+      it("should not allow to restart initially", (done) => {
+        service
+          .canRestart()
+          .pipe(first())
+          .subscribe((canRestart) => {
+            expect(canRestart).toBeFalse();
             done();
           });
       });
@@ -71,7 +83,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("running", () => {
       beforeEach(() => {
-        spyOn(solver, "solveNextStep").and.callFake((b) => b);
+        spyOnSolveNextStepAndReturn();
         service.startExecuting();
       });
 
@@ -114,11 +126,21 @@ describe(SudokuSolverStateService.name, () => {
             done();
           });
       });
+
+      it("should not allow to restart while running", (done) => {
+        service
+          .canRestart()
+          .pipe(first())
+          .subscribe((canRestart) => {
+            expect(canRestart).toBeFalse();
+            done();
+          });
+      });
     });
 
     describe("paused", () => {
       beforeEach(() => {
-        spyOn(solver, "solveNextStep").and.callFake((b) => b);
+        spyOnSolveNextStepAndReturn();
         service.startExecuting();
         service.pauseExecuting();
       });
@@ -162,11 +184,21 @@ describe(SudokuSolverStateService.name, () => {
             done();
           });
       });
+
+      it("should not allow to restart while paused", (done) => {
+        service
+          .canRestart()
+          .pipe(first())
+          .subscribe((canRestart) => {
+            expect(canRestart).toBeFalse();
+            done();
+          });
+      });
     });
 
     describe("go to next step", () => {
       beforeEach(() => {
-        spyOn(solver, "solveNextStep").and.callFake((b) => b);
+        spyOnSolveNextStepAndReturn();
         service.startExecuting();
         service.pauseExecuting();
         service.executeNextStep();
@@ -201,11 +233,21 @@ describe(SudokuSolverStateService.name, () => {
             done();
           });
       });
+
+      it("should not allow to restart after going to next step", (done) => {
+        service
+          .canRestart()
+          .pipe(first())
+          .subscribe((canRestart) => {
+            expect(canRestart).toBeFalse();
+            done();
+          });
+      });
     });
 
     describe("continuing after paused", () => {
       beforeEach(() => {
-        spyOn(solver, "solveNextStep").and.callFake((b) => b);
+        spyOnSolveNextStepAndReturn();
         service.startExecuting();
         service.pauseExecuting();
         service.startExecuting();
@@ -250,6 +292,16 @@ describe(SudokuSolverStateService.name, () => {
             done();
           });
       });
+
+      it("should not allow to restart after continuing", (done) => {
+        service
+          .canRestart()
+          .pipe(first())
+          .subscribe((canRestart) => {
+            expect(canRestart).toBeFalse();
+            done();
+          });
+      });
     });
 
     describe("finished", () => {
@@ -259,7 +311,7 @@ describe(SudokuSolverStateService.name, () => {
 
       describe("success", () => {
         beforeEach(() => {
-          spyOn(solver, "solveNextStep").and.callFake((b) => b);
+          spyOnSolveNextStepAndReturn();
           service.startExecuting();
           service.finishExecuting("DONE");
         });
@@ -303,11 +355,21 @@ describe(SudokuSolverStateService.name, () => {
               done();
             });
         });
+
+        it("should allow to restart when done", (done) => {
+          service
+            .canRestart()
+            .pipe(first())
+            .subscribe((canRestart) => {
+              expect(canRestart).toBeTrue();
+              done();
+            });
+        });
       });
 
       describe("failure", () => {
         beforeEach(() => {
-          spyOn(solver, "solveNextStep").and.callFake((b) => b);
+          spyOnSolveNextStepAndReturn();
           service.startExecuting();
           service.finishExecuting("FAILED");
         });
@@ -351,13 +413,23 @@ describe(SudokuSolverStateService.name, () => {
               done();
             });
         });
+
+        it("should allow to restart when failed", (done) => {
+          service
+            .canRestart()
+            .pipe(first())
+            .subscribe((canRestart) => {
+              expect(canRestart).toBeTrue();
+              done();
+            });
+        });
       });
     });
   });
 
   describe("calling solver", () => {
     it("should call solver with puzzle to solve when starting", () => {
-      spyOn(solver, "solveNextStep").and.callFake((b) => b);
+      spyOnSolveNextStepAndReturn();
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       expect(solver.solveNextStep).not.toHaveBeenCalled();
 
@@ -369,9 +441,7 @@ describe(SudokuSolverStateService.name, () => {
     });
 
     it("should call solver again with puzzle from last step while running", fakeAsync(() => {
-      spyOn(solver, "solveNextStep").and.callFake(() => [
-        PuzzleAdvanced.PUZZLE_1.puzzle,
-      ]);
+      spyOnSolveNextStepAndReturnValue([PuzzleAdvanced.PUZZLE_1.puzzle]);
 
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       service.setMaxSteps(3);
@@ -391,10 +461,7 @@ describe(SudokuSolverStateService.name, () => {
     }));
 
     it("should call solver with puzzle to solve when going to next step", () => {
-      const solverSpy: jasmine.Spy = spyOn(
-        solver,
-        "solveNextStep",
-      ).and.callFake((b) => b);
+      const solverSpy: jasmine.Spy = spyOnSolveNextStepAndReturn();
 
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       service.startExecuting();
@@ -412,7 +479,7 @@ describe(SudokuSolverStateService.name, () => {
 
   describe("reset", () => {
     beforeEach(() => {
-      spyOn(solver, "solveNextStep").and.callFake((b) => b);
+      spyOnSolveNextStepAndReturn();
       spyOn(solver, "reset").and.callFake(() => {});
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
       service.startExecuting();
@@ -454,13 +521,23 @@ describe(SudokuSolverStateService.name, () => {
         });
     });
 
-    it("should not allow to go to next step after reset", (done) => {
+    it("should allow to go to next step after reset", (done) => {
       service.reset();
       service
         .canGoToNextStep()
         .pipe(first())
         .subscribe((canGoToNext) => {
-          expect(canGoToNext).toBeFalse();
+          expect(canGoToNext).toBeTrue();
+          done();
+        });
+    });
+
+    it("should not allow to restart after reset", (done) => {
+      service
+        .canRestart()
+        .pipe(first())
+        .subscribe((canRestart) => {
+          expect(canRestart).toBeFalse();
           done();
         });
     });
@@ -516,7 +593,7 @@ describe(SudokuSolverStateService.name, () => {
 
   describe("stopping time for executing the solver", () => {
     beforeEach(() => {
-      spyOn(solver, "solveNextStep").and.callFake((b) => b);
+      spyOnSolveNextStepAndReturn();
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
     });
 
@@ -556,4 +633,24 @@ describe(SudokuSolverStateService.name, () => {
       expect(service.getTimeElapsed()).toEqual(200);
     }));
   });
+
+  function spyOnSolveNextStepAndReturn(): jasmine.Spy {
+    return spyOn(solver, "solveNextStep").and.callFake((b) => {
+      return {
+        branches: b,
+        status: "INCOMPLETE",
+        stepId: "",
+      } satisfies SolverResponse;
+    });
+  }
+
+  function spyOnSolveNextStepAndReturnValue(value: SudokuGrid[]): jasmine.Spy {
+    return spyOn(solver, "solveNextStep").and.callFake(() => {
+      return {
+        branches: value,
+        status: "INCOMPLETE",
+        stepId: "",
+      } satisfies SolverResponse;
+    });
+  }
 });

@@ -17,34 +17,3 @@ $icon-size: 24px;
     width: $icon-size;
   }
 }
-
-.states {
-  display: flex;
-  gap: 0.5em;
-  align-items: center;
-
-  .state {
-    padding: 0.25em 0.5em;
-    border-radius: 0.25em;
-    background-color: $label-background-color;
-    color: $label-color;
-  }
-
-  .success {
-    background-color: $valid-background-color;
-    color: $valid-color;
-  }
-
-  .failure {
-    background-color: $invalid-background-color;
-    color: $invalid-color;
-  }
-}
-
-#maxSteps {
-  ::ng-deep {
-    input {
-      width: 7em;
-    }
-  }
-}

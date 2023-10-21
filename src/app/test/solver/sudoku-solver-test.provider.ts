@@ -11,7 +11,7 @@ export class TestSolver1 extends Solver {
     return 1;
   }
   override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
-    return { branches, failed: false };
+    return { branches, stepId: "TEST_1", failed: false };
   }
   override reset(): void {
     // nothing to do
@@ -23,7 +23,7 @@ export class TestSolver2 extends Solver {
     return 2;
   }
   override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
-    return { branches, failed: false };
+    return { branches, stepId: "TEST_2", failed: false };
   }
   override reset(): void {
     // nothing to do

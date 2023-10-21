@@ -4,13 +4,16 @@
   },
   "SETTINGS": {
     "TITLE": "Settings",
-    "CHANGE": "Change settings",
+    "CHANGE": "Change puzzle",
     "DONE": "Done",
     "WIDTH": "Width",
     "HEIGHT": "Height",
     "SELECT": "Select existing Sudoku",
     "SIZE": "Size",
-    "HINTS": "Values can be entered by clicking on a cell and typing on the keyboard."
+    "HINTS": {
+      "ENTER_VALUES": "Values can be set by clicking on a cell and typing on the keyboard.",
+      "SELECT_OR_SIZE": "Select an existing Sudoku to be solved or enter a size. Afterwards the values of the cells can be set."
+    }
   },
   "PUZZLE": {
     "4x4": {
@@ -59,7 +62,8 @@
     "ACTIONS": {
       "START": "Start solving the Sudoku",
       "PAUSE": "Pause solving the Sudoku",
-      "NEXT": "Solve next step"
+      "NEXT": "Solve next step",
+      "RESTART": "Restart solving the Sudoku"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -70,8 +74,25 @@
       "FAILED": "Could not find solution"
     },
     "STEPS": {
-      "CALCULATED": "Calculated steps",
-      "MAX": "Maximum calculation steps"
+      "CALCULATED": "Steps",
+      "MAX": {
+        "MAX": "Maximum steps",
+        "TOOLTIP": "Maximum steps which the solver executes before it terminates. This prevents an infinite-loop, if no solution is found."
+      },
+      "LAST": "Last step",
+      "STEP": {
+        "CLEANUP_POSSIBLE_VALUES": "Remove found values from possible values",
+        "EMPTY_CELLS_TO_POSSIBLE_VALUES": "Determine possible values in empty cells",
+        "SINGLE_POSSIBLE_VALUE": "Convert cells where only one value is possible",
+        "ELIMINATE": "Find values via elimination",
+        "SEARCH": "Find values via search",
+        "VALUES_POSSIBLE_ONCE": "Search for values which are possible only once",
+        "COMPLETE": "Check whether Sudoku is complete"
+      }
+    },
+    "DELAY": {
+      "DELAY": "Delay",
+      "TOOLTIP": "Waiting time in milliseconds between steps while solving the Sudoku"
     }
   }
 }
