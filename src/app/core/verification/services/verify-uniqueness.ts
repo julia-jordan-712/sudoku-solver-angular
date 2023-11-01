@@ -1,3 +1,4 @@
+import { Logger } from "@app/core/log/logger";
 import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
@@ -5,6 +6,7 @@ import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
 import { Index } from "@app/shared/types";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
+import { StopWatch } from "@app/shared/types/stopwatch";
 import {
   SudokuGrid,
   SudokuGridCell,
@@ -24,14 +26,20 @@ export class VerifyUniqueness {
   verify(
     options: VerificationOptions = { trackUniquenessViolations: false },
   ): VerificationResult {
-    const result: VerificationResult = VerificationResult.createValid();
-    this.verifyRowsAndColumnsAndSquares(
-      options,
-      this.candidate,
-      this.size,
-      result,
+    return StopWatch.monitor(
+      () => {
+        const result: VerificationResult = VerificationResult.createValid();
+        this.verifyRowsAndColumnsAndSquares(
+          options,
+          this.candidate,
+          this.size,
+          result,
+        );
+        return result;
+      },
+      new Logger(VerifyUniqueness.name),
+      { message: VerifyUniqueness.name },
     );
-    return result;
   }
 
   private verifyRowsAndColumnsAndSquares(

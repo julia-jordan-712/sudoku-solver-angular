@@ -11,7 +11,9 @@ import {
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { SudokuGridCellValidator } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.validator";
+import { Logger } from "@app/core/log/logger";
 import { Nullable } from "@app/shared/types/nullable";
+import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
 import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { Subscription } from "rxjs";
@@ -22,6 +24,7 @@ import { Subscription } from "rxjs";
   styleUrls: ["./sudoku-grid-cell.component.scss"],
 })
 export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
+  private logger: Logger = new Logger(SudokuGridCellComponent.name);
   value: Nullable<number>;
 
   notes: Nullable<number[]>;
@@ -77,6 +80,12 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    StopWatch.monitor<void>(() => this.onChanges(changes), this.logger, {
+      message: "ngOnChanges",
+    });
+  }
+
+  private onChanges(changes: SimpleChanges): void {
     if (changes["maxValue"]) {
       this.numbers = Array(this.maxValue)
         .fill(0)

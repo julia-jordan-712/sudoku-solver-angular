@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
+import { Logger } from "@app/core/log/logger";
 import { Nullable } from "@app/shared/types/nullable";
+import { StopWatch } from "@app/shared/types/stopwatch";
 import {
   SudokuGrid,
   SudokuGridCell,
@@ -11,6 +13,8 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
   providedIn: "root",
 })
 export class SudokuSettingsGridUpdateService {
+  private logger: Logger = new Logger(SudokuSettingsGridUpdateService.name);
+
   updateGrid(
     value: SudokuGrid,
     height: Nullable<number>,
@@ -36,10 +40,16 @@ export class SudokuSettingsGridUpdateService {
     height: Nullable<number>,
     width: Nullable<number>,
   ): SudokuGrid {
-    const result: SudokuGrid = SudokuGridUtil.clone(value);
-    this.updateHeight(result, height ?? value.length);
-    this.updateWidth(result, width ?? value[0]?.length ?? 0);
-    return result;
+    return StopWatch.monitor(
+      () => {
+        const result: SudokuGrid = SudokuGridUtil.clone(value);
+        this.updateHeight(result, height ?? value.length);
+        this.updateWidth(result, width ?? value[0]?.length ?? 0);
+        return result;
+      },
+      this.logger,
+      { message: "Updating grid" },
+    );
   }
 
   private updateHeight(value: SudokuGrid, height: number): void {

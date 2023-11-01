@@ -1,5 +1,7 @@
+import { Logger } from "@app/core/log/logger";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
+import { StopWatch } from "@app/shared/types/stopwatch";
 import {
   SudokuGrid,
   SudokuGridCell,
@@ -10,13 +12,19 @@ import { isDefined } from "@app/shared/util/is-defined";
 
 export class SudokuGridUtil {
   static clone(grid: SudokuGrid): SudokuGrid {
-    const result: SudokuGrid = [];
-    grid.forEach((row) => {
-      const newRow: SudokuGridRow = [];
-      row.forEach((cell: SudokuGridCell) => newRow.push(cell));
-      result.push(newRow);
-    });
-    return result;
+    return StopWatch.monitor(
+      () => {
+        const result: SudokuGrid = [];
+        grid.forEach((row) => {
+          const newRow: SudokuGridRow = [];
+          row.forEach((cell: SudokuGridCell) => newRow.push(cell));
+          result.push(newRow);
+        });
+        return result;
+      },
+      new Logger(SudokuGridUtil.name),
+      { message: "Cloning Sudoku" },
+    );
   }
 
   static getRowValues(grid: SudokuGrid, rowIndex: number): number[] {
