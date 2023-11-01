@@ -23,8 +23,8 @@
   flex-direction: column;
   height: 100vh;
   justify-content: space-between;
-  overflow: hidden;
 
+  min-width: fit-content;
   flex-shrink: 1;
   border-left: $border;
 
