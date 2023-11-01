@@ -54,7 +54,6 @@ export class SudokuSettingsComponent {
   }
 
   setSize(size: number): void {
-    this.settingState.setHeight(size);
-    this.settingState.setWidth(size);
+    this.settingState.setHeightAndWidth(size, size);
   }
 }
