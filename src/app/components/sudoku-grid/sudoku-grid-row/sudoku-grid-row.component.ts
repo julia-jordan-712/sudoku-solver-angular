@@ -26,6 +26,9 @@ export class SudokuGridRowComponent {
   @Input()
   columnsWithDuplicates: Nullable<number[]>;
 
+  @Input()
+  readonly: Nullable<boolean>;
+
   @Output()
   valueChange: EventEmitter<SudokuGridRow> = new EventEmitter();
 

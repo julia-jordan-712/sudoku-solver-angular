@@ -11,6 +11,10 @@ export class SudokuGridCellValidator {
   readonly validator: ValidatorFn = (control: AbstractControl) =>
     this.validate(control.value);
 
+  isValid(value: Nullable<number>): boolean {
+    return this.validate(value) == null;
+  }
+
   validate(value: Nullable<number>): ValidationErrors | null {
     if (value == null) {
       return null;

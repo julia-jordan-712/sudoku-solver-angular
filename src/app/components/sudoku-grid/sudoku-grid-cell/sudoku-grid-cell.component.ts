@@ -57,12 +57,18 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   @HostBinding("class.duplicate")
   isDuplicate = false;
+  @HostBinding("class.invalid")
+  invalid = false;
 
   @HostBinding("class.focused")
   isFocused = false;
   setFocus(focused: boolean): void {
     this.isFocused = focused;
   }
+
+  @Input()
+  @HostBinding("class.readonly")
+  readonly: Nullable<boolean> = false;
 
   @Output()
   valueChange: EventEmitter<number> = new EventEmitter();
@@ -99,6 +105,7 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
       if (isArray(this.cell)) {
         this.notes = this.cell;
         this.value = null;
+        this.readonly = true;
       } else if (isNotArray(this.cell)) {
         this.notes = null;
         this.value = this.cell;
@@ -114,15 +121,15 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private onChange(value: number): void {
-    if (this.inputField.valid) {
-      this.valueChange.emit(value);
-    } else {
+    if (this.readonly || !this.validator.isValid(value)) {
       this.resetValue();
+    } else {
+      this.valueChange.emit(value);
     }
   }
 
   private resetValue(): void {
-    this.inputField.setValue(this.value, { onlySelf: true, emitEvent: false });
+    this.inputField.reset(this.value, { onlySelf: true, emitEvent: false });
   }
 
   trackByFn(index: number): number {

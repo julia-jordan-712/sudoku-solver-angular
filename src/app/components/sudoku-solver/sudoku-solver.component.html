@@ -12,6 +12,7 @@
       <app-sudoku-grid
         [grid]="branch"
         [verification]="((verification$ | async) ?? [])[i]"
+        [readonly]="true"
       ></app-sudoku-grid>
     </div>
   </ng-container>
