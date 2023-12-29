@@ -18,14 +18,20 @@
     border-bottom-width: 3px;
   }
 
-  &.duplicate {
+  &.focused {
+    background-color: $secondary-color;
+    color: $on-secondary-color;
+  }
+
+  &.duplicate,
+  &.invalid {
     background-color: $invalid-background-color;
     color: $invalid-color;
   }
 
-  &.focused {
-    background-color: $secondary-color;
-    color: $on-secondary-color;
+  cursor: pointer;
+  &.readonly {
+    cursor: not-allowed;
   }
 }
 
@@ -47,10 +53,10 @@ input {
     margin: 0;
   }
 
-  cursor: pointer;
+  cursor: inherit;
   &:hover,
   &:focus {
-    cursor: pointer;
+    cursor: inherit;
   }
 
   &::selection {

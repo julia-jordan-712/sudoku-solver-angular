@@ -27,6 +27,9 @@ export class SudokuGridCellTestComponent {
   @Input()
   isDuplicate = false;
 
+  @Input()
+  readonly = false;
+
   @Output()
   valueChange: EventEmitter<number> = new EventEmitter();
 

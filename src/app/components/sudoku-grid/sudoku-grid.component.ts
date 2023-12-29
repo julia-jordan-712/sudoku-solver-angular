@@ -26,6 +26,8 @@ export class SudokuGridComponent {
   verification: Nullable<VerificationResult>;
   @Input()
   duplications: Nullable<DuplicationColumnIndicesToRowIndices>;
+  @Input()
+  readonly: Nullable<boolean>;
 
   @Output()
   valueChange: EventEmitter<SudokuGrid> = new EventEmitter();

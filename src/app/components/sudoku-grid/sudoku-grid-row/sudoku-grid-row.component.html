@@ -16,6 +16,7 @@
       [borderBottom]="borderBottom"
       [borderLeft]="first"
       [maxValue]="_row.length"
+      [readonly]="readonly"
       (valueChange)="onCellChanged($event, i)"
     ></app-sudoku-grid-cell>
   </ng-container>
