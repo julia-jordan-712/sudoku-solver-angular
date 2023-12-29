@@ -4,12 +4,14 @@ import {
   SudokuDropdownSelectionService,
 } from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
 import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
+import { Logger } from "@app/core/log/logger";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Index } from "@app/shared/types";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { Nullable } from "@app/shared/types/nullable";
+import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
 import { Objects } from "@app/shared/util/objects";
@@ -19,6 +21,8 @@ import { BehaviorSubject, Observable, filter, map } from "rxjs";
   providedIn: "root",
 })
 export class SudokuSettingsStateService implements OnDestroy {
+  private logger: Logger = new Logger(SudokuSettingsStateService.name);
+
   private gridUpdate = inject(SudokuSettingsGridUpdateService);
   private dropdownSelection = inject(SudokuDropdownSelectionService);
   private verify = inject(VerifySolutionService);
@@ -28,10 +32,13 @@ export class SudokuSettingsStateService implements OnDestroy {
   private width$ = new BehaviorSubject<Nullable<number>>(undefined);
   private grid$ = new BehaviorSubject<Nullable<SudokuGrid>>(undefined);
 
-  private dropdownSelectionItems = [...this.dropdownSelection.getItems()];
+  private dropdownSelectionItems = [
+    this.dropdownSelection.NO_SELECTION_ITEM,
+    ...this.dropdownSelection.getItems(),
+  ];
   private dropdownSelectionItem$ =
     new BehaviorSubject<SudokuDropdownSelectionItem>(
-      this.dropdownSelectionItems[0],
+      this.dropdownSelection.NO_SELECTION_ITEM,
     );
 
   public readonly verification$: Observable<VerificationResult> =
@@ -53,6 +60,10 @@ export class SudokuSettingsStateService implements OnDestroy {
     this.height$.complete();
     this.width$.complete();
     this.grid$.complete();
+  }
+
+  clearSelection(): void {
+    this.dropdownSelectionItem$.next(this.dropdownSelection.NO_SELECTION_ITEM);
   }
 
   isConfirmed(): Observable<boolean> {
@@ -95,12 +106,8 @@ export class SudokuSettingsStateService implements OnDestroy {
     this.width$.next(grid?.[0]?.length);
   }
 
-  setHeight(height: number): void {
+  setHeightAndWidth(height: number, width: number): void {
     this.height$.next(height);
-    this.updateGrid();
-  }
-
-  setWidth(width: number): void {
     this.width$.next(width);
     this.updateGrid();
   }
@@ -118,14 +125,20 @@ export class SudokuSettingsStateService implements OnDestroy {
   private convertDuplicates(
     duplicates: VerificationDuplicates,
   ): DuplicationColumnIndicesToRowIndices {
-    const cellPositions: CellPosition[] = Objects.uniqueArray(
-      Object.values(duplicates).flat(),
-      (a, b) => a.equals(b),
-    );
-    return Objects.arrayToArrayIndex(
-      cellPositions,
-      (c) => c.x.toString(),
-      (c) => c.y,
+    return StopWatch.monitor(
+      () => {
+        const cellPositions: CellPosition[] = Objects.uniqueArray(
+          Object.values(duplicates).flat(),
+          (a, b) => a.equals(b),
+        );
+        return Objects.arrayToArrayIndex(
+          cellPositions,
+          (c) => c.x.toString(),
+          (c) => c.y,
+        );
+      },
+      this.logger,
+      { message: "Convert duplicates" },
     );
   }
 }

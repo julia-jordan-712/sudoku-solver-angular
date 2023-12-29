@@ -12,7 +12,7 @@
     "SIZE": "Größe",
     "HINTS": {
       "ENTER_VALUES": "Werte können eingegeben werden, indem man auf eine Zelle klickt und sie auf der Tastatur eingibt.",
-      "SELECT_OR_SIZE": "Wählen Sie ein bestehendes Sudoku aus, das gelöst werden soll, oder geben Sie eine Größe ein. Anschließend können die Werte der Zellen eingegeben werden."
+      "SELECT_OR_SIZE": "Wählen Sie ein bestehendes Sudoku aus, das gelöst werden soll, oder wählen Sie eine Größe. Anschließend können die Werte der Zellen eingegeben werden."
     }
   },
   "PUZZLE": {

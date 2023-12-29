@@ -9,7 +9,7 @@ import { VerificationResult } from "@app/core/verification/types/verification-re
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
-import { Observable, filter, take } from "rxjs";
+import { Observable, filter, first } from "rxjs";
 
 @Component({
   selector: "app-sudoku-settings",
@@ -41,7 +41,7 @@ export class SudokuSettingsComponent {
     this.settingState.setConfirmed(true);
     this.settingState
       .getGrid()
-      .pipe(take(1), filter(isDefined))
+      .pipe(first(), filter(isDefined))
       .subscribe((puzzle) => this.solverState.setInitialPuzzle(puzzle));
   }
 
@@ -54,7 +54,7 @@ export class SudokuSettingsComponent {
   }
 
   setSize(size: number): void {
-    this.settingState.setHeight(size);
-    this.settingState.setWidth(size);
+    this.settingState.clearSelection();
+    this.settingState.setHeightAndWidth(size, size);
   }
 }

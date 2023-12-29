@@ -1,3 +1,5 @@
+import { Logger } from "@app/core/log/logger";
+
 export class StopWatch {
   private started: number | undefined;
   private stopped: number | undefined;
@@ -30,5 +32,24 @@ export class StopWatch {
       : this.stopped != undefined
       ? this.stopped - this.started
       : Date.now() - this.started;
+  }
+
+  static monitor<T>(
+    runnable: () => T,
+    logger: Logger,
+    data?: { message?: string; threshold?: number },
+  ): T {
+    const stopWatch = new StopWatch();
+    stopWatch.start();
+
+    const result: T = runnable();
+
+    stopWatch.stop();
+    if (stopWatch.timeElapsed() >= (data?.threshold ?? 10)) {
+      logger.logWarning(
+        `${data?.message ?? runnable.name} took ${stopWatch.timeElapsed()}ms`,
+      );
+    }
+    return result;
   }
 }

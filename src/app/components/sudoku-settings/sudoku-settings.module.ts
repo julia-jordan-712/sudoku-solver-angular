@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { IconModule } from "@app/components/icon/icon.module";
 import { DropdownInputModule } from "@app/components/input-field/dropdown-input/dropdown-input.module";
 import { NumberInputModule } from "@app/components/input-field/number-input/number-input.module";
+import { SelectionListModule } from "@app/components/input-field/selection-list/selection-list.module";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { SudokuSettingsComponent } from "./sudoku-settings.component";
@@ -14,6 +15,7 @@ import { SudokuSettingsComponent } from "./sudoku-settings.component";
     DropdownInputModule,
     IconModule,
     NumberInputModule,
+    SelectionListModule,
     SudokuGridModule,
     TranslateModule,
   ],

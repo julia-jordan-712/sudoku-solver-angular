@@ -1,18 +1,26 @@
+import { Logger } from "@app/core/log/logger";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
 import { VerifySquareResult } from "@app/core/verification/types/verify-square-result";
+import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 
 export class VerifySquare {
   constructor(private candidate: SudokuGrid) {}
 
   verifyAndGetSize(): VerifySquareResult {
-    const result: VerificationResult = VerificationResult.createValid();
-    const size: number = this.verifyIsSquare(this.candidate, result);
-    if (result.isValid()) {
-      this.verifyConsistsOfSquares(size, result);
-    }
-    return { result, size };
+    return StopWatch.monitor(
+      () => {
+        const result: VerificationResult = VerificationResult.createValid();
+        const size: number = this.verifyIsSquare(this.candidate, result);
+        if (result.isValid()) {
+          this.verifyConsistsOfSquares(size, result);
+        }
+        return { result, size };
+      },
+      new Logger(VerifySquare.name),
+      { message: VerifySquare.name },
+    );
   }
 
   private verifyIsSquare(area: SudokuGrid, result: VerificationResult): number {

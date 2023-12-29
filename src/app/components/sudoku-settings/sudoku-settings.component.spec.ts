@@ -3,6 +3,7 @@ import { By } from "@angular/platform-browser";
 import { IconModule } from "@app/components/icon/icon.module";
 import { DropdownInputTestComponent } from "@app/test/components/dropdown-input-test.component";
 import { NumberInputTestComponent } from "@app/test/components/number-input-test.component";
+import { SelectionListTestComponent } from "@app/test/components/selection-list-test.component";
 import { SudokuGridTestComponent } from "@app/test/components/sudoku-grid-test.component";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
@@ -18,7 +19,7 @@ describe(SudokuSettingsComponent.name, () => {
       declarations: [
         SudokuSettingsComponent,
         DropdownInputTestComponent,
-        NumberInputTestComponent,
+        SelectionListTestComponent,
         SudokuGridTestComponent,
       ],
       imports: [TranslateTestingModule.withTranslations({}), IconModule],
@@ -87,7 +88,7 @@ describe(SudokuSettingsComponent.name, () => {
     expect(grid.verification?.isValid()).toEqual(false);
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("3");
-    expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
+    expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(true);
 
     size.change(4);
@@ -101,7 +102,7 @@ describe(SudokuSettingsComponent.name, () => {
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("4");
-    expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
+    expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(false);
   });
 
