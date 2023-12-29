@@ -49,25 +49,17 @@ describe(SudokuSettingsStateService.name, () => {
       expect(updateGridSpy).not.toHaveBeenCalled();
     });
 
-    it("should update the grid and height when height is set", (done) => {
-      underTest.setHeight(4);
-
-      expect(updateGridSpy).toHaveBeenCalledOnceWith([], 4, undefined);
-      expectGridHeightWidth(
-        { grid: [[], [], [], []], height: 4, width: undefined },
-        done,
-      );
-    });
-
-    it("should update the grid and width when width is set", (done) => {
-      // because updateGrid is written to not do anything if the height is not defined yet
-      underTest.setHeight(4);
+    it("should update the grid, height and width when height and width are set", (done) => {
+      underTest.setHeightAndWidth(2, 2);
       updateGridSpy.calls.reset();
 
-      underTest.setWidth(1);
+      underTest.setHeightAndWidth(4, 1);
 
-      expect(gridUpdate.updateGrid).toHaveBeenCalledOnceWith(
-        [[], [], [], []],
+      expect(updateGridSpy).toHaveBeenCalledOnceWith(
+        [
+          [undefined, undefined],
+          [undefined, undefined],
+        ],
         4,
         1,
       );
@@ -142,8 +134,8 @@ describe(SudokuSettingsStateService.name, () => {
       expect(verifySpy).not.toHaveBeenCalled();
     });
 
-    it("should verify the grid when height is set", (done) => {
-      underTest.setHeight(4);
+    it("should verify the grid when height and width are set", (done) => {
+      underTest.setHeightAndWidth(4, 0);
 
       expectVerification(false, done);
       expect(verifySpy).toHaveBeenCalledOnceWith([[], [], [], []], {
@@ -152,11 +144,7 @@ describe(SudokuSettingsStateService.name, () => {
     });
 
     it("should verify the grid when width is set", (done) => {
-      // because updateGrid is written to not do anything if the height is not defined yet
-      underTest.setHeight(4);
-      verifySpy.calls.reset();
-
-      underTest.setWidth(1);
+      underTest.setHeightAndWidth(4, 1);
 
       expectVerification(false, done);
       expect(verifySpy).toHaveBeenCalledOnceWith(
