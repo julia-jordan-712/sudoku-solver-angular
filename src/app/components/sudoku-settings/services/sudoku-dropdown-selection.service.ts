@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { DropdownInputOption } from "@app/components/input-field/dropdown-input/dropdown-input.component";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
@@ -13,15 +13,16 @@ import { TranslateService } from "@ngx-translate/core";
   providedIn: "root",
 })
 export class SudokuDropdownSelectionService {
-  constructor(private translate: TranslateService) {}
+  private translate: TranslateService = inject(TranslateService);
+
+  public readonly NO_SELECTION_ITEM: SudokuDropdownSelectionItem = {
+    id: "None",
+    name: this.translate.stream("PUZZLE.NONE"),
+    grid: undefined,
+  };
 
   getItems(): SudokuDropdownSelectionItem[] {
     return [
-      {
-        id: "None",
-        name: this.translate.stream("PUZZLE.NONE"),
-        grid: undefined,
-      },
       {
         id: "Puzzle4x4.EMPTY",
         name: this.translate.stream("PUZZLE.4x4.EMPTY"),

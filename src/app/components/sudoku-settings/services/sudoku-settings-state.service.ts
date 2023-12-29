@@ -32,10 +32,13 @@ export class SudokuSettingsStateService implements OnDestroy {
   private width$ = new BehaviorSubject<Nullable<number>>(undefined);
   private grid$ = new BehaviorSubject<Nullable<SudokuGrid>>(undefined);
 
-  private dropdownSelectionItems = [...this.dropdownSelection.getItems()];
+  private dropdownSelectionItems = [
+    this.dropdownSelection.NO_SELECTION_ITEM,
+    ...this.dropdownSelection.getItems(),
+  ];
   private dropdownSelectionItem$ =
     new BehaviorSubject<SudokuDropdownSelectionItem>(
-      this.dropdownSelectionItems[0],
+      this.dropdownSelection.NO_SELECTION_ITEM,
     );
 
   public readonly verification$: Observable<VerificationResult> =
@@ -57,6 +60,10 @@ export class SudokuSettingsStateService implements OnDestroy {
     this.height$.complete();
     this.width$.complete();
     this.grid$.complete();
+  }
+
+  clearSelection(): void {
+    this.dropdownSelectionItem$.next(this.dropdownSelection.NO_SELECTION_ITEM);
   }
 
   isConfirmed(): Observable<boolean> {

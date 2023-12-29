@@ -88,7 +88,7 @@ describe(SudokuSettingsComponent.name, () => {
     expect(grid.verification?.isValid()).toEqual(false);
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("3");
-    expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
+    expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(true);
 
     size.change(4);
@@ -102,7 +102,7 @@ describe(SudokuSettingsComponent.name, () => {
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("4");
-    expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
+    expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(false);
   });
 
