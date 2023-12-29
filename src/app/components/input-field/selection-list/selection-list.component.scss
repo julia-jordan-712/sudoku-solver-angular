@@ -1,0 +1,36 @@
+@use "constants" as *;
+
+:host {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.buttons {
+  display: flex;
+}
+
+button {
+  border: none;
+  border-radius: 0;
+  background-color: $secondary-color;
+  color: $on-secondary-color;
+
+  &:hover {
+    background-color: $secondary-hover-color;
+    color: $on-secondary-color;
+  }
+  &:active,
+  &:focus {
+    background-color: $secondary-color;
+    color: $on-secondary-color;
+  }
+
+  &:not(:last-of-type) {
+    border-right: 1px solid $primary-color;
+  }
+
+  &.selected {
+    border-bottom: 2px solid $primary-color;
+  }
+}

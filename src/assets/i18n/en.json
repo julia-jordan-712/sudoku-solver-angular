@@ -12,7 +12,7 @@
     "SIZE": "Size",
     "HINTS": {
       "ENTER_VALUES": "Values can be set by clicking on a cell and typing on the keyboard.",
-      "SELECT_OR_SIZE": "Select an existing Sudoku to be solved or enter a size. Afterwards the values of the cells can be set."
+      "SELECT_OR_SIZE": "Select an existing Sudoku to be solved or select a size. Afterwards the values of the cells can be set."
     }
   },
   "PUZZLE": {

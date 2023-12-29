@@ -13,12 +13,13 @@
       [selectedItem]="selectedItem$ | async"
       (selected)="onSelect($event)"
     ></app-dropdown-input>
-    <app-number-input
+    <app-selection-list
       id="sizeInput"
       [label]="'SETTINGS.SIZE' | translate"
       [value]="size$ | async"
+      [values]="[4, 9, 16, 25]"
       (valueChange)="setSize($event)"
-    ></app-number-input>
+    ></app-selection-list>
   </div>
   <div *ngIf="((grid$ | async)?.length ?? 0) > 0">
     {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
