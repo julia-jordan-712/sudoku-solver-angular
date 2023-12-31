@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
+import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { Observable, map } from "rxjs";
 
 @Component({
@@ -8,7 +8,7 @@ import { Observable, map } from "rxjs";
   styleUrls: ["./sudoku-solver-settings.component.scss"],
 })
 export class SudokuSolverSettingsComponent {
-  private state = inject(SudokuSolverStateService);
+  private state = inject(SUDOKU_SOLVER_STATE);
   show$: Observable<boolean> = this.state
     .getBranches()
     .pipe(map((branches) => branches.length > 0));
@@ -20,6 +20,6 @@ export class SudokuSolverSettingsComponent {
   }
 
   setMaxSteps(max: number): void {
-    this.state.setMaxSteps(max);
+    this.state.setMaximumSteps(max);
   }
 }

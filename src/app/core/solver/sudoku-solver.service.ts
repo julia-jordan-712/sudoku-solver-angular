@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
+import { SudokuSolverState } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { Solver } from "@app/core/solver/solver";
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { SOLVER_TOKEN } from "@app/core/solver/sudoku-solver.provider";
@@ -23,7 +23,7 @@ export class SudokuSolverService {
 
   solveNextStep(
     branches: SudokuGrid[],
-    solverState: SudokuSolverStateService,
+    solverState: SudokuSolverState,
   ): SolverResponse {
     const response: SolverResponse = this.executeSolvers(branches);
     if (response.status === "COMPLETE") {

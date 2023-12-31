@@ -1,4 +1,5 @@
 import { Injectable, inject } from "@angular/core";
+import { SudokuSolverState } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
@@ -10,10 +11,8 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { BehaviorSubject, Observable, map } from "rxjs";
 
-@Injectable({
-  providedIn: "root",
-})
-export class SudokuSolverStateService {
+@Injectable()
+export class SudokuSolverStateService implements SudokuSolverState {
   private solver: SudokuSolverService = inject(SudokuSolverService);
   private verify: VerifySolutionService = inject(VerifySolutionService);
 
@@ -150,7 +149,7 @@ export class SudokuSolverStateService {
     });
   }
 
-  setMaxSteps(max: number): void {
+  setMaximumSteps(max: number): void {
     this.maxSteps$.next(Math.max(0, max));
   }
 

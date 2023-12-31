@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { IconModule } from "@app/components/icon/icon.module";
 import { NumberInputModule } from "@app/components/input-field/number-input/number-input.module";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
+import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { SudokuSolverStatusComponent } from "@app/components/sudoku-solver/sudoku-solver-status/sudoku-solver-status.component";
 import { SudokuSolverStepsComponent } from "@app/components/sudoku-solver/sudoku-solver-steps/sudoku-solver-steps.component";
@@ -31,12 +32,15 @@ describe(SudokuSolverComponent.name, () => {
         TranslateTestingModule.withTranslations({}),
         SudokuGridModule,
       ],
-      providers: SOLVER_TEST_PROVIDERS,
+      providers: [
+        ...SOLVER_TEST_PROVIDERS,
+        SudokuSolverStateService,
+        { provide: SUDOKU_SOLVER_STATE, useExisting: SudokuSolverStateService },
+      ],
     });
-    spyOn(
-      TestBed.inject(SudokuSolverStateService),
-      "getBranches",
-    ).and.returnValue(of([PuzzleSimple.PUZZLE_3.puzzle]));
+    spyOn(TestBed.inject(SUDOKU_SOLVER_STATE), "getBranches").and.returnValue(
+      of([PuzzleSimple.PUZZLE_3.puzzle]),
+    );
     spyOn(TestBed.inject(SudokuSolverService), "solveNextStep").and.callFake(
       (b) => {
         return {

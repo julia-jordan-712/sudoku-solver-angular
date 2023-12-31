@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
+import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { Observable, map } from "rxjs";
 
 @Component({
@@ -8,7 +8,7 @@ import { Observable, map } from "rxjs";
   styleUrls: ["./sudoku-solver-steps.component.scss"],
 })
 export class SudokuSolverStepsComponent {
-  private state = inject(SudokuSolverStateService);
+  private state = inject(SUDOKU_SOLVER_STATE);
   steps$: Observable<number> = this.state.getStepsExecuted();
   lastStep$: Observable<string> = this.state.getLastStep();
   lastStepI18nKey$: Observable<string> = this.lastStep$.pipe(

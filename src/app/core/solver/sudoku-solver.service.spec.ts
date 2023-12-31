@@ -1,5 +1,4 @@
 import { TestBed } from "@angular/core/testing";
-import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { Solver } from "@app/core/solver/solver";
 import {
   SOLVER_PROVIDERS,
@@ -12,11 +11,15 @@ import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleMedium } from "@app/test/puzzles/puzzle-medium";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import {
+  SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
+  SudokuSolverStateMockService,
+} from "@app/test/solver/sudoku-solver-state-mock.service";
 import { SudokuSolverService } from "./sudoku-solver.service";
 
 describe(SudokuSolverService.name, () => {
   describe("updating verification result", () => {
-    let solverState: SudokuSolverStateService;
+    let solverState: SudokuSolverStateMockService;
     let service: SudokuSolverService;
     let testSolver: jasmine.SpyObj<Solver>;
 
@@ -32,10 +35,11 @@ describe(SudokuSolverService.name, () => {
             useValue: testSolver,
             multi: true,
           },
+          ...SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
         ],
       });
       service = TestBed.inject(SudokuSolverService);
-      solverState = TestBed.inject(SudokuSolverStateService);
+      solverState = TestBed.inject(SudokuSolverStateMockService);
       testSolver.getExecutionOrder.and.returnValue(0);
       spyOn(solverState, "updateVerificationResults").and.callFake(() => {});
     });
@@ -72,17 +76,17 @@ describe(SudokuSolverService.name, () => {
   });
 
   describe("solver", () => {
-    let solverState: SudokuSolverStateService;
+    let solverState: SudokuSolverStateMockService;
     let service: SudokuSolverService;
     let verify: VerifySolutionService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: SOLVER_PROVIDERS,
+        providers: [...SOLVER_PROVIDERS, ...SUDOKU_SOLVER_STATE_MOCK_PROVIDER],
       });
 
       service = TestBed.inject(SudokuSolverService);
-      solverState = TestBed.inject(SudokuSolverStateService);
+      solverState = TestBed.inject(SudokuSolverStateMockService);
       verify = TestBed.inject(VerifySolutionService);
     });
 

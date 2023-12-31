@@ -1,4 +1,5 @@
 import { TestBed, fakeAsync, tick } from "@angular/core/testing";
+import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -14,7 +15,12 @@ describe(SudokuSolverStateService.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SudokuSolverService, ...SOLVER_TEST_PROVIDERS],
+      providers: [
+        SudokuSolverService,
+        ...SOLVER_TEST_PROVIDERS,
+        SudokuSolverStateService,
+        { provide: SUDOKU_SOLVER_STATE, useExisting: SudokuSolverStateService },
+      ],
     });
     service = TestBed.inject(SudokuSolverStateService);
     solver = TestBed.inject(SudokuSolverService);
@@ -444,7 +450,7 @@ describe(SudokuSolverStateService.name, () => {
       spyOnSolveNextStepAndReturnValue([PuzzleAdvanced.PUZZLE_1.puzzle]);
 
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
-      service.setMaxSteps(3);
+      service.setMaximumSteps(3);
       expect(solver.solveNextStep).not.toHaveBeenCalled();
 
       service.startExecuting();
