@@ -1,10 +1,9 @@
 import { TestBed, fakeAsync, flush, tick } from "@angular/core/testing";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
-import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { first } from "rxjs";
 import { SudokuSolverStateService } from "./sudoku-solver-state.service";
@@ -33,7 +32,7 @@ describe(SudokuSolverStateService.name, () => {
   describe("start/pause/next", () => {
     describe("initially", () => {
       beforeEach(() => {
-        spyOnSolveNextStepAndReturn();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
       });
 
       it("should have state NOT_STARTED", (done) => {
@@ -89,7 +88,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("running", () => {
       beforeEach(() => {
-        spyOnSolveNextStepAndReturn();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
         service.startExecuting();
       });
 
@@ -146,7 +145,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("paused", () => {
       beforeEach(() => {
-        spyOnSolveNextStepAndReturn();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
         service.startExecuting();
         service.pauseExecuting();
       });
@@ -204,7 +203,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("go to next step", () => {
       beforeEach(() => {
-        spyOnSolveNextStepAndReturn();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
         service.startExecuting();
         service.pauseExecuting();
         service.executeNextStep();
@@ -253,7 +252,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("continuing after paused", () => {
       beforeEach(() => {
-        spyOnSolveNextStepAndReturn();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
         service.startExecuting();
         service.pauseExecuting();
         service.startExecuting();
@@ -317,7 +316,7 @@ describe(SudokuSolverStateService.name, () => {
 
       describe("success", () => {
         beforeEach(() => {
-          spyOnSolveNextStepAndReturn();
+          SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
           service.startExecuting();
           service.finishExecuting("DONE");
         });
@@ -375,7 +374,7 @@ describe(SudokuSolverStateService.name, () => {
 
       describe("failure", () => {
         beforeEach(() => {
-          spyOnSolveNextStepAndReturn();
+          SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
           service.startExecuting();
           service.finishExecuting("FAILED");
         });
@@ -435,19 +434,20 @@ describe(SudokuSolverStateService.name, () => {
 
   describe("calling solver", () => {
     it("should call solver with puzzle to solve when starting", () => {
-      spyOnSolveNextStepAndReturn();
+      SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       expect(solver.solveNextStep).not.toHaveBeenCalled();
 
       service.startExecuting();
-      expect(solver.solveNextStep).toHaveBeenCalledWith(
-        [PuzzleSimple.PUZZLE_1.puzzle],
-        jasmine.anything(),
-      );
+      expect(solver.solveNextStep).toHaveBeenCalledWith([
+        PuzzleSimple.PUZZLE_1.puzzle,
+      ]);
     });
 
     it("should call solver again with puzzle from last step while running", fakeAsync(() => {
-      spyOnSolveNextStepAndReturnValue([PuzzleAdvanced.PUZZLE_1.puzzle]);
+      SudokuSolverSpy.onSolveNextStepAndReturnGrid(solver, [
+        PuzzleAdvanced.PUZZLE_1.puzzle,
+      ]);
 
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       service.setMaximumSteps(3);
@@ -456,18 +456,17 @@ describe(SudokuSolverStateService.name, () => {
       service.startExecuting();
       tick(1);
 
-      expect(solver.solveNextStep).toHaveBeenCalledWith(
-        [PuzzleSimple.PUZZLE_1.puzzle],
-        jasmine.anything(),
-      );
-      expect(solver.solveNextStep).toHaveBeenCalledWith(
-        [PuzzleAdvanced.PUZZLE_1.puzzle],
-        jasmine.anything(),
-      );
+      expect(solver.solveNextStep).toHaveBeenCalledWith([
+        PuzzleSimple.PUZZLE_1.puzzle,
+      ]);
+      expect(solver.solveNextStep).toHaveBeenCalledWith([
+        PuzzleAdvanced.PUZZLE_1.puzzle,
+      ]);
     }));
 
     it("should call solver with puzzle to solve when going to next step", () => {
-      const solverSpy: jasmine.Spy = spyOnSolveNextStepAndReturn();
+      const solverSpy: jasmine.Spy =
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
 
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       service.startExecuting();
@@ -476,22 +475,76 @@ describe(SudokuSolverStateService.name, () => {
       expect(solverSpy).not.toHaveBeenCalled();
 
       service.executeNextStep();
-      expect(solverSpy).toHaveBeenCalledWith(
-        [PuzzleSimple.PUZZLE_1.puzzle],
-        jasmine.anything(),
-      );
+      expect(solverSpy).toHaveBeenCalledWith([PuzzleSimple.PUZZLE_1.puzzle]);
+    });
+  });
+
+  describe("updating when solver is done", () => {
+    describe("success", () => {
+      beforeEach(() => {
+        SudokuSolverSpy.onSolveNextStepAndReturnSuccess(solver);
+        service.executeNextStep();
+      });
+
+      it("should terminate", (done) => {
+        service
+          .getExecutionState()
+          .pipe(first())
+          .subscribe((state) => {
+            expect(state).toEqual("DONE");
+            done();
+          });
+      });
+
+      it("should determine verification result", (done) => {
+        service
+          .getVerificationResults()
+          .pipe(first())
+          .subscribe((result) => {
+            expect(result).not.toBeNull();
+            expect(result?.length).toEqual(1);
+            expect(result?.[0].isValid()).toBeTrue();
+            done();
+          });
+      });
+    });
+
+    describe("failure", () => {
+      beforeEach(() => {
+        SudokuSolverSpy.onSolveNextStepAndReturnFailure(solver);
+        service.executeNextStep();
+      });
+
+      it("should terminate", (done) => {
+        service
+          .getExecutionState()
+          .pipe(first())
+          .subscribe((state) => {
+            expect(state).toEqual("FAILED");
+            done();
+          });
+      });
+
+      it("should NOT determine verification result", (done) => {
+        service
+          .getVerificationResults()
+          .pipe(first())
+          .subscribe((result) => {
+            expect(result).toBeUndefined();
+            done();
+          });
+      });
     });
   });
 
   describe("reset", () => {
     beforeEach(() => {
-      spyOnSolveNextStepAndReturn();
+      SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
       spyOn(solver, "reset").and.callFake(() => {});
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
       service.startExecuting();
       service.pauseExecuting();
       service.executeNextStep();
-      service.updateVerificationResults();
     });
 
     it("should have state NOT_STARTED", (done) => {
@@ -599,7 +652,7 @@ describe(SudokuSolverStateService.name, () => {
 
   describe("stopping time for executing the solver", () => {
     beforeEach(() => {
-      spyOnSolveNextStepAndReturn();
+      SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
       service.setMaximumSteps(10);
       service.setDelay(100);
@@ -649,24 +702,4 @@ describe(SudokuSolverStateService.name, () => {
       flush();
     }));
   });
-
-  function spyOnSolveNextStepAndReturn(): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake((b) => {
-      return {
-        branches: b,
-        status: "INCOMPLETE",
-        stepId: "",
-      } satisfies SolverResponse;
-    });
-  }
-
-  function spyOnSolveNextStepAndReturnValue(value: SudokuGrid[]): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(() => {
-      return {
-        branches: value,
-        status: "INCOMPLETE",
-        stepId: "",
-      } satisfies SolverResponse;
-    });
-  }
 });

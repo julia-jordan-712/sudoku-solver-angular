@@ -72,9 +72,6 @@ export class SudokuSolverStateMockService implements SudokuSolverState {
   restart(): void {
     // do nothing
   }
-  updateVerificationResults(): void {
-    // do nothing
-  }
   getVerificationResults(): Observable<Nullable<VerificationResult[]>> {
     return EMPTY;
   }

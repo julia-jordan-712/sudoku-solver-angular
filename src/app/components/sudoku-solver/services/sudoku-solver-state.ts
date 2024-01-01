@@ -41,6 +41,5 @@ export interface SudokuSolverState {
   canRestart(): Observable<boolean>;
   restart(): void;
 
-  updateVerificationResults(): void;
   getVerificationResults(): Observable<Nullable<VerificationResult[]>>;
 }

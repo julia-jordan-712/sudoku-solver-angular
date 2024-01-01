@@ -5,7 +5,10 @@ import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
-import { SolverExecution } from "@app/shared/types/solver-execution";
+import {
+  SolverExecution,
+  SolverExecutionState,
+} from "@app/shared/types/solver-execution";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
@@ -93,10 +96,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
   }
 
   executeNextStep(): void {
-    if (this.stepsExecuted$.getValue() >= this.maxSteps$.getValue()) {
-      this.finishExecuting("FAILED");
-      return;
-    }
     if (!this.stopWatch.isStarted()) {
       this.stopWatch.start();
     }
@@ -104,10 +103,30 @@ export class SudokuSolverStateService implements SudokuSolverState {
       this.execution$.next("PAUSED");
     }
     this.verificationResults$.next(undefined);
-    this.response$.next(
-      this.solver.solveNextStep(this.getResponseBranches(), this),
-    );
+
+    this.solveNextStepAndFinishIfDone();
     this.stepsExecuted$.next(this.stepsExecuted$.getValue() + 1);
+
+    if (
+      !SolverExecutionState.isFinished(this.execution$.getValue()) &&
+      this.stepsExecuted$.getValue() >= this.maxSteps$.getValue()
+    ) {
+      this.finishExecuting("FAILED");
+    }
+  }
+
+  private solveNextStepAndFinishIfDone(): SolverResponse {
+    const response: SolverResponse = this.solver.solveNextStep(
+      this.getResponseBranches(),
+    );
+    this.response$.next(response);
+    if (response.status === "COMPLETE") {
+      this.updateVerificationResults();
+      this.finishExecuting("DONE");
+    } else if (response.status === "FAILED") {
+      this.finishExecuting("FAILED");
+    }
+    return response;
   }
 
   private getResponseBranches(): SudokuGrid[] {
@@ -169,7 +188,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
     }
   }
 
-  updateVerificationResults(): void {
+  private updateVerificationResults(): void {
     this.verificationResults$.next(
       this.getResponseBranches().map((grid) => this.verify.verify(grid)),
     );
