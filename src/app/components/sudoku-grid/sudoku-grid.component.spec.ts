@@ -7,6 +7,7 @@ import { VerificationResult } from "@app/core/verification/types/verification-re
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridCellTestComponent } from "@app/test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
+import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { SudokuGridComponent } from "./sudoku-grid.component";
 
@@ -26,6 +27,7 @@ describe(SudokuGridComponent.name, () => {
         SudokuVerificationModule,
         TranslateTestingModule.withTranslations({}),
       ],
+      providers: [SUDOKU_SOLVER_STATE_MOCK_PROVIDER],
     }).compileComponents();
   });
 

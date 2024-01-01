@@ -6,8 +6,7 @@ import {
 import { Nullable } from "@app/shared/types/nullable";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { isArray } from "@app/shared/util/is-array";
-import { isDefined } from "@app/shared/util/is-defined";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
 export abstract class Solver {
   private logger: Logger = new Logger(Solver.name);
@@ -41,18 +40,6 @@ export abstract class Solver {
   }
 
   protected isDone(grid: Nullable<SudokuGrid>): boolean {
-    if (!isDefined(grid)) {
-      return false;
-    }
-
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid.length; j++) {
-        const cell = grid[i][j];
-        if (isArray(cell) || !isDefined(cell)) {
-          return false;
-        }
-      }
-    }
-    return true;
+    return SudokuGridUtil.isDone(grid);
   }
 }

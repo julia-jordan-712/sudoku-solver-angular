@@ -1,19 +1,21 @@
 import { Injectable, inject } from "@angular/core";
+import { SudokuSolverState } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
-import { SolverExecution } from "@app/shared/types/solver-execution";
+import {
+  SolverExecution,
+  SolverExecutionState,
+} from "@app/shared/types/solver-execution";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { BehaviorSubject, Observable, map } from "rxjs";
 
-@Injectable({
-  providedIn: "root",
-})
-export class SudokuSolverStateService {
+@Injectable()
+export class SudokuSolverStateService implements SudokuSolverState {
   private solver: SudokuSolverService = inject(SudokuSolverService);
   private verify: VerifySolutionService = inject(VerifySolutionService);
 
@@ -101,10 +103,30 @@ export class SudokuSolverStateService {
       this.execution$.next("PAUSED");
     }
     this.verificationResults$.next(undefined);
-    this.response$.next(
-      this.solver.solveNextStep(this.getResponseBranches(), this),
-    );
+
+    this.solveNextStepAndFinishIfDone();
     this.stepsExecuted$.next(this.stepsExecuted$.getValue() + 1);
+
+    if (
+      !SolverExecutionState.isFinished(this.execution$.getValue()) &&
+      this.stepsExecuted$.getValue() >= this.maxSteps$.getValue()
+    ) {
+      this.finishExecuting("FAILED");
+    }
+  }
+
+  private solveNextStepAndFinishIfDone(): SolverResponse {
+    const response: SolverResponse = this.solver.solveNextStep(
+      this.getResponseBranches(),
+    );
+    this.response$.next(response);
+    if (response.status === "COMPLETE") {
+      this.updateVerificationResults();
+      this.finishExecuting("DONE");
+    } else if (response.status === "FAILED") {
+      this.finishExecuting("FAILED");
+    }
+    return response;
   }
 
   private getResponseBranches(): SudokuGrid[] {
@@ -150,7 +172,7 @@ export class SudokuSolverStateService {
     });
   }
 
-  setMaxSteps(max: number): void {
+  setMaximumSteps(max: number): void {
     this.maxSteps$.next(Math.max(0, max));
   }
 
@@ -160,16 +182,13 @@ export class SudokuSolverStateService {
   }
 
   private scheduleNextStep(): void {
-    if (this.stepsExecuted$.getValue() >= this.maxSteps$.getValue()) {
-      this.execution$.next("FAILED");
-    }
     if (this.execution$.getValue() === "RUNNING") {
       this.executeNextStep();
       setTimeout(() => this.scheduleNextStep(), this.delay.getValue());
     }
   }
 
-  updateVerificationResults(): void {
+  private updateVerificationResults(): void {
     this.verificationResults$.next(
       this.getResponseBranches().map((grid) => this.verify.verify(grid)),
     );

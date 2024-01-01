@@ -4,7 +4,7 @@ import {
   DuplicationColumnIndicesToRowIndices,
   SudokuSettingsStateService,
 } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
-import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
+import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -18,7 +18,7 @@ import { Observable, filter, first } from "rxjs";
 })
 export class SudokuSettingsComponent {
   private settingState = inject(SudokuSettingsStateService);
-  private solverState = inject(SudokuSolverStateService);
+  private solverState = inject(SUDOKU_SOLVER_STATE);
 
   confirmed$: Observable<boolean> = this.settingState.isConfirmed();
   size$: Observable<Nullable<number>> = this.settingState.getHeight();

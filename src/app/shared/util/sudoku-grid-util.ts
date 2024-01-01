@@ -1,13 +1,14 @@
 import { Logger } from "@app/core/log/logger";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
+import { Nullable } from "@app/shared/types/nullable";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
 } from "@app/shared/types/sudoku-grid";
-import { isNotArray } from "@app/shared/util/is-array";
+import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 
 export class SudokuGridUtil {
@@ -25,6 +26,22 @@ export class SudokuGridUtil {
       new Logger(SudokuGridUtil.name),
       { message: "Cloning Sudoku" },
     );
+  }
+
+  static isDone(grid: Nullable<SudokuGrid>): boolean {
+    if (!isDefined(grid)) {
+      return false;
+    }
+
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid.length; j++) {
+        const cell = grid[i][j];
+        if (isArray(cell) || !isDefined(cell)) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   static getRowValues(grid: SudokuGrid, rowIndex: number): number[] {

@@ -1,9 +1,15 @@
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
+export type SolverResponseStatus =
+  | "COMPLETE"
+  | "INCOMPLETE"
+  | "FAILED"
+  | "UNKNOWN";
+
 export interface SolverResponse {
   branches: SudokuGrid[];
   stepId: string;
-  status: "COMPLETE" | "INCOMPLETE" | "FAILED" | "UNKNOWN";
+  status: SolverResponseStatus;
 }
 
 export interface SolverStepResponse {
