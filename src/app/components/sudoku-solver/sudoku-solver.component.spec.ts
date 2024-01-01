@@ -2,7 +2,10 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { IconModule } from "@app/components/icon/icon.module";
 import { NumberInputModule } from "@app/components/input-field/number-input/number-input.module";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import {
+  SUDOKU_SOLVER_STATE,
+  SudokuSolverState,
+} from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { SudokuSolverStatusComponent } from "@app/components/sudoku-solver/sudoku-solver-status/sudoku-solver-status.component";
 import { SudokuSolverStepsComponent } from "@app/components/sudoku-solver/sudoku-solver-steps/sudoku-solver-steps.component";
@@ -17,6 +20,7 @@ import { SudokuSolverActionsComponent } from "./sudoku-solver-actions/sudoku-sol
 
 describe(SudokuSolverComponent.name, () => {
   let fixture: ComponentFixture<SudokuSolverComponent>;
+  let service: SudokuSolverState;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -38,7 +42,8 @@ describe(SudokuSolverComponent.name, () => {
         { provide: SUDOKU_SOLVER_STATE, useExisting: SudokuSolverStateService },
       ],
     });
-    spyOn(TestBed.inject(SUDOKU_SOLVER_STATE), "getBranches").and.returnValue(
+    service = TestBed.inject(SUDOKU_SOLVER_STATE);
+    spyOn(service, "getBranches").and.returnValue(
       of([PuzzleSimple.PUZZLE_3.puzzle]),
     );
     spyOn(TestBed.inject(SudokuSolverService), "solveNextStep").and.callFake(
@@ -52,6 +57,10 @@ describe(SudokuSolverComponent.name, () => {
     );
     fixture = TestBed.createComponent(SudokuSolverComponent);
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    service.reset();
   });
 
   it("should allow to start initially", () => {

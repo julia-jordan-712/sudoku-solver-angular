@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick } from "@angular/core/testing";
+import { TestBed, fakeAsync, flush, tick } from "@angular/core/testing";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
@@ -601,6 +601,8 @@ describe(SudokuSolverStateService.name, () => {
     beforeEach(() => {
       spyOnSolveNextStepAndReturn();
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
+      service.setMaximumSteps(10);
+      service.setDelay(100);
     });
 
     it("should not have any time passed before it is started", fakeAsync(() => {
@@ -613,6 +615,8 @@ describe(SudokuSolverStateService.name, () => {
 
       tick(100);
       expect(service.getTimeElapsed()).toEqual(200);
+
+      flush();
     }));
 
     it("should stop when state DONE is reached", fakeAsync(() => {
@@ -621,6 +625,8 @@ describe(SudokuSolverStateService.name, () => {
       service.finishExecuting("DONE");
       tick(100);
       expect(service.getTimeElapsed()).toEqual(100);
+
+      flush();
     }));
 
     it("should stop when state FAILED is reached", fakeAsync(() => {
@@ -629,6 +635,8 @@ describe(SudokuSolverStateService.name, () => {
       service.finishExecuting("FAILED");
       tick(100);
       expect(service.getTimeElapsed()).toEqual(100);
+
+      flush();
     }));
 
     it("should NOT stop when paused", fakeAsync(() => {
@@ -637,6 +645,8 @@ describe(SudokuSolverStateService.name, () => {
       service.pauseExecuting();
       tick(100);
       expect(service.getTimeElapsed()).toEqual(200);
+
+      flush();
     }));
   });
 

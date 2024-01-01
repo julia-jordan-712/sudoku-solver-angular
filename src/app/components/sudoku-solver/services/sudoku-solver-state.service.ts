@@ -93,6 +93,10 @@ export class SudokuSolverStateService implements SudokuSolverState {
   }
 
   executeNextStep(): void {
+    if (this.stepsExecuted$.getValue() >= this.maxSteps$.getValue()) {
+      this.finishExecuting("FAILED");
+      return;
+    }
     if (!this.stopWatch.isStarted()) {
       this.stopWatch.start();
     }
@@ -159,9 +163,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
   }
 
   private scheduleNextStep(): void {
-    if (this.stepsExecuted$.getValue() >= this.maxSteps$.getValue()) {
-      this.execution$.next("FAILED");
-    }
     if (this.execution$.getValue() === "RUNNING") {
       this.executeNextStep();
       setTimeout(() => this.scheduleNextStep(), this.delay.getValue());
