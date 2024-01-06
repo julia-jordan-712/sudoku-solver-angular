@@ -6,6 +6,7 @@ import { VerifySolutionService } from "@app/core/verification/services/verify-so
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
+import { PuzzleHard } from "@app/test/puzzles/puzzle-hard";
 import { PuzzleMedium } from "@app/test/puzzles/puzzle-medium";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SudokuSolverService } from "./sudoku-solver.service";
@@ -61,15 +62,20 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleMedium.PUZZLE_1.puzzle,
       name: "medium puzzle 1",
-      steps: 224,
+      steps: 228,
     },
     {
       puzzle: PuzzleAdvanced.PUZZLE_1.puzzle,
       name: "advanced puzzle 1",
-      steps: 194,
+      steps: 196,
+    },
+    {
+      puzzle: PuzzleHard.PUZZLE_1.puzzle,
+      name: "hard puzzle 1",
+      steps: 227,
     },
   ].forEach((params) => {
-    it(`should solve ${params.name} in ${params.steps} steps`, () => {
+    it(`should solve "${params.name}" in ${params.steps} steps`, () => {
       spyOn(solverState, "finishExecuting").and.callThrough();
       let puzzle: SudokuGrid[] = [SudokuGridUtil.clone(params.puzzle)];
 

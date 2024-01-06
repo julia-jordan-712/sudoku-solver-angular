@@ -1,5 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import { Nullable } from "@app/shared/types/nullable";
 import { Observable, map } from "rxjs";
 
 @Component({
@@ -14,12 +15,18 @@ export class SudokuSolverSettingsComponent {
     .pipe(map((branches) => branches.length > 0));
   delay$: Observable<number> = this.state.getDelay();
   maxSteps$: Observable<number> = this.state.getMaximumSteps();
+  pauseAfterStep$: Observable<Nullable<number>> =
+    this.state.getPauseAfterStep();
 
-  setDelay(ms: number): void {
-    this.state.setDelay(ms);
+  setDelay(ms: Nullable<number>): void {
+    this.state.setDelay(ms ?? 0);
   }
 
-  setMaxSteps(max: number): void {
-    this.state.setMaximumSteps(max);
+  setMaxSteps(max: Nullable<number>): void {
+    this.state.setMaximumSteps(max ?? 0);
+  }
+
+  setPauseAfterStep(step: Nullable<number>): void {
+    this.state.setPauseAfterStep(step);
   }
 }

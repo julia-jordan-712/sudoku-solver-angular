@@ -87,7 +87,12 @@
         "EMPTY_CELLS_TO_POSSIBLE_VALUES": "Mögliche Werte in leeren Zellen bestimmen",
         "SINGLE_POSSIBLE_VALUE": "Zellen, in denen nur ein Wert möglich ist, konvertieren",
         "VALUES_POSSIBLE_ONCE": "Suche nach Werten, die nur einmal möglich sind",
-        "COMPLETE": "Überprüfe, ob das Sudoku vollständig ist"
+        "COMPLETE": "Überprüfe, ob das Sudoku vollständig ist",
+        "ELIMINATE_POSSIBLE_PAIR": "Eliminierung von Paaren, die nur zweimal möglich sind, aus anderen Zellen"
+      },
+      "PAUSE_AT_STEP": {
+        "LABEL": "Pausiere bei Schritt ",
+        "TOOLTIP": "Pausiert den Solver, wenn der angegebene Schritt erreicht ist."
       }
     },
     "DELAY": {

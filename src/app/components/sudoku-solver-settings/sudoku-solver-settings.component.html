@@ -17,5 +17,13 @@
       [tooltip]="'SOLVER.STEPS.MAX.TOOLTIP' | translate"
       (valueChange)="setMaxSteps($event)"
     ></app-number-input>
+    <app-number-input
+      id="pauseAtStep"
+      [label]="'SOLVER.STEPS.PAUSE_AT_STEP.LABEL' | translate"
+      [value]="pauseAfterStep$ | async"
+      inputWidth="5em"
+      [tooltip]="'SOLVER.STEPS.PAUSE_AT_STEP.TOOLTIP' | translate"
+      (valueChange)="setPauseAfterStep($event)"
+    ></app-number-input>
   </div>
 </ng-container>
