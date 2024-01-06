@@ -29,16 +29,23 @@ export class EliminatePossiblePair {
           grid,
           squarePositionsMap,
         );
-        const valuesEliminated =
-          this.eliminateRows(possiblePairResult, v1, v2, grid) ||
+        let valuesEliminated = this.eliminateRows(
+          possiblePairResult,
+          v1,
+          v2,
+          grid,
+        );
+        valuesEliminated =
           this.eliminateColumns(possiblePairResult, v1, v2, grid) ||
+          valuesEliminated;
+        valuesEliminated =
           this.eliminateSquares(
             squarePositionsMap,
             possiblePairResult,
             v1,
             v2,
             grid,
-          );
+          ) || valuesEliminated;
         if (valuesEliminated) {
           return true;
         }
@@ -108,7 +115,7 @@ export class EliminatePossiblePair {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.row) {
+    if (possiblePairResult.row != undefined) {
       for (let i = 0; i < grid.length; i++) {
         const removePairValues = this.removePairValuesFromCell(
           v1,
@@ -130,7 +137,7 @@ export class EliminatePossiblePair {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.column) {
+    if (possiblePairResult.column != undefined) {
       for (let i = 0; i < grid.length; i++) {
         const removePairValues = this.removePairValuesFromCell(
           v1,
@@ -153,7 +160,7 @@ export class EliminatePossiblePair {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.square) {
+    if (possiblePairResult.square != undefined) {
       squarePositionsMap
         .getForSquareIndex(possiblePairResult.square)
         .forEach((cellPosition) => {

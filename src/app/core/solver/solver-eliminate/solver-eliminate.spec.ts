@@ -13,19 +13,19 @@ describe(SolverEliminate.name, () => {
     verify = TestBed.inject(VerifySolutionService);
   });
 
-  it("should solve 149 steps of medium puzzle 1 and then fail", () => {
+  it("should solve 'medium puzzle 1' in 229 steps", () => {
     let puzzle: SudokuGrid[] = [
       SudokuGridUtil.clone(PuzzleMedium.PUZZLE_1.puzzle),
     ];
     const solver = new SolverEliminate();
-    for (let i = 1; i <= 149; i++) {
+    for (let i = 1; i <= 229; i++) {
       const response = solver.executeNextStep(puzzle);
       puzzle = response.branches;
 
-      if (i < 149) {
+      if (i < 229) {
         expect(response.status).toEqual("INCOMPLETE");
       } else {
-        expect(response.status).toEqual("FAILED");
+        expect(response.status).toEqual("COMPLETE");
       }
     }
     expect(verify.verify(puzzle[0]).isValid()).toBeTrue();
