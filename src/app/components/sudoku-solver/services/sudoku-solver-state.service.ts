@@ -23,6 +23,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
   private initialPuzzle: SudokuGrid = [];
   private maxSteps$ = new BehaviorSubject<number>(10_000);
+  private pauseAfterStep$ = new BehaviorSubject<Nullable<number>>(undefined);
   private response$ = new BehaviorSubject<SolverResponse>(
     this.createInitialSolverResponse(),
   );
@@ -59,6 +60,10 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   getMaximumSteps(): Observable<number> {
     return this.maxSteps$.asObservable();
+  }
+
+  getPauseAfterStep(): Observable<Nullable<number>> {
+    return this.pauseAfterStep$.asObservable();
   }
 
   getStepsExecuted(): Observable<number> {
@@ -99,13 +104,19 @@ export class SudokuSolverStateService implements SudokuSolverState {
     if (!this.stopWatch.isStarted()) {
       this.stopWatch.start();
     }
-    if (this.execution$.getValue() === "NOT_STARTED") {
-      this.execution$.next("PAUSED");
-    }
     this.verificationResults$.next(undefined);
 
     this.solveNextStepAndFinishIfDone();
     this.stepsExecuted$.next(this.stepsExecuted$.getValue() + 1);
+
+    const pauseAfterStep = this.pauseAfterStep$.getValue();
+    if (
+      this.execution$.getValue() === "NOT_STARTED" ||
+      (pauseAfterStep != undefined &&
+        this.stepsExecuted$.getValue() === pauseAfterStep)
+    ) {
+      this.execution$.next("PAUSED");
+    }
 
     if (
       !SolverExecutionState.isFinished(this.execution$.getValue()) &&
@@ -173,7 +184,13 @@ export class SudokuSolverStateService implements SudokuSolverState {
   }
 
   setMaximumSteps(max: number): void {
-    this.maxSteps$.next(Math.max(0, max));
+    this.maxSteps$.next(Math.max(1, max));
+  }
+
+  setPauseAfterStep(step: Nullable<number>): void {
+    this.pauseAfterStep$.next(
+      step != undefined ? Math.max(0, step) : undefined,
+    );
   }
 
   startExecuting(): void {

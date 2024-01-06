@@ -20,9 +20,9 @@ export class NumberInputComponent {
   inputWidth: Nullable<string>;
 
   @Output()
-  valueChange: EventEmitter<number> = new EventEmitter();
+  valueChange: EventEmitter<Nullable<number>> = new EventEmitter();
 
-  onChange(value: number): void {
+  onChange(value: Nullable<number>): void {
     this.valueChange.emit(value);
   }
 }

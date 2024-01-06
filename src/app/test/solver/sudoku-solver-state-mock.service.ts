@@ -36,6 +36,12 @@ export class SudokuSolverStateMockService implements SudokuSolverState {
   setMaximumSteps(max: number): void {
     // do nothing
   }
+  getPauseAfterStep(): Observable<Nullable<number>> {
+    return EMPTY;
+  }
+  setPauseAfterStep(step: Nullable<number>): void {
+    // do nothing
+  }
   getTimeElapsed(): number {
     return -1;
   }

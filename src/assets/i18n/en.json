@@ -89,6 +89,10 @@
         "VALUES_POSSIBLE_ONCE": "Search for values which are possible only once",
         "COMPLETE": "Check whether Sudoku is complete",
         "ELIMINATE_POSSIBLE_PAIR": "Eliminate pairs, which are possible only twice, from other cells"
+      },
+      "PAUSE_AT_STEP": {
+        "LABEL": "Pause at step",
+        "TOOLTIP": "Pauses the solver when the specified step is reached."
       }
     },
     "DELAY": {

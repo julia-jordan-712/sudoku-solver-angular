@@ -77,8 +77,7 @@ describe(SudokuSolverComponent.name, () => {
     });
 
     it("should allow to pause but not to go to next step while running", () => {
-      getStart().click();
-      fixture.detectChanges();
+      clickButton(getStart());
 
       expect(getStart().disabled).toEqual(true);
       expect(getPause().disabled).toEqual(false);
@@ -88,10 +87,8 @@ describe(SudokuSolverComponent.name, () => {
     });
 
     it("should allow to continue and to go to next step while paused", () => {
-      getStart().click();
-      fixture.detectChanges();
-      getPause().click();
-      fixture.detectChanges();
+      clickButton(getStart());
+      clickButton(getPause());
 
       expect(getStart().disabled).toEqual(false);
       expect(getPause().disabled).toEqual(true);
@@ -101,8 +98,7 @@ describe(SudokuSolverComponent.name, () => {
     });
 
     it("should allow to continue and to go to next step after going to next step", () => {
-      getNext().click();
-      fixture.detectChanges();
+      clickButton(getNext());
 
       expect(getStart().disabled).toEqual(false);
       expect(getPause().disabled).toEqual(true);
@@ -112,12 +108,9 @@ describe(SudokuSolverComponent.name, () => {
     });
 
     it("should allow to pause again but not to go to next step after continuing", () => {
-      getStart().click();
-      fixture.detectChanges();
-      getPause().click();
-      fixture.detectChanges();
-      getStart().click();
-      fixture.detectChanges();
+      clickButton(getStart());
+      clickButton(getPause());
+      clickButton(getStart());
 
       expect(getStart().disabled).toEqual(true);
       expect(getPause().disabled).toEqual(false);
@@ -130,8 +123,7 @@ describe(SudokuSolverComponent.name, () => {
       expect(getSteps().innerText).toContain("0");
       expect(getSteps().innerText).not.toContain("SOLVER.STEPS.LAST");
 
-      getNext().click();
-      fixture.detectChanges();
+      clickButton(getNext());
 
       expect(getSteps().innerText).toContain("1");
       expect(getSteps().innerText).toContain("SOLVER.STEPS.LAST");
@@ -152,10 +144,7 @@ describe(SudokuSolverComponent.name, () => {
       it("should succeed if solution is found", fakeAsync(() => {
         SudokuSolverSpy.onSolveNextStepAndReturnSuccess(solver);
 
-        getStart().click();
-        tick(100);
-        fixture.detectChanges();
-
+        clickButtonAndTick(getStart(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.DONE");
 
         flush();
@@ -164,10 +153,7 @@ describe(SudokuSolverComponent.name, () => {
       it("should fail after the maximum amount of steps if no solution is found", fakeAsync(() => {
         SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
 
-        getStart().click();
-        tick(100);
-        fixture.detectChanges();
-
+        clickButtonAndTick(getStart(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.FAILED");
 
         flush();
@@ -178,10 +164,7 @@ describe(SudokuSolverComponent.name, () => {
       it("should succeed if solution is found", fakeAsync(() => {
         SudokuSolverSpy.onSolveNextStepAndReturnSuccess(solver);
 
-        getNext().click();
-        tick(100);
-        fixture.detectChanges();
-
+        clickButtonAndTick(getNext(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.DONE");
 
         flush();
@@ -190,21 +173,55 @@ describe(SudokuSolverComponent.name, () => {
       it("should fail after the maximum amount of steps if no solution is found", fakeAsync(() => {
         SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
 
-        getNext().click();
-        tick(100);
-        fixture.detectChanges();
-
+        clickButtonAndTick(getNext(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.PAUSED");
 
-        getNext().click();
-        tick(100);
-        fixture.detectChanges();
-
+        clickButtonAndTick(getNext(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.FAILED");
 
         flush();
       }));
     });
+  });
+
+  describe("pause after step", () => {
+    beforeEach(() => {
+      service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
+      SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
+      service.setPauseAfterStep(2);
+      service.setDelay(100);
+      service.setMaximumSteps(4);
+      fixture = TestBed.createComponent(SudokuSolverComponent);
+      fixture.detectChanges();
+    });
+
+    it("should not make a difference if already paused", fakeAsync(() => {
+      clickButtonAndTick(getNext(), 100);
+      expect(getStates().innerText).toContain("SOLVER.STATUS.PAUSED");
+      expect(getSteps().innerText).toContain("1");
+
+      clickButtonAndTick(getNext(), 100);
+      expect(getStates().innerText).toContain("SOLVER.STATUS.PAUSED");
+      expect(getSteps().innerText).toContain("2");
+
+      clickButtonAndTick(getNext(), 100);
+      expect(getStates().innerText).toContain("SOLVER.STATUS.PAUSED");
+      expect(getSteps().innerText).toContain("3");
+
+      flush();
+    }));
+
+    it("should pause when the step is reached and allow to continue running", fakeAsync(() => {
+      clickButtonAndTick(getStart(), 100);
+      expect(getStates().innerText).toContain("SOLVER.STATUS.PAUSED");
+      expect(getSteps().innerText).toContain("2");
+
+      clickButtonAndTick(getStart(), 100);
+      expect(getStates().innerText).toContain("SOLVER.STATUS.FAILED");
+      expect(getSteps().innerText).toContain("4");
+
+      flush();
+    }));
   });
 
   function getStart(): any {
@@ -225,5 +242,16 @@ describe(SudokuSolverComponent.name, () => {
 
   function getSteps(): any {
     return fixture.nativeElement.querySelector("app-sudoku-solver-steps");
+  }
+
+  function clickButton(button: any): void {
+    button.click();
+    fixture.detectChanges();
+  }
+
+  function clickButtonAndTick(button: any, ms: number): void {
+    button.click();
+    tick(ms);
+    fixture.detectChanges();
   }
 });
