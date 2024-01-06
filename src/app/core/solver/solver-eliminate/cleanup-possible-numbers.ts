@@ -30,26 +30,4 @@ export class CleanupPossibleNumbers {
     }
     return false;
   }
-
-  convertEmptyCellToPossibleValues(
-    grid: SudokuGrid,
-    rowIndex: number,
-    columnIndex: number,
-  ): number[] {
-    const possibleValues: number[] = [];
-    for (let possibleValue = 1; possibleValue <= grid.length; possibleValue++) {
-      if (
-        !SudokuGridUtil.getRowValues(grid, rowIndex).includes(possibleValue) &&
-        !SudokuGridUtil.getColumnValues(grid, columnIndex).includes(
-          possibleValue,
-        ) &&
-        !SudokuGridUtil.getSquareValues(grid, rowIndex, columnIndex).includes(
-          possibleValue,
-        )
-      ) {
-        possibleValues.push(possibleValue);
-      }
-    }
-    return possibleValues;
-  }
 }

@@ -54,6 +54,17 @@ export class SudokuGridUtil {
     return values;
   }
 
+  static getColumnCells(
+    grid: SudokuGrid,
+    columnIndex: number,
+  ): SudokuGridCell[] {
+    const values: SudokuGridCell[] = [];
+    for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
+      values.push(grid[rowIndex][columnIndex]);
+    }
+    return values;
+  }
+
   static getColumnValues(grid: SudokuGrid, columnIndex: number): number[] {
     const values: number[] = [];
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {

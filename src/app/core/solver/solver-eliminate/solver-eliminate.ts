@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { CleanupPossibleNumbers } from "@app/core/solver/solver-eliminate/cleanup-possible-numbers";
+import { EliminatePossiblePair } from "@app/core/solver/solver-eliminate/eliminate-possible-pair";
 import { EmptyCellsToPossibleNumbers } from "@app/core/solver/solver-eliminate/empty-cells-to-possible-numbers";
 import { SinglePossibleValue } from "@app/core/solver/solver-eliminate/single-possible-value";
 import { SolverStepResponse } from "@app/core/solver/solver-response";
@@ -47,6 +48,9 @@ export class SolverEliminate extends Solver {
     }
     if (new CleanupPossibleNumbers().run(grid)) {
       return { stepId: "CLEANUP_POSSIBLE_VALUES", failed: false };
+    }
+    if (new EliminatePossiblePair().run(grid)) {
+      return { stepId: "ELIMINATE_POSSIBLE_PAIR", failed: false };
     }
 
     return { stepId: "ELIMINATE", failed: true };

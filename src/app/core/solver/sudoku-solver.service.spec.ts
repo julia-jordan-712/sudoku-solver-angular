@@ -66,7 +66,7 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleAdvanced.PUZZLE_1.puzzle,
       name: "advanced puzzle 1",
-      steps: 194,
+      steps: 196,
     },
   ].forEach((params) => {
     it(`should solve ${params.name} in ${params.steps} steps`, () => {
