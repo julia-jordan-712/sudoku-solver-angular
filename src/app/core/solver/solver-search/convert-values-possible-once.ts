@@ -14,7 +14,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  *
  * This step should be executed regularly after steps which potentially eliminate possible values.
  */
-export class ValuesPossibleOnce implements SolverRunnable {
+export class ConvertValuesPossibleOnce implements SolverRunnable {
   private cellPositionsOfSquaresPerGridSize: Record<number, CellPositionMap> =
     {};
 

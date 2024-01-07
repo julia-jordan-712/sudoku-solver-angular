@@ -1,14 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { SolverStepResponse } from "@app/core/solver/solver-response";
-import { ValuesPossibleOnce } from "@app/core/solver/solver-search/values-possible-once";
+import { ConvertValuesPossibleOnce } from "@app/core/solver/solver-search/convert-values-possible-once";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
 
 @Injectable()
 export class SolverSearch extends Solver {
-  private valuesPossibleOnce: ValuesPossibleOnce = new ValuesPossibleOnce();
+  private valuesPossibleOnce: ConvertValuesPossibleOnce =
+    new ConvertValuesPossibleOnce();
 
   override getExecutionOrder(): number {
     return 2;

@@ -10,7 +10,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  * This step has to be executed after a step which found new values - otherwise the
  * possible values do not reflect the found value.
  */
-export class CleanupPossibleNumbers implements SolverRunnable {
+export class CleanupPossibleValues implements SolverRunnable {
   run(grid: SudokuGrid): boolean {
     return this.cleanupNextPossibleValue(grid);
   }

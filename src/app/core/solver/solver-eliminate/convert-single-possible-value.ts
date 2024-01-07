@@ -8,7 +8,7 @@ import { isArray } from "@app/shared/util/is-array";
  *
  * This step should be executed regularly after steps which potentially eliminate possible values.
  */
-export class SinglePossibleValue implements SolverRunnable {
+export class ConvertSinglePossibleValue implements SolverRunnable {
   run(grid: SudokuGrid): boolean {
     return this.convertNextSinglePossibleValue(grid);
   }

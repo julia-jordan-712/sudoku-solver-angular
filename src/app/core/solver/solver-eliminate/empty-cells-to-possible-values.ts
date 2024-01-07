@@ -13,7 +13,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  * This step has to be executed as the first step for all empty cells - otherwise
  * there is no possible-values-array for the other algorithms to work with.
  */
-export class EmptyCellsToPossibleNumbers implements SolverRunnable {
+export class EmptyCellsToPossibleValues implements SolverRunnable {
   run(grid: SudokuGrid): boolean {
     return this.convertNextEmptyCellToPossibleValues(grid);
   }

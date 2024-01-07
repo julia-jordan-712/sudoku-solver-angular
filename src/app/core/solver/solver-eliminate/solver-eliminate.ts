@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
-import { CleanupPossibleNumbers } from "@app/core/solver/solver-eliminate/cleanup-possible-numbers";
+import { CleanupPossibleValues } from "@app/core/solver/solver-eliminate/cleanup-possible-values";
+import { ConvertSinglePossibleValue } from "@app/core/solver/solver-eliminate/convert-single-possible-value";
 import { EliminatePossiblePair } from "@app/core/solver/solver-eliminate/eliminate-possible-pair";
-import { EmptyCellsToPossibleNumbers } from "@app/core/solver/solver-eliminate/empty-cells-to-possible-numbers";
-import { SinglePossibleValue } from "@app/core/solver/solver-eliminate/single-possible-value";
+import { EmptyCellsToPossibleValues } from "@app/core/solver/solver-eliminate/empty-cells-to-possible-values";
 import { SolverStepResponse } from "@app/core/solver/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -37,16 +37,16 @@ export class SolverEliminate extends Solver {
 
     if (!this.allCellsContainValuesOrPossibleValues) {
       const foundNewPossibleValues: boolean =
-        new EmptyCellsToPossibleNumbers().run(grid);
+        new EmptyCellsToPossibleValues().run(grid);
       this.allCellsContainValuesOrPossibleValues = !foundNewPossibleValues;
       if (foundNewPossibleValues) {
         return { stepId: "EMPTY_CELLS_TO_POSSIBLE_VALUES", failed: false };
       }
     }
-    if (new SinglePossibleValue().run(grid)) {
+    if (new ConvertSinglePossibleValue().run(grid)) {
       return { stepId: "SINGLE_POSSIBLE_VALUE", failed: false };
     }
-    if (new CleanupPossibleNumbers().run(grid)) {
+    if (new CleanupPossibleValues().run(grid)) {
       return { stepId: "CLEANUP_POSSIBLE_VALUES", failed: false };
     }
     if (new EliminatePossiblePair().run(grid)) {

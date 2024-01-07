@@ -1,7 +1,7 @@
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { CleanupPossibleNumbers } from "./cleanup-possible-numbers";
+import { CleanupPossibleValues } from "./cleanup-possible-values";
 
-describe(CleanupPossibleNumbers.name, () => {
+describe(CleanupPossibleValues.name, () => {
   it("should always cleanup the next cell with possible values", () => {
     const grid: SudokuGrid = [
       [[1, 2, 3, 4], [1, 2, 3, 4], 3, 4],
@@ -9,7 +9,7 @@ describe(CleanupPossibleNumbers.name, () => {
       [2, 3, 4, 1],
       [4, 1, 2, 3],
     ];
-    let result = new CleanupPossibleNumbers().run(grid);
+    let result = new CleanupPossibleValues().run(grid);
 
     expect(result).toBeTrue();
     expect(grid).toEqual([
@@ -19,7 +19,7 @@ describe(CleanupPossibleNumbers.name, () => {
       [4, 1, 2, 3],
     ]);
 
-    result = new CleanupPossibleNumbers().run(grid);
+    result = new CleanupPossibleValues().run(grid);
     expect(result).toBeTrue();
     expect(grid).toEqual([
       [[1], [2], 3, 4],
@@ -36,7 +36,7 @@ describe(CleanupPossibleNumbers.name, () => {
       [2, 3, 4, undefined],
       [undefined, undefined, undefined, [1, 2, 3]],
     ];
-    const result = new CleanupPossibleNumbers().run(grid);
+    const result = new CleanupPossibleValues().run(grid);
     expect(result).toBeFalse();
   });
 
@@ -47,7 +47,7 @@ describe(CleanupPossibleNumbers.name, () => {
       [2, 3, undefined, undefined],
       [4, 1, undefined, [1, 2, 3, 4]],
     ];
-    const result = new CleanupPossibleNumbers().run(grid);
+    const result = new CleanupPossibleValues().run(grid);
     expect(result).toBeTrue();
     expect(grid[3][3]).toEqual([2, 3]);
   });
@@ -59,7 +59,7 @@ describe(CleanupPossibleNumbers.name, () => {
       [2, 3, undefined, undefined],
       [undefined, undefined, undefined, [1, 2, 3, 4]],
     ];
-    const result = new CleanupPossibleNumbers().run(grid);
+    const result = new CleanupPossibleValues().run(grid);
     expect(result).toBeTrue();
     expect(grid[3][3]).toEqual([1, 3]);
   });
@@ -71,7 +71,7 @@ describe(CleanupPossibleNumbers.name, () => {
       [2, 3, 4, undefined],
       [undefined, undefined, undefined, [1, 2, 3, 4]],
     ];
-    const result = new CleanupPossibleNumbers().run(grid);
+    const result = new CleanupPossibleValues().run(grid);
     expect(result).toBeTrue();
     expect(grid[3][3]).toEqual([1, 2, 3]);
   });
