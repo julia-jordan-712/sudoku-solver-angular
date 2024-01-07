@@ -2,12 +2,19 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isArray } from "@app/shared/util/is-array";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
+/**
+ * Cleans up the possible values by removing found values from the possible-values-array.
+ * Only the next cell which can be cleaned up is handled and then the solver returns.
+ *
+ * This step has to be executed after a step which found new values - otherwise the
+ * possible values do not reflect the found value.
+ */
 export class CleanupPossibleNumbers {
   run(grid: SudokuGrid): boolean {
-    return this.cleanupPossibleValues(grid);
+    return this.cleanupNextPossibleValue(grid);
   }
 
-  private cleanupPossibleValues(grid: SudokuGrid): boolean {
+  private cleanupNextPossibleValue(grid: SudokuGrid): boolean {
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
       for (let columnIndex = 0; columnIndex < grid.length; columnIndex++) {
         const cell = grid[rowIndex][columnIndex];

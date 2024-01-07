@@ -12,12 +12,26 @@ interface PossiblePairResult {
   square?: number;
 }
 
+/**
+ * Identifies pairs of possible values which occur twice in a row/column/square and
+ * eliminates them from the other possible values in this row/column/square.
+ * Only one elimination is done and then the solver returns. The first checked pair
+ * is [1,2] and the next is [1,3] and so on until the last pair ([8,9] for a 9x9 Sudoku).
+ *
+ * Example: A row contains [1,3,4,5], [3,5], [4,5], [3,5] as possible values. Since
+ * the numbers 3 and 5 occur as a pair [3,5] exactly twice, this means that 3 and 5
+ * are actually not possible in the other cells and the possible values can be reduced
+ * to [1,4], [3,5], [4], [3,5].
+ *
+ * This step is longer than the other ones and should only be executed if the other
+ * search- and elimination-algorithms do not make any more progress.
+ */
 export class EliminatePossiblePair {
   run(grid: SudokuGrid): boolean {
-    return this.eliminatePossiblePair(grid);
+    return this.eliminateNextPossiblePair(grid);
   }
 
-  private eliminatePossiblePair(grid: SudokuGrid): boolean {
+  private eliminateNextPossiblePair(grid: SudokuGrid): boolean {
     const squarePositionsMap: CellPositionMap =
       SudokuGridUtil.getCellPositionsOfSquares(grid.length);
 
