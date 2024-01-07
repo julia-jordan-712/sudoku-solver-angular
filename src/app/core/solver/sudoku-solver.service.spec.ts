@@ -6,6 +6,7 @@ import { VerifySolutionService } from "@app/core/verification/services/verify-so
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
+import { PuzzleExtreme } from "@app/test/puzzles/puzzle-extreme";
 import { PuzzleHard } from "@app/test/puzzles/puzzle-hard";
 import { PuzzleMedium } from "@app/test/puzzles/puzzle-medium";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
@@ -73,6 +74,11 @@ describe(SudokuSolverService.name, () => {
       puzzle: PuzzleHard.PUZZLE_1.puzzle,
       name: "hard puzzle 1",
       steps: 234,
+    },
+    {
+      puzzle: PuzzleExtreme.PUZZLE_2.puzzle,
+      name: "extreme puzzle 2",
+      steps: 209,
     },
   ].forEach((params) => {
     it(`should solve "${params.name}" in ${params.steps} steps`, () => {
