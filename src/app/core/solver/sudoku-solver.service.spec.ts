@@ -37,42 +37,42 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleSimple.PUZZLE_1.puzzle,
       name: "simple puzzle 1",
-      steps: 150,
+      steps: 177,
     },
     {
       puzzle: PuzzleSimple.PUZZLE_2.puzzle,
       name: "simple puzzle 2",
-      steps: 153,
+      steps: 162,
     },
     {
       puzzle: PuzzleSimple.PUZZLE_3.puzzle,
       name: "simple puzzle 3",
-      steps: 161,
+      steps: 179,
     },
     {
       puzzle: PuzzleSimple.PUZZLE_4.puzzle,
       name: "simple puzzle 4",
-      steps: 157,
+      steps: 174,
     },
     {
       puzzle: PuzzleSimple.PUZZLE_5.puzzle,
       name: "simple puzzle 5",
-      steps: 153,
+      steps: 164,
     },
     {
       puzzle: PuzzleMedium.PUZZLE_1.puzzle,
       name: "medium puzzle 1",
-      steps: 228,
+      steps: 238,
     },
     {
       puzzle: PuzzleAdvanced.PUZZLE_1.puzzle,
       name: "advanced puzzle 1",
-      steps: 196,
+      steps: 204,
     },
     {
       puzzle: PuzzleHard.PUZZLE_1.puzzle,
       name: "hard puzzle 1",
-      steps: 227,
+      steps: 234,
     },
   ].forEach((params) => {
     it(`should solve "${params.name}" in ${params.steps} steps`, () => {

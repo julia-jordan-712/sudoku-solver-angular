@@ -88,7 +88,9 @@
         "SINGLE_POSSIBLE_VALUE": "Zellen, in denen nur ein Wert möglich ist, konvertieren",
         "VALUES_POSSIBLE_ONCE": "Suche nach Werten, die nur einmal möglich sind",
         "COMPLETE": "Überprüfe, ob das Sudoku vollständig ist",
-        "ELIMINATE_POSSIBLE_PAIR": "Eliminierung von Paaren, die nur zweimal möglich sind, aus anderen Zellen"
+        "ELIMINATE_POSSIBLE_PAIR": "Eliminierung von Paaren, die nur zweimal möglich sind, aus anderen Zellen",
+        "PREPARE": "Bereitet das Sudoku vor",
+        "CLEAN_UP": "Bereinigung nach den vorherigen Schritten"
       },
       "PAUSE_AT_STEP": {
         "LABEL": "Pausiere bei Schritt ",

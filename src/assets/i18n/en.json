@@ -88,7 +88,9 @@
         "SEARCH": "Find values via search",
         "VALUES_POSSIBLE_ONCE": "Search for values which are possible only once",
         "COMPLETE": "Check whether Sudoku is complete",
-        "ELIMINATE_POSSIBLE_PAIR": "Eliminate pairs, which are possible only twice, from other cells"
+        "ELIMINATE_POSSIBLE_PAIR": "Eliminate pairs, which are possible only twice, from other cells",
+        "PREPARE": "Prepare the Sudoku",
+        "CLEAN_UP": "Clean up after previous steps"
       },
       "PAUSE_AT_STEP": {
         "LABEL": "Pause at step",

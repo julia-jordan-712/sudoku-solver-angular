@@ -1,23 +1,21 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
+import { EmptyCellsToPossibleValues } from "@app/core/solver/solver-prepare/empty-cells-to-possible-values";
 import { SolverStepResponse } from "@app/core/solver/solver-response";
-import { ConvertSinglePossibleValue } from "@app/core/solver/solver-search/convert-single-possible-value";
-import { ConvertValuesPossibleOnce } from "@app/core/solver/solver-search/convert-values-possible-once";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
 
 @Injectable()
-export class SolverSearch extends Solver {
-  private valuesPossibleOnce: ConvertValuesPossibleOnce =
-    new ConvertValuesPossibleOnce();
+export class SolverPrepare extends Solver {
+  private allCellsContainValuesOrPossibleValues = false;
 
   override getExecutionOrder(): number {
-    return 3;
+    return 1;
   }
 
   override reset(): void {
-    // nothing to do
+    this.allCellsContainValuesOrPossibleValues = false;
   }
 
   override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
@@ -31,16 +29,18 @@ export class SolverSearch extends Solver {
     grid: Nullable<SudokuGrid>,
   ): Omit<SolverStepResponse, "branches"> {
     if (!isDefined(grid)) {
-      return { stepId: "SEARCH", failed: true };
+      return { stepId: "PREPARE", failed: true };
     }
 
-    if (new ConvertSinglePossibleValue().run(grid)) {
-      return { stepId: "SINGLE_POSSIBLE_VALUE", failed: false };
-    }
-    if (this.valuesPossibleOnce.run(grid)) {
-      return { stepId: "VALUES_POSSIBLE_ONCE", failed: false };
+    if (!this.allCellsContainValuesOrPossibleValues) {
+      const foundNewPossibleValues: boolean =
+        new EmptyCellsToPossibleValues().run(grid);
+      this.allCellsContainValuesOrPossibleValues = !foundNewPossibleValues;
+      if (foundNewPossibleValues) {
+        return { stepId: "EMPTY_CELLS_TO_POSSIBLE_VALUES", failed: false };
+      }
     }
 
-    return { stepId: "SEARCH", failed: true };
+    return { stepId: "PREPARE", failed: true };
   }
 }
