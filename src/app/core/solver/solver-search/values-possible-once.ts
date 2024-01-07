@@ -1,3 +1,4 @@
+import { SolverRunnable } from "@app/core/solver/solver-runnable";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
 import { Nullable } from "@app/shared/types/nullable";
@@ -13,7 +14,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  *
  * This step should be executed regularly after steps which potentially eliminate possible values.
  */
-export class ValuesPossibleOnce {
+export class ValuesPossibleOnce implements SolverRunnable {
   private cellPositionsOfSquaresPerGridSize: Record<number, CellPositionMap> =
     {};
 

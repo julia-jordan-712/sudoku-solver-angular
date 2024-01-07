@@ -1,3 +1,4 @@
+import { SolverRunnable } from "@app/core/solver/solver-runnable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isArray } from "@app/shared/util/is-array";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
@@ -9,7 +10,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  * This step has to be executed after a step which found new values - otherwise the
  * possible values do not reflect the found value.
  */
-export class CleanupPossibleNumbers {
+export class CleanupPossibleNumbers implements SolverRunnable {
   run(grid: SudokuGrid): boolean {
     return this.cleanupNextPossibleValue(grid);
   }

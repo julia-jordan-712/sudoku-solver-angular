@@ -1,3 +1,4 @@
+import { SolverRunnable } from "@app/core/solver/solver-runnable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isArray } from "@app/shared/util/is-array";
 
@@ -7,7 +8,7 @@ import { isArray } from "@app/shared/util/is-array";
  *
  * This step should be executed regularly after steps which potentially eliminate possible values.
  */
-export class SinglePossibleValue {
+export class SinglePossibleValue implements SolverRunnable {
   run(grid: SudokuGrid): boolean {
     return this.convertNextSinglePossibleValue(grid);
   }

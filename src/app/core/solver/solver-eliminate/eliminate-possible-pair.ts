@@ -1,3 +1,4 @@
+import { SolverRunnable } from "@app/core/solver/solver-runnable";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
 import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
@@ -26,7 +27,7 @@ interface PossiblePairResult {
  * This step is longer than the other ones and should only be executed if the other
  * search- and elimination-algorithms do not make any more progress.
  */
-export class EliminatePossiblePair {
+export class EliminatePossiblePair implements SolverRunnable {
   run(grid: SudokuGrid): boolean {
     return this.eliminateNextPossiblePair(grid);
   }
