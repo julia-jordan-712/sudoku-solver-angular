@@ -1,3 +1,4 @@
+import { SolverEliminateUtil } from "@app/core/solver/solver-eliminate/solver-eliminate-util";
 import { SolverRunnable } from "@app/core/solver/solver-runnable";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
@@ -62,7 +63,10 @@ export class EliminateFromSquare implements SolverRunnable {
     for (let v = 1; v <= grid.length; v++) {
       let valuesEliminated = false;
       const squareIndexInRow =
-        this.findIndexOfSingleSliceContainingPossibleValue(rowSlices, v);
+        SolverEliminateUtil.findIndexOfSingleSliceContainingPossibleValue(
+          rowSlices,
+          v,
+        );
       if (squareIndexInRow >= 0) {
         valuesEliminated = this.eliminateFromSquareBasedOnRow(
           grid,
@@ -74,7 +78,10 @@ export class EliminateFromSquare implements SolverRunnable {
       }
 
       const squareIndexInColumn =
-        this.findIndexOfSingleSliceContainingPossibleValue(columnSlices, v);
+        SolverEliminateUtil.findIndexOfSingleSliceContainingPossibleValue(
+          columnSlices,
+          v,
+        );
       if (squareIndexInColumn >= 0) {
         valuesEliminated =
           this.eliminateFromSquareBasedOnColumn(
@@ -103,32 +110,6 @@ export class EliminateFromSquare implements SolverRunnable {
       slices.push(cells.splice(0, sqrt));
     }
     return slices;
-  }
-
-  private findIndexOfSingleSliceContainingPossibleValue(
-    slices: SudokuGridCell[][],
-    v: number,
-  ): number {
-    let resultIndex = -1;
-    for (let i = 0; i < slices.length; i++) {
-      if (this.cellsIncludeValue(slices[i], v)) {
-        if (resultIndex >= 0) {
-          // second match => value occurs in multiple slices => return -1
-          return -1;
-        } else {
-          // first match => save index of slice
-          resultIndex = i;
-        }
-      }
-    }
-    return resultIndex;
-  }
-
-  private cellsIncludeValue(cells: SudokuGridCell[], v: number): boolean {
-    return cells.reduce(
-      (acc, cell) => acc || (isArray(cell) && cell.includes(v)),
-      false,
-    );
   }
 
   private eliminateFromSquareBasedOnRow(

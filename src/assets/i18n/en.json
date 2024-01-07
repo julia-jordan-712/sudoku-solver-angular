@@ -91,7 +91,8 @@
         "ELIMINATE_POSSIBLE_PAIR": "Eliminate pairs, which are possible only twice, from other cells",
         "PREPARE": "Prepare the Sudoku",
         "CLEAN_UP": "Clean up after previous steps",
-        "ELIMINATE_FROM_SQUARE": "Eliminate values in squares which are possible only in one row/column of that square"
+        "ELIMINATE_FROM_SQUARE": "Eliminate values in squares which are possible only in one row/column of that square",
+        "ELIMINATE_FROM_ROW_OR_COLUMN": "Eliminate values in rows/columns which are possible only in one square-section of that row/column"
       },
       "PAUSE_AT_STEP": {
         "LABEL": "Pause at step",
