@@ -1,19 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
+import { CleanupPossibleValues } from "@app/core/solver/solver-clean-up/cleanup-possible-values";
 import { SolverStepResponse } from "@app/core/solver/solver-response";
-import { ConvertSinglePossibleValue } from "@app/core/solver/solver-search/convert-single-possible-value";
-import { ConvertValuesPossibleOnce } from "@app/core/solver/solver-search/convert-values-possible-once";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
 
 @Injectable()
-export class SolverSearch extends Solver {
-  private valuesPossibleOnce: ConvertValuesPossibleOnce =
-    new ConvertValuesPossibleOnce();
-
+export class SolverCleanUp extends Solver {
   override getExecutionOrder(): number {
-    return 3;
+    return 2;
   }
 
   override reset(): void {
@@ -31,16 +27,13 @@ export class SolverSearch extends Solver {
     grid: Nullable<SudokuGrid>,
   ): Omit<SolverStepResponse, "branches"> {
     if (!isDefined(grid)) {
-      return { stepId: "SEARCH", failed: true };
+      return { stepId: "CLEAN_UP", failed: true };
     }
 
-    if (new ConvertSinglePossibleValue().run(grid)) {
-      return { stepId: "SINGLE_POSSIBLE_VALUE", failed: false };
-    }
-    if (this.valuesPossibleOnce.run(grid)) {
-      return { stepId: "VALUES_POSSIBLE_ONCE", failed: false };
+    if (new CleanupPossibleValues().run(grid)) {
+      return { stepId: "CLEANUP_POSSIBLE_VALUES", failed: false };
     }
 
-    return { stepId: "SEARCH", failed: true };
+    return { stepId: "CLEAN_UP", failed: true };
   }
 }
