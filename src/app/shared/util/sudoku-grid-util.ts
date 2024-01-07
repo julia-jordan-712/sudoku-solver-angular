@@ -17,15 +17,19 @@ export class SudokuGridUtil {
       () => {
         const result: SudokuGrid = [];
         grid.forEach((row) => {
-          const newRow: SudokuGridRow = [];
-          row.forEach((cell: SudokuGridCell) => newRow.push(cell));
-          result.push(newRow);
+          result.push(this.cloneRow(row));
         });
         return result;
       },
       new Logger(SudokuGridUtil.name),
       { message: "Cloning Sudoku" },
     );
+  }
+
+  static cloneRow(row: SudokuGridRow): SudokuGridRow {
+    const newRow: SudokuGridRow = [];
+    row.forEach((cell: SudokuGridCell) => newRow.push(cell));
+    return newRow;
   }
 
   static isDone(grid: Nullable<SudokuGrid>): boolean {

@@ -123,6 +123,26 @@ export class SudokuDropdownSelectionService {
         name: this.translate.stream("PUZZLE.EXTREME.SOLVED", { number: 1 }),
         grid: PuzzleExtreme.PUZZLE_1.solution,
       },
+      {
+        id: "PuzzleExtreme.PUZZLE_2.puzzle",
+        name: this.translate.stream("PUZZLE.EXTREME.PUZZLE", { number: 2 }),
+        grid: PuzzleExtreme.PUZZLE_2.puzzle,
+      },
+      {
+        id: "PuzzleExtreme.PUZZLE_2.solution",
+        name: this.translate.stream("PUZZLE.EXTREME.SOLVED", { number: 2 }),
+        grid: PuzzleExtreme.PUZZLE_2.solution,
+      },
+      {
+        id: "PuzzleExtreme.PUZZLE_3.puzzle",
+        name: this.translate.stream("PUZZLE.EXTREME.PUZZLE", { number: 3 }),
+        grid: PuzzleExtreme.PUZZLE_3.puzzle,
+      },
+      {
+        id: "PuzzleExtreme.PUZZLE_3.solution",
+        name: this.translate.stream("PUZZLE.EXTREME.SOLVED", { number: 3 }),
+        grid: PuzzleExtreme.PUZZLE_3.solution,
+      },
     ];
   }
 }
