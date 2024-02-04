@@ -42,6 +42,12 @@ export class SudokuSolverStateMockService implements SudokuSolverState {
   setPauseAfterStep(step: Nullable<number>): void {
     // do nothing
   }
+  getHighlightNumber(): Observable<Nullable<number>> {
+    return EMPTY;
+  }
+  setHighlightNumber(value: Nullable<number>): void {
+    // do nothing
+  }
   getTimeElapsed(): number {
     return -1;
   }

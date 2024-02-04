@@ -24,6 +24,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
   private initialPuzzle: SudokuGrid = [];
   private maxSteps$ = new BehaviorSubject<number>(10_000);
   private pauseAfterStep$ = new BehaviorSubject<Nullable<number>>(undefined);
+  private highlightNumber$ = new BehaviorSubject<Nullable<number>>(undefined);
   private response$ = new BehaviorSubject<SolverResponse>(
     this.createInitialSolverResponse(),
   );
@@ -64,6 +65,10 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   getPauseAfterStep(): Observable<Nullable<number>> {
     return this.pauseAfterStep$.asObservable();
+  }
+
+  getHighlightNumber(): Observable<Nullable<number>> {
+    return this.highlightNumber$.asObservable();
   }
 
   getStepsExecuted(): Observable<number> {
@@ -191,6 +196,10 @@ export class SudokuSolverStateService implements SudokuSolverState {
     this.pauseAfterStep$.next(
       step != undefined ? Math.max(0, step) : undefined,
     );
+  }
+
+  setHighlightNumber(value: Nullable<number>): void {
+    this.highlightNumber$.next(value);
   }
 
   startExecuting(): void {

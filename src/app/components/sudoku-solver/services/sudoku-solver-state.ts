@@ -22,6 +22,8 @@ export interface SudokuSolverState {
   setMaximumSteps(max: number): void;
   getPauseAfterStep(): Observable<Nullable<number>>;
   setPauseAfterStep(step: Nullable<number>): void;
+  getHighlightNumber(): Observable<Nullable<number>>;
+  setHighlightNumber(value: Nullable<number>): void;
 
   getTimeElapsed(): number;
 

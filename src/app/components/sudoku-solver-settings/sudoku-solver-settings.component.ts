@@ -17,6 +17,8 @@ export class SudokuSolverSettingsComponent {
   maxSteps$: Observable<number> = this.state.getMaximumSteps();
   pauseAfterStep$: Observable<Nullable<number>> =
     this.state.getPauseAfterStep();
+  highlightNumber$: Observable<Nullable<number>> =
+    this.state.getHighlightNumber();
 
   setDelay(ms: Nullable<number>): void {
     this.state.setDelay(ms ?? 0);
@@ -28,5 +30,9 @@ export class SudokuSolverSettingsComponent {
 
   setPauseAfterStep(step: Nullable<number>): void {
     this.state.setPauseAfterStep(step);
+  }
+
+  setHighlightNumber(step: Nullable<number>): void {
+    this.state.setHighlightNumber(step);
   }
 }

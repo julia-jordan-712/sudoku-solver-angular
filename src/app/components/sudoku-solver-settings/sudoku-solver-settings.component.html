@@ -25,5 +25,13 @@
       [tooltip]="'SOLVER.STEPS.PAUSE_AT_STEP.TOOLTIP' | translate"
       (valueChange)="setPauseAfterStep($event)"
     ></app-number-input>
+    <app-number-input
+      id="highlightValue"
+      [label]="'SOLVER.HIGHLIGHT.NUMBER.LABEL' | translate"
+      [value]="highlightNumber$ | async"
+      inputWidth="5em"
+      [tooltip]="'SOLVER.HIGHLIGHT.NUMBER.TOOLTIP' | translate"
+      (valueChange)="setHighlightNumber($event)"
+    ></app-number-input>
   </div>
 </ng-container>
