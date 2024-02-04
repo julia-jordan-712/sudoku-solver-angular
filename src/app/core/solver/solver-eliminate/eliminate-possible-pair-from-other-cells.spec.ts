@@ -1,7 +1,7 @@
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { EliminatePossiblePair } from "./eliminate-possible-pair";
+import { EliminatePossiblePairFromOtherCells } from "./eliminate-possible-pair-from-other-cells";
 
-describe(EliminatePossiblePair.name, () => {
+describe(EliminatePossiblePairFromOtherCells.name, () => {
   [
     {
       text: "row",
@@ -32,7 +32,9 @@ describe(EliminatePossiblePair.name, () => {
     },
   ].forEach((params) => {
     it(`should not do anything if the values of the pair do not appear again in a ${params.text}`, () => {
-      expect(new EliminatePossiblePair().run(params.grid)).toBeFalse();
+      expect(
+        new EliminatePossiblePairFromOtherCells().run(params.grid),
+      ).toBeFalse();
     });
   });
 
@@ -66,7 +68,9 @@ describe(EliminatePossiblePair.name, () => {
     },
   ].forEach((params) => {
     it(`should not remove already set values in a ${params.text}`, () => {
-      expect(new EliminatePossiblePair().run(params.grid)).toBeFalse();
+      expect(
+        new EliminatePossiblePairFromOtherCells().run(params.grid),
+      ).toBeFalse();
     });
   });
 
@@ -170,7 +174,7 @@ describe(EliminatePossiblePair.name, () => {
       params.input,
     )}`, () => {
       const grid = SudokuGridUtil.clone(params.input);
-      expect(new EliminatePossiblePair().run(grid)).toBeTrue();
+      expect(new EliminatePossiblePairFromOtherCells().run(grid)).toBeTrue();
       expect(grid).toEqual(params.expected);
     });
   });
@@ -190,7 +194,9 @@ describe(EliminatePossiblePair.name, () => {
       [all, all, all, all],
     ];
 
-    expect(new EliminatePossiblePair().run(onlyRowChanged)).toBeTrue();
+    expect(
+      new EliminatePossiblePairFromOtherCells().run(onlyRowChanged),
+    ).toBeTrue();
     expect(onlyRowChanged).toEqual([
       [
         [3, 4],
@@ -203,7 +209,9 @@ describe(EliminatePossiblePair.name, () => {
       [all, all, all, [3, 4]],
     ]);
 
-    expect(new EliminatePossiblePair().run(allChanged)).toBeTrue();
+    expect(
+      new EliminatePossiblePairFromOtherCells().run(allChanged),
+    ).toBeTrue();
     expect(allChanged).toEqual([
       [
         [1, 2],

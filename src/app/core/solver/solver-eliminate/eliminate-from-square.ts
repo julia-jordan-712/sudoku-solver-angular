@@ -8,7 +8,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
 /**
  * Identifies squares where a certain value is possible only inside one row/column and
- * removed this value from the possible-value-array of the other rows/columns inside
+ * removes this value from the possible-value-array of the other rows/columns inside
  * this square.
  * Only one elimination is done and then the solver returns. This solver iterates over
  * all rows/columns of a Sudoku and for each row/column checks all possible values of
@@ -18,9 +18,6 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  * position of value 4 is not fully determined yet. However it can only appear in the
  * 3rd square of this row. Therefore it can be eliminated from the *other rows* in the
  * *same square*.
- *
- * This step is longer than the other ones and should only be executed if the other
- * search- and elimination-algorithms do not make any more progress.
  */
 export class EliminateFromSquare implements SolverRunnable {
   run(grid: SudokuGrid): boolean {

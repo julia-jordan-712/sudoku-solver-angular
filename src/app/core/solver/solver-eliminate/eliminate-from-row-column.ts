@@ -7,7 +7,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
 /**
  * Identifies rows/columns where a certain value is possible only at certain positions
- * based on the values in the squares and removed this value from the possible-value-array
+ * based on the values in the squares and removes this value from the possible-value-array
  * of the invalid positions inside this row/column.
  * Only one elimination is done and then the solver returns. This solver iterates over
  * all squares of a Sudoku and for each square checks all possible values of this Sudoku
@@ -17,9 +17,6 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  * The position of value 4 is not fully determined yet. However it can only appear in the
  * 1st row of this square. Therefore it can be eliminated from all other positions in
  * this row which are part of *another* square.
- *
- * This step is longer than the other ones and should only be executed if the other
- * search- and elimination-algorithms do not make any more progress.
  */
 export class EliminateFromRowOrColumn implements SolverRunnable {
   run(grid: SudokuGrid): boolean {
