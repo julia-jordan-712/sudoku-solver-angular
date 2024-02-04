@@ -1,7 +1,7 @@
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { EliminateOtherCellsFromPossiblePair } from "./eliminate-other-cells-from-possible-pair";
+import { EliminateOtherValuesFromPossiblePair } from "./eliminate-other-values-from-possible-pair";
 
-describe(EliminateOtherCellsFromPossiblePair.name, () => {
+describe(EliminateOtherValuesFromPossiblePair.name, () => {
   [
     {
       text: "row",
@@ -33,7 +33,7 @@ describe(EliminateOtherCellsFromPossiblePair.name, () => {
   ].forEach((params) => {
     it(`should not do anything if the values also appear in other cells of a ${params.text}`, () => {
       const grid = SudokuGridUtil.clone(params.grid);
-      expect(new EliminateOtherCellsFromPossiblePair().run(grid)).toBeFalse();
+      expect(new EliminateOtherValuesFromPossiblePair().run(grid)).toBeFalse();
       expect(grid).toEqual(params.grid);
     });
   });
@@ -86,7 +86,7 @@ describe(EliminateOtherCellsFromPossiblePair.name, () => {
       params.input,
     )}`, () => {
       const grid = SudokuGridUtil.clone(params.input);
-      expect(new EliminateOtherCellsFromPossiblePair().run(grid)).toBeTrue();
+      expect(new EliminateOtherValuesFromPossiblePair().run(grid)).toBeTrue();
       expect(grid).toEqual(params.expected);
     });
   });
@@ -107,7 +107,7 @@ describe(EliminateOtherCellsFromPossiblePair.name, () => {
     ];
 
     expect(
-      new EliminateOtherCellsFromPossiblePair().run(onlyRowChanged),
+      new EliminateOtherValuesFromPossiblePair().run(onlyRowChanged),
     ).toBeTrue();
     expect(onlyRowChanged).toEqual([
       [[1, 3], [2], [1, 3], [4]],
@@ -117,7 +117,7 @@ describe(EliminateOtherCellsFromPossiblePair.name, () => {
     ]);
 
     expect(
-      new EliminateOtherCellsFromPossiblePair().run(allChanged),
+      new EliminateOtherValuesFromPossiblePair().run(allChanged),
     ).toBeTrue();
     expect(allChanged).toEqual([
       [[2], [1, 3], [1, 3], [4]],

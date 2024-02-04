@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { EliminateFromRowOrColumn } from "@app/core/solver/solver-eliminate/eliminate-from-row-column";
 import { EliminateFromSquare } from "@app/core/solver/solver-eliminate/eliminate-from-square";
-import { EliminateOtherCellsFromPossiblePair } from "@app/core/solver/solver-eliminate/eliminate-other-cells-from-possible-pair";
+import { EliminateOtherValuesFromPossiblePair } from "@app/core/solver/solver-eliminate/eliminate-other-values-from-possible-pair";
 import { EliminatePossiblePairFromOtherCells } from "@app/core/solver/solver-eliminate/eliminate-possible-pair-from-other-cells";
 import { SolverStepResponse } from "@app/core/solver/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
@@ -39,9 +39,9 @@ export class SolverEliminate extends Solver {
         failed: false,
       };
     }
-    if (new EliminateOtherCellsFromPossiblePair().run(grid)) {
+    if (new EliminateOtherValuesFromPossiblePair().run(grid)) {
       return {
-        stepId: "ELIMINATE_OTHER_CELLS_FROM_POSSIBLE_PAIR",
+        stepId: "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_PAIR",
         failed: false,
       };
     }
