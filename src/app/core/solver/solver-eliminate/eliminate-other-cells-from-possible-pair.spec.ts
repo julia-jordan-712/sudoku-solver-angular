@@ -6,7 +6,7 @@ describe(EliminateOtherCellsFromPossiblePair.name, () => {
     {
       text: "row",
       grid: [
-        [3, 4, 1, 2],
+        [3, [4], 1, 2],
         [[1, 3, 4], [1, 4], [1, 3], 4],
         [2, 3, 4, 1],
         [4, 1, 2, 3],
@@ -31,10 +31,10 @@ describe(EliminateOtherCellsFromPossiblePair.name, () => {
       ],
     },
   ].forEach((params) => {
-    it(`should not do anything if the values do not appear as a pair in a ${params.text}`, () => {
-      expect(
-        new EliminateOtherCellsFromPossiblePair().run(params.grid),
-      ).toBeFalse();
+    it(`should not do anything if the values also appear in other cells of a ${params.text}`, () => {
+      const grid = SudokuGridUtil.clone(params.grid);
+      expect(new EliminateOtherCellsFromPossiblePair().run(grid)).toBeFalse();
+      expect(grid).toEqual(params.grid);
     });
   });
 
