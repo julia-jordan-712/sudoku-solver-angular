@@ -5,6 +5,10 @@
     background-color: $secondary-color;
     color: $on-secondary-color;
   }
+  &.invalid {
+    background-color: $invalid-background-color;
+    color: $invalid-color;
+  }
 
   cursor: pointer;
   &.readonly {

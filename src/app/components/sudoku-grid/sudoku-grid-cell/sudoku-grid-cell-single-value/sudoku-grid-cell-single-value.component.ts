@@ -35,6 +35,9 @@ export class SudokuGridCellSingleValueComponent
   @HostBinding("class.readonly")
   readonly: Nullable<boolean> = false;
 
+  @HostBinding("class.invalid")
+  invalid = false;
+
   @HostBinding("class.focused")
   isFocused = false;
   setFocus(focused: boolean): void {
@@ -67,15 +70,28 @@ export class SudokuGridCellSingleValueComponent
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  private onChange(value: number): void {
-    if (this.readonly || !this.validator.isValid(value)) {
+  blur(): void {
+    if (this.invalid) {
       this.resetValue();
-    } else {
+    }
+    this.setFocus(false);
+  }
+
+  private onChange(value: number): void {
+    if (this.readonly) {
+      this.resetValue();
+      return;
+    }
+    if (this.validator.isValid(value)) {
+      this.invalid = false;
       this.valueChange.emit(value);
+    } else {
+      this.invalid = true;
     }
   }
 
   private resetValue(): void {
     this.inputField.reset(this.value, { onlySelf: true, emitEvent: false });
+    this.invalid = false;
   }
 }

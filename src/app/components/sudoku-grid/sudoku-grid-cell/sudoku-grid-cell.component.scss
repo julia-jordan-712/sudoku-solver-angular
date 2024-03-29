@@ -31,8 +31,7 @@
     }
   }
 
-  &.duplicate,
-  &.invalid {
+  &.duplicate {
     background-color: $invalid-background-color;
     color: $invalid-color;
   }

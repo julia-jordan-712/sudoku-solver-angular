@@ -28,9 +28,6 @@ export class SudokuGridCellTestComponent {
   isDuplicate = false;
 
   @Input()
-  invalid = false;
-
-  @Input()
   highlight = false;
 
   @Input()

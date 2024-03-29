@@ -48,9 +48,7 @@ export class SudokuGridCellComponent implements OnChanges {
   @Input()
   @HostBinding("class.duplicate")
   isDuplicate = false;
-  @Input()
-  @HostBinding("class.invalid")
-  invalid = false;
+
   @Input()
   @HostBinding("class.highlight")
   highlight = false;
