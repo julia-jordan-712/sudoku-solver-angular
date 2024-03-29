@@ -15,6 +15,8 @@ export class SudokuSolverComponent {
   branches$: Observable<SudokuGrid[]> = this.state.getBranches();
   verification$: Observable<Nullable<VerificationResult[]>> =
     this.state.getVerificationResults();
+  highlightNumber$: Observable<Nullable<number>> =
+    this.state.getHighlightNumber();
 
   trackByFn(index: number): number {
     return index;

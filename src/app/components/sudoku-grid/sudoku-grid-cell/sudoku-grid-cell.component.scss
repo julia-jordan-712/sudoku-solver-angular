@@ -23,6 +23,14 @@
     color: $on-secondary-color;
   }
 
+  &.highlight {
+    background-color: $highlight-color;
+    color: $on-highlight-color;
+    &:hover {
+      background-color: $highlight-hover-color;
+    }
+  }
+
   &.duplicate,
   &.invalid {
     background-color: $invalid-background-color;

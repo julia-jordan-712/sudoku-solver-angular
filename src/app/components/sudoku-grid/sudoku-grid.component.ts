@@ -27,6 +27,8 @@ export class SudokuGridComponent {
   @Input()
   duplications: Nullable<DuplicationColumnIndicesToRowIndices>;
   @Input()
+  highlightNumber: Nullable<number>;
+  @Input()
   readonly: Nullable<boolean>;
 
   @Output()

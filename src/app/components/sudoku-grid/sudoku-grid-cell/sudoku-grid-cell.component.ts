@@ -57,8 +57,12 @@ export class SudokuGridCellComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   @HostBinding("class.duplicate")
   isDuplicate = false;
+  @Input()
   @HostBinding("class.invalid")
   invalid = false;
+  @Input()
+  @HostBinding("class.highlight")
+  highlight = false;
 
   @HostBinding("class.focused")
   isFocused = false;

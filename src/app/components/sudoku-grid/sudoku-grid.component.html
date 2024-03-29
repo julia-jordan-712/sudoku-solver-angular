@@ -12,6 +12,7 @@
       [columnsWithDuplicates]="duplications?.[i]"
       [borderTop]="first"
       [borderBottom]="last || (sqrt ? (i + 1) % sqrt === 0 : false)"
+      [highlightNumber]="highlightNumber"
       [readonly]="readonly"
       (valueChange)="onRowChanged($event, i)"
     ></app-sudoku-grid-row>

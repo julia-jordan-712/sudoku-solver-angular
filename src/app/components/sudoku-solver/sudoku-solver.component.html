@@ -12,6 +12,7 @@
       <app-sudoku-grid
         [grid]="branch"
         [verification]="((verification$ | async) ?? [])[i]"
+        [highlightNumber]="highlightNumber$ | async"
         [readonly]="true"
       ></app-sudoku-grid>
     </div>
