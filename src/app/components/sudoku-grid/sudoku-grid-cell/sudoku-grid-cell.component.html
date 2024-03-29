@@ -1,24 +1,16 @@
-<ng-container *ngIf="notes; else inputTemplate">
-  <div
-    class="notes"
-    [style.grid-template-columns]="noteGridColumns"
-    [style.width]="size + 'px'"
-    [style.height]="size + 'px'"
-  >
-    <span class="note" *ngFor="let number of numbers; trackBy: trackByFn">{{
-      notes.includes(number) ? number : ""
-    }}</span>
-  </div>
+<ng-container *ngIf="values; else inputTemplate">
+  <app-sudoku-grid-cell-multiple-values
+    [values]="values"
+    [size]="size"
+    [maxValue]="maxValue"
+  ></app-sudoku-grid-cell-multiple-values>
 </ng-container>
 <ng-template #inputTemplate>
-  <input
-    #cellInput
-    type="number"
-    [style.width]="size + 'px'"
-    [style.height]="size + 'px'"
-    [formControl]="inputField"
-    (click)="cellInput.select()"
-    (focus)="setFocus(true)"
-    (blur)="setFocus(false)"
-  />
+  <app-sudoku-grid-cell-single-value
+    [value]="value"
+    [size]="size"
+    [maxValue]="maxValue"
+    [readonly]="readonly"
+    (valueChange)="onChange($event)"
+  ></app-sudoku-grid-cell-single-value>
 </ng-template>

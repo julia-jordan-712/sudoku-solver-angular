@@ -1,0 +1,16 @@
+:host {
+  cursor: not-allowed;
+}
+
+.notes {
+  font-size: 8px;
+  display: grid;
+  box-sizing: border-box;
+  padding: 2px;
+  gap: 2px;
+  opacity: 70%;
+
+  .note {
+    text-align: center;
+  }
+}
