@@ -17,7 +17,7 @@ import { SudokuSolverStatusComponent } from "@app/components/sudoku-solver/sudok
 import { SudokuSolverStepsComponent } from "@app/components/sudoku-solver/sudoku-solver-steps/sudoku-solver-steps.component";
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
-import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";

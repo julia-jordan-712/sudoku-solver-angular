@@ -5,7 +5,7 @@ import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { SudokuGridCellTestComponent } from "@app/test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";

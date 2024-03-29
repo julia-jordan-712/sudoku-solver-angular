@@ -10,7 +10,7 @@ import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
-import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { Observable, filter, first, map } from "rxjs";
 
 @Component({

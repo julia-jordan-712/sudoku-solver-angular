@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { IconModule } from "@app/components/icon/icon.module";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { DropdownInputTestComponent } from "@app/test/components/dropdown-input-test.component";
 import { NumberInputTestComponent } from "@app/test/components/number-input-test.component";
 import { SelectionListTestComponent } from "@app/test/components/selection-list-test.component";

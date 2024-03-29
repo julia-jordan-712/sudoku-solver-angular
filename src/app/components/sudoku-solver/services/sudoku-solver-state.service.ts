@@ -12,8 +12,8 @@ import {
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { BehaviorSubject, Observable, map } from "rxjs";
 
 @Injectable()

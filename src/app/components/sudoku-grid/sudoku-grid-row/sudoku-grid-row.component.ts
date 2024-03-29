@@ -13,7 +13,7 @@ import {
   SudokuGridRowViewModel,
 } from "@app/shared/types/sudoku-grid-view-model";
 import { isNotArray } from "@app/shared/util/is-array";
-import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 
 @Component({
   selector: "app-sudoku-grid-row",

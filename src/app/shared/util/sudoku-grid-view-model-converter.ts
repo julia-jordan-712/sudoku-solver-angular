@@ -11,9 +11,9 @@ import {
 
 export class SudokuGridViewModelConverter {
   public static createViewModelsFromGrids(
-    branches: SudokuGrid[],
+    grids: SudokuGrid[],
   ): SudokuGridViewModel[] {
-    return branches.map((grid, index) =>
+    return grids.map((grid, index) =>
       SudokuGridViewModelConverter.createViewModelFromGrid(grid, index),
     );
   }

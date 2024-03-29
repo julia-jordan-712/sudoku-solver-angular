@@ -7,8 +7,8 @@ import {
   SudokuGridRowViewModel,
   SudokuGridViewModel,
 } from "@app/shared/types/sudoku-grid-view-model";
-import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 
 @Component({
   selector: "app-sudoku-grid",
