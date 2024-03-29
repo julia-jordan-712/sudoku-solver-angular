@@ -1,7 +1,7 @@
 <ng-container *ngIf="_row">
   <ng-container
     *ngFor="
-      let cell of _row;
+      let cell of _row.cells;
       let i = index;
       let first = first;
       let last = last;
@@ -16,7 +16,7 @@
       [borderBottom]="borderBottom"
       [borderLeft]="first"
       [highlight]="highlightCells[i]"
-      [maxValue]="_row.length"
+      [maxValue]="_row.cells.length"
       [readonly]="readonly"
       (valueChange)="onCellChanged($event, i)"
     ></app-sudoku-grid-cell>

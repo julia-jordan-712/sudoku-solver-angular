@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { IconModule } from "@app/components/icon/icon.module";
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
 import { DropdownInputTestComponent } from "@app/test/components/dropdown-input-test.component";
 import { NumberInputTestComponent } from "@app/test/components/number-input-test.component";
 import { SelectionListTestComponent } from "@app/test/components/selection-list-test.component";
@@ -56,7 +58,7 @@ describe(SudokuSettingsComponent.name, () => {
       grid: Puzzle4x4.COMPLETE,
     });
     fixture.detectChanges();
-    expect(grid.grid).toEqual(Puzzle4x4.COMPLETE);
+    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("4");
@@ -71,7 +73,7 @@ describe(SudokuSettingsComponent.name, () => {
     ];
     grid.change(gridWithDuplications);
     fixture.detectChanges();
-    expect(grid.grid).toEqual(gridWithDuplications);
+    expectGridToEqual(grid, gridWithDuplications);
     expect(grid.verification?.isValid()).toEqual(false);
     expect(grid.duplications).toEqual({
       0: [3], // first row, last column
@@ -84,7 +86,7 @@ describe(SudokuSettingsComponent.name, () => {
 
     size.change(3);
     fixture.detectChanges();
-    expect(grid.grid).toEqual([
+    expectGridToEqual(grid, [
       [1, 2, 3],
       [3, 4, 1],
       [2, 3, 4],
@@ -97,7 +99,7 @@ describe(SudokuSettingsComponent.name, () => {
 
     size.change(4);
     fixture.detectChanges();
-    expect(grid.grid).toEqual([
+    expectGridToEqual(grid, [
       [1, 2, 3, undefined],
       [3, 4, 1, undefined],
       [2, 3, 4, undefined],
@@ -121,7 +123,7 @@ describe(SudokuSettingsComponent.name, () => {
     });
     fixture.detectChanges();
 
-    expect(grid.grid).toEqual(Puzzle4x4.COMPLETE);
+    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("4");
@@ -141,7 +143,7 @@ describe(SudokuSettingsComponent.name, () => {
     fixture.detectChanges();
 
     expect(queryChangeSettings()).toBeNull();
-    expect(grid.grid).toEqual(Puzzle4x4.COMPLETE);
+    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("4");
@@ -174,5 +176,16 @@ describe(SudokuSettingsComponent.name, () => {
   function getSudokuGrid(): SudokuGridTestComponent {
     return fixture.debugElement.query(By.css("app-sudoku-grid"))
       .componentInstance;
+  }
+
+  function expectGridToEqual(
+    component: SudokuGridTestComponent,
+    expected: SudokuGrid,
+  ): void {
+    expect(component.grid).toBeTruthy();
+    expect(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      SudokuGridViewModelConverter.createGridFromViewModel(component.grid!),
+    ).toEqual(expected);
   }
 });

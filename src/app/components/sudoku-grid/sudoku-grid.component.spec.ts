@@ -5,6 +5,7 @@ import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
 import { SudokuGridCellTestComponent } from "@app/test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
@@ -44,7 +45,8 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, undefined, undefined],
       [undefined, undefined, undefined, undefined],
     ];
-    component.grid = testGrid;
+    component.grid =
+      SudokuGridViewModelConverter.createViewModelFromGrid(testGrid);
     component.verification = VerificationResult.createValid();
     component.duplications = {};
     fixture.detectChanges();
@@ -59,7 +61,8 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, undefined, undefined],
       [undefined, undefined, undefined, undefined],
     ];
-    component.grid = testGrid;
+    component.grid =
+      SudokuGridViewModelConverter.createViewModelFromGrid(testGrid);
     component.duplications = { 0: [0, 3] };
     fixture.detectChanges();
 
@@ -70,7 +73,9 @@ describe(SudokuGridComponent.name, () => {
   });
 
   it("should set borders of cells correctly", () => {
-    component.grid = Puzzle4x4.COMPLETE;
+    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
+      Puzzle4x4.COMPLETE,
+    );
     fixture.detectChanges();
 
     // first row
@@ -159,7 +164,9 @@ describe(SudokuGridComponent.name, () => {
   });
 
   it("should set the allowed maximum value of a cell correctly", () => {
-    component.grid = Puzzle4x4.COMPLETE;
+    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
+      Puzzle4x4.COMPLETE,
+    );
     fixture.detectChanges();
 
     expect(getCellComponent(0).maxValue).toEqual(4);
@@ -181,7 +188,8 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, 4, 1],
       [4, undefined, 2, 3],
     ];
-    component.grid = input;
+    component.grid =
+      SudokuGridViewModelConverter.createViewModelFromGrid(input);
     fixture.detectChanges();
     const changeSpy = spyOn(component.valueChange, "emit");
 

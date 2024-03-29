@@ -8,8 +8,10 @@ import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudo
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
-import { Observable, filter, first } from "rxjs";
+import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
+import { Observable, filter, first, map } from "rxjs";
 
 @Component({
   selector: "app-sudoku-settings",
@@ -22,7 +24,12 @@ export class SudokuSettingsComponent {
 
   confirmed$: Observable<boolean> = this.settingState.isConfirmed();
   size$: Observable<Nullable<number>> = this.settingState.getHeight();
-  grid$: Observable<Nullable<SudokuGrid>> = this.settingState.getGrid();
+  grid$: Observable<Nullable<SudokuGridViewModel>> = this.settingState
+    .getGrid()
+    .pipe(
+      filter(isDefined),
+      map((grid) => SudokuGridViewModelConverter.createViewModelFromGrid(grid)),
+    );
   selectionItems: SudokuDropdownSelectionItem[] =
     this.settingState.getSelectionItems();
   selectedItem$: Observable<SudokuDropdownSelectionItem> =

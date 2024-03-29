@@ -1,4 +1,4 @@
-<ng-container *ngIf="branches$ | async as branches">
+<ng-container *ngIf="viewModels$ | async as branches">
   <ng-container *ngIf="branches.length > 0">
     <div class="top">
       <app-sudoku-solver-actions></app-sudoku-solver-actions>

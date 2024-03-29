@@ -21,7 +21,7 @@
       (valueChange)="setSize($event)"
     ></app-selection-list>
   </div>
-  <div *ngIf="((grid$ | async)?.length ?? 0) > 0">
+  <div *ngIf="((grid$ | async)?.rows?.length ?? 0) > 0">
     {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
   </div>
   <app-sudoku-grid

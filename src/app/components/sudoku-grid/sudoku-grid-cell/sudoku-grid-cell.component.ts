@@ -10,6 +10,7 @@ import {
 } from "@angular/core";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { BehaviorSubject } from "rxjs";
 
@@ -31,8 +32,8 @@ export class SudokuGridCellComponent implements OnChanges {
   >(null);
 
   @Input({ required: true })
-  set cell(cell: SudokuGridCell) {
-    this.setCell(cell);
+  set cell(cell: SudokuGridCellViewModel) {
+    this.setCell(cell.cell);
   }
 
   size = 32;

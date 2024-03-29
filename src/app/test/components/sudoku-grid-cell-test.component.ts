@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import { Nullable } from "@app/shared/types/nullable";
+import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
 
 @Component({
   selector: "app-sudoku-grid-cell",
-  template: `{{ cell }}`,
+  template: `{{ cell.cell }}`,
 })
 export class SudokuGridCellTestComponent {
   @Input({ required: true })
-  cell: SudokuGridCell;
+  cell: Nullable<SudokuGridCellViewModel>;
 
   @Input({ required: true })
   maxValue = 1;

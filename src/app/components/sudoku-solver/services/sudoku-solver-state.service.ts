@@ -11,6 +11,8 @@ import {
 } from "@app/shared/types/solver-execution";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { BehaviorSubject, Observable, map } from "rxjs";
 
@@ -39,10 +41,16 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private stopWatch: StopWatch = new StopWatch();
 
-  getBranches(): Observable<SudokuGrid[]> {
+  getViewModels(): Observable<SudokuGridViewModel[]> {
     return this.response$
       .asObservable()
-      .pipe(map((response) => response.branches));
+      .pipe(
+        map((response) =>
+          SudokuGridViewModelConverter.createViewModelsFromGrids(
+            response.branches,
+          ),
+        ),
+      );
   }
 
   getDelay(): Observable<number> {

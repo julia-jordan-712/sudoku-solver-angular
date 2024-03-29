@@ -11,8 +11,8 @@ import { Observable, map } from "rxjs";
 export class SudokuSolverSettingsComponent {
   private state = inject(SUDOKU_SOLVER_STATE);
   show$: Observable<boolean> = this.state
-    .getBranches()
-    .pipe(map((branches) => branches.length > 0));
+    .getViewModels()
+    .pipe(map((viewModels) => viewModels.length > 0));
   delay$: Observable<number> = this.state.getDelay();
   maxSteps$: Observable<number> = this.state.getMaximumSteps();
   pauseAfterStep$: Observable<Nullable<number>> =

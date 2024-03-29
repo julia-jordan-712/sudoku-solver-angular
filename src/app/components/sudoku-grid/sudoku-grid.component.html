@@ -2,7 +2,7 @@
   <div class="grid" [style.grid-template-columns]="gridColumns">
     <app-sudoku-grid-row
       *ngFor="
-        let row of _grid;
+        let row of _grid.rows;
         let i = index;
         let first = first;
         let last = last;

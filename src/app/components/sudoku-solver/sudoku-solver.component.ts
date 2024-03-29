@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { Observable } from "rxjs";
 
 @Component({
@@ -12,13 +12,13 @@ import { Observable } from "rxjs";
 })
 export class SudokuSolverComponent {
   private state = inject(SUDOKU_SOLVER_STATE);
-  branches$: Observable<SudokuGrid[]> = this.state.getBranches();
+  viewModels$: Observable<SudokuGridViewModel[]> = this.state.getViewModels();
   verification$: Observable<Nullable<VerificationResult[]>> =
     this.state.getVerificationResults();
   highlightNumber$: Observable<Nullable<number>> =
     this.state.getHighlightNumber();
 
-  trackByFn(index: number): number {
-    return index;
+  trackByFn(index_: number, viewModel: SudokuGridViewModel): string {
+    return viewModel.id;
   }
 }

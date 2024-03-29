@@ -8,11 +8,12 @@ import { VerificationResult } from "@app/core/verification/types/verification-re
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { EMPTY, Observable } from "rxjs";
 
 @Injectable()
 export class SudokuSolverStateMockService implements SudokuSolverState {
-  getBranches(): Observable<SudokuGrid[]> {
+  getViewModels(): Observable<SudokuGridViewModel[]> {
     return EMPTY;
   }
   getExecutionState(): Observable<SolverExecution> {

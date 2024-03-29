@@ -3,6 +3,11 @@ import { DuplicationColumnIndicesToRowIndices } from "@app/components/sudoku-set
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
+import {
+  SudokuGridRowViewModel,
+  SudokuGridViewModel,
+} from "@app/shared/types/sudoku-grid-view-model";
+import { SudokuGridViewModelConverter } from "@app/shared/util/soduku-grid-view-model-converter";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
 @Component({
@@ -11,15 +16,15 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
   styleUrls: ["./sudoku-grid.component.scss"],
 })
 export class SudokuGridComponent {
-  _grid: Nullable<SudokuGrid>;
+  _grid: Nullable<SudokuGridViewModel>;
   sqrt: Nullable<number>;
   gridColumns = "";
 
   @Input({ required: true })
-  set grid(grid: Nullable<SudokuGrid>) {
+  set grid(grid: Nullable<SudokuGridViewModel>) {
     this._grid = grid;
-    this.sqrt = grid ? Math.round(Math.sqrt(grid.length)) : null;
-    this.gridColumns = `repeat(${grid?.length ?? 1}, max-content)`;
+    this.sqrt = grid ? Math.round(Math.sqrt(grid.rows.length)) : null;
+    this.gridColumns = `repeat(${grid?.rows?.length ?? 1}, max-content)`;
   }
 
   @Input()
@@ -35,14 +40,16 @@ export class SudokuGridComponent {
   valueChange: EventEmitter<SudokuGrid> = new EventEmitter();
 
   onRowChanged(row: SudokuGridRow, index: number): void {
-    if (this._grid && index >= 0 && index < this._grid.length) {
-      const newGrid = SudokuGridUtil.clone(this._grid);
+    if (this._grid && index >= 0 && index < this._grid.rows.length) {
+      const newGrid = SudokuGridUtil.clone(
+        SudokuGridViewModelConverter.createGridFromViewModel(this._grid),
+      );
       newGrid[index] = row;
       this.valueChange.emit(newGrid);
     }
   }
 
-  trackByFn(index: number): number {
-    return index;
+  trackByFn(index_: number, viewModel: SudokuGridRowViewModel): string {
+    return viewModel.id;
   }
 }

@@ -26,7 +26,7 @@ describe(SudokuGridCellComponent.name, () => {
   });
 
   it("should emit the input value from the child component", () => {
-    component.cell = 5;
+    component.cell = { id: "id-0", cell: 5 };
     component.ngOnChanges({ cell: { currentValue: 5 } as SimpleChange });
     fixture.detectChanges();
     const valueChangeSpy = spyOn(component.valueChange, "emit").and.callFake(
