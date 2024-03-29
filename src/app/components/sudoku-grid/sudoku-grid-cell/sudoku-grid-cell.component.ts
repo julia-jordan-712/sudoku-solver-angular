@@ -12,6 +12,7 @@ import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
 import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isArray, isNotArray } from "@app/shared/util/is-array";
+import { Objects } from "@app/shared/util/objects";
 import { BehaviorSubject } from "rxjs";
 
 @Component({
@@ -65,6 +66,9 @@ export class SudokuGridCellComponent implements OnChanges {
   @HostBinding("class.highlight")
   highlight = false;
 
+  @HostBinding("class.highlight")
+  changed = false;
+
   @Input()
   @HostBinding("class.readonly")
   readonly: Nullable<boolean> = false;
@@ -93,6 +97,9 @@ export class SudokuGridCellComponent implements OnChanges {
 
     this.displayValue$.next(this.value);
     this.displayValues$.next(this.values);
+    this.changed =
+      (this.previousValue != null && this.previousValue !== this.value) ||
+      !Objects.arraysEqual(this.previousValues, this.values);
   }
 
   onChange(value: number): void {
@@ -104,7 +111,7 @@ export class SudokuGridCellComponent implements OnChanges {
 
   @HostListener("mouseenter")
   onMouseEnter(): void {
-    if (!this.isHoveringOverCell) {
+    if (!this.isHoveringOverCell && this.changed) {
       this.isHoveringOverCell = true;
       this.startTimer(() => this.switchBetweenPreviousAndCurrentValue(1), 500);
     }
@@ -120,7 +127,7 @@ export class SudokuGridCellComponent implements OnChanges {
       this.displayValues$.next(this.values);
     } else {
       this.displayValue$.next(this.previousValue ?? this.value);
-      this.displayValues$.next(this.previousValues ?? this.values);
+      this.displayValues$.next(this.previousValues);
     }
     this.startTimer(
       () => this.switchBetweenPreviousAndCurrentValue(++counter),
