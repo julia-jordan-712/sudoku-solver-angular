@@ -12,42 +12,51 @@ import {
 export class SudokuGridViewModelConverter {
   public static createViewModelsFromGrids(
     grids: SudokuGrid[],
+    id = "",
   ): SudokuGridViewModel[] {
     return grids.map((grid, index) =>
-      SudokuGridViewModelConverter.createViewModelFromGrid(grid, index),
+      SudokuGridViewModelConverter.createViewModelFromGrid(grid, id, index),
     );
   }
 
   public static createViewModelFromGrid(
     grid: SudokuGrid,
+    id = "",
     index = 0,
   ): SudokuGridViewModel {
     return {
-      id: `grid-${index}`,
-      rows: SudokuGridViewModelConverter.createViewModelsFromRows(grid),
+      id: `${id}-grid-${index}`,
+      rows: SudokuGridViewModelConverter.createViewModelsFromRows(grid, id),
     } satisfies SudokuGridViewModel;
   }
 
   private static createViewModelsFromRows(
     rows: SudokuGridRow[],
+    id = "",
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
-      SudokuGridViewModelConverter.createViewModelsFromRow(row, index),
+      SudokuGridViewModelConverter.createViewModelsFromRow(row, id, index),
     );
   }
 
   private static createViewModelsFromRow(
     row: SudokuGridRow,
+    id = "",
     index = 0,
   ): SudokuGridRowViewModel {
     return {
-      id: `row-${index}`,
-      cells: SudokuGridViewModelConverter.createViewModelsFromCells(row, index),
+      id: `${id}-row-${index}`,
+      cells: SudokuGridViewModelConverter.createViewModelsFromCells(
+        row,
+        id,
+        index,
+      ),
     } satisfies SudokuGridRowViewModel;
   }
 
   private static createViewModelsFromCells(
     cells: SudokuGridCell[],
+    id = "",
     rowIndex = 0,
   ): SudokuGridCellViewModel[] {
     return cells.map((cell, index) =>
@@ -55,6 +64,7 @@ export class SudokuGridViewModelConverter {
         cell,
         rowIndex,
         index,
+        id,
       ),
     );
   }
@@ -63,9 +73,10 @@ export class SudokuGridViewModelConverter {
     cell: SudokuGridCell,
     rowIndex = 0,
     columnIndex = 0,
+    id = "",
   ): SudokuGridCellViewModel {
     return {
-      id: `cell-${rowIndex}-${columnIndex}`,
+      id: `${id}-cell-${rowIndex}-${columnIndex}`,
       cell,
     } satisfies SudokuGridCellViewModel;
   }

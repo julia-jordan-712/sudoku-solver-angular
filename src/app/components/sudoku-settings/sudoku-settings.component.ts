@@ -12,6 +12,7 @@ import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { Observable, filter, first, map } from "rxjs";
+import { v4 as randomUUID } from "uuid";
 
 @Component({
   selector: "app-sudoku-settings",
@@ -28,7 +29,12 @@ export class SudokuSettingsComponent {
     .getGrid()
     .pipe(
       filter(isDefined),
-      map((grid) => SudokuGridViewModelConverter.createViewModelFromGrid(grid)),
+      map((grid) =>
+        SudokuGridViewModelConverter.createViewModelFromGrid(
+          grid,
+          randomUUID(),
+        ),
+      ),
     );
   selectionItems: SudokuDropdownSelectionItem[] =
     this.settingState.getSelectionItems();

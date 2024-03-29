@@ -14,7 +14,8 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
-import { BehaviorSubject, Observable, map } from "rxjs";
+import { BehaviorSubject, Observable, combineLatest, map } from "rxjs";
+import { v4 as randomUUID } from "uuid";
 
 @Injectable()
 export class SudokuSolverStateService implements SudokuSolverState {
@@ -23,10 +24,11 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private delay = new BehaviorSubject<number>(0);
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
+  private executionId$ = new BehaviorSubject<string>(randomUUID());
+  private highlightNumber$ = new BehaviorSubject<Nullable<number>>(undefined);
   private initialPuzzle: SudokuGrid = [];
   private maxSteps$ = new BehaviorSubject<number>(10_000);
   private pauseAfterStep$ = new BehaviorSubject<Nullable<number>>(undefined);
-  private highlightNumber$ = new BehaviorSubject<Nullable<number>>(undefined);
   private response$ = new BehaviorSubject<SolverResponse>(
     this.createInitialSolverResponse(),
   );
@@ -42,15 +44,14 @@ export class SudokuSolverStateService implements SudokuSolverState {
   private stopWatch: StopWatch = new StopWatch();
 
   getViewModels(): Observable<SudokuGridViewModel[]> {
-    return this.response$
-      .asObservable()
-      .pipe(
-        map((response) =>
-          SudokuGridViewModelConverter.createViewModelsFromGrids(
-            response.branches,
-          ),
+    return combineLatest([this.response$, this.executionId$]).pipe(
+      map(([response, id]) =>
+        SudokuGridViewModelConverter.createViewModelsFromGrids(
+          response.branches,
+          id,
         ),
-      );
+      ),
+    );
   }
 
   getDelay(): Observable<number> {
@@ -178,6 +179,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private resetAllExceptSolution(): void {
     this.execution$.next("NOT_STARTED");
+    this.executionId$.next(randomUUID());
     this.verificationResults$.next(undefined);
     this.stepsExecuted$.next(0);
     this.solver.reset();
