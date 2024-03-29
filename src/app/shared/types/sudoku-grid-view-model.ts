@@ -13,4 +13,6 @@ export interface SudokuGridRowViewModel {
 export interface SudokuGridCellViewModel {
   id: string;
   cell: SudokuGridCell;
+  maxValue: number;
+  widthAndHeight: number;
 }

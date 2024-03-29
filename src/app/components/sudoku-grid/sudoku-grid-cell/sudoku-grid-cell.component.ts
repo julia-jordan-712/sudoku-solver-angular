@@ -4,9 +4,7 @@ import {
   HostBinding,
   HostListener,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
 } from "@angular/core";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
@@ -20,7 +18,7 @@ import { BehaviorSubject } from "rxjs";
   templateUrl: "./sudoku-grid-cell.component.html",
   styleUrls: ["./sudoku-grid-cell.component.scss"],
 })
-export class SudokuGridCellComponent implements OnChanges {
+export class SudokuGridCellComponent {
   private value: Nullable<number>;
   private values: Nullable<number[]>;
   private previousValue: Nullable<number>;
@@ -35,11 +33,11 @@ export class SudokuGridCellComponent implements OnChanges {
   @Input({ required: true })
   set cell(cell: SudokuGridCellViewModel) {
     this.setCell(cell.cell);
+    this.maxValue = cell.maxValue;
+    this.size = cell.widthAndHeight;
   }
 
   size = 32;
-
-  @Input({ required: true })
   maxValue = 1;
 
   @Input()
@@ -75,13 +73,6 @@ export class SudokuGridCellComponent implements OnChanges {
 
   @Output()
   valueChange: EventEmitter<number> = new EventEmitter();
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes["maxValue"]) {
-      const sqrt = Math.ceil(Math.sqrt(this.maxValue));
-      this.size = Math.max(32, 16 + 10 * sqrt);
-    }
-  }
 
   private setCell(cell: SudokuGridCell): void {
     this.previousValue = this.value;

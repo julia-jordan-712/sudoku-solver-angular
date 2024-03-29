@@ -1,4 +1,3 @@
-import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { SudokuGridCellMultipleValuesComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-multiple-values/sudoku-grid-cell-multiple-values.component";
@@ -20,14 +19,11 @@ describe(SudokuGridCellComponent.name, () => {
     });
     fixture = TestBed.createComponent(SudokuGridCellComponent);
     component = fixture.componentInstance;
-    component.maxValue = 9;
-    component.ngOnChanges({ maxValue: { currentValue: 9 } as SimpleChange });
     fixture.detectChanges();
   });
 
   it("should emit the input value from the child component", () => {
-    component.cell = { id: "id-0", cell: 5 };
-    component.ngOnChanges({ cell: { currentValue: 5 } as SimpleChange });
+    component.cell = { id: "id-0", cell: 5, maxValue: 9, widthAndHeight: 20 };
     fixture.detectChanges();
     const valueChangeSpy = spyOn(component.valueChange, "emit").and.callFake(
       () => {},

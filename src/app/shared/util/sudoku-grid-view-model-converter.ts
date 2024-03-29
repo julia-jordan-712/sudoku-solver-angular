@@ -59,9 +59,15 @@ export class SudokuGridViewModelConverter {
     id = "",
     rowIndex = 0,
   ): SudokuGridCellViewModel[] {
+    const maxValue = cells.length;
+    const sqrt = Math.ceil(Math.sqrt(maxValue));
+    const size = Math.max(32, 16 + 10 * sqrt);
+
     return cells.map((cell, index) =>
       SudokuGridViewModelConverter.createViewModelsFromCell(
         cell,
+        maxValue,
+        size,
         rowIndex,
         index,
         id,
@@ -71,12 +77,16 @@ export class SudokuGridViewModelConverter {
 
   private static createViewModelsFromCell(
     cell: SudokuGridCell,
+    maxValue: number,
+    size: number,
     rowIndex = 0,
     columnIndex = 0,
     id = "",
   ): SudokuGridCellViewModel {
     return {
       id: `${id}-cell-${rowIndex}-${columnIndex}`,
+      maxValue,
+      widthAndHeight: size,
       cell,
     } satisfies SudokuGridCellViewModel;
   }
