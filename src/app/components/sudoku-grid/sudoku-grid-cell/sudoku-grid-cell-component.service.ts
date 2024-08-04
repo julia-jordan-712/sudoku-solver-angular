@@ -49,9 +49,10 @@ export class SudokuGridCellComponentService {
 
     this.displayValue$.next(this.value);
     this.displayValues$.next(this.values);
+
     this.changed$.next(
       (this.previousValue != null && this.previousValue !== this.value) ||
-        !Objects.arraysEqual(this.previousValues, this.values),
+        !Objects.arraysEqualIgnoringOrder(this.previousValues, this.values),
     );
   }
 

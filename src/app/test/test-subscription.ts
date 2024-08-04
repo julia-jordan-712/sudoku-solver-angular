@@ -1,4 +1,3 @@
-import { isDefined } from "@app/shared/util/is-defined";
 import {
   BehaviorSubject,
   Observable,
@@ -11,35 +10,48 @@ import {
 } from "rxjs";
 
 export class TestSubscription<T> {
-  public static start<T>(input: Observable<T>): TestSubscription<T> {
-    return new TestSubscription(input);
+  public static start<T>(
+    input: Observable<T>,
+    skipPreviousEmissions = true,
+  ): TestSubscription<T> {
+    return new TestSubscription(input, skipPreviousEmissions);
   }
 
-  private value$: BehaviorSubject<T | null> = new BehaviorSubject<T | null>(
-    null,
-  );
+  private value$: BehaviorSubject<T> = new BehaviorSubject<T>(undefined as T);
   private values$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
   private destroyed$: Subject<void> = new Subject();
 
-  private constructor(input$: Observable<T>) {
-    const helperSubject: Subject<void> = new Subject();
-    input$
-      .pipe(skipUntil(helperSubject), takeUntil(this.destroyed$))
-      .subscribe((value) => {
-        this.value$.next(value);
-        this.values$.next([...this.values$.getValue(), value]);
-      });
-    helperSubject.next();
-    helperSubject.complete();
+  private constructor(input$: Observable<T>, skipPreviousEmissions: boolean) {
+    if (skipPreviousEmissions) {
+      const helperSubject: Subject<void> = new Subject();
+      input$
+        .pipe(skipUntil(helperSubject), takeUntil(this.destroyed$))
+        .subscribe((v) => this.nextValue(v));
+      helperSubject.next();
+      helperSubject.complete();
+    } else {
+      input$
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((v) => this.nextValue(v));
+    }
   }
 
-  getValue(): Promise<T> {
+  private nextValue(value: T): void {
+    this.value$.next(value);
+    this.values$.next([...this.values$.getValue(), value]);
+  }
+
+  value(): Promise<T> {
     return lastValueFrom(
-      this.value$.asObservable().pipe(filter(isDefined), first()),
+      this.value$.asObservable().pipe(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        filter((_) => this.values$.getValue().length > 0),
+        first(),
+      ),
     );
   }
 
-  getValues(): Promise<T[]> {
+  values(): Promise<T[]> {
     return lastValueFrom(this.values$.asObservable().pipe(first()));
   }
 

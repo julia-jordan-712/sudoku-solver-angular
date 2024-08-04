@@ -98,7 +98,7 @@ describe(SudokuGridRowComponentService.name, () => {
           highlightNumber: new SimpleChange(undefined, params.value, true),
         });
 
-        const result: boolean[] = await highlighted.getValue();
+        const result: boolean[] = await highlighted.value();
         expect(result).toEqual(params.expected);
 
         highlighted.destroy();
@@ -115,7 +115,7 @@ describe(SudokuGridRowComponentService.name, () => {
         highlightNumber: new SimpleChange(undefined, 1, true),
       });
 
-      let result: boolean[] = await highlighted.getValue();
+      let result: boolean[] = await highlighted.value();
       expect(result).toEqual([true, false, false, false]);
 
       service.setHighlightNumber(2);
@@ -123,10 +123,10 @@ describe(SudokuGridRowComponentService.name, () => {
         highlightNumber: new SimpleChange(undefined, 2, true),
       });
 
-      result = await highlighted.getValue();
+      result = await highlighted.value();
       expect(result).toEqual([false, false, false, false]);
 
-      expect(await highlighted.getValues()).toEqual([
+      expect(await highlighted.values()).toEqual([
         [true, false, false, false],
         [false, false, false, false],
       ]);
