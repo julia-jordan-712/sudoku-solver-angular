@@ -35,6 +35,18 @@ export class SudokuGridCellSingleValueComponent
   @HostBinding("class.readonly")
   readonly: Nullable<boolean> = false;
 
+  @Input({ required: true })
+  @HostBinding("class.duplicate")
+  isDuplicate = false;
+
+  @Input({ required: true })
+  @HostBinding("class.highlight")
+  highlight = false;
+
+  @Input({ required: true })
+  @HostBinding("class.changed")
+  changed = false;
+
   @HostBinding("class.invalid")
   invalid = false;
 

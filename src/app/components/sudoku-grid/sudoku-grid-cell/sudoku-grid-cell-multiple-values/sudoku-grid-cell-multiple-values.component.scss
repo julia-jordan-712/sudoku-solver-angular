@@ -1,4 +1,10 @@
+@use "_constants" as *;
+@import "./../sudoku-grid-cell.styles.scss";
+
 :host {
+  @include hostMixin();
+
+  color: $text-color-lighter;
   cursor: not-allowed;
 }
 
@@ -8,7 +14,6 @@
   box-sizing: border-box;
   padding: 2px;
   gap: 2px;
-  opacity: 70%;
 
   .note {
     text-align: center;

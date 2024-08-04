@@ -1,18 +1,12 @@
 @use "_constants" as *;
+@import "./../sudoku-grid-cell.styles.scss";
 
 :host {
-  &.focused {
-    background-color: $secondary-color;
-    color: $on-secondary-color;
-  }
+  @include hostMixin();
+
   &.invalid {
     background-color: $invalid-background-color;
     color: $invalid-color;
-  }
-
-  cursor: pointer;
-  &.readonly {
-    cursor: not-allowed;
   }
 }
 

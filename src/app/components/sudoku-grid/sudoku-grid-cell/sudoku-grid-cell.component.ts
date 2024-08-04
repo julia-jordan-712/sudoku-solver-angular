@@ -57,14 +57,11 @@ export class SudokuGridCellComponent {
   borderLeft = false;
 
   @Input()
-  @HostBinding("class.duplicate")
   isDuplicate = false;
 
   @Input()
-  @HostBinding("class.highlight")
   highlight = false;
 
-  @HostBinding("class.changed")
   changed = false;
 
   @Input()

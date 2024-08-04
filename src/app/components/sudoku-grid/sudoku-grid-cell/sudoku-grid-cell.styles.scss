@@ -1,0 +1,29 @@
+@use "_constants" as *;
+
+@mixin hostMixin() {
+  &.focused {
+    background-color: $secondary-color;
+    color: $on-secondary-color;
+  }
+
+  &.highlight {
+    background-color: $highlight-color;
+    color: $on-highlight-color;
+    &:hover {
+      background-color: $highlight-hover-color;
+    }
+  }
+
+  &.changed {
+    background-color: $changed-color;
+    color: $on-changed-color;
+    &:hover {
+      background-color: $changed-hover-color;
+    }
+  }
+
+  &.duplicate {
+    background-color: $invalid-background-color;
+    color: $invalid-color;
+  }
+}

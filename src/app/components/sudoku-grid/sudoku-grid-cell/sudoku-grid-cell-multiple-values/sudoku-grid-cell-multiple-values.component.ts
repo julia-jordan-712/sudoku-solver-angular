@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from "@angular/core";
 
 @Component({
   selector: "app-sudoku-grid-cell-multiple-values",
@@ -16,6 +22,18 @@ export class SudokuGridCellMultipleValuesComponent implements OnChanges {
 
   @Input({ required: true })
   maxValue = 1;
+
+  @Input({ required: true })
+  @HostBinding("class.duplicate")
+  isDuplicate = false;
+
+  @Input({ required: true })
+  @HostBinding("class.highlight")
+  highlight = false;
+
+  @Input({ required: true })
+  @HostBinding("class.changed")
+  changed = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["maxValue"]) {
