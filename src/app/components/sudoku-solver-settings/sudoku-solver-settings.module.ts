@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { NumberInputModule } from "@app/components/input-field/number-input/number-input.module";
+import { NumberInputModule } from "@app/components/interactions/number-input/number-input.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { SudokuSolverSettingsComponent } from "./sudoku-solver-settings.component";
 

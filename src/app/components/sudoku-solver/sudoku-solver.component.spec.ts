@@ -6,7 +6,7 @@ import {
   tick,
 } from "@angular/core/testing";
 import { IconModule } from "@app/components/icon/icon.module";
-import { NumberInputModule } from "@app/components/input-field/number-input/number-input.module";
+import { NumberInputModule } from "@app/components/interactions/number-input/number-input.module";
 import { SudokuGridComponentService } from "@app/components/sudoku-grid/sudoku-grid-component.service";
 import { SudokuGridRowComponentService } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row-component.service";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
