@@ -7,6 +7,8 @@ import {
 } from "@angular/core/testing";
 import { IconModule } from "@app/components/icon/icon.module";
 import { NumberInputModule } from "@app/components/input-field/number-input/number-input.module";
+import { SudokuGridComponentService } from "@app/components/sudoku-grid/sudoku-grid-component.service";
+import { SudokuGridRowComponentService } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row-component.service";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
 import {
   SUDOKU_SOLVER_STATE,
@@ -49,6 +51,9 @@ describe(SudokuSolverComponent.name, () => {
         ...SOLVER_TEST_PROVIDERS,
         SudokuSolverStateService,
         { provide: SUDOKU_SOLVER_STATE, useExisting: SudokuSolverStateService },
+        SudokuGridComponentService,
+        SudokuGridRowComponentService,
+        SudokuGridComponentService,
       ],
     });
     service = TestBed.inject(SUDOKU_SOLVER_STATE);

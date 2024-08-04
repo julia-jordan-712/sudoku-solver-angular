@@ -9,7 +9,6 @@ import {
 } from "@angular/core";
 import {
   SudokuGridCellChangeEvent,
-  SudokuGridCellsHighlightResult,
   SudokuGridRowComponentService,
 } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row-component.service";
 import { Nullable } from "@app/shared/types/nullable";
@@ -18,6 +17,7 @@ import {
   SudokuGridCellViewModel,
   SudokuGridRowViewModel,
 } from "@app/shared/types/sudoku-grid-view-model";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-sudoku-grid-row",
@@ -26,16 +26,18 @@ import {
   providers: [SudokuGridRowComponentService],
 })
 export class SudokuGridRowComponent implements OnChanges {
-  _row: Nullable<SudokuGridRowViewModel>;
-  sqrt: Nullable<number>;
-
   private componentService: SudokuGridRowComponentService = inject(
     SudokuGridRowComponentService,
   );
 
+  row$: Observable<SudokuGridRowViewModel> = this.componentService.getRow();
+  highlightCells$: Observable<boolean[]> =
+    this.componentService.getHighlightCells();
+  sqrt: Nullable<number>;
+
   @Input({ required: true })
   set row(row: Nullable<SudokuGridRowViewModel>) {
-    this._row = row;
+    this.componentService.setRow(row);
     this.sqrt = row ? Math.round(Math.sqrt(row.cells.length)) : null;
   }
 
@@ -49,8 +51,9 @@ export class SudokuGridRowComponent implements OnChanges {
   columnsWithDuplicates: Nullable<number[]>;
 
   @Input()
-  highlightNumber: Nullable<number>;
-  highlightCells: boolean[] = [];
+  set highlightNumber(highlightNumber: Nullable<number>) {
+    this.componentService.setHighlightNumber(highlightNumber);
+  }
 
   @Input()
   readonly: Nullable<boolean>;
@@ -59,20 +62,12 @@ export class SudokuGridRowComponent implements OnChanges {
   valueChange: EventEmitter<SudokuGridRow> = new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges): void {
-    const highlightResult: SudokuGridCellsHighlightResult =
-      this.componentService.determineCellsToBeHighlighted(
-        changes,
-        this._row,
-        this.highlightNumber,
-      );
-    if (highlightResult.updateHighlightedCells) {
-      this.highlightCells = highlightResult.newCells;
-    }
+    this.componentService.onChanges(changes);
   }
 
   onCellChanged(cell: SudokuGridCell, index: number): void {
     const rowChange: SudokuGridCellChangeEvent =
-      this.componentService.cellChanged(this._row, cell, index);
+      this.componentService.cellChanged(cell, index);
     if (rowChange.rowChanged) {
       this.valueChange.emit(rowChange.newRow);
     }
