@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
+import { SudokuGridComponentService } from "@app/components/sudoku-grid/sudoku-grid-component.service";
 import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row.component";
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
@@ -24,11 +24,13 @@ describe(SudokuGridComponent.name, () => {
         SudokuGridCellTestComponent,
       ],
       imports: [
-        ReactiveFormsModule,
         SudokuVerificationModule,
         TranslateTestingModule.withTranslations({}),
       ],
-      providers: [SUDOKU_SOLVER_STATE_MOCK_PROVIDER],
+      providers: [
+        SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
+        SudokuGridComponentService,
+      ],
     }).compileComponents();
   });
 

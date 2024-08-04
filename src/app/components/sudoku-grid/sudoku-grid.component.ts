@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
+import {
+  SudokuGridComponentService,
+  SudokuGridRowChangeEvent,
+} from "@app/components/sudoku-grid/sudoku-grid-component.service";
 import { DuplicationColumnIndicesToRowIndices } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
@@ -7,18 +11,21 @@ import {
   SudokuGridRowViewModel,
   SudokuGridViewModel,
 } from "@app/shared/types/sudoku-grid-view-model";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 
 @Component({
   selector: "app-sudoku-grid",
   templateUrl: "./sudoku-grid.component.html",
   styleUrls: ["./sudoku-grid.component.scss"],
+  providers: [SudokuGridComponentService],
 })
 export class SudokuGridComponent {
   _grid: Nullable<SudokuGridViewModel>;
   sqrt: Nullable<number>;
   gridColumns = "";
+
+  private componentService: SudokuGridComponentService = inject(
+    SudokuGridComponentService,
+  );
 
   @Input({ required: true })
   set grid(grid: Nullable<SudokuGridViewModel>) {
@@ -40,12 +47,10 @@ export class SudokuGridComponent {
   valueChange: EventEmitter<SudokuGrid> = new EventEmitter();
 
   onRowChanged(row: SudokuGridRow, index: number): void {
-    if (this._grid && index >= 0 && index < this._grid.rows.length) {
-      const newGrid = SudokuGridUtil.clone(
-        SudokuGridViewModelConverter.createGridFromViewModel(this._grid),
-      );
-      newGrid[index] = row;
-      this.valueChange.emit(newGrid);
+    const rowChange: SudokuGridRowChangeEvent =
+      this.componentService.rowChanged(this._grid, row, index);
+    if (rowChange.gridChanged) {
+      this.valueChange.emit(rowChange.newGrid);
     }
   }
 

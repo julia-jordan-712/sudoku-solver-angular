@@ -7,7 +7,7 @@
     [maxValue]="maxValue"
     [isDuplicate]="isDuplicate"
     [highlight]="highlight"
-    [changed]="changed"
+    [changed]="(changed$ | async) ?? false"
   ></app-sudoku-grid-cell-multiple-values>
 </ng-container>
 <ng-template #inputTemplate>
@@ -18,7 +18,7 @@
     [readonly]="readonly"
     [isDuplicate]="isDuplicate"
     [highlight]="highlight"
-    [changed]="changed"
+    [changed]="(changed$ | async) ?? false"
     (valueChange)="onChange($event)"
   ></app-sudoku-grid-cell-single-value>
 </ng-template>
