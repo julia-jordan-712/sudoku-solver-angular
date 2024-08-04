@@ -103,6 +103,12 @@
     "DELAY": {
       "DELAY": "Verzögerung",
       "TOOLTIP": "Wartezeit in Millisekunden zwischen den Schritten beim Lösen des Sudokus"
+    },
+    "HIGHLIGHT": {
+      "NUMBER": {
+        "LABEL": "Nummer hervorheben",
+        "TOOLTIP": "Hebt alle Vorkommen dieser Nummer im Sudoku hervor."
+      }
     }
   }
 }

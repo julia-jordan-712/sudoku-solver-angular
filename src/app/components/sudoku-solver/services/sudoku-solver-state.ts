@@ -3,13 +3,14 @@ import { VerificationResult } from "@app/core/verification/types/verification-re
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { Observable } from "rxjs";
 
 export const SUDOKU_SOLVER_STATE: InjectionToken<SudokuSolverState> =
   new InjectionToken<SudokuSolverState>("SUDOKU_SOLVER_STATE");
 
 export interface SudokuSolverState {
-  getBranches(): Observable<SudokuGrid[]>;
+  getViewModels(): Observable<SudokuGridViewModel[]>;
   getExecutionState(): Observable<SolverExecution>;
 
   getDelay(): Observable<number>;
@@ -22,6 +23,8 @@ export interface SudokuSolverState {
   setMaximumSteps(max: number): void;
   getPauseAfterStep(): Observable<Nullable<number>>;
   setPauseAfterStep(step: Nullable<number>): void;
+  getHighlightNumber(): Observable<Nullable<number>>;
+  setHighlightNumber(value: Nullable<number>): void;
 
   getTimeElapsed(): number;
 

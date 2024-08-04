@@ -1,16 +1,22 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
 
 @Component({
   selector: "app-sudoku-grid-cell",
-  template: `{{ cell }}`,
+  template: `{{ _cell }}`,
 })
 export class SudokuGridCellTestComponent {
-  @Input({ required: true })
-  cell: SudokuGridCell;
+  size: number | undefined;
+  maxValue: number | undefined;
+  _cell: SudokuGridCell | undefined;
 
   @Input({ required: true })
-  maxValue = 1;
+  set cell(cell: SudokuGridCellViewModel) {
+    this._cell = cell.cell;
+    this.maxValue = cell.maxValue;
+    this.size = cell.widthAndHeight;
+  }
 
   @Input()
   borderTop = false;
@@ -26,6 +32,9 @@ export class SudokuGridCellTestComponent {
 
   @Input()
   isDuplicate = false;
+
+  @Input()
+  highlight = false;
 
   @Input()
   readonly = false;

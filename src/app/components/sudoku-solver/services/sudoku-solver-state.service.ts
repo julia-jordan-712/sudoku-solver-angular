@@ -11,8 +11,11 @@ import {
 } from "@app/shared/types/solver-execution";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { BehaviorSubject, Observable, map } from "rxjs";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
+import { BehaviorSubject, Observable, combineLatest, map } from "rxjs";
+import { v4 as randomUUID } from "uuid";
 
 @Injectable()
 export class SudokuSolverStateService implements SudokuSolverState {
@@ -21,6 +24,8 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private delay = new BehaviorSubject<number>(0);
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
+  private executionId$ = new BehaviorSubject<string>(randomUUID());
+  private highlightNumber$ = new BehaviorSubject<Nullable<number>>(undefined);
   private initialPuzzle: SudokuGrid = [];
   private maxSteps$ = new BehaviorSubject<number>(10_000);
   private pauseAfterStep$ = new BehaviorSubject<Nullable<number>>(undefined);
@@ -38,10 +43,15 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private stopWatch: StopWatch = new StopWatch();
 
-  getBranches(): Observable<SudokuGrid[]> {
-    return this.response$
-      .asObservable()
-      .pipe(map((response) => response.branches));
+  getViewModels(): Observable<SudokuGridViewModel[]> {
+    return combineLatest([this.response$, this.executionId$]).pipe(
+      map(([response, id]) =>
+        SudokuGridViewModelConverter.createViewModelsFromGrids(
+          response.branches,
+          id,
+        ),
+      ),
+    );
   }
 
   getDelay(): Observable<number> {
@@ -64,6 +74,10 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   getPauseAfterStep(): Observable<Nullable<number>> {
     return this.pauseAfterStep$.asObservable();
+  }
+
+  getHighlightNumber(): Observable<Nullable<number>> {
+    return this.highlightNumber$.asObservable();
   }
 
   getStepsExecuted(): Observable<number> {
@@ -165,6 +179,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private resetAllExceptSolution(): void {
     this.execution$.next("NOT_STARTED");
+    this.executionId$.next(randomUUID());
     this.verificationResults$.next(undefined);
     this.stepsExecuted$.next(0);
     this.solver.reset();
@@ -191,6 +206,10 @@ export class SudokuSolverStateService implements SudokuSolverState {
     this.pauseAfterStep$.next(
       step != undefined ? Math.max(0, step) : undefined,
     );
+  }
+
+  setHighlightNumber(value: Nullable<number>): void {
+    this.highlightNumber$.next(value);
   }
 
   startExecuting(): void {

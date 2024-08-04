@@ -64,4 +64,24 @@ export class Objects {
     });
     return result;
   }
+
+  public static arraysEqual<T>(a1: Nullable<T[]>, a2: Nullable<T[]>): boolean {
+    if (a1 && a2) {
+      if (a1.length !== a2.length) {
+        return false;
+      }
+      for (let i = 0; i < a1.length; i++) {
+        if (a1[i] !== a2[i]) {
+          return false;
+        }
+      }
+      return true;
+    } else if (a1 && !a2) {
+      return false;
+    } else if (!a1 && a2) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

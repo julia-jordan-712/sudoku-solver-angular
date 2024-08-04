@@ -1,20 +1,33 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridCell, SudokuGridRow } from "@app/shared/types/sudoku-grid";
+import {
+  SudokuGridCellViewModel,
+  SudokuGridRowViewModel,
+} from "@app/shared/types/sudoku-grid-view-model";
+import { isArray, isNotArray } from "@app/shared/util/is-array";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 
 @Component({
   selector: "app-sudoku-grid-row",
   templateUrl: "./sudoku-grid-row.component.html",
   styleUrls: ["./sudoku-grid-row.component.scss"],
 })
-export class SudokuGridRowComponent {
-  _row: Nullable<SudokuGridRow>;
+export class SudokuGridRowComponent implements OnChanges {
+  _row: Nullable<SudokuGridRowViewModel>;
   sqrt: Nullable<number>;
 
   @Input({ required: true })
-  set row(row: Nullable<SudokuGridRow>) {
+  set row(row: Nullable<SudokuGridRowViewModel>) {
     this._row = row;
-    this.sqrt = row ? Math.round(Math.sqrt(row.length)) : null;
+    this.sqrt = row ? Math.round(Math.sqrt(row.cells.length)) : null;
   }
 
   @Input()
@@ -27,20 +40,52 @@ export class SudokuGridRowComponent {
   columnsWithDuplicates: Nullable<number[]>;
 
   @Input()
+  highlightNumber: Nullable<number>;
+  highlightCells: boolean[] = [];
+
+  @Input()
   readonly: Nullable<boolean>;
 
   @Output()
   valueChange: EventEmitter<SudokuGridRow> = new EventEmitter();
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["row"] || changes["highlightNumber"]) {
+      if (this._row && this.highlightNumber != null) {
+        this.highlightCells = this.determineCellsToBeHighlighted(
+          this._row,
+          this.highlightNumber,
+        );
+      } else {
+        this.highlightCells = [];
+      }
+    }
+  }
+
+  private determineCellsToBeHighlighted(
+    row: SudokuGridRowViewModel,
+    numberToHighlight: number,
+  ): boolean[] {
+    return row.cells
+      .map((viewModel: SudokuGridCellViewModel) => viewModel.cell)
+      .map(
+        (cell: SudokuGridCell) =>
+          (isNotArray(cell) && cell === numberToHighlight) ||
+          (isArray(cell) && cell.includes(numberToHighlight)),
+      );
+  }
+
   onCellChanged(cell: SudokuGridCell, index: number): void {
-    if (this._row && index >= 0 && index < this._row.length) {
-      const newRow = [...this._row];
+    if (this._row && index >= 0 && index < this._row.cells.length) {
+      const newRow = [
+        ...SudokuGridViewModelConverter.createRowFromViewModel(this._row),
+      ];
       newRow[index] = cell;
       this.valueChange.emit(newRow);
     }
   }
 
-  trackByFn(index: number): number {
-    return index;
+  trackByFn(index_: number, viewModel: SudokuGridCellViewModel): string {
+    return viewModel.id;
   }
 }

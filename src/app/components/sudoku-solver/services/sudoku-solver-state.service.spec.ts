@@ -604,10 +604,10 @@ describe(SudokuSolverStateService.name, () => {
     it("should have no sudoku grid after reset", (done) => {
       service.reset();
       service
-        .getBranches()
+        .getViewModels()
         .pipe(first())
-        .subscribe((branches) => {
-          expect(branches).toEqual([]);
+        .subscribe((viewModels) => {
+          expect(viewModels).toEqual([]);
           done();
         });
     });

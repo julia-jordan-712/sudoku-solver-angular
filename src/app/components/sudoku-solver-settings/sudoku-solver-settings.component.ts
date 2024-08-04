@@ -11,12 +11,14 @@ import { Observable, map } from "rxjs";
 export class SudokuSolverSettingsComponent {
   private state = inject(SUDOKU_SOLVER_STATE);
   show$: Observable<boolean> = this.state
-    .getBranches()
-    .pipe(map((branches) => branches.length > 0));
+    .getViewModels()
+    .pipe(map((viewModels) => viewModels.length > 0));
   delay$: Observable<number> = this.state.getDelay();
   maxSteps$: Observable<number> = this.state.getMaximumSteps();
   pauseAfterStep$: Observable<Nullable<number>> =
     this.state.getPauseAfterStep();
+  highlightNumber$: Observable<Nullable<number>> =
+    this.state.getHighlightNumber();
 
   setDelay(ms: Nullable<number>): void {
     this.state.setDelay(ms ?? 0);
@@ -28,5 +30,9 @@ export class SudokuSolverSettingsComponent {
 
   setPauseAfterStep(step: Nullable<number>): void {
     this.state.setPauseAfterStep(step);
+  }
+
+  setHighlightNumber(step: Nullable<number>): void {
+    this.state.setHighlightNumber(step);
   }
 }
