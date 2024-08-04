@@ -3,38 +3,36 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
+  inject,
   Input,
   Output,
 } from "@angular/core";
+import { SudokuGridCellComponentService } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-component.service";
 import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
 import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { isArray, isNotArray } from "@app/shared/util/is-array";
-import { Objects } from "@app/shared/util/objects";
-import { BehaviorSubject } from "rxjs";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-sudoku-grid-cell",
   templateUrl: "./sudoku-grid-cell.component.html",
   styleUrls: ["./sudoku-grid-cell.component.scss"],
+  providers: [SudokuGridCellComponentService],
 })
 export class SudokuGridCellComponent {
-  private value: Nullable<number>;
-  private values: Nullable<number[]>;
-  private previousValue: Nullable<number>;
-  private previousValues: Nullable<number[]>;
-  displayValue$: BehaviorSubject<Nullable<number>> = new BehaviorSubject<
-    Nullable<number>
-  >(null);
-  displayValues$: BehaviorSubject<Nullable<number[]>> = new BehaviorSubject<
-    Nullable<number[]>
-  >(null);
+  private componentService: SudokuGridCellComponentService = inject(
+    SudokuGridCellComponentService,
+  );
+  displayValue$: Observable<Nullable<number>> =
+    this.componentService.getDisplayValue();
+  displayValues$: Observable<Nullable<number[]>> =
+    this.componentService.getDisplayValues();
+  changed$: Observable<boolean> = this.componentService.isChanged();
 
   @Input({ required: true })
-  set cell(cell: SudokuGridCellViewModel) {
-    this.setCell(cell.cell);
-    this.maxValue = cell.maxValue;
-    this.size = cell.widthAndHeight;
+  set cell(viewModel: SudokuGridCellViewModel) {
+    this.componentService.setCell(viewModel.cell);
+    this.maxValue = viewModel.maxValue;
+    this.size = viewModel.widthAndHeight;
   }
 
   size = 32;
@@ -62,8 +60,6 @@ export class SudokuGridCellComponent {
   @Input()
   highlight = false;
 
-  changed = false;
-
   @Input()
   @HostBinding("class.readonly")
   readonly: Nullable<boolean> = false;
@@ -71,77 +67,17 @@ export class SudokuGridCellComponent {
   @Output()
   valueChange: EventEmitter<number> = new EventEmitter();
 
-  private setCell(cell: SudokuGridCell): void {
-    this.previousValue = this.value;
-    this.previousValues = this.values;
-
-    if (isArray(cell)) {
-      this.values = cell;
-      this.value = null;
-    } else if (isNotArray(cell)) {
-      this.values = null;
-      this.value = cell;
-    }
-
-    this.displayValue$.next(this.value);
-    this.displayValues$.next(this.values);
-    this.changed =
-      (this.previousValue != null && this.previousValue !== this.value) ||
-      !Objects.arraysEqual(this.previousValues, this.values);
-  }
-
   onChange(value: number): void {
     this.valueChange.emit(value);
   }
 
-  isHoveringOverCell = false;
-  timeOutFnId: Nullable<number> = null;
-
   @HostListener("mouseenter")
   onMouseEnter(): void {
-    if (!this.isHoveringOverCell && this.changed) {
-      this.isHoveringOverCell = true;
-      this.startTimer(() => this.switchBetweenPreviousAndCurrentValue(1), 500);
-    }
-  }
-
-  private switchBetweenPreviousAndCurrentValue(counter: number): void {
-    this.stopTimer();
-    if (!this.isHoveringOverCell) {
-      return;
-    }
-    if (counter % 2 === 0) {
-      this.displayValue$.next(this.value);
-      this.displayValues$.next(this.values);
-    } else {
-      this.displayValue$.next(this.previousValue ?? this.value);
-      this.displayValues$.next(this.previousValues);
-    }
-    this.startTimer(
-      () => this.switchBetweenPreviousAndCurrentValue(++counter),
-      1000,
-    );
+    this.componentService.onMouseEnter();
   }
 
   @HostListener("mouseleave")
   onMouseLeave(): void {
-    this.isHoveringOverCell = false;
-    this.stopTimer();
-    this.displayValue$.next(this.value);
-    this.displayValues$.next(this.values);
-  }
-
-  private startTimer(callback: () => void, ms: number): void {
-    this.stopTimer();
-    if (this.isHoveringOverCell) {
-      this.timeOutFnId = setTimeout(callback, ms) as unknown as number;
-    }
-  }
-
-  private stopTimer(): void {
-    if (this.timeOutFnId) {
-      clearTimeout(this.timeOutFnId);
-      this.timeOutFnId = null;
-    }
+    this.componentService.onMouseLeave();
   }
 }

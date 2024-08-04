@@ -17,9 +17,4 @@
   &.border-bottom {
     border-bottom-width: 3px;
   }
-
-  cursor: pointer;
-  &.readonly {
-    cursor: not-allowed;
-  }
 }

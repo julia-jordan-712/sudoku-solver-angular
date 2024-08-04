@@ -29,7 +29,7 @@ export class SudokuSettingsComponent {
     .getGrid()
     .pipe(
       filter(isDefined),
-      map((grid) =>
+      map((grid: SudokuGrid) =>
         SudokuGridViewModelConverter.createViewModelFromGrid(
           grid,
           randomUUID(),
@@ -55,7 +55,9 @@ export class SudokuSettingsComponent {
     this.settingState
       .getGrid()
       .pipe(first(), filter(isDefined))
-      .subscribe((puzzle) => this.solverState.setInitialPuzzle(puzzle));
+      .subscribe((puzzle: SudokuGrid) =>
+        this.solverState.setInitialPuzzle(puzzle),
+      );
   }
 
   onSelect(option: SudokuDropdownSelectionItem): void {

@@ -8,6 +8,11 @@
     background-color: $invalid-background-color;
     color: $invalid-color;
   }
+
+  cursor: pointer;
+  &.readonly {
+    cursor: not-allowed;
+  }
 }
 
 input {

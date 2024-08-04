@@ -2,9 +2,9 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { Nullable } from "@app/shared/types/nullable";
 
 export class SudokuGridCellValidator {
-  private maxValue: number | undefined;
+  private maxValue: number | null = null;
 
-  setMaxValue(maxValue: number): void {
+  setMaxValue(maxValue: number | null): void {
     this.maxValue = maxValue;
   }
 
@@ -19,9 +19,12 @@ export class SudokuGridCellValidator {
     if (value == null) {
       return null;
     }
+    if (Number.isNaN(value)) {
+      return { nan: value };
+    }
     if (value < 1) {
       return { min: value };
-    } else if (this.maxValue != undefined && value > this.maxValue) {
+    } else if (this.maxValue != null && value > this.maxValue) {
       return { max: value };
     }
     return null;

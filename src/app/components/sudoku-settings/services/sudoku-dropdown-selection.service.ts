@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { DropdownInputOption } from "@app/components/input-field/dropdown-input/dropdown-input.component";
+import { DropdownInputOption } from "@app/components/interactions/dropdown-input/dropdown-input.component";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
