@@ -64,7 +64,7 @@ export class SudokuGridCellComponent {
   @HostBinding("class.highlight")
   highlight = false;
 
-  @HostBinding("class.highlight")
+  @HostBinding("class.changed")
   changed = false;
 
   @Input()

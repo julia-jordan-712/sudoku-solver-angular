@@ -23,7 +23,8 @@
     color: $on-secondary-color;
   }
 
-  &.highlight {
+  &.highlight,
+  &.changed {
     background-color: $highlight-color;
     color: $on-highlight-color;
     &:hover {
