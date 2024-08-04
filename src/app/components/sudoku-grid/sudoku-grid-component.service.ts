@@ -12,7 +12,12 @@ export class SudokuGridComponentService {
     row: SudokuGridRow,
     index: number,
   ): SudokuGridRowChangeEvent {
-    if (grid && index >= 0 && index < grid.rows.length) {
+    if (
+      grid &&
+      index >= 0 &&
+      index < grid.rows.length &&
+      row.length === grid.rows[0].cells.length
+    ) {
       const newGrid: SudokuGrid = SudokuGridUtil.clone(
         SudokuGridViewModelConverter.createGridFromViewModel(grid),
       );
