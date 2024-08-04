@@ -12,7 +12,7 @@ import {
   SudokuGridCellViewModel,
   SudokuGridRowViewModel,
 } from "@app/shared/types/sudoku-grid-view-model";
-import { isNotArray } from "@app/shared/util/is-array";
+import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 
 @Component({
@@ -51,14 +51,28 @@ export class SudokuGridRowComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["row"] || changes["highlightNumber"]) {
-      if (this._row && this.highlightNumber) {
-        this.highlightCells = this._row.cells.map(
-          (cell) => isNotArray(cell) && this.highlightNumber === cell.cell,
+      if (this._row && this.highlightNumber != null) {
+        this.highlightCells = this.determineCellsToBeHighlighted(
+          this._row,
+          this.highlightNumber,
         );
       } else {
         this.highlightCells = [];
       }
     }
+  }
+
+  private determineCellsToBeHighlighted(
+    row: SudokuGridRowViewModel,
+    numberToHighlight: number,
+  ): boolean[] {
+    return row.cells
+      .map((viewModel: SudokuGridCellViewModel) => viewModel.cell)
+      .map(
+        (cell: SudokuGridCell) =>
+          (isNotArray(cell) && cell === numberToHighlight) ||
+          (isArray(cell) && cell.includes(numberToHighlight)),
+      );
   }
 
   onCellChanged(cell: SudokuGridCell, index: number): void {
