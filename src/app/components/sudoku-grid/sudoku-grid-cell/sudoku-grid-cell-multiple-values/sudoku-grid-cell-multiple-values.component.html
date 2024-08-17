@@ -3,10 +3,8 @@
   [style.grid-template-columns]="noteGridColumns"
   [style.width]="size + 'px'"
   [style.height]="size + 'px'"
-  >
+>
   @for (number of numbers; track trackByFn($index, number)) {
-    <span class="note">{{
-      values.includes(number) ? number : ""
-    }}</span>
+    <span class="note">{{ values.includes(number) ? number : "" }}</span>
   }
 </div>

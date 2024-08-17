@@ -4,7 +4,7 @@
   [disabled]="(canStart$ | async) === false"
   [title]="'SOLVER.ACTIONS.START' | translate"
   (click)="start()"
-  >
+>
   <app-icon>play_arrow</app-icon>
 </button>
 <button
@@ -13,7 +13,7 @@
   [disabled]="(canPause$ | async) === false"
   [title]="'SOLVER.ACTIONS.PAUSE' | translate"
   (click)="pause()"
-  >
+>
   <app-icon>pause</app-icon>
 </button>
 <button
@@ -22,7 +22,7 @@
   [disabled]="(canGoToNext$ | async) === false"
   [title]="'SOLVER.ACTIONS.NEXT' | translate"
   (click)="next()"
-  >
+>
   <app-icon>skip_next</app-icon>
 </button>
 @if (canRestart$ | async) {
@@ -31,7 +31,7 @@
     class="icon primary"
     [title]="'SOLVER.ACTIONS.RESTART' | translate"
     (click)="restart()"
-    >
+  >
     <app-icon>restart_alt</app-icon>
   </button>
 }

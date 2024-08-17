@@ -1,8 +1,12 @@
 @if (_grid && sqrt) {
   <div class="grid" [style.grid-template-columns]="gridColumns">
     @for (
-      row of _grid.rows; track trackByFn(i,
-      row); let i = $index; let first = $first; let last = $last) {
+      row of _grid.rows;
+      track trackByFn(i, row);
+      let i = $index;
+      let first = $first;
+      let last = $last
+    ) {
       <app-sudoku-grid-row
         [row]="row"
         [columnsWithDuplicates]="duplications?.[i]"

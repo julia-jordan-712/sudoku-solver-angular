@@ -30,14 +30,14 @@
     [verification]="verification$ | async"
     [duplications]="duplications$ | async"
     (valueChange)="onGridChange($event)"
-    >
+  >
   </app-sudoku-grid>
   <button
     id="confirmSettings"
     class="primary"
     [disabled]="!(verification$ | async)?.isValid()"
     (click)="submit()"
-    >
+  >
     <app-icon>done</app-icon>
     {{ "SETTINGS.DONE" | translate }}
   </button>

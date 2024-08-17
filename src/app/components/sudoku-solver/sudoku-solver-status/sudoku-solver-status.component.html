@@ -1,34 +1,33 @@
 {{ "SOLVER.STATUS.TITLE" | translate }}:
 @switch (state$ | async) {
-  @case ('NOT_STARTED') {
+  @case ("NOT_STARTED") {
     <div class="state">
       {{ "SOLVER.STATUS.NOT_STARTED" | translate }}
     </div>
   }
-  @case ('RUNNING') {
+  @case ("RUNNING") {
     <div class="state">
       {{ "SOLVER.STATUS.RUNNING" | translate }}
     </div>
   }
-  @case ('PAUSED') {
+  @case ("PAUSED") {
     <div class="state">
       {{ "SOLVER.STATUS.PAUSED" | translate }}
     </div>
   }
-  @case ('DONE') {
+  @case ("DONE") {
     <div class="state success">
       {{
-      "SOLVER.STATUS.DONE"
-      | translate
-      : { time: getTime() | number: "1.1-1" : this.translate.currentLang }
+        "SOLVER.STATUS.DONE"
+          | translate
+            : { time: getTime() | number: "1.1-1" : this.translate.currentLang }
       }}
     </div>
   }
-  @case ('FAILED') {
+  @case ("FAILED") {
     <div class="state failure">
       {{ "SOLVER.STATUS.FAILED" | translate }}
     </div>
   }
-  @default {
-  }
+  @default {}
 }

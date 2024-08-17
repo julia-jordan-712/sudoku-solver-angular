@@ -1,8 +1,12 @@
 @if (row$ | async; as row) {
   @if (highlightCells$ | async; as highlightCells) {
     @for (
-      cell of row.cells; track trackByFn(i,
-      cell); let i = $index; let first = $first; let last = $last) {
+      cell of row.cells;
+      track trackByFn(i, cell);
+      let i = $index;
+      let first = $first;
+      let last = $last
+    ) {
       <app-sudoku-grid-cell
         [cell]="cell"
         [isDuplicate]="columnsWithDuplicates?.includes(i) ?? false"
