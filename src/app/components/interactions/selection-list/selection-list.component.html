@@ -1,11 +1,14 @@
 <label>{{ label }}:</label>
-<app-icon *ngIf="tooltip" [title]="tooltip">info</app-icon>
+@if (tooltip) {
+  <app-icon [title]="tooltip">info</app-icon>
+}
 <div class="buttons">
-  <button
-    *ngFor="let selectableValue of values; trackBy: trackByFn"
-    (click)="selectValue(selectableValue)"
-    [class.selected]="selectableValue === value"
-  >
-    {{ selectableValue }}
-  </button>
+  @for (selectableValue of values; track trackByFn($index, selectableValue)) {
+    <button
+      (click)="selectValue(selectableValue)"
+      [class.selected]="selectableValue === value"
+      >
+      {{ selectableValue }}
+    </button>
+  }
 </div>

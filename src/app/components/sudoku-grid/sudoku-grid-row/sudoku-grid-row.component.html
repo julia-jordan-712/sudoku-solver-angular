@@ -1,14 +1,8 @@
-<ng-container *ngIf="row$ | async as row">
-  <ng-container *ngIf="highlightCells$ | async as highlightCells">
-    <ng-container
-      *ngFor="
-        let cell of row.cells;
-        let i = index;
-        let first = first;
-        let last = last;
-        trackBy: trackByFn
-      "
-    >
+@if (row$ | async; as row) {
+  @if (highlightCells$ | async; as highlightCells) {
+    @for (
+      cell of row.cells; track trackByFn(i,
+      cell); let i = $index; let first = $first; let last = $last) {
       <app-sudoku-grid-cell
         [cell]="cell"
         [isDuplicate]="columnsWithDuplicates?.includes(i) ?? false"
@@ -20,6 +14,6 @@
         [readonly]="readonly"
         (valueChange)="onCellChanged($event, i)"
       ></app-sudoku-grid-cell>
-    </ng-container>
-  </ng-container>
-</ng-container>
+    }
+  }
+}

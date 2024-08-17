@@ -1,23 +1,20 @@
-<ng-container *ngIf="_grid && sqrt">
+@if (_grid && sqrt) {
   <div class="grid" [style.grid-template-columns]="gridColumns">
-    <app-sudoku-grid-row
-      *ngFor="
-        let row of _grid.rows;
-        let i = index;
-        let first = first;
-        let last = last;
-        trackBy: trackByFn
-      "
-      [row]="row"
-      [columnsWithDuplicates]="duplications?.[i]"
-      [borderTop]="first"
-      [borderBottom]="last || (sqrt ? (i + 1) % sqrt === 0 : false)"
-      [highlightNumber]="highlightNumber"
-      [readonly]="readonly"
-      (valueChange)="onRowChanged($event, i)"
-    ></app-sudoku-grid-row>
+    @for (
+      row of _grid.rows; track trackByFn(i,
+      row); let i = $index; let first = $first; let last = $last) {
+      <app-sudoku-grid-row
+        [row]="row"
+        [columnsWithDuplicates]="duplications?.[i]"
+        [borderTop]="first"
+        [borderBottom]="last || (sqrt ? (i + 1) % sqrt === 0 : false)"
+        [highlightNumber]="highlightNumber"
+        [readonly]="readonly"
+        (valueChange)="onRowChanged($event, i)"
+      ></app-sudoku-grid-row>
+    }
   </div>
   <app-sudoku-verification
     [verification]="verification"
   ></app-sudoku-verification>
-</ng-container>
+}

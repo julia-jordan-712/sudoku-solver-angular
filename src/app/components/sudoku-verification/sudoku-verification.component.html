@@ -1,21 +1,22 @@
-<ng-container *ngIf="verification">
-  <ng-container *ngIf="verification.isValid(); else invalidTemplate">
+@if (verification) {
+  @if (verification.isValid()) {
     <div class="container valid">
       <span class="bold">
         <app-icon>check_circle</app-icon>
         {{ "VERIFY.RESULT.VALID" | translate }}
       </span>
     </div>
-  </ng-container>
-  <ng-template #invalidTemplate>
+  } @else {
     <div class="container invalid">
       <span class="bold">
         <app-icon>report</app-icon>
         {{ "VERIFY.RESULT.INVALID" | translate }}
       </span>
-      <span *ngFor="let error of verification.getErrors(); trackBy: trackByFn">
-        {{ error.key | translate: error.params }}
-      </span>
+      @for (error of verification.getErrors(); track trackByFn($index, error)) {
+        <span>
+          {{ error.key | translate: error.params }}
+        </span>
+      }
     </div>
-  </ng-template>
-</ng-container>
+  }
+}

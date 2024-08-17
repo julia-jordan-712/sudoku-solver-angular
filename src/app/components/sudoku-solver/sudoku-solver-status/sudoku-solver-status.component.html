@@ -1,23 +1,34 @@
 {{ "SOLVER.STATUS.TITLE" | translate }}:
-<ng-container [ngSwitch]="state$ | async">
-  <div class="state" *ngSwitchCase="'NOT_STARTED'">
-    {{ "SOLVER.STATUS.NOT_STARTED" | translate }}
-  </div>
-  <div class="state" *ngSwitchCase="'RUNNING'">
-    {{ "SOLVER.STATUS.RUNNING" | translate }}
-  </div>
-  <div class="state" *ngSwitchCase="'PAUSED'">
-    {{ "SOLVER.STATUS.PAUSED" | translate }}
-  </div>
-  <div class="state success" *ngSwitchCase="'DONE'">
-    {{
+@switch (state$ | async) {
+  @case ('NOT_STARTED') {
+    <div class="state">
+      {{ "SOLVER.STATUS.NOT_STARTED" | translate }}
+    </div>
+  }
+  @case ('RUNNING') {
+    <div class="state">
+      {{ "SOLVER.STATUS.RUNNING" | translate }}
+    </div>
+  }
+  @case ('PAUSED') {
+    <div class="state">
+      {{ "SOLVER.STATUS.PAUSED" | translate }}
+    </div>
+  }
+  @case ('DONE') {
+    <div class="state success">
+      {{
       "SOLVER.STATUS.DONE"
-        | translate
-          : { time: getTime() | number: "1.1-1" : this.translate.currentLang }
-    }}
-  </div>
-  <div class="state failure" *ngSwitchCase="'FAILED'">
-    {{ "SOLVER.STATUS.FAILED" | translate }}
-  </div>
-  <ng-container *ngSwitchDefault></ng-container>
-</ng-container>
+      | translate
+      : { time: getTime() | number: "1.1-1" : this.translate.currentLang }
+      }}
+    </div>
+  }
+  @case ('FAILED') {
+    <div class="state failure">
+      {{ "SOLVER.STATUS.FAILED" | translate }}
+    </div>
+  }
+  @default {
+  }
+}
