@@ -3,7 +3,7 @@
 <input
   type="number"
   #inputField
-  [(ngModel)]="value"
+  [ngModel]="_value"
   (ngModelChange)="onChange($event)"
   [style.width]="inputWidth ?? ''"
 />
