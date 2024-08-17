@@ -21,7 +21,6 @@
     "lib": ["es2020", "dom"],
     "paths": {
       "rxjs": ["node_modules/rxjs"],
-      "@angular/*": ["node_modules/@angular/*"],
       "@app/*": ["src/app/*"]
     },
     "useDefineForClassFields": false
