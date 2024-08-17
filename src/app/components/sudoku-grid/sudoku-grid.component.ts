@@ -7,10 +7,7 @@ import { DuplicationColumnIndicesToRowIndices } from "@app/components/sudoku-set
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
-import {
-  SudokuGridRowViewModel,
-  SudokuGridViewModel,
-} from "@app/shared/types/sudoku-grid-view-model";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 
 @Component({
   selector: "app-sudoku-grid",
@@ -52,9 +49,5 @@ export class SudokuGridComponent {
     if (rowChange.gridChanged) {
       this.valueChange.emit(rowChange.newGrid);
     }
-  }
-
-  trackByFn(index_: number, viewModel: SudokuGridRowViewModel): string {
-    return viewModel.id;
   }
 }

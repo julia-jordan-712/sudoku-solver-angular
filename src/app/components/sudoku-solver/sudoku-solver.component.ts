@@ -17,8 +17,4 @@ export class SudokuSolverComponent {
     this.state.getVerificationResults();
   highlightNumber$: Observable<Nullable<number>> =
     this.state.getHighlightNumber();
-
-  trackByFn(index_: number, viewModel: SudokuGridViewModel): string {
-    return viewModel.id;
-  }
 }

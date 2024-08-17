@@ -42,10 +42,6 @@ export class DropdownInputComponent<T extends DropdownInputOption>
     this._selectedItem = option;
     this.selected.emit(option);
   }
-
-  trackByFn(_: number, item: T): string {
-    return item.id;
-  }
 }
 
 export interface DropdownInputOption extends ObjectWithId {

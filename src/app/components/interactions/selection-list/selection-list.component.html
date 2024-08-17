@@ -3,7 +3,7 @@
   <app-icon [title]="tooltip">info</app-icon>
 }
 <div class="buttons">
-  @for (selectableValue of values; track trackByFn($index, selectableValue)) {
+  @for (selectableValue of values; track selectableValue) {
     <button
       (click)="selectValue(selectableValue)"
       [class.selected]="selectableValue === value"

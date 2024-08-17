@@ -2,7 +2,7 @@
   <div class="grid" [style.grid-template-columns]="gridColumns">
     @for (
       row of _grid.rows;
-      track trackByFn(i, row);
+      track row.id;
       let i = $index;
       let first = $first;
       let last = $last

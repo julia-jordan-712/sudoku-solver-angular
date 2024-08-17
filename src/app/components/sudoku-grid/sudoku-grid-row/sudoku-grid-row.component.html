@@ -2,7 +2,7 @@
   @if (highlightCells$ | async; as highlightCells) {
     @for (
       cell of row.cells;
-      track trackByFn(i, cell);
+      track cell.id;
       let i = $index;
       let first = $first;
       let last = $last

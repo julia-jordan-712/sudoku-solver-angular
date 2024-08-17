@@ -12,7 +12,7 @@
         <app-icon>report</app-icon>
         {{ "VERIFY.RESULT.INVALID" | translate }}
       </span>
-      @for (error of verification.getErrors(); track trackByFn($index, error)) {
+      @for (error of verification.getErrors(); track error.key) {
         <span>
           {{ error.key | translate: error.params }}
         </span>
