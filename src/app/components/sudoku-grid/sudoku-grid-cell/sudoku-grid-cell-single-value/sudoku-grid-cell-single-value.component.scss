@@ -2,14 +2,14 @@
 @import "./../sudoku-grid-cell.styles.scss";
 
 :host {
+  cursor: pointer;
+
   @include hostMixin();
 
   &.invalid {
     background-color: $invalid-background-color;
     color: $invalid-color;
   }
-
-  cursor: pointer;
   &.readonly {
     cursor: not-allowed;
   }
@@ -24,6 +24,7 @@ input {
   outline: none;
   text-align: center;
   caret-color: transparent;
+  cursor: inherit;
 
   appearance: textfield;
   -moz-appearance: textfield;
@@ -33,7 +34,6 @@ input {
     margin: 0;
   }
 
-  cursor: inherit;
   &:hover,
   &:focus {
     cursor: inherit;
