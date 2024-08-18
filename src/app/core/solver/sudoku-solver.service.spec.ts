@@ -76,9 +76,19 @@ describe(SudokuSolverService.name, () => {
       steps: 234,
     },
     {
+      puzzle: PuzzleExtreme.PUZZLE_1.puzzle,
+      name: "extreme puzzle 1",
+      steps: 204,
+    },
+    {
       puzzle: PuzzleExtreme.PUZZLE_2.puzzle,
       name: "extreme puzzle 2",
       steps: 209,
+    },
+    {
+      puzzle: PuzzleExtreme.PUZZLE_3.puzzle,
+      name: "extreme puzzle 2",
+      steps: 192,
     },
   ].forEach((params) => {
     it(`should solve "${params.name}" in ${params.steps} steps`, () => {
