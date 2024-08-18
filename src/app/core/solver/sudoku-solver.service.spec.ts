@@ -127,25 +127,25 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleHard.PUZZLE_1.puzzle,
       name: "hard puzzle 1",
-      steps: 235,
+      steps: 232,
       success: true,
     },
     {
       puzzle: PuzzleHard.PUZZLE_2.puzzle,
       name: "hard puzzle 2",
-      steps: 211,
+      steps: 210,
       success: true,
     },
     {
       puzzle: PuzzleHard.PUZZLE_3.puzzle,
       name: "hard puzzle 3",
-      steps: 206,
+      steps: 203,
       success: true,
     },
     {
       puzzle: PuzzleHard.PUZZLE_4.puzzle,
       name: "hard puzzle 4",
-      steps: 193,
+      steps: 195,
       success: true,
     },
     {
@@ -181,7 +181,7 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleExtreme.PUZZLE_5.puzzle,
       name: "extreme puzzle 5",
-      steps: 207,
+      steps: 203,
       success: true,
     },
   ].forEach((params) => {

@@ -8,9 +8,9 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 interface PossiblePairResult {
   v1: number;
   v2: number;
-  row?: number;
-  column?: number;
-  square?: number;
+  rows: number[];
+  columns: number[];
+  squares: number[];
 }
 
 /**
@@ -73,6 +73,10 @@ export class EliminatePossiblePairFromOtherCells implements SolverRunnable {
     grid: SudokuGrid,
     squarePositionsMap: CellPositionMap,
   ): PossiblePairResult {
+    const rows: number[] = [];
+    const columns: number[] = [];
+    const squares: number[] = [];
+
     for (let i = 0; i < grid.length; i++) {
       const rowPositions: CellPosition[] = [];
       const columnPositions: CellPosition[] = [];
@@ -97,15 +101,17 @@ export class EliminatePossiblePairFromOtherCells implements SolverRunnable {
           this.containsOnlySearchedPair(v1, v2, grid[position.x][position.y]),
         );
 
-      const row = rowPositions.length === 2 ? i : undefined;
-      const column = columnPositions.length === 2 ? i : undefined;
-      const square = squarePositions.length === 2 ? i : undefined;
-
-      if (row != undefined || column != undefined || square != undefined) {
-        return { v1, v2, row, column, square };
+      if (rowPositions.length === 2) {
+        rows.push(i);
+      }
+      if (columnPositions.length === 2) {
+        columns.push(i);
+      }
+      if (squarePositions.length === 2) {
+        squares.push(i);
       }
     }
-    return { v1, v2 };
+    return { v1, v2, rows, columns, squares };
   }
 
   private containsOnlySearchedPair(
@@ -128,14 +134,14 @@ export class EliminatePossiblePairFromOtherCells implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.row != undefined) {
+    for (const row of possiblePairResult.rows) {
       for (let i = 0; i < grid.length; i++) {
         const removePairValues = this.removePairValuesFromCell(
           v1,
           v2,
-          grid[possiblePairResult.row][i],
+          grid[row][i],
         );
-        grid[possiblePairResult.row][i] = removePairValues.cell;
+        grid[row][i] = removePairValues.cell;
         valuesEliminated =
           valuesEliminated || removePairValues.valuesEliminated;
       }
@@ -150,14 +156,14 @@ export class EliminatePossiblePairFromOtherCells implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.column != undefined) {
+    for (const column of possiblePairResult.columns) {
       for (let i = 0; i < grid.length; i++) {
         const removePairValues = this.removePairValuesFromCell(
           v1,
           v2,
-          grid[i][possiblePairResult.column],
+          grid[i][column],
         );
-        grid[i][possiblePairResult.column] = removePairValues.cell;
+        grid[i][column] = removePairValues.cell;
         valuesEliminated =
           valuesEliminated || removePairValues.valuesEliminated;
       }
@@ -173,19 +179,17 @@ export class EliminatePossiblePairFromOtherCells implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.square != undefined) {
-      squarePositionsMap
-        .getForSquareIndex(possiblePairResult.square)
-        .forEach((cellPosition) => {
-          const removePairValues = this.removePairValuesFromCell(
-            v1,
-            v2,
-            grid[cellPosition.x][cellPosition.y],
-          );
-          grid[cellPosition.x][cellPosition.y] = removePairValues.cell;
-          valuesEliminated =
-            valuesEliminated || removePairValues.valuesEliminated;
-        });
+    for (const square of possiblePairResult.squares) {
+      squarePositionsMap.getForSquareIndex(square).forEach((cellPosition) => {
+        const removePairValues = this.removePairValuesFromCell(
+          v1,
+          v2,
+          grid[cellPosition.x][cellPosition.y],
+        );
+        grid[cellPosition.x][cellPosition.y] = removePairValues.cell;
+        valuesEliminated =
+          valuesEliminated || removePairValues.valuesEliminated;
+      });
     }
     return valuesEliminated;
   }
