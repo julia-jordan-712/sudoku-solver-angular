@@ -24,10 +24,10 @@ export class SudokuGridViewModelConverter {
     id = "",
     index = 0,
   ): SudokuGridViewModel {
-    return {
-      id: `${id}-grid-${index}`,
-      rows: SudokuGridViewModelConverter.createViewModelsFromRows(grid, id),
-    } satisfies SudokuGridViewModel;
+    return new SudokuGridViewModel(
+      `${id}-grid-${index}`,
+      SudokuGridViewModelConverter.createViewModelsFromRows(grid, id),
+    );
   }
 
   private static createViewModelsFromRows(
@@ -44,14 +44,10 @@ export class SudokuGridViewModelConverter {
     id = "",
     index = 0,
   ): SudokuGridRowViewModel {
-    return {
-      id: `${id}-row-${index}`,
-      cells: SudokuGridViewModelConverter.createViewModelsFromCells(
-        row,
-        id,
-        index,
-      ),
-    } satisfies SudokuGridRowViewModel;
+    return new SudokuGridRowViewModel(
+      `${id}-row-${index}`,
+      SudokuGridViewModelConverter.createViewModelsFromCells(row, id, index),
+    );
   }
 
   private static createViewModelsFromCells(
@@ -83,12 +79,12 @@ export class SudokuGridViewModelConverter {
     columnIndex = 0,
     id = "",
   ): SudokuGridCellViewModel {
-    return {
-      id: `${id}-cell-${rowIndex}-${columnIndex}`,
-      maxValue,
-      widthAndHeight: size,
+    return new SudokuGridCellViewModel(
+      `${id}-cell-${rowIndex}-${columnIndex}`,
       cell,
-    } satisfies SudokuGridCellViewModel;
+      maxValue,
+      size,
+    );
   }
 
   public static createGridFromViewModel(

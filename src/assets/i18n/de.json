@@ -40,7 +40,8 @@
       "PUZZLE": "9x9 | Einfach | Rätsel {{number}}",
       "SOLVED": "9x9 | Einfach | Rätsel {{number}} - gelöst"
     },
-    "NONE": "-"
+    "NONE": "-",
+    "COPY_TO_CLIPBOARD": "Aktuelles Sudoku in die Zwischenablage kopieren"
   },
   "VERIFY": {
     "ERROR": {

@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SudokuGridCellComponentService } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-component.service";
 import { SudokuGridCellMultipleValuesComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-multiple-values/sudoku-grid-cell-multiple-values.component";
 import { SudokuGridCellSingleValueComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-single-value/sudoku-grid-cell-single-value.component";
+import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { SudokuGridCellComponent } from "./sudoku-grid-cell.component";
 
 describe(SudokuGridCellComponent.name, () => {
@@ -25,7 +26,7 @@ describe(SudokuGridCellComponent.name, () => {
   });
 
   it("should emit the input value from the child component", () => {
-    component.cell = { id: "id-0", cell: 5, maxValue: 9, widthAndHeight: 20 };
+    component.cell = new SudokuGridCellViewModel("id-0", 5, 9, 20);
     fixture.detectChanges();
     const valueChangeSpy = spyOn(component.valueChange, "emit").and.callFake(
       () => {},

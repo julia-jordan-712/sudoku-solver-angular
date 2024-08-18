@@ -8,9 +8,9 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 interface PossiblePairResult {
   v1: number;
   v2: number;
-  row?: number;
-  column?: number;
-  square?: number;
+  rows: number[];
+  columns: number[];
+  squares: number[];
 }
 
 /**
@@ -73,6 +73,10 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
     grid: SudokuGrid,
     squarePositionsMap: CellPositionMap,
   ): PossiblePairResult {
+    const rows: number[] = [];
+    const columns: number[] = [];
+    const squares: number[] = [];
+
     for (let i = 0; i < grid.length; i++) {
       const rowPositionsContainingPair: CellPosition[] = [];
       const rowPositionsContainingOneOfBothValues: CellPosition[] = [];
@@ -109,27 +113,26 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
         }
       });
 
-      const row =
+      if (
         rowPositionsContainingPair.length === 2 &&
         rowPositionsContainingOneOfBothValues.length === 0
-          ? i
-          : undefined;
-      const column =
+      ) {
+        rows.push(i);
+      }
+      if (
         columnPositionsContainingPair.length === 2 &&
         columnPositionsContainingOneOfBothValues.length === 0
-          ? i
-          : undefined;
-      const square =
+      ) {
+        columns.push(i);
+      }
+      if (
         squarePositionsContainingPair.length === 2 &&
         squarePositionsContainingOneOfBothValues.length === 0
-          ? i
-          : undefined;
-
-      if (row != undefined || column != undefined || square != undefined) {
-        return { v1, v2, row, column, square };
+      ) {
+        squares.push(i);
       }
     }
-    return { v1, v2 };
+    return { v1, v2, rows, columns, squares };
   }
 
   private containsSearchedPair(
@@ -159,14 +162,14 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.row != undefined) {
+    for (const row of possiblePairResult.rows) {
       for (let i = 0; i < grid.length; i++) {
         const keptPairValues = this.keepOnlyPairValuesInCell(
           v1,
           v2,
-          grid[possiblePairResult.row][i],
+          grid[row][i],
         );
-        grid[possiblePairResult.row][i] = keptPairValues.cell;
+        grid[row][i] = keptPairValues.cell;
         valuesEliminated = valuesEliminated || keptPairValues.valuesEliminated;
       }
     }
@@ -180,14 +183,14 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.column != undefined) {
+    for (const column of possiblePairResult.columns) {
       for (let i = 0; i < grid.length; i++) {
         const keptPairValues = this.keepOnlyPairValuesInCell(
           v1,
           v2,
-          grid[i][possiblePairResult.column],
+          grid[i][column],
         );
-        grid[i][possiblePairResult.column] = keptPairValues.cell;
+        grid[i][column] = keptPairValues.cell;
         valuesEliminated = valuesEliminated || keptPairValues.valuesEliminated;
       }
     }
@@ -202,19 +205,16 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    if (possiblePairResult.square != undefined) {
-      squarePositionsMap
-        .getForSquareIndex(possiblePairResult.square)
-        .forEach((cellPosition) => {
-          const keptPairValues = this.keepOnlyPairValuesInCell(
-            v1,
-            v2,
-            grid[cellPosition.x][cellPosition.y],
-          );
-          grid[cellPosition.x][cellPosition.y] = keptPairValues.cell;
-          valuesEliminated =
-            valuesEliminated || keptPairValues.valuesEliminated;
-        });
+    for (const square of possiblePairResult.squares) {
+      squarePositionsMap.getForSquareIndex(square).forEach((cellPosition) => {
+        const keptPairValues = this.keepOnlyPairValuesInCell(
+          v1,
+          v2,
+          grid[cellPosition.x][cellPosition.y],
+        );
+        grid[cellPosition.x][cellPosition.y] = keptPairValues.cell;
+        valuesEliminated = valuesEliminated || keptPairValues.valuesEliminated;
+      });
     }
     return valuesEliminated;
   }

@@ -1,3 +1,4 @@
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { EliminateOtherValuesFromPossiblePair } from "./eliminate-other-values-from-possible-pair";
 
@@ -91,15 +92,15 @@ describe(EliminateOtherValuesFromPossiblePair.name, () => {
     });
   });
 
-  it("should only handle rows, columns and squares simultaneously for the same pair of numbers if they occur in the same index", () => {
+  it("should handle rows, columns and squares simultaneously for the same pair of numbers", () => {
     const all = [1, 2, 3, 4];
-    const onlyRowChanged = [
+    const firstRowThirdColumSecondSquareFourthSquare_pair13 = [
       [[1, 2, 3], [2], [1, 3, 4], [4]],
       [all, all, [4], all],
       [all, all, [1, 2, 3], [4]],
       [all, all, [2], [1, 3, 4]],
     ];
-    const allChanged = [
+    const firstRowFirstColumnFirstSquare_pair13 = [
       [[2], [1, 2, 3], [1, 3, 4], [4]],
       [[1, 3, 4], [2, 4], all, all],
       [[1, 2, 3], all, all, all],
@@ -107,23 +108,56 @@ describe(EliminateOtherValuesFromPossiblePair.name, () => {
     ];
 
     expect(
-      new EliminateOtherValuesFromPossiblePair().run(onlyRowChanged),
+      new EliminateOtherValuesFromPossiblePair().run(
+        firstRowThirdColumSecondSquareFourthSquare_pair13,
+      ),
     ).toBeTrue();
-    expect(onlyRowChanged).toEqual([
+    expect(firstRowThirdColumSecondSquareFourthSquare_pair13).toEqual([
       [[1, 3], [2], [1, 3], [4]],
-      [all, all, [4], all],
-      [all, all, [1, 2, 3], [4]],
-      [all, all, [2], [1, 3, 4]],
+      [all, all, [4], [1, 3]],
+      [all, all, [1, 3], [4]],
+      [all, all, [2], [1, 3]],
     ]);
 
     expect(
-      new EliminateOtherValuesFromPossiblePair().run(allChanged),
+      new EliminateOtherValuesFromPossiblePair().run(
+        firstRowFirstColumnFirstSquare_pair13,
+      ),
     ).toBeTrue();
-    expect(allChanged).toEqual([
+    expect(firstRowFirstColumnFirstSquare_pair13).toEqual([
       [[2], [1, 3], [1, 3], [4]],
       [[1, 3], [2, 4], all, all],
       [[1, 3], all, all, all],
       [[4], all, all, all],
+    ]);
+  });
+
+  it("should find pair [1,2] in row 6", () => {
+    const sudoku: SudokuGrid = [
+      [[2, 4], 7, [2, 3, 4], 5, [3, 4], 1, 8, 6, 9],
+      [8, [3, 5], 9, 6, [3, 4], 2, [3, 4, 5], 1, 7],
+      [1, 6, [3, 4, 5], 9, 8, 7, [2, 3, 4, 5], [3, 4, 5], [2, 4, 5]],
+      [3, [1, 5, 9], 8, 7, 2, 6, [1, 4, 5], [4, 5, 9], [4, 5]],
+      [[4, 5, 9], [2, 5, 9], 7, 3, 1, [4, 9], 6, 8, [2, 5]],
+      [[4, 6, 9], [1, 2, 9], [4, 6], 8, 5, [4, 9], [1, 2, 7], [7, 9], 3],
+      [[5, 6, 9], [3, 5, 9], [3, 5, 6], 4, 7, 8, [3, 5], 2, 1],
+      [[2, 7], 4, [1, 2, 3], [1, 2], 6, 5, 9, [3, 7], 8],
+      [[2, 5, 7], 8, [1, 2, 5], [1, 2], 9, 3, [4, 5, 7], [4, 5, 7], 6],
+    ];
+    new EliminateOtherValuesFromPossiblePair().run(sudoku);
+
+    // in row 6 the values 1 and 2 appear only in columns 2 and 7
+    // expect: all other possible values in these cells are removed
+    expect(sudoku[5]).toEqual([
+      [4, 6, 9],
+      [1, 2],
+      [4, 6],
+      8,
+      5,
+      [4, 9],
+      [1, 2],
+      [7, 9],
+      3,
     ]);
   });
 });
