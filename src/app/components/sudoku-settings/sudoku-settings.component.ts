@@ -64,7 +64,11 @@ export class SudokuSettingsComponent {
     this.settingState.setSelection(option);
   }
 
-  onGridChange(grid: SudokuGrid): void {
+  onCellChange(grid: SudokuGrid): void {
+    this.settingState.verifyGrid(grid);
+  }
+
+  onCellSubmit(grid: SudokuGrid): void {
     this.settingState.setGrid(grid);
   }
 

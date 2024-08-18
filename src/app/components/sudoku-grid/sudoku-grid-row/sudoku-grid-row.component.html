@@ -17,6 +17,7 @@
         [highlight]="highlightCells[i]"
         [readonly]="readonly"
         (valueChange)="onCellChanged($event, i)"
+        (valueSubmit)="onCellSubmitted($event, i)"
       ></app-sudoku-grid-cell>
     }
   }

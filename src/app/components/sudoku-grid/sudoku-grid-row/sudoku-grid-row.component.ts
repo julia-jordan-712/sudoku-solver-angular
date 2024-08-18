@@ -58,6 +58,9 @@ export class SudokuGridRowComponent implements OnChanges {
   @Output()
   valueChange: EventEmitter<SudokuGridRow> = new EventEmitter();
 
+  @Output()
+  valueSubmit: EventEmitter<SudokuGridRow> = new EventEmitter();
+
   ngOnChanges(changes: SimpleChanges): void {
     this.componentService.onChanges(changes);
   }
@@ -67,6 +70,14 @@ export class SudokuGridRowComponent implements OnChanges {
       this.componentService.cellChanged(cell, index);
     if (rowChange.rowChanged) {
       this.valueChange.emit(rowChange.newRow);
+    }
+  }
+
+  onCellSubmitted(cell: SudokuGridCell, index: number): void {
+    const rowChange: SudokuGridCellChangeEvent =
+      this.componentService.cellChanged(cell, index);
+    if (rowChange.rowChanged) {
+      this.valueSubmit.emit(rowChange.newRow);
     }
   }
 }

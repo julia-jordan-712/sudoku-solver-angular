@@ -59,6 +59,9 @@ export class SudokuGridCellSingleValueComponent
   @Output()
   valueChange: EventEmitter<number> = new EventEmitter();
 
+  @Output()
+  valueSubmit: EventEmitter<number> = new EventEmitter();
+
   readonly inputField = new FormControl();
   private readonly subscriptions: Subscription[] = [];
   private readonly validator: SudokuGridCellValidator =
@@ -87,6 +90,7 @@ export class SudokuGridCellSingleValueComponent
       this.resetValue();
     }
     this.setFocus(false);
+    this.valueSubmit.emit(this.inputField.value);
   }
 
   private onChange(value: number): void {
@@ -94,12 +98,8 @@ export class SudokuGridCellSingleValueComponent
       this.resetValue();
       return;
     }
-    if (this.validator.isValid(value)) {
-      this.invalid = false;
-      this.valueChange.emit(value);
-    } else {
-      this.invalid = true;
-    }
+    this.invalid = !this.validator.isValid(value);
+    this.valueChange.emit(value);
   }
 
   private resetValue(): void {
