@@ -29,7 +29,8 @@
     [grid]="grid$ | async"
     [verification]="verification$ | async"
     [duplications]="duplications$ | async"
-    (valueChange)="onGridChange($event)"
+    (valueChange)="onCellChange($event)"
+    (valueSubmit)="onCellSubmit($event)"
   >
   </app-sudoku-grid>
   <button

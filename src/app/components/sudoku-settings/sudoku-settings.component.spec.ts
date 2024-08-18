@@ -47,9 +47,8 @@ describe(SudokuSettingsComponent.name, () => {
     expect(queryChangeSettings()).toBeNull();
   });
 
-  it("should update the grid when selection changes", () => {
+  it("should update the grid when dropdown changes", () => {
     const dropdown: DropdownInputTestComponent = getDropdown();
-    const size: NumberInputTestComponent = getSizeInput();
     const grid: SudokuGridTestComponent = getSudokuGrid();
 
     dropdown.change({
@@ -64,6 +63,10 @@ describe(SudokuSettingsComponent.name, () => {
     expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
     expect(queryConfirm().disabled).toEqual(false);
+  });
+
+  it("should update the grid when cell change is submitted", () => {
+    const grid: SudokuGridTestComponent = getSudokuGrid();
 
     const gridWithDuplications = [
       [1, 2, 3, 4],
@@ -71,7 +74,7 @@ describe(SudokuSettingsComponent.name, () => {
       [2, 3, 4, 1],
       [4, 1, 2, 4],
     ];
-    grid.change(gridWithDuplications);
+    grid.submit(gridWithDuplications);
     fixture.detectChanges();
     expectGridToEqual(grid, gridWithDuplications);
     expect(grid.verification?.isValid()).toEqual(false);
@@ -81,8 +84,14 @@ describe(SudokuSettingsComponent.name, () => {
       3: [0, 3], // last row, first and last column
     });
     expect(querySize().innerText).toEqual("4");
-    expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
+    expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(true);
+  });
+
+  it("should update the grid when size changes", () => {
+    const size: NumberInputTestComponent = getSizeInput();
+    const grid: SudokuGridTestComponent = getSudokuGrid();
+    grid.submit(Puzzle4x4.COMPLETE);
 
     size.change(3);
     fixture.detectChanges();
@@ -109,6 +118,40 @@ describe(SudokuSettingsComponent.name, () => {
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
+    expect(queryConfirm().disabled).toEqual(false);
+  });
+
+  it("should update the verification when cell is changed but not submitted", () => {
+    const grid: SudokuGridTestComponent = getSudokuGrid();
+    grid.submit(Puzzle4x4.COMPLETE);
+
+    grid.change([
+      [9, 2, 3, 4],
+      [3, 4, 1, 2],
+      [2, 3, 4, 1],
+      [4, 1, 2, 3],
+    ]);
+    fixture.detectChanges();
+
+    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
+    expect(grid.verification?.isValid()).toEqual(false);
+    expect(grid.duplications).toEqual({});
+    expect(querySize().innerText).toEqual("4");
+    expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
+    expect(queryConfirm().disabled).toEqual(true);
+
+    grid.change(Puzzle4x4.EMPTY_COLUMN);
+    fixture.detectChanges();
+
+    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
+    expect(grid.verification?.isValid()).toEqual(true);
+    expect(queryConfirm().disabled).toEqual(false);
+
+    grid.submit(Puzzle4x4.EMPTY_COLUMN);
+    fixture.detectChanges();
+
+    expectGridToEqual(grid, Puzzle4x4.EMPTY_COLUMN);
+    expect(grid.verification?.isValid()).toEqual(true);
     expect(queryConfirm().disabled).toEqual(false);
   });
 

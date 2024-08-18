@@ -15,6 +15,7 @@
         [highlightNumber]="highlightNumber"
         [readonly]="readonly"
         (valueChange)="onRowChanged($event, i)"
+        (valueSubmit)="onRowSubmitted($event, i)"
       ></app-sudoku-grid-row>
     }
   </div>

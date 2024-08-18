@@ -43,11 +43,22 @@ export class SudokuGridComponent {
   @Output()
   valueChange: EventEmitter<SudokuGrid> = new EventEmitter();
 
+  @Output()
+  valueSubmit: EventEmitter<SudokuGrid> = new EventEmitter();
+
   onRowChanged(row: SudokuGridRow, index: number): void {
     const rowChange: SudokuGridRowChangeEvent =
       this.componentService.rowChanged(this._grid, row, index);
     if (rowChange.gridChanged) {
       this.valueChange.emit(rowChange.newGrid);
+    }
+  }
+
+  onRowSubmitted(row: SudokuGridRow, index: number): void {
+    const rowChange: SudokuGridRowChangeEvent =
+      this.componentService.rowChanged(this._grid, row, index);
+    if (rowChange.gridChanged) {
+      this.valueSubmit.emit(rowChange.newGrid);
     }
   }
 }

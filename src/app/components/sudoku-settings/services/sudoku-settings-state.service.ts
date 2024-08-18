@@ -15,7 +15,7 @@ import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
 import { Objects } from "@app/shared/util/objects";
-import { BehaviorSubject, Observable, filter, map } from "rxjs";
+import { BehaviorSubject, Observable, combineLatest, filter, map } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -30,7 +30,8 @@ export class SudokuSettingsStateService implements OnDestroy {
   private confirmed$ = new BehaviorSubject<boolean>(false);
   private height$ = new BehaviorSubject<Nullable<number>>(undefined);
   private width$ = new BehaviorSubject<Nullable<number>>(undefined);
-  private grid$ = new BehaviorSubject<Nullable<SudokuGrid>>(undefined);
+  private gridSubmitted$ = new BehaviorSubject<Nullable<SudokuGrid>>(undefined);
+  private gridVerify$ = new BehaviorSubject<Nullable<SudokuGrid>>(undefined);
 
   private dropdownSelectionItems = [
     this.dropdownSelection.NO_SELECTION_ITEM,
@@ -41,13 +42,15 @@ export class SudokuSettingsStateService implements OnDestroy {
       this.dropdownSelection.NO_SELECTION_ITEM,
     );
 
-  public readonly verification$: Observable<VerificationResult> =
-    this.grid$.pipe(
-      filter(isDefined),
-      map((grid: SudokuGrid) =>
-        this.verify.verify(grid, { trackUniquenessViolations: true }),
-      ),
-    );
+  public readonly verification$: Observable<VerificationResult> = combineLatest(
+    [this.gridSubmitted$, this.gridVerify$],
+  ).pipe(
+    map(([gridSubmitted, gridVerify]) => gridVerify ?? gridSubmitted),
+    filter(isDefined),
+    map((grid: SudokuGrid) =>
+      this.verify.verify(grid, { trackUniquenessViolations: true }),
+    ),
+  );
   public readonly duplicationColumnIndicesToRowIndices$: Observable<DuplicationColumnIndicesToRowIndices> =
     this.verification$.pipe(
       map((result: VerificationResult) =>
@@ -59,7 +62,7 @@ export class SudokuSettingsStateService implements OnDestroy {
     this.confirmed$.complete();
     this.height$.complete();
     this.width$.complete();
-    this.grid$.complete();
+    this.gridSubmitted$.complete();
   }
 
   clearSelection(): void {
@@ -79,7 +82,7 @@ export class SudokuSettingsStateService implements OnDestroy {
   }
 
   getGrid(): Observable<Nullable<SudokuGrid>> {
-    return this.grid$.asObservable();
+    return this.gridSubmitted$.asObservable();
   }
 
   getSelectionItems(): SudokuDropdownSelectionItem[] {
@@ -101,9 +104,18 @@ export class SudokuSettingsStateService implements OnDestroy {
   }
 
   setGrid(grid: Nullable<SudokuGrid>): void {
-    this.grid$.next(grid);
+    this.setSubmittedGrid(grid);
+  }
+
+  private setSubmittedGrid(grid: Nullable<SudokuGrid>): void {
+    this.gridSubmitted$.next(grid);
+    this.gridVerify$.next(undefined);
     this.height$.next(grid?.length);
     this.width$.next(grid?.[0]?.length);
+  }
+
+  verifyGrid(grid: Nullable<SudokuGrid>): void {
+    this.gridVerify$.next(grid);
   }
 
   setHeightAndWidth(height: number, width: number): void {
@@ -113,9 +125,9 @@ export class SudokuSettingsStateService implements OnDestroy {
   }
 
   private updateGrid(): void {
-    this.grid$.next(
+    this.gridSubmitted$.next(
       this.gridUpdate.updateGrid(
-        this.grid$.value ?? [],
+        this.gridSubmitted$.value ?? [],
         this.height$.value,
         this.width$.value,
       ),

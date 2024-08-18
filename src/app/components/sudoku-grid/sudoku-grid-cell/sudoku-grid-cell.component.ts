@@ -67,8 +67,15 @@ export class SudokuGridCellComponent {
   @Output()
   valueChange: EventEmitter<number> = new EventEmitter();
 
+  @Output()
+  valueSubmit: EventEmitter<number> = new EventEmitter();
+
   onChange(value: number): void {
     this.valueChange.emit(value);
+  }
+
+  onSubmit(value: number): void {
+    this.valueSubmit.emit(value);
   }
 
   @HostListener("mouseenter")

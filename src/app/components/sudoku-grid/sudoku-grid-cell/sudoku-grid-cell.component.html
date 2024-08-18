@@ -17,5 +17,6 @@
     [highlight]="highlight"
     [changed]="(changed$ | async) ?? false"
     (valueChange)="onChange($event)"
+    (valueSubmit)="onSubmit($event)"
   ></app-sudoku-grid-cell-single-value>
 }

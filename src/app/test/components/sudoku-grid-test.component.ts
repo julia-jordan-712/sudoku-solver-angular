@@ -22,7 +22,14 @@ export class SudokuGridTestComponent {
   @Output()
   valueChange: EventEmitter<SudokuGrid> = new EventEmitter();
 
+  @Output()
+  valueSubmit: EventEmitter<SudokuGrid> = new EventEmitter();
+
   change(grid: SudokuGrid): void {
     this.valueChange.emit(grid);
+  }
+
+  submit(grid: SudokuGrid): void {
+    this.valueSubmit.emit(grid);
   }
 }
