@@ -256,9 +256,65 @@ export class PuzzleAdvanced {
     ],
   };
 
+  public static readonly PUZZLE_4: TestPuzzle = {
+    puzzle: [
+      [2, 4, undefined, undefined, undefined, 1, 8, undefined, undefined],
+      [undefined, 6, 1, 9, undefined, undefined, undefined, 2, undefined],
+      [undefined, undefined, undefined, 2, undefined, 4, 1, 6, undefined],
+      [
+        7,
+        1,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      ],
+      [
+        undefined,
+        undefined,
+        undefined,
+        8,
+        undefined,
+        9,
+        undefined,
+        undefined,
+        undefined,
+      ],
+      [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        1,
+        2,
+      ],
+      [undefined, 2, 9, 4, undefined, 5, undefined, undefined, undefined],
+      [undefined, 5, undefined, undefined, undefined, 8, 2, 7, undefined],
+      [undefined, undefined, 4, 1, undefined, undefined, undefined, 5, 9],
+    ],
+    solution: [
+      [2, 4, 5, 3, 6, 1, 8, 9, 7],
+      [3, 6, 1, 9, 8, 7, 4, 2, 5],
+      [9, 8, 7, 2, 5, 4, 1, 6, 3],
+      [7, 1, 6, 5, 4, 2, 9, 3, 8],
+      [5, 3, 2, 8, 1, 9, 7, 4, 6],
+      [4, 9, 8, 7, 3, 6, 5, 1, 2],
+      [6, 2, 9, 4, 7, 5, 3, 8, 1],
+      [1, 5, 3, 6, 9, 8, 2, 7, 4],
+      [8, 7, 4, 1, 2, 3, 6, 5, 9],
+    ],
+  };
+
   public static readonly PUZZLES: TestPuzzle[] = [
     PuzzleAdvanced.PUZZLE_1,
     PuzzleAdvanced.PUZZLE_2,
     PuzzleAdvanced.PUZZLE_3,
+    PuzzleAdvanced.PUZZLE_4,
   ];
 }
