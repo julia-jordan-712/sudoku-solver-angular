@@ -52,7 +52,6 @@ export class SudokuDropdownSelectionService {
           index + 1,
         );
         items.push(testPuzzleItem.puzzle);
-        items.push(testPuzzleItem.solution);
       });
     });
 
