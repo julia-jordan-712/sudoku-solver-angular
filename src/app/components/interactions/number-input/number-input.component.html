@@ -1,9 +1,11 @@
 <label for="inputField">{{ label }}:</label>
-<app-icon *ngIf="tooltip" [title]="tooltip">info</app-icon>
+@if (tooltip) {
+  <app-icon [title]="tooltip">info</app-icon>
+}
 <input
   type="number"
   #inputField
-  [(ngModel)]="value"
+  [ngModel]="_value"
   (ngModelChange)="onChange($event)"
   [style.width]="inputWidth ?? ''"
 />

@@ -1,5 +1,9 @@
 import { registerLocaleData } from "@angular/common";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import {
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from "@angular/common/http";
 import localeDe from "@angular/common/locales/de";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
@@ -16,10 +20,10 @@ registerLocaleData(localeDe);
 
 @NgModule({
   declarations: [AppComponent],
+  bootstrap: [AppComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
-    HttpClientModule,
     TranslateModule.forRoot({
       defaultLanguage: "en",
       loader: {
@@ -34,7 +38,7 @@ registerLocaleData(localeDe);
     ...SOLVER_PROVIDERS,
     SudokuSolverStateService,
     { provide: SUDOKU_SOLVER_STATE, useExisting: SudokuSolverStateService },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -2,10 +2,9 @@
 @import "./../sudoku-grid-cell.styles.scss";
 
 :host {
-  @include hostMixin();
-
   color: $text-color-lighter;
   cursor: not-allowed;
+  @include hostMixin();
 }
 
 .notes {

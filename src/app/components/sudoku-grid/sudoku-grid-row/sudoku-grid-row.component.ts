@@ -13,10 +13,7 @@ import {
 } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row-component.service";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridCell, SudokuGridRow } from "@app/shared/types/sudoku-grid";
-import {
-  SudokuGridCellViewModel,
-  SudokuGridRowViewModel,
-} from "@app/shared/types/sudoku-grid-view-model";
+import { SudokuGridRowViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { Observable } from "rxjs";
 
 @Component({
@@ -71,9 +68,5 @@ export class SudokuGridRowComponent implements OnChanges {
     if (rowChange.rowChanged) {
       this.valueChange.emit(rowChange.newRow);
     }
-  }
-
-  trackByFn(index_: number, viewModel: SudokuGridCellViewModel): string {
-    return viewModel.id;
   }
 }

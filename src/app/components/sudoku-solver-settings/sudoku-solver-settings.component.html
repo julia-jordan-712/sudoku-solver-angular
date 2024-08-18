@@ -1,4 +1,4 @@
-<ng-container *ngIf="show$ | async">
+@if (show$ | async) {
   <h2>{{ "SETTINGS.TITLE" | translate }}</h2>
   <div class="inputs">
     <app-number-input
@@ -34,4 +34,4 @@
       (valueChange)="setHighlightNumber($event)"
     ></app-number-input>
   </div>
-</ng-container>
+}

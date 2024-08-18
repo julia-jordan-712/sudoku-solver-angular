@@ -1,10 +1,9 @@
-<ng-container *ngIf="confirmed$ | async; else editSettings">
+@if (confirmed$ | async) {
   <button id="changeSettings" (click)="changeSettings()">
     <app-icon>edit</app-icon>
     {{ "SETTINGS.CHANGE" | translate }}
   </button>
-</ng-container>
-<ng-template #editSettings>
+} @else {
   <div>{{ "SETTINGS.HINTS.SELECT_OR_SIZE" | translate }}</div>
   <div class="settings">
     <app-dropdown-input
@@ -21,9 +20,11 @@
       (valueChange)="setSize($event)"
     ></app-selection-list>
   </div>
-  <div *ngIf="((grid$ | async)?.rows?.length ?? 0) > 0">
-    {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
-  </div>
+  @if (((grid$ | async)?.rows?.length ?? 0) > 0) {
+    <div>
+      {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
+    </div>
+  }
   <app-sudoku-grid
     [grid]="grid$ | async"
     [verification]="verification$ | async"
@@ -40,4 +41,4 @@
     <app-icon>done</app-icon>
     {{ "SETTINGS.DONE" | translate }}
   </button>
-</ng-template>
+}

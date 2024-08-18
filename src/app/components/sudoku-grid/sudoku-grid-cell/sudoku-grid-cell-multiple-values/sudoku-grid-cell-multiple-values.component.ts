@@ -44,8 +44,4 @@ export class SudokuGridCellMultipleValuesComponent implements OnChanges {
       this.noteGridColumns = `repeat(${sqrt}, auto)`;
     }
   }
-
-  trackByFn(index: number): number {
-    return index;
-  }
 }

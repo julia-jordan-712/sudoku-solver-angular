@@ -4,7 +4,7 @@
   [style.width]="size + 'px'"
   [style.height]="size + 'px'"
 >
-  <span class="note" *ngFor="let number of numbers; trackBy: trackByFn">{{
-    values.includes(number) ? number : ""
-  }}</span>
+  @for (number of numbers; track number) {
+    <span class="note">{{ values.includes(number) ? number : "" }}</span>
+  }
 </div>

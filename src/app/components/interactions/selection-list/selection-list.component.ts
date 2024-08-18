@@ -27,8 +27,4 @@ export class SelectionListComponent {
       this.valueChange.emit(value);
     }
   }
-
-  trackByFn(index: number): number {
-    return index;
-  }
 }

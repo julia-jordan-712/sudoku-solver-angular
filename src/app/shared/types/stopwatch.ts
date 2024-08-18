@@ -30,8 +30,8 @@ export class StopWatch {
     return this.started == undefined
       ? 0
       : this.stopped != undefined
-      ? this.stopped - this.started
-      : Date.now() - this.started;
+        ? this.stopped - this.started
+        : Date.now() - this.started;
   }
 
   static monitor<T>(

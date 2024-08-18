@@ -1,10 +1,8 @@
 <label for="inputField">{{ label }}:</label>
-<select
-  [(ngModel)]="selectedItem"
-  (ngModelChange)="onChange($event)"
-  #inputField
->
-  <option *ngFor="let item of items; trackBy: trackByFn" [ngValue]="item">
-    {{ item.name | async }}
-  </option>
+<select [ngModel]="selectedItem" (ngModelChange)="onChange($event)" #inputField>
+  @for (item of items; track item.id) {
+    <option [ngValue]="item">
+      {{ item.name | async }}
+    </option>
+  }
 </select>

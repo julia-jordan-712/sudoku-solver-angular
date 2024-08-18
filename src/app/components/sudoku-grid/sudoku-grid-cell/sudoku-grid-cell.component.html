@@ -1,6 +1,4 @@
-<ng-container
-  *ngIf="displayValues$ | async as displayValues; else inputTemplate"
->
+@if (displayValues$ | async; as displayValues) {
   <app-sudoku-grid-cell-multiple-values
     [values]="displayValues"
     [size]="size"
@@ -9,8 +7,7 @@
     [highlight]="highlight"
     [changed]="(changed$ | async) ?? false"
   ></app-sudoku-grid-cell-multiple-values>
-</ng-container>
-<ng-template #inputTemplate>
+} @else {
   <app-sudoku-grid-cell-single-value
     [value]="displayValue$ | async"
     [size]="size"
@@ -21,4 +18,4 @@
     [changed]="(changed$ | async) ?? false"
     (valueChange)="onChange($event)"
   ></app-sudoku-grid-cell-single-value>
-</ng-template>
+}

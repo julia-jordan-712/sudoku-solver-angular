@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Logger } from "@app/core/log/logger";
 import { VerifySquareService } from "@app/core/verification/services/verify-square.service";
 import { VerifyUniquenessService } from "@app/core/verification/services/verify-uniqueness.service";
@@ -12,12 +12,14 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
   providedIn: "root",
 })
 export class VerifySolutionService {
+  private squareService: VerifySquareService = inject(VerifySquareService);
+  private uniquenessService: VerifyUniquenessService = inject(
+    VerifyUniquenessService,
+  );
+
   private logger: Logger = new Logger(VerifySolutionService.name);
 
-  constructor(
-    private squareService: VerifySquareService,
-    private uniquenessService: VerifyUniquenessService,
-  ) {}
+  constructor() {}
 
   verify(
     candidate: SudokuGrid,

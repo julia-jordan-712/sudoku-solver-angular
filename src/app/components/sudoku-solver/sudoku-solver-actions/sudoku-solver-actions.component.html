@@ -25,12 +25,13 @@
 >
   <app-icon>skip_next</app-icon>
 </button>
-<button
-  id="restart"
-  class="icon primary"
-  *ngIf="canRestart$ | async"
-  [title]="'SOLVER.ACTIONS.RESTART' | translate"
-  (click)="restart()"
->
-  <app-icon>restart_alt</app-icon>
-</button>
+@if (canRestart$ | async) {
+  <button
+    id="restart"
+    class="icon primary"
+    [title]="'SOLVER.ACTIONS.RESTART' | translate"
+    (click)="restart()"
+  >
+    <app-icon>restart_alt</app-icon>
+  </button>
+}
