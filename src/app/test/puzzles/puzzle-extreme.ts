@@ -243,4 +243,10 @@ export class PuzzleExtreme {
       [7, 3, 6, 1, 8, 4, 2, 9, 5],
     ],
   };
+
+  public static readonly PUZZLES: TestPuzzle[] = [
+    PuzzleExtreme.PUZZLE_1,
+    PuzzleExtreme.PUZZLE_2,
+    PuzzleExtreme.PUZZLE_3,
+  ];
 }

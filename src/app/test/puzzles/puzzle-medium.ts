@@ -385,4 +385,12 @@ export class PuzzleMedium {
       [2, 9, 4, 8, 5, 6, 3, 7, 1],
     ],
   };
+
+  public static readonly PUZZLES: TestPuzzle[] = [
+    PuzzleMedium.PUZZLE_1,
+    PuzzleMedium.PUZZLE_2,
+    PuzzleMedium.PUZZLE_3,
+    PuzzleMedium.PUZZLE_4,
+    PuzzleMedium.PUZZLE_5,
+  ];
 }

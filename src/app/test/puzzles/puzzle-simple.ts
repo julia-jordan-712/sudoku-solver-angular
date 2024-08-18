@@ -291,4 +291,12 @@ export class PuzzleSimple {
       [1, 3, 2, 8, 7, 9, 5, 6, 4],
     ],
   };
+
+  public static readonly PUZZLES: TestPuzzle[] = [
+    PuzzleSimple.PUZZLE_1,
+    PuzzleSimple.PUZZLE_2,
+    PuzzleSimple.PUZZLE_3,
+    PuzzleSimple.PUZZLE_4,
+    PuzzleSimple.PUZZLE_5,
+  ];
 }

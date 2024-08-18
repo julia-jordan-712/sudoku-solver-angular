@@ -85,4 +85,6 @@ export class PuzzleAdvanced {
       [2, 1, 3, 7, 5, 4, 8, 9, 6],
     ],
   };
+
+  public static readonly PUZZLES: TestPuzzle[] = [PuzzleAdvanced.PUZZLE_1];
 }
