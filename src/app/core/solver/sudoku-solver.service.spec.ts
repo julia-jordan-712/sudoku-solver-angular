@@ -76,6 +76,11 @@ describe(SudokuSolverService.name, () => {
       steps: 177,
     },
     {
+      puzzle: PuzzleMedium.PUZZLE_4.puzzle,
+      name: "medium puzzle 4",
+      steps: 240,
+    },
+    {
       puzzle: PuzzleAdvanced.PUZZLE_1.puzzle,
       name: "advanced puzzle 1",
       steps: 204,
