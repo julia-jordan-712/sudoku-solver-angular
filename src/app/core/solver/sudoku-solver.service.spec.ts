@@ -178,6 +178,12 @@ describe(SudokuSolverService.name, () => {
       steps: 76,
       success: false,
     },
+    {
+      puzzle: PuzzleExtreme.PUZZLE_5.puzzle,
+      name: "extreme puzzle 5",
+      steps: 207,
+      success: true,
+    },
   ].forEach((params) => {
     it(`should ${params.success ? "" : "fail to"} solve "${params.name}" in ${params.steps} steps`, () => {
       let puzzle: SudokuGrid[] = [SudokuGridUtil.clone(params.puzzle)];
