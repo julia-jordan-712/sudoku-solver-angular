@@ -12,7 +12,7 @@ export class ClipboardService {
     const clipboardString = value.toClipboardString();
     this.documentRef.defaultView?.navigator?.clipboard
       ?.writeText(clipboardString)
-      .then((_) => this.log.logDebug("Copied to clipboard", clipboardString));
+      .then(() => this.log.logDebug("Copied to clipboard", clipboardString));
   }
 }
 

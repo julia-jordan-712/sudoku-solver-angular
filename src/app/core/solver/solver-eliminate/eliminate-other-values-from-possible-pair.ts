@@ -162,7 +162,7 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    for (let row of possiblePairResult.rows) {
+    for (const row of possiblePairResult.rows) {
       for (let i = 0; i < grid.length; i++) {
         const keptPairValues = this.keepOnlyPairValuesInCell(
           v1,
@@ -183,7 +183,7 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    for (let column of possiblePairResult.columns) {
+    for (const column of possiblePairResult.columns) {
       for (let i = 0; i < grid.length; i++) {
         const keptPairValues = this.keepOnlyPairValuesInCell(
           v1,
@@ -205,7 +205,7 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    for (let square of possiblePairResult.squares) {
+    for (const square of possiblePairResult.squares) {
       squarePositionsMap.getForSquareIndex(square).forEach((cellPosition) => {
         const keptPairValues = this.keepOnlyPairValuesInCell(
           v1,
