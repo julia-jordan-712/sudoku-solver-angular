@@ -1,7 +1,10 @@
 import { Component, inject } from "@angular/core";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { Nullable } from "@app/shared/types/nullable";
-import { Observable, map } from "rxjs";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { ClipboardService } from "@app/shared/util/clipboard-service";
+import { isDefined } from "@app/shared/util/is-defined";
+import { Observable, filter, first, map } from "rxjs";
 
 @Component({
   selector: "app-sudoku-solver-settings",
@@ -10,6 +13,8 @@ import { Observable, map } from "rxjs";
 })
 export class SudokuSolverSettingsComponent {
   private state = inject(SUDOKU_SOLVER_STATE);
+  private clipboard = inject(ClipboardService);
+
   show$: Observable<boolean> = this.state
     .getViewModels()
     .pipe(map((viewModels) => viewModels.length > 0));
@@ -34,5 +39,21 @@ export class SudokuSolverSettingsComponent {
 
   setHighlightNumber(step: Nullable<number>): void {
     this.state.setHighlightNumber(step);
+  }
+
+  copyCurrentSudoku(): void {
+    this.state
+      .getViewModels()
+      .pipe(
+        map(
+          (viewModels: SudokuGridViewModel[]) =>
+            viewModels[viewModels.length - 1],
+        ),
+        filter(isDefined),
+        first(),
+      )
+      .subscribe((grid: SudokuGridViewModel) =>
+        this.clipboard.copyToClipboard(grid),
+      );
   }
 }

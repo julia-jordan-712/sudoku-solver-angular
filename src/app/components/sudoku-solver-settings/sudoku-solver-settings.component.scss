@@ -13,4 +13,8 @@
   app-number-input {
     display: contents;
   }
+
+  button {
+    grid-column: 1 / -1;
+  }
 }
