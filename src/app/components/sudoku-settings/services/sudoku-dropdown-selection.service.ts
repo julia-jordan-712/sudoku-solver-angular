@@ -74,7 +74,7 @@ export class SudokuDropdownSelectionService {
       },
       solution: {
         id: `Puzzle.${category}_${index}.solution`,
-        name: this.translate.stream(`PUZZLE.${category}.PUZZLE`, {
+        name: this.translate.stream(`PUZZLE.${category}.SOLVED`, {
           number: index,
         }),
         grid: testPuzzle.solution,
