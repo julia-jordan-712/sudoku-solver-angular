@@ -7,16 +7,20 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 
 export class SudokuSolverSpy {
+  public static readonly STEP_ID = "TEST";
+
   static onSolveNextStepAndReturnPreviousGrid(
     solver: SudokuSolverService,
   ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake((b) => {
-      return {
-        branches: b,
-        status: "INCOMPLETE",
-        stepId: "TEST",
-      } satisfies SolverResponse;
-    });
+    return spyOn(solver, "solveNextStep").and.callFake(
+      (response: SolverResponse) => {
+        return {
+          branches: response.branches,
+          status: "INCOMPLETE",
+          stepId: SudokuSolverSpy.STEP_ID,
+        } satisfies SolverResponse;
+      },
+    );
   }
 
   static onSolveNextStepAndReturnGrid(
@@ -24,13 +28,15 @@ export class SudokuSolverSpy {
     value: SudokuGrid[],
     status: SolverResponseStatus = "INCOMPLETE",
   ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(() => {
-      return {
-        branches: value,
-        status: status,
-        stepId: "TEST",
-      } satisfies SolverResponse;
-    });
+    return spyOn(solver, "solveNextStep").and.callFake(
+      (_response: SolverResponse) => {
+        return {
+          branches: value,
+          status: status,
+          stepId: SudokuSolverSpy.STEP_ID,
+        } satisfies SolverResponse;
+      },
+    );
   }
 
   static onSolveNextStepAndReturnSuccess(
@@ -40,7 +46,7 @@ export class SudokuSolverSpy {
       return {
         branches: [PuzzleSimple.PUZZLE_1.solution],
         status: "COMPLETE",
-        stepId: "TEST",
+        stepId: SudokuSolverSpy.STEP_ID,
       } satisfies SolverResponse;
     });
   }
@@ -52,7 +58,7 @@ export class SudokuSolverSpy {
       return {
         branches: [PuzzleSimple.PUZZLE_1.puzzle],
         status: "FAILED",
-        stepId: "TEST",
+        stepId: SudokuSolverSpy.STEP_ID,
       } satisfies SolverResponse;
     });
   }

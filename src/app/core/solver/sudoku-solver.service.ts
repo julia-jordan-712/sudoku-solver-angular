@@ -2,7 +2,6 @@ import { Inject, Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { SOLVER_TOKEN } from "@app/core/solver/sudoku-solver.provider";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
 @Injectable({
   providedIn: "root",
@@ -20,14 +19,10 @@ export class SudokuSolverService {
     this.solvers.forEach((solver) => solver.reset());
   }
 
-  solveNextStep(branches: SudokuGrid[]): SolverResponse {
-    let response: SolverResponse = {
-      branches,
-      stepId: "INITIAL",
-      status: "FAILED",
-    };
+  solveNextStep(lastResponse: SolverResponse): SolverResponse {
+    let response: SolverResponse = lastResponse;
     for (const solver of this.solvers) {
-      response = solver.executeNextStep(branches);
+      response = solver.executeNextStep(response);
       if (response.status !== "FAILED") {
         break;
       }

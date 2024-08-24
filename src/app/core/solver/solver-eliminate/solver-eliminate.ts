@@ -4,7 +4,10 @@ import { EliminateFromRowOrColumn } from "@app/core/solver/solver-eliminate/elim
 import { EliminateFromSquare } from "@app/core/solver/solver-eliminate/eliminate-from-square";
 import { EliminateOtherValuesFromPossiblePair } from "@app/core/solver/solver-eliminate/eliminate-other-values-from-possible-pair";
 import { EliminatePossiblePairFromOtherCells } from "@app/core/solver/solver-eliminate/eliminate-possible-pair-from-other-cells";
-import { SolverStepResponse } from "@app/core/solver/solver-response";
+import {
+  SolverResponse,
+  SolverStepResponse,
+} from "@app/core/solver/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
@@ -19,11 +22,16 @@ export class SolverEliminate extends Solver {
     // nothing to do
   }
 
-  override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
-    const response: Omit<SolverStepResponse, "branches"> = this.execute(
-      this.getCurrentBranch(branches),
+  override executeSingleStep(lastResponse: SolverResponse): SolverStepResponse {
+    const currentBranch: Nullable<SudokuGrid> = this.cloneCurrentBranch(
+      lastResponse.branches,
     );
-    return { ...response, branches };
+    const response: Omit<SolverStepResponse, "branches"> =
+      this.execute(currentBranch);
+    return {
+      ...response,
+      branches: this.replaceCurrentBranch(lastResponse.branches, currentBranch),
+    };
   }
 
   private execute(

@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { CleanupPossibleValues } from "@app/core/solver/solver-clean-up/cleanup-possible-values";
-import { SolverStepResponse } from "@app/core/solver/solver-response";
+import {
+  SolverResponse,
+  SolverStepResponse,
+} from "@app/core/solver/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
@@ -16,11 +19,16 @@ export class SolverCleanUp extends Solver {
     // nothing to do
   }
 
-  override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
-    const response: Omit<SolverStepResponse, "branches"> = this.execute(
-      this.getCurrentBranch(branches),
+  override executeSingleStep(lastResponse: SolverResponse): SolverStepResponse {
+    const currentBranch: Nullable<SudokuGrid> = this.cloneCurrentBranch(
+      lastResponse.branches,
     );
-    return { ...response, branches };
+    const response: Omit<SolverStepResponse, "branches"> =
+      this.execute(currentBranch);
+    return {
+      ...response,
+      branches: this.replaceCurrentBranch(lastResponse.branches, currentBranch),
+    };
   }
 
   private execute(

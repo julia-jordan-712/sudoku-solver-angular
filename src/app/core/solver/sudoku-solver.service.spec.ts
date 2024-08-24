@@ -4,7 +4,6 @@ import { SudokuSolverStateService } from "@app/components/sudoku-solver/services
 import { SolverResponse } from "@app/core/solver/solver-response";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleExtreme } from "@app/test/puzzles/puzzle-extreme";
@@ -186,13 +185,14 @@ describe(SudokuSolverService.name, () => {
     },
   ].forEach((params) => {
     it(`should ${params.success ? "" : "fail to"} solve "${params.name}" in ${params.steps} steps`, () => {
-      let puzzle: SudokuGrid[] = [SudokuGridUtil.clone(params.puzzle)];
-
       let step = 0;
-      let response: SolverResponse;
+      let response: SolverResponse = {
+        branches: [SudokuGridUtil.clone(params.puzzle)],
+        status: "UNKNOWN",
+        stepId: "",
+      };
       do {
-        response = service.solveNextStep(puzzle);
-        puzzle = response.branches;
+        response = service.solveNextStep(response);
         step++;
       } while (
         step < 100000 &&

@@ -1,6 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
-import { SolverStepResponse } from "@app/core/solver/solver-response";
+import {
+  SolverResponse,
+  SolverStepResponse,
+} from "@app/core/solver/solver-response";
 import { ConvertSinglePossibleValue } from "@app/core/solver/solver-search/convert-single-possible-value";
 import { ConvertValuesPossibleOnce } from "@app/core/solver/solver-search/convert-values-possible-once";
 import { Nullable } from "@app/shared/types/nullable";
@@ -20,11 +23,16 @@ export class SolverSearch extends Solver {
     // nothing to do
   }
 
-  override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
-    const response: Omit<SolverStepResponse, "branches"> = this.execute(
-      this.getCurrentBranch(branches),
+  override executeSingleStep(lastResponse: SolverResponse): SolverStepResponse {
+    const currentBranch: Nullable<SudokuGrid> = this.cloneCurrentBranch(
+      lastResponse.branches,
     );
-    return { ...response, branches };
+    const response: Omit<SolverStepResponse, "branches"> =
+      this.execute(currentBranch);
+    return {
+      ...response,
+      branches: this.replaceCurrentBranch(lastResponse.branches, currentBranch),
+    };
   }
 
   private execute(

@@ -142,7 +142,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private solveNextStepAndFinishIfDone(): SolverResponse {
     const response: SolverResponse = this.solver.solveNextStep(
-      this.getResponseBranches(),
+      this.response$.getValue(),
     );
     this.response$.next(response);
     if (response.status === "COMPLETE") {
