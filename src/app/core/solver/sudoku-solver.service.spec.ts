@@ -1,8 +1,8 @@
 import { TestBed } from "@angular/core/testing";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
-import { SolverResponse } from "@app/core/solver/solver-response";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";

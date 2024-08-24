@@ -2,7 +2,7 @@ import { Logger } from "@app/core/log/logger";
 import {
   SolverResponse,
   SolverStepResponse,
-} from "@app/core/solver/solver-response";
+} from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";

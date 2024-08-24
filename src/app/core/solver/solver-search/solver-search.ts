@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
+import { ConvertSinglePossibleValue } from "@app/core/solver/solver-search/convert-single-possible-value";
+import { ConvertValuesPossibleOnce } from "@app/core/solver/solver-search/convert-values-possible-once";
 import {
   SolverResponse,
   SolverStepResponse,
-} from "@app/core/solver/solver-response";
-import { ConvertSinglePossibleValue } from "@app/core/solver/solver-search/convert-single-possible-value";
-import { ConvertValuesPossibleOnce } from "@app/core/solver/solver-search/convert-values-possible-once";
+} from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";

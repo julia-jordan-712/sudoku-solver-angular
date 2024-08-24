@@ -1,8 +1,8 @@
+import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import {
   SolverResponse,
   SolverResponseStatus,
-} from "@app/core/solver/solver-response";
-import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+} from "@app/core/solver/types/solver-response";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 

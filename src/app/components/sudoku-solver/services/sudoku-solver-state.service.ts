@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { SudokuSolverState } from "@app/components/sudoku-solver/services/sudoku-solver-state";
-import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";

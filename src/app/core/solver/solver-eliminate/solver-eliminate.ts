@@ -7,7 +7,7 @@ import { EliminatePossiblePairFromOtherCells } from "@app/core/solver/solver-eli
 import {
   SolverResponse,
   SolverStepResponse,
-} from "@app/core/solver/solver-response";
+} from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";

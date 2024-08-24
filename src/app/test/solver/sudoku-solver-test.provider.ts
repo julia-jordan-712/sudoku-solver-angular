@@ -1,10 +1,10 @@
 import { Injectable, Provider } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
+import { SOLVER_TOKEN } from "@app/core/solver/sudoku-solver.provider";
 import {
   SolverResponse,
   SolverStepResponse,
-} from "@app/core/solver/solver-response";
-import { SOLVER_TOKEN } from "@app/core/solver/sudoku-solver.provider";
+} from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
-import { SolverResponse } from "@app/core/solver/solver-response";
 import { SOLVER_TOKEN } from "@app/core/solver/sudoku-solver.provider";
+import { SolverResponse } from "@app/core/solver/types/solver-response";
 
 @Injectable({
   providedIn: "root",
