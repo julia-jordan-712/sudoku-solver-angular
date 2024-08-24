@@ -1,4 +1,4 @@
-import { SolverRunnable } from "@app/core/solver/solver-runnable";
+import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
 import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";

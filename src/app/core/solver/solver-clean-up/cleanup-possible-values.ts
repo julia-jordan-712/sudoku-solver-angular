@@ -1,4 +1,4 @@
-import { SolverRunnable } from "@app/core/solver/solver-runnable";
+import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isArray } from "@app/shared/util/is-array";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
