@@ -24,14 +24,13 @@ export class SolverSearch extends Solver {
   }
 
   override executeSingleStep(lastResponse: SolverResponse): SolverStepResponse {
-    const currentBranch: Nullable<SudokuGrid> = this.cloneCurrentBranch(
-      lastResponse.branches,
+    const response: Omit<SolverStepResponse, "branches"> = this.execute(
+      this.getCurrentBranch(lastResponse)?.grid,
     );
-    const response: Omit<SolverStepResponse, "branches"> =
-      this.execute(currentBranch);
     return {
-      ...response,
-      branches: this.replaceCurrentBranch(lastResponse.branches, currentBranch),
+      stepId: response.stepId,
+      failed: response.failed,
+      branches: lastResponse.branches,
     };
   }
 

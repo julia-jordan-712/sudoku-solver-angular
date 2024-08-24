@@ -2,6 +2,7 @@ import { TestBed } from "@angular/core/testing";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
@@ -187,7 +188,9 @@ describe(SudokuSolverService.name, () => {
     it(`should ${params.success ? "" : "fail to"} solve "${params.name}" in ${params.steps} steps`, () => {
       let step = 0;
       let response: SolverResponse = {
-        branches: [SudokuGridUtil.clone(params.puzzle)],
+        branches: [
+          SolverBranch.createInitialBranch(SudokuGridUtil.clone(params.puzzle)),
+        ],
         status: "UNKNOWN",
         stepId: "",
       };
@@ -208,11 +211,9 @@ describe(SudokuSolverService.name, () => {
       } else {
         expect(response.status).toEqual("FAILED");
       }
-      expect(
-        verify
-          .verify(response.branches[response.branches.length - 1])
-          .isValid(),
-      ).toBeTrue();
+      response.branches.forEach((branch) =>
+        expect(verify.verify(branch.grid).isValid()).toBeTrue(),
+      );
     });
   });
 });

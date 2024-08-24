@@ -1,4 +1,4 @@
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
 
 export type SolverResponseStatus =
   | "COMPLETE"
@@ -7,7 +7,7 @@ export type SolverResponseStatus =
   | "UNKNOWN";
 
 export interface SolverResponse {
-  branches: SudokuGrid[];
+  branches: SolverBranch[];
   stepId: string;
   status: SolverResponseStatus;
 }

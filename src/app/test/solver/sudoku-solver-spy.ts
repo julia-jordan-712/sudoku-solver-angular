@@ -1,4 +1,5 @@
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import {
   SolverResponse,
   SolverResponseStatus,
@@ -25,13 +26,13 @@ export class SudokuSolverSpy {
 
   static onSolveNextStepAndReturnGrid(
     solver: SudokuSolverService,
-    value: SudokuGrid[],
+    value: SudokuGrid,
     status: SolverResponseStatus = "INCOMPLETE",
   ): jasmine.Spy {
     return spyOn(solver, "solveNextStep").and.callFake(
-      (_response: SolverResponse) => {
+      (response: SolverResponse) => {
         return {
-          branches: value,
+          branches: SudokuSolverSpy.setGridInAllBranches(response, value),
           status: status,
           stepId: SudokuSolverSpy.STEP_ID,
         } satisfies SolverResponse;
@@ -42,24 +43,52 @@ export class SudokuSolverSpy {
   static onSolveNextStepAndReturnSuccess(
     solver: SudokuSolverService,
   ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(() => {
-      return {
-        branches: [PuzzleSimple.PUZZLE_1.solution],
-        status: "COMPLETE",
-        stepId: SudokuSolverSpy.STEP_ID,
-      } satisfies SolverResponse;
-    });
+    return spyOn(solver, "solveNextStep").and.callFake(
+      (response: SolverResponse) => {
+        return {
+          branches: SudokuSolverSpy.setGridInAllBranches(
+            response,
+            PuzzleSimple.PUZZLE_1.solution,
+          ),
+          status: "COMPLETE",
+          stepId: SudokuSolverSpy.STEP_ID,
+        } satisfies SolverResponse;
+      },
+    );
   }
 
   static onSolveNextStepAndReturnFailure(
     solver: SudokuSolverService,
   ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(() => {
-      return {
-        branches: [PuzzleSimple.PUZZLE_1.puzzle],
-        status: "FAILED",
-        stepId: SudokuSolverSpy.STEP_ID,
-      } satisfies SolverResponse;
-    });
+    return spyOn(solver, "solveNextStep").and.callFake(
+      (response: SolverResponse) => {
+        return {
+          branches: SudokuSolverSpy.setGridInAllBranches(
+            response,
+            PuzzleSimple.PUZZLE_1.solution,
+          ),
+          status: "FAILED",
+          stepId: SudokuSolverSpy.STEP_ID,
+        } satisfies SolverResponse;
+      },
+    );
   }
+
+  private static setGridInAllBranches(
+    response: SolverResponse,
+    grid: SudokuGrid,
+  ): SolverBranch[] {
+    if (response.branches.length === 0) {
+      return [SolverBranch.createInitialBranch(grid)];
+    } else {
+      return response.branches.map((branch) => {
+        if (branch.isCurrentBranch()) {
+          branch.grid = grid;
+        }
+        return branch;
+      });
+    }
+  }
+
+  public static expectToHaveBeenCalledWith(): void {}
 }

@@ -442,7 +442,9 @@ describe(SudokuSolverStateService.name, () => {
 
       service.startExecuting();
       expect(solverSpy).toHaveBeenCalledWith({
-        branches: [PuzzleSimple.PUZZLE_1.puzzle],
+        branches: [
+          jasmine.objectContaining({ grid: PuzzleSimple.PUZZLE_1.puzzle }),
+        ],
         status: "UNKNOWN",
         stepId: "",
       });
@@ -460,16 +462,18 @@ describe(SudokuSolverStateService.name, () => {
 
       service.executeNextStep();
       expect(solverSpy).toHaveBeenCalledWith({
-        branches: [PuzzleSimple.PUZZLE_1.puzzle],
+        branches: [
+          jasmine.objectContaining({ grid: PuzzleSimple.PUZZLE_1.puzzle }),
+        ],
         status: "INCOMPLETE",
-        stepId: "TEST",
+        stepId: SudokuSolverSpy.STEP_ID,
       });
     });
 
     it("should call solver with response from last step while running", fakeAsync(() => {
-      const responseBranches: SudokuGrid[] = [PuzzleAdvanced.PUZZLE_1.puzzle];
+      const responseGrid: SudokuGrid = PuzzleAdvanced.PUZZLE_1.puzzle;
       const solverSpy: jasmine.Spy =
-        SudokuSolverSpy.onSolveNextStepAndReturnGrid(solver, responseBranches);
+        SudokuSolverSpy.onSolveNextStepAndReturnGrid(solver, responseGrid);
 
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       service.setMaximumSteps(3);
@@ -486,7 +490,9 @@ describe(SudokuSolverStateService.name, () => {
       // second call with response from previous step
       expect(solverSpy).toHaveBeenCalledTimes(2);
       expect(solver.solveNextStep).toHaveBeenCalledWith({
-        branches: responseBranches,
+        branches: [
+          jasmine.objectContaining({ grid: PuzzleAdvanced.PUZZLE_1.puzzle }),
+        ],
         status: "INCOMPLETE",
         stepId: SudokuSolverSpy.STEP_ID,
       });

@@ -1,4 +1,8 @@
 import {
+  SolverBranch,
+  SolverBranchUtil,
+} from "@app/core/solver/types/solver-branch";
+import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
@@ -11,9 +15,12 @@ import {
 
 export class SudokuGridViewModelConverter {
   public static createViewModelsFromGrids(
-    grids: SudokuGrid[],
+    branches: SolverBranch[],
     id = "",
   ): SudokuGridViewModel[] {
+    const grids: SudokuGrid[] = branches
+      .sort(SolverBranchUtil.sortingFunction)
+      .map((branch) => branch.grid);
     return grids.map((grid, index) =>
       SudokuGridViewModelConverter.createViewModelFromGrid(grid, id, index),
     );
