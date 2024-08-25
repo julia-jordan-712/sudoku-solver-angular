@@ -6,16 +6,20 @@ import {
 import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
+import { v4 as randomUUID } from "uuid";
 
 describe(SudokuGridComponentService.name, () => {
   let service: SudokuGridComponentService;
   const viewModel: SudokuGridViewModel =
-    SudokuGridViewModelConverter.createViewModelFromGrid([
-      [1, 2, 3, 4],
-      [3, 4, 1, 2],
-      [undefined, undefined, 4, 1],
-      [undefined, undefined, 2, 3],
-    ]);
+    SudokuGridViewModelConverter.createViewModelFromGrid(
+      [
+        [1, 2, 3, 4],
+        [3, 4, 1, 2],
+        [undefined, undefined, 4, 1],
+        [undefined, undefined, 2, 3],
+      ],
+      randomUUID(),
+    );
 
   beforeEach(() => {
     TestBed.configureTestingModule({ providers: [SudokuGridComponentService] });

@@ -1,7 +1,4 @@
-import {
-  SolverBranch,
-  SolverBranchUtil,
-} from "@app/core/solver/types/solver-branch";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import {
   SudokuGrid,
   SudokuGridCell,
@@ -16,30 +13,31 @@ import {
 export class SudokuGridViewModelConverter {
   public static createViewModelsFromGrids(
     branches: SolverBranch[],
-    id = "",
+    id: string,
   ): SudokuGridViewModel[] {
-    const grids: SudokuGrid[] = branches
-      .sort(SolverBranchUtil.sortingFunction)
-      .map((branch) => branch.grid);
-    return grids.map((grid, index) =>
-      SudokuGridViewModelConverter.createViewModelFromGrid(grid, id, index),
-    );
+    return branches
+      .sort((a, b) => a.compareTo(b))
+      .map((branch) =>
+        SudokuGridViewModelConverter.createViewModelFromGrid(
+          branch.grid,
+          `${id}_${branch.getId()}`,
+        ),
+      );
   }
 
   public static createViewModelFromGrid(
     grid: SudokuGrid,
-    id = "",
-    index = 0,
+    id: string,
   ): SudokuGridViewModel {
     return new SudokuGridViewModel(
-      `${id}-grid-${index}`,
+      id,
       SudokuGridViewModelConverter.createViewModelsFromRows(grid, id),
     );
   }
 
   private static createViewModelsFromRows(
     rows: SudokuGridRow[],
-    id = "",
+    id: string,
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
       SudokuGridViewModelConverter.createViewModelsFromRow(row, id, index),
@@ -48,19 +46,19 @@ export class SudokuGridViewModelConverter {
 
   private static createViewModelsFromRow(
     row: SudokuGridRow,
-    id = "",
-    index = 0,
+    id: string,
+    index: number,
   ): SudokuGridRowViewModel {
     return new SudokuGridRowViewModel(
-      `${id}-row-${index}`,
+      `${id}_row-${index}`,
       SudokuGridViewModelConverter.createViewModelsFromCells(row, id, index),
     );
   }
 
   private static createViewModelsFromCells(
     cells: SudokuGridCell[],
-    id = "",
-    rowIndex = 0,
+    id: string,
+    rowIndex: number,
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
@@ -82,12 +80,12 @@ export class SudokuGridViewModelConverter {
     cell: SudokuGridCell,
     maxValue: number,
     size: number,
-    rowIndex = 0,
-    columnIndex = 0,
-    id = "",
+    rowIndex: number,
+    columnIndex: number,
+    id: string,
   ): SudokuGridCellViewModel {
     return new SudokuGridCellViewModel(
-      `${id}-cell-${rowIndex}-${columnIndex}`,
+      `${id}_cell-${rowIndex}-${columnIndex}`,
       cell,
       maxValue,
       size,

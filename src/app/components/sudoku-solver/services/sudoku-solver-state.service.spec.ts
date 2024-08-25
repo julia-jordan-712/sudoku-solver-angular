@@ -1,11 +1,18 @@
 import { TestBed, fakeAsync, flush, tick } from "@angular/core/testing";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import {
+  SudokuGridCellViewModel,
+  SudokuGridViewModel,
+} from "@app/shared/types/sudoku-grid-view-model";
+import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
+import { TestSubscription } from "@app/test/test-subscription";
 import { first } from "rxjs";
 import { SudokuSolverStateService } from "./sudoku-solver-state.service";
 
@@ -721,5 +728,110 @@ describe(SudokuSolverStateService.name, () => {
 
       flush();
     }));
+  });
+
+  describe("view models", () => {
+    it("should create single view model with exactly the same cell values", async () => {
+      const testSubscription = TestSubscription.start(service.getViewModels());
+      service.setInitialPuzzle([
+        [1, 2, 3, 4],
+        [3, 4, [1, 2], [1, 2]],
+        [2, [1, 3], [1, 4], [1, 3]],
+        [4, [1, 3], [1, 2], [1, 2, 3]],
+      ]);
+
+      const viewModels: SudokuGridViewModel[] = await testSubscription.value();
+
+      expect(viewModels.length).toEqual(1);
+      const viewModel: SudokuGridViewModel = viewModels[0];
+
+      expect(viewModel.rows.length).toEqual(4);
+      const row0: SudokuGridCellViewModel[] = viewModel.rows[0].cells;
+      expect(row0.length).toEqual(4);
+      expect(row0[0].cell).toEqual(1);
+      expect(row0[1].cell).toEqual(2);
+      expect(row0[2].cell).toEqual(3);
+      expect(row0[3].cell).toEqual(4);
+      const row1: SudokuGridCellViewModel[] = viewModel.rows[1].cells;
+      expect(row1.length).toEqual(4);
+      expect(row1[0].cell).toEqual(3);
+      expect(row1[1].cell).toEqual(4);
+      expect(row1[2].cell).toEqual([1, 2]);
+      expect(row1[3].cell).toEqual([1, 2]);
+      const row2: SudokuGridCellViewModel[] = viewModel.rows[2].cells;
+      expect(row2[0].cell).toEqual(2);
+      expect(row2[1].cell).toEqual([1, 3]);
+      expect(row2[2].cell).toEqual([1, 4]);
+      expect(row2[3].cell).toEqual([1, 3]);
+      const row3: SudokuGridCellViewModel[] = viewModel.rows[3].cells;
+      expect(row3[0].cell).toEqual(4);
+      expect(row3[1].cell).toEqual([1, 3]);
+      expect(row3[2].cell).toEqual([1, 2]);
+      expect(row3[3].cell).toEqual([1, 2, 3]);
+    });
+
+    it("should have correct max value in each cell", async () => {
+      const testSubscription = TestSubscription.start(service.getViewModels());
+      service.setInitialPuzzle(Puzzle4x4.EMPTY);
+
+      const viewModels: SudokuGridViewModel[] = await testSubscription.value();
+
+      viewModels[0].rows
+        .flatMap((row) => row.cells.map((cell) => cell.maxValue))
+        .forEach((maxValue) => expect(maxValue).toEqual(4));
+    });
+
+    it("should order multiple view models by branches", async () => {
+      const initialBranch: SolverBranch = SolverBranch.createInitialBranch(
+        Puzzle4x4.INCOMPLETE_ALL_VALUES,
+      );
+      const secondBranch: SolverBranch = initialBranch.openBranch(
+        { row: 0, column: 0 },
+        1,
+      );
+      const thirdBranch: SolverBranch = secondBranch.openBranch(
+        { row: 1, column: 1 },
+        2,
+      );
+      const fourthBranch: SolverBranch = thirdBranch.openBranch(
+        { row: 2, column: 3 },
+        3,
+      );
+      const branches: SolverBranch[] = [
+        thirdBranch,
+        fourthBranch,
+        initialBranch,
+        secondBranch,
+      ];
+      SudokuSolverSpy.onSolveNextStepAndReturnBranches(solver, branches);
+      service.setInitialPuzzle(Puzzle4x4.EMPTY);
+
+      const testSubscription = TestSubscription.start(
+        service.getViewModels(),
+        true,
+      );
+      service.executeNextStep();
+
+      const viewModels: SudokuGridViewModel[] = await testSubscription.value();
+      expect(viewModels.length).toEqual(4);
+      expect(removeExecutionIdFromViewModelId(viewModels[0])).toEqual(
+        initialBranch.getId(),
+      );
+      expect(removeExecutionIdFromViewModelId(viewModels[1])).toEqual(
+        secondBranch.getId(),
+      );
+      expect(removeExecutionIdFromViewModelId(viewModels[2])).toEqual(
+        thirdBranch.getId(),
+      );
+      expect(removeExecutionIdFromViewModelId(viewModels[3])).toEqual(
+        fourthBranch.getId(),
+      );
+    });
+
+    function removeExecutionIdFromViewModelId(
+      viewModel: SudokuGridViewModel,
+    ): string {
+      return viewModel.id.substring(viewModel.id.indexOf("_") + 1);
+    }
   });
 });

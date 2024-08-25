@@ -27,6 +27,7 @@ import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { of } from "rxjs";
+import { v4 as randomUUID } from "uuid";
 import { SudokuSolverActionsComponent } from "./sudoku-solver-actions/sudoku-solver-actions.component";
 
 describe(SudokuSolverComponent.name, () => {
@@ -69,9 +70,10 @@ describe(SudokuSolverComponent.name, () => {
     beforeEach(() => {
       spyOn(service, "getViewModels").and.returnValue(
         of(
-          SudokuGridViewModelConverter.createViewModelsFromGrids([
-            SolverBranch.createInitialBranch(PuzzleSimple.PUZZLE_3.puzzle),
-          ]),
+          SudokuGridViewModelConverter.createViewModelsFromGrids(
+            [SolverBranch.createInitialBranch(PuzzleSimple.PUZZLE_3.puzzle)],
+            randomUUID(),
+          ),
         ),
       );
       SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);

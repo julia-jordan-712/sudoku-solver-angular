@@ -14,6 +14,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TestSubscription } from "@app/test/test-subscription";
+import { v4 as randomUUID } from "uuid";
 
 describe(SudokuGridRowComponentService.name, () => {
   let service: SudokuGridRowComponentService;
@@ -29,7 +30,8 @@ describe(SudokuGridRowComponentService.name, () => {
     const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.EMPTY);
     grid[0] = row;
     const viewModel: SudokuGridRowViewModel =
-      SudokuGridViewModelConverter.createViewModelFromGrid(grid).rows[0];
+      SudokuGridViewModelConverter.createViewModelFromGrid(grid, randomUUID())
+        .rows[0];
     service.setRow(viewModel);
     return viewModel;
   }

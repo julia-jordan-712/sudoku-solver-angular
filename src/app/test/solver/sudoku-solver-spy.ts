@@ -10,6 +10,22 @@ import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 export class SudokuSolverSpy {
   public static readonly STEP_ID = "TEST";
 
+  static onSolveNextStepAndReturnBranches(
+    solver: SudokuSolverService,
+    branches: SolverBranch[],
+    status: SolverResponseStatus = "INCOMPLETE",
+  ): jasmine.Spy {
+    return spyOn(solver, "solveNextStep").and.callFake(
+      (_response: SolverResponse) => {
+        return {
+          branches,
+          status: status,
+          stepId: SudokuSolverSpy.STEP_ID,
+        } satisfies SolverResponse;
+      },
+    );
+  }
+
   static onSolveNextStepAndReturnPreviousGrid(
     solver: SudokuSolverService,
   ): jasmine.Spy {
