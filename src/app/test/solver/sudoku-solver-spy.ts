@@ -7,74 +7,73 @@ import {
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 
-export class SudokuSolverSpy {
-  public static readonly STEP_ID = "TEST";
+type SpyFunctions = "solveNextStep" | "reset";
 
-  static onSolveNextStepAndReturnPreviousGrid(
-    solver: SudokuSolverService,
-  ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(
-      (response: SolverResponse) => {
-        return {
-          branches: response.branches,
-          status: "INCOMPLETE",
-          stepId: SudokuSolverSpy.STEP_ID,
-        } satisfies SolverResponse;
-      },
+export class SudokuSolverSpy {
+  public readonly STEP_ID = "TEST";
+
+  private solveNextStep: (response: SolverResponse) => SolverResponse;
+  private solveNextStepSpy: jasmine.Spy;
+  private resetSpy: jasmine.Spy;
+
+  constructor(private solver: SudokuSolverService) {
+    this.solveNextStep = (r) => r;
+    this.solveNextStepSpy = spyOn(this.solver, "solveNextStep").and.callFake(
+      this.solveNextStep,
     );
+    this.resetSpy = spyOn(this.solver, "reset").and.callFake(() => {});
   }
 
-  static onSolveNextStepAndReturnGrid(
-    solver: SudokuSolverService,
+  onSolveNextStepAndReturnPreviousGrid(): void {
+    this.solveNextStep = (response: SolverResponse) => {
+      return {
+        branches: response.branches,
+        status: "INCOMPLETE",
+        stepId: this.STEP_ID,
+      } satisfies SolverResponse;
+    };
+  }
+
+  onSolveNextStepAndReturnGrid(
     value: SudokuGrid,
     status: SolverResponseStatus = "INCOMPLETE",
-  ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(
-      (response: SolverResponse) => {
-        return {
-          branches: SudokuSolverSpy.setGridInAllBranches(response, value),
-          status: status,
-          stepId: SudokuSolverSpy.STEP_ID,
-        } satisfies SolverResponse;
-      },
-    );
+  ): void {
+    this.solveNextStep = (response: SolverResponse) => {
+      return {
+        branches: this.setGridInAllBranches(response, value),
+        status: status,
+        stepId: this.STEP_ID,
+      } satisfies SolverResponse;
+    };
   }
 
-  static onSolveNextStepAndReturnSuccess(
-    solver: SudokuSolverService,
-  ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(
-      (response: SolverResponse) => {
-        return {
-          branches: SudokuSolverSpy.setGridInAllBranches(
-            response,
-            PuzzleSimple.PUZZLE_1.solution,
-          ),
-          status: "COMPLETE",
-          stepId: SudokuSolverSpy.STEP_ID,
-        } satisfies SolverResponse;
-      },
-    );
+  onSolveNextStepAndReturnSuccess(): void {
+    this.solveNextStep = (response: SolverResponse) => {
+      return {
+        branches: this.setGridInAllBranches(
+          response,
+          PuzzleSimple.PUZZLE_1.solution,
+        ),
+        status: "COMPLETE",
+        stepId: this.STEP_ID,
+      } satisfies SolverResponse;
+    };
   }
 
-  static onSolveNextStepAndReturnFailure(
-    solver: SudokuSolverService,
-  ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(
-      (response: SolverResponse) => {
-        return {
-          branches: SudokuSolverSpy.setGridInAllBranches(
-            response,
-            PuzzleSimple.PUZZLE_1.solution,
-          ),
-          status: "FAILED",
-          stepId: SudokuSolverSpy.STEP_ID,
-        } satisfies SolverResponse;
-      },
-    );
+  onSolveNextStepAndReturnFailure(): void {
+    this.solveNextStep = (response: SolverResponse) => {
+      return {
+        branches: this.setGridInAllBranches(
+          response,
+          PuzzleSimple.PUZZLE_1.solution,
+        ),
+        status: "FAILED",
+        stepId: this.STEP_ID,
+      } satisfies SolverResponse;
+    };
   }
 
-  private static setGridInAllBranches(
+  private setGridInAllBranches(
     response: SolverResponse,
     grid: SudokuGrid,
   ): SolverBranch[] {
@@ -90,5 +89,56 @@ export class SudokuSolverSpy {
     }
   }
 
-  public static expectToHaveBeenCalledWith(): void {}
+  public expectSolveNextStepToHaveBeenCalledWith(
+    branches: { grid: SudokuGrid; hasParent?: boolean; hasChild?: boolean }[],
+    status: SolverResponse["status"],
+    stepId: SolverResponse["stepId"],
+  ): void {
+    const expectedBranches = branches.map((branch) => {
+      jasmine.objectContaining({
+        grid: branch.grid,
+        parentId:
+          branch.hasParent != undefined
+            ? branch.hasParent
+              ? jasmine.anything()
+              : undefined
+            : jasmine.anything(),
+        childId:
+          branch.hasChild != undefined
+            ? branch.hasChild
+              ? jasmine.anything()
+              : undefined
+            : jasmine.anything(),
+      });
+    });
+    expect(this.solveNextStepSpy).toHaveBeenCalledWith({
+      branches: expectedBranches,
+      status,
+      stepId,
+    });
+  }
+
+  public expectToHaveBeenCalledTimes(func: SpyFunctions, times: number) {
+    switch (func) {
+      case "solveNextStep":
+        this.expectSpyToHaveBeenCalledTimes(this.solveNextStepSpy, times);
+        break;
+      case "reset":
+        this.expectSpyToHaveBeenCalledTimes(this.resetSpy, times);
+        break;
+    }
+  }
+
+  private expectSpyToHaveBeenCalledTimes(spy: jasmine.Spy, times: number) {
+    if (times === 0) {
+      expect(spy).not.toHaveBeenCalled();
+    } else {
+      expect(spy).toHaveBeenCalledTimes(times);
+    }
+  }
+
+  public resetAllCalls(): void {
+    this.solveNextStepSpy.calls.reset();
+    this.resetSpy.calls.reset();
+  }
 }

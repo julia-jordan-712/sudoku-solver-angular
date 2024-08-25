@@ -32,7 +32,7 @@ import { SudokuSolverActionsComponent } from "./sudoku-solver-actions/sudoku-sol
 describe(SudokuSolverComponent.name, () => {
   let fixture: ComponentFixture<SudokuSolverComponent>;
   let service: SudokuSolverState;
-  let solver: SudokuSolverService;
+  let solver: SudokuSolverSpy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -58,7 +58,7 @@ describe(SudokuSolverComponent.name, () => {
       ],
     });
     service = TestBed.inject(SUDOKU_SOLVER_STATE);
-    solver = TestBed.inject(SudokuSolverService);
+    solver = new SudokuSolverSpy(TestBed.inject(SudokuSolverService));
   });
 
   afterEach(() => {
@@ -74,7 +74,7 @@ describe(SudokuSolverComponent.name, () => {
           ]),
         ),
       );
-      SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
+      solver.onSolveNextStepAndReturnPreviousGrid();
       fixture = TestBed.createComponent(SudokuSolverComponent);
       fixture.detectChanges();
     });
@@ -153,7 +153,7 @@ describe(SudokuSolverComponent.name, () => {
 
     describe("when running", () => {
       it("should succeed if solution is found", fakeAsync(() => {
-        SudokuSolverSpy.onSolveNextStepAndReturnSuccess(solver);
+        solver.onSolveNextStepAndReturnSuccess();
 
         clickButtonAndTick(getStart(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.DONE");
@@ -162,7 +162,7 @@ describe(SudokuSolverComponent.name, () => {
       }));
 
       it("should fail after the maximum amount of steps if no solution is found", fakeAsync(() => {
-        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
+        solver.onSolveNextStepAndReturnPreviousGrid();
 
         clickButtonAndTick(getStart(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.FAILED");
@@ -173,7 +173,7 @@ describe(SudokuSolverComponent.name, () => {
 
     describe("when going to next step", () => {
       it("should succeed if solution is found", fakeAsync(() => {
-        SudokuSolverSpy.onSolveNextStepAndReturnSuccess(solver);
+        solver.onSolveNextStepAndReturnSuccess();
 
         clickButtonAndTick(getNext(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.DONE");
@@ -182,7 +182,7 @@ describe(SudokuSolverComponent.name, () => {
       }));
 
       it("should fail after the maximum amount of steps if no solution is found", fakeAsync(() => {
-        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
+        solver.onSolveNextStepAndReturnPreviousGrid();
 
         clickButtonAndTick(getNext(), 100);
         expect(getStates().innerText).toContain("SOLVER.STATUS.PAUSED");
@@ -198,7 +198,7 @@ describe(SudokuSolverComponent.name, () => {
   describe("pause after step", () => {
     beforeEach(() => {
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
-      SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
+      solver.onSolveNextStepAndReturnPreviousGrid();
       service.setPauseAfterStep(2);
       service.setDelay(100);
       service.setMaximumSteps(4);
