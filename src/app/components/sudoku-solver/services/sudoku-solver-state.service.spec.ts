@@ -11,7 +11,7 @@ import { SudokuSolverStateService } from "./sudoku-solver-state.service";
 
 describe(SudokuSolverStateService.name, () => {
   let service: SudokuSolverStateService;
-  let solver: SudokuSolverSpy;
+  let solver: SudokuSolverService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe(SudokuSolverStateService.name, () => {
       ],
     });
     service = TestBed.inject(SudokuSolverStateService);
-    solver = new SudokuSolverSpy(TestBed.inject(SudokuSolverService));
+    solver = TestBed.inject(SudokuSolverService);
   });
 
   afterEach(() => {
@@ -33,7 +33,7 @@ describe(SudokuSolverStateService.name, () => {
   describe("start/pause/next", () => {
     describe("initially", () => {
       beforeEach(() => {
-        solver.onSolveNextStepAndReturnPreviousGrid();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
       });
 
       it("should have state NOT_STARTED", (done) => {
@@ -89,7 +89,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("running", () => {
       beforeEach(() => {
-        solver.onSolveNextStepAndReturnPreviousGrid();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
         service.startExecuting();
       });
 
@@ -146,7 +146,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("paused", () => {
       beforeEach(() => {
-        solver.onSolveNextStepAndReturnPreviousGrid();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
         service.startExecuting();
         service.pauseExecuting();
       });
@@ -204,7 +204,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("go to next step", () => {
       beforeEach(() => {
-        solver.onSolveNextStepAndReturnPreviousGrid();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
         service.startExecuting();
         service.pauseExecuting();
         service.executeNextStep();
@@ -253,7 +253,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("continuing after paused", () => {
       beforeEach(() => {
-        solver.onSolveNextStepAndReturnPreviousGrid();
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
         service.startExecuting();
         service.pauseExecuting();
         service.startExecuting();
@@ -317,7 +317,7 @@ describe(SudokuSolverStateService.name, () => {
 
       describe("success", () => {
         beforeEach(() => {
-          solver.onSolveNextStepAndReturnPreviousGrid();
+          SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
           service.startExecuting();
           service.finishExecuting("DONE");
         });
@@ -375,7 +375,7 @@ describe(SudokuSolverStateService.name, () => {
 
       describe("failure", () => {
         beforeEach(() => {
-          solver.onSolveNextStepAndReturnPreviousGrid();
+          SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
           service.startExecuting();
           service.finishExecuting("FAILED");
         });
@@ -435,65 +435,74 @@ describe(SudokuSolverStateService.name, () => {
 
   describe("calling solver", () => {
     it("should call solver with initial response (contains puzzle to solve) when starting", () => {
-      solver.onSolveNextStepAndReturnPreviousGrid();
+      const solverSpy: jasmine.Spy =
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
-      solver.expectToHaveBeenCalledTimes("solveNextStep", 0);
+      expect(solverSpy).not.toHaveBeenCalled();
 
       service.startExecuting();
-      solver.expectSolveNextStepToHaveBeenCalledWith(
-        [{ grid: PuzzleSimple.PUZZLE_1.puzzle }],
-        "UNKNOWN",
-        "",
-      );
+      expect(solverSpy).toHaveBeenCalledWith({
+        branches: [
+          jasmine.objectContaining({ grid: PuzzleSimple.PUZZLE_1.puzzle }),
+        ],
+        status: "UNKNOWN",
+        stepId: "",
+      });
     });
 
     it("should call solver with response from last step when going to next step", () => {
-      solver.onSolveNextStepAndReturnPreviousGrid();
+      const solverSpy: jasmine.Spy =
+        SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
 
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       service.startExecuting();
       service.pauseExecuting();
-      solver.resetAllCalls();
-      solver.expectToHaveBeenCalledTimes("solveNextStep", 0);
+      solverSpy.calls.reset();
+      expect(solverSpy).not.toHaveBeenCalled();
 
       service.executeNextStep();
-      solver.expectSolveNextStepToHaveBeenCalledWith(
-        [{ grid: PuzzleSimple.PUZZLE_1.puzzle }],
-        "INCOMPLETE",
-        solver.STEP_ID,
-      );
+      expect(solverSpy).toHaveBeenCalledWith({
+        branches: [
+          jasmine.objectContaining({ grid: PuzzleSimple.PUZZLE_1.puzzle }),
+        ],
+        status: "INCOMPLETE",
+        stepId: SudokuSolverSpy.STEP_ID,
+      });
     });
 
     it("should call solver with response from last step while running", fakeAsync(() => {
       const responseGrid: SudokuGrid = PuzzleAdvanced.PUZZLE_1.puzzle;
-      solver.onSolveNextStepAndReturnGrid(responseGrid);
+      const solverSpy: jasmine.Spy =
+        SudokuSolverSpy.onSolveNextStepAndReturnGrid(solver, responseGrid);
 
       service.setInitialPuzzle(PuzzleSimple.PUZZLE_1.puzzle);
       service.setMaximumSteps(3);
-      solver.expectToHaveBeenCalledTimes("solveNextStep", 0);
+      expect(solverSpy).not.toHaveBeenCalled();
       service.executeNextStep();
-      solver.expectToHaveBeenCalledTimes("solveNextStep", 1);
-      solver.resetAllCalls();
-      solver.expectToHaveBeenCalledTimes("solveNextStep", 0);
+      expect(solverSpy).toHaveBeenCalledTimes(1);
+      solverSpy.calls.reset();
+      expect(solverSpy).not.toHaveBeenCalled();
 
       // start running
       service.startExecuting();
       tick(1);
 
       // second call with response from previous step
-      solver.expectToHaveBeenCalledTimes("solveNextStep", 2);
-      solver.expectSolveNextStepToHaveBeenCalledWith(
-        [{ grid: PuzzleAdvanced.PUZZLE_1.puzzle }],
-        "INCOMPLETE",
-        solver.STEP_ID,
-      );
+      expect(solverSpy).toHaveBeenCalledTimes(2);
+      expect(solver.solveNextStep).toHaveBeenCalledWith({
+        branches: [
+          jasmine.objectContaining({ grid: PuzzleAdvanced.PUZZLE_1.puzzle }),
+        ],
+        status: "INCOMPLETE",
+        stepId: SudokuSolverSpy.STEP_ID,
+      });
     }));
   });
 
   describe("updating when solver is done", () => {
     describe("success", () => {
       beforeEach(() => {
-        solver.onSolveNextStepAndReturnSuccess();
+        SudokuSolverSpy.onSolveNextStepAndReturnSuccess(solver);
         service.executeNextStep();
       });
 
@@ -522,7 +531,7 @@ describe(SudokuSolverStateService.name, () => {
 
     describe("failure", () => {
       beforeEach(() => {
-        solver.onSolveNextStepAndReturnFailure();
+        SudokuSolverSpy.onSolveNextStepAndReturnFailure(solver);
         service.executeNextStep();
       });
 
@@ -550,7 +559,8 @@ describe(SudokuSolverStateService.name, () => {
 
   describe("reset", () => {
     beforeEach(() => {
-      solver.onSolveNextStepAndReturnPreviousGrid();
+      SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
+      spyOn(solver, "reset").and.callFake(() => {});
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
       service.startExecuting();
       service.pauseExecuting();
@@ -656,13 +666,13 @@ describe(SudokuSolverStateService.name, () => {
 
     it("should reset the solver", () => {
       service.reset();
-      solver.expectToHaveBeenCalledTimes("reset", 1);
+      expect(solver.reset).toHaveBeenCalledTimes(1);
     });
   });
 
   describe("stopping time for executing the solver", () => {
     beforeEach(() => {
-      solver.onSolveNextStepAndReturnPreviousGrid();
+      SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
       service.setInitialPuzzle(PuzzleAdvanced.PUZZLE_1.puzzle);
       service.setMaximumSteps(10);
       service.setDelay(100);
