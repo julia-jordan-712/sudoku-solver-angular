@@ -10,6 +10,9 @@ export class VerifyI18nKey {
   public static readonly ERROR_EMPTY: I18nKey = {
     key: `${VerifyI18nKey.VERIFY_ERROR}.EMPTY`,
   };
+  public static readonly ERROR_EMPTY_CELL: I18nKey = {
+    key: `${VerifyI18nKey.VERIFY_ERROR}.EMPTY_CELL`,
+  };
   public static readonly ERROR_INVALID_NUMBERS = (limit: number): I18nKey => {
     return {
       key: `${VerifyI18nKey.VERIFY_ERROR}.INVALID_NUMBERS`,

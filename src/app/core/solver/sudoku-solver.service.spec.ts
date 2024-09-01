@@ -175,8 +175,8 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleExtreme.PUZZLE_4.puzzle,
       name: "extreme puzzle 4",
-      steps: 230,
-      success: false,
+      steps: 457,
+      success: true,
     },
     {
       puzzle: PuzzleExtreme.PUZZLE_5.puzzle,

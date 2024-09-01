@@ -29,6 +29,7 @@ export class SolverCloseBranch extends Solver {
     if (currentBranch) {
       const verificationResult = this.verifyService.verify(currentBranch.grid, {
         size: currentBranch.grid.length,
+        disallowEmptyCells: true,
       });
       if (!verificationResult.isValid()) {
         const newBranches: SolverBranch[] = currentBranch.closeBranch(
