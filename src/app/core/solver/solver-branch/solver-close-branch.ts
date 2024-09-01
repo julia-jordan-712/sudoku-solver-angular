@@ -32,14 +32,18 @@ export class SolverCloseBranch extends Solver {
         disallowEmptyCells: true,
       });
       if (!verificationResult.isValid()) {
-        const newBranches: SolverBranch[] = currentBranch.closeBranch(
-          lastResponse.branches,
-        );
-        return {
-          branches: newBranches,
-          failed: true,
-          stepId: SolverCloseBranch.STEP_ID,
-        };
+        try {
+          const newBranches: SolverBranch[] = currentBranch.closeBranch(
+            lastResponse.branches,
+          );
+          return {
+            branches: newBranches,
+            failed: true,
+            stepId: SolverCloseBranch.STEP_ID,
+          };
+        } catch (error) {
+          // nothing to do - fall through to failing return statement
+        }
       }
     }
     return {

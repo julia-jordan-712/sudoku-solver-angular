@@ -33,15 +33,19 @@ export class SolverOpenBranch extends Solver {
           currentBranch.grid,
         );
         if (branchingPointAndValue) {
-          const newBranch: SolverBranch = currentBranch.openBranch(
-            branchingPointAndValue.cell,
-            branchingPointAndValue.value,
-          );
-          return {
-            branches: [...lastResponse.branches, newBranch],
-            failed: false,
-            stepId: SolverOpenBranch.STEP_ID,
-          };
+          try {
+            const newBranch: SolverBranch = currentBranch.openBranch(
+              branchingPointAndValue.cell,
+              branchingPointAndValue.value,
+            );
+            return {
+              branches: [...lastResponse.branches, newBranch],
+              failed: false,
+              stepId: SolverOpenBranch.STEP_ID,
+            };
+          } catch (error) {
+            // nothing to do - fall through to failing return statement
+          }
         }
       }
     }
