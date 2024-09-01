@@ -83,8 +83,8 @@ export class SolverBranch {
 
   public closeBranch(allBranches: SolverBranch[]): SolverBranch[] {
     let newBranches: SolverBranch[] = [];
-    let closedSuccessfully: boolean = false;
-    for (let branch of allBranches) {
+    let closedSuccessfully = false;
+    for (const branch of allBranches) {
       if (branch.getId() === this.getParentId()) {
         closedSuccessfully = branch.closeFromChildBranch(this);
         newBranches.push(branch);

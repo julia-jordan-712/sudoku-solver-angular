@@ -15,15 +15,13 @@ export class SudokuSolverSpy {
     branches: SolverBranch[],
     status: SolverResponseStatus = "INCOMPLETE",
   ): jasmine.Spy {
-    return spyOn(solver, "solveNextStep").and.callFake(
-      (_response: SolverResponse) => {
-        return {
-          branches,
-          status: status,
-          stepId: SudokuSolverSpy.STEP_ID,
-        } satisfies SolverResponse;
-      },
-    );
+    return spyOn(solver, "solveNextStep").and.callFake(() => {
+      return {
+        branches,
+        status: status,
+        stepId: SudokuSolverSpy.STEP_ID,
+      } satisfies SolverResponse;
+    });
   }
 
   static onSolveNextStepAndReturnPreviousGrid(
