@@ -16,7 +16,7 @@ export class SolverSearch extends Solver {
     new ConvertValuesPossibleOnce();
 
   override getExecutionOrder(): number {
-    return 3;
+    return 4;
   }
 
   override reset(): void {

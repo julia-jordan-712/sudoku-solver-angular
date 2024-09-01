@@ -5,7 +5,7 @@ import { isDefined } from "@app/shared/util/is-defined";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { v4 as randomUUID } from "uuid";
 
-interface BranchingPoint {
+export interface BranchingPoint {
   row: number;
   column: number;
 }

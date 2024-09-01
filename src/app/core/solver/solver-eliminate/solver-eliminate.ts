@@ -15,7 +15,7 @@ import { isDefined } from "@app/shared/util/is-defined";
 @Injectable()
 export class SolverEliminate extends Solver {
   override getExecutionOrder(): number {
-    return 4;
+    return 5;
   }
 
   override reset(): void {

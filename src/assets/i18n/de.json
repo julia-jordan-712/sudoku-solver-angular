@@ -94,7 +94,9 @@
         "ELIMINATE_FROM_SQUARE": "Eliminierung von Werten in Quadraten, die nur in einer Zeile/Spalte dieses Quadrats möglich sind",
         "ELIMINATE_FROM_ROW_OR_COLUMN": "Eliminierung von Werten in Zeilen/Spalten, die nur in einem quadratischen Abschnitt dieser Zeile/Spalte möglich sind",
         "ELIMINATE_POSSIBLE_PAIR_FROM_OTHER_CELLS": "Eliminierung von Paaren, die nur zweimal möglich sind, aus anderen Zellen",
-        "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_PAIR": "Eliminierung anderer möglicher Werte aus Paaren, die nur zweimal möglich sind"
+        "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_PAIR": "Eliminierung anderer möglicher Werte aus Paaren, die nur zweimal möglich sind",
+        "BRANCH_CLOSE": "Aktuellen Zweig schließen, da er ungültig geworden ist",
+        "BRANCH_OPEN": "Neuen Zweig öffnen, da bei diesem Schritt kein Fortschritt erzielt wurde"
       },
       "PAUSE_AT_STEP": {
         "LABEL": "Pausiere bei Schritt ",

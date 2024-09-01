@@ -12,7 +12,7 @@ import { isDefined } from "@app/shared/util/is-defined";
 @Injectable()
 export class SolverCleanUp extends Solver {
   override getExecutionOrder(): number {
-    return 2;
+    return 3;
   }
 
   override reset(): void {
