@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Logger } from "@app/core/log/logger";
 import { Solver } from "@app/core/solver/solver";
 import {
   BranchingPoint,
@@ -44,7 +45,11 @@ export class SolverOpenBranch extends Solver {
               stepId: SolverOpenBranch.STEP_ID,
             };
           } catch (error) {
-            // nothing to do - fall through to failing return statement
+            new Logger(SolverOpenBranch.name).logError(
+              `Failed to open a new branch at point (${branchingPointAndValue.cell.row},${branchingPointAndValue.cell.column}) with value ${branchingPointAndValue.value}`,
+              { error, currentBranch },
+            );
+            // fall through to failing return statement
           }
         }
       }

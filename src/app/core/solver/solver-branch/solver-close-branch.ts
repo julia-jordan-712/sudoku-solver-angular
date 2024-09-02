@@ -1,4 +1,5 @@
 import { inject, Injectable } from "@angular/core";
+import { Logger } from "@app/core/log/logger";
 import { Solver } from "@app/core/solver/solver";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import {
@@ -42,7 +43,11 @@ export class SolverCloseBranch extends Solver {
             stepId: SolverCloseBranch.STEP_ID,
           };
         } catch (error) {
-          // nothing to do - fall through to failing return statement
+          new Logger(SolverCloseBranch.name).logError(
+            `Failed to close branch with id ${currentBranch.getId()}`,
+            { error, currentBranch, branches: lastResponse.branches },
+          );
+          // fall through to failing return statement
         }
       }
     }

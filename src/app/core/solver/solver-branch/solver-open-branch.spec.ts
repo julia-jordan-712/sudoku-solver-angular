@@ -73,6 +73,7 @@ describe(SolverOpenBranch.name, () => {
   [
     {
       title: "should open a new branch at the only possible branching point",
+      // eslint-disable-next-line
       modifySudoku: (grid: SudokuGrid) => {
         grid[2][1] = [1, 2, 3, 4];
       },
@@ -80,6 +81,7 @@ describe(SolverOpenBranch.name, () => {
     },
     {
       title: "should open a new branch at the first possible branching point",
+      // eslint-disable-next-line
       modifySudoku: (grid: SudokuGrid) => {
         grid[1][1] = [1, 2, 3, 4];
         grid[1][2] = [1, 2, 3, 4];
@@ -89,6 +91,7 @@ describe(SolverOpenBranch.name, () => {
     {
       title:
         "should use the first possible value at the branching point as branching value",
+      // eslint-disable-next-line
       modifySudoku: (grid: SudokuGrid) => {
         grid[3][3] = [3, 2, 4, 1];
       },
@@ -97,6 +100,7 @@ describe(SolverOpenBranch.name, () => {
     {
       title:
         "should prefer pairs over triples etc when looking for the branching point",
+      // eslint-disable-next-line
       modifySudoku: (grid: SudokuGrid) => {
         grid[0][0] = [1, 2, 3, 4];
         grid[1][1] = [2, 3, 4];

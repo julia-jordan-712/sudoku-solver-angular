@@ -47,6 +47,7 @@ describe(SolverCloseBranch.name, () => {
   [
     {
       title: "the Sudoku contains duplicate values",
+      // eslint-disable-next-line
       makeSudokuInvalid: (grid: SudokuGrid) => {
         grid[1][0] = 1;
         grid[1][1] = 1;
@@ -54,12 +55,14 @@ describe(SolverCloseBranch.name, () => {
     },
     {
       title: "a cell is undefined",
+      // eslint-disable-next-line
       makeSudokuInvalid: (grid: SudokuGrid) => {
         grid[2][1] = undefined;
       },
     },
     {
       title: "a cell contains no possible values anymore",
+      // eslint-disable-next-line
       makeSudokuInvalid: (grid: SudokuGrid) => {
         grid[2][1] = [];
       },
