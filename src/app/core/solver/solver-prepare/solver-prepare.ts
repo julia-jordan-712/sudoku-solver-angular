@@ -40,8 +40,9 @@ export class SolverPrepare extends Solver {
     }
 
     if (!this.allCellsContainValuesOrPossibleValues) {
-      const foundNewPossibleValues: boolean =
-        new EmptyCellsToPossibleValues().run(grid);
+      const foundNewPossibleValues: boolean = new EmptyCellsToPossibleValues(
+        "ALL_CELLS",
+      ).run(grid);
       this.allCellsContainValuesOrPossibleValues = !foundNewPossibleValues;
       if (foundNewPossibleValues) {
         return { stepId: "EMPTY_CELLS_TO_POSSIBLE_VALUES", failed: false };
