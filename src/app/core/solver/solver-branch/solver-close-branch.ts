@@ -29,7 +29,7 @@ export class SolverCloseBranch extends Solver {
     if (currentBranch) {
       const verificationResult = this.verifyService.verify(currentBranch.grid, {
         size: currentBranch.grid.length,
-        disallowEmptyCells: true,
+        allowEmptyCells: false,
       });
       if (!verificationResult.isValid()) {
         try {
@@ -38,7 +38,7 @@ export class SolverCloseBranch extends Solver {
           );
           return {
             branches: newBranches,
-            failed: true,
+            failed: false,
             stepId: SolverCloseBranch.STEP_ID,
           };
         } catch (error) {

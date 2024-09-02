@@ -37,10 +37,12 @@ describe(VerifyNothingEmpty.name, () => {
     });
 
     it("should be invalid if a single cell contains an empty array", () => {
-      const sudokuWithUndefinedCell = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
-      sudokuWithUndefinedCell[2][3] = [];
+      const sudokuWithCellWithEmptyArray = SudokuGridUtil.clone(
+        Puzzle4x4.COMPLETE,
+      );
+      sudokuWithCellWithEmptyArray[2][3] = [];
       expect(
-        new VerifyNothingEmpty(sudokuWithUndefinedCell).verify().isValid(),
+        new VerifyNothingEmpty(sudokuWithCellWithEmptyArray).verify().isValid(),
       ).toBeFalse();
     });
   });
@@ -60,10 +62,18 @@ describe(VerifyNothingEmpty.name, () => {
       ).toBeTrue();
     });
 
+    it("should not skip validation if options do not specify whether empty values are allowed", () => {
+      expect(
+        new VerifyNothingEmpty(Puzzle4x4.EMPTY)
+          .verify({ allowEmptyCells: undefined })
+          .isValid(),
+      ).toBeFalse();
+    });
+
     it("should skip validation if options allow empty values", () => {
       expect(
         new VerifyNothingEmpty(Puzzle4x4.EMPTY)
-          .verify({ disallowEmptyCells: undefined })
+          .verify({ allowEmptyCells: true })
           .isValid(),
       ).toBeTrue();
     });

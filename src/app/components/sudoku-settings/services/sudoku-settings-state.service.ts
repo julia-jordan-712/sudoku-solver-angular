@@ -48,7 +48,10 @@ export class SudokuSettingsStateService implements OnDestroy {
     map(([gridSubmitted, gridVerify]) => gridVerify ?? gridSubmitted),
     filter(isDefined),
     map((grid: SudokuGrid) =>
-      this.verify.verify(grid, { trackUniquenessViolations: true }),
+      this.verify.verify(grid, {
+        allowEmptyCells: true,
+        trackUniquenessViolations: true,
+      }),
     ),
   );
   public readonly duplicationColumnIndicesToRowIndices$: Observable<DuplicationColumnIndicesToRowIndices> =

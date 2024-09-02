@@ -1,10 +1,11 @@
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { EmptyCellsToPossibleValues } from "./empty-cells-to-possible-values";
 
 describe(EmptyCellsToPossibleValues.name, () => {
   it("should always convert the next undefined cell into all possible values in an empty Sudoku", () => {
-    const grid: SudokuGrid = Puzzle4x4.EMPTY;
+    const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.EMPTY);
     let result = new EmptyCellsToPossibleValues().run(grid);
 
     expect(result).toBeTrue();

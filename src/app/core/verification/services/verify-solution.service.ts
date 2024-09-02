@@ -62,11 +62,9 @@ export class VerifySolutionService {
     size: number,
     options: VerificationOptions,
   ): VerificationResult {
-    if (options.disallowEmptyCells) {
-      const result = this.nothingEmptyService.verify(candidate);
-      if (!result.isValid()) {
-        return result;
-      }
+    const result = this.nothingEmptyService.verify(candidate, options);
+    if (!result.isValid()) {
+      return result;
     }
     return this.uniquenessService.verify(candidate, size, options);
   }

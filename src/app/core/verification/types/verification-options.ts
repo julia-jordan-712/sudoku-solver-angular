@@ -1,5 +1,5 @@
 export interface VerificationOptions {
   size?: number;
-  disallowEmptyCells?: boolean;
+  allowEmptyCells?: boolean;
   trackUniquenessViolations?: boolean;
 }

@@ -8,10 +8,10 @@ import { isDefined } from "@app/shared/util/is-defined";
 export class VerifyNothingEmpty {
   constructor(private candidate: SudokuGrid) {}
 
-  verify(
-    options: VerificationOptions = { disallowEmptyCells: true },
-  ): VerificationResult {
-    if (options.disallowEmptyCells) {
+  verify(options?: VerificationOptions): VerificationResult {
+    if (options?.allowEmptyCells) {
+      return VerificationResult.createValid();
+    } else {
       for (let row = 0; row < this.candidate.length; row++) {
         for (let column = 0; column < this.candidate[row].length; column++) {
           const cell: SudokuGridCell = this.candidate[row][column];
@@ -26,7 +26,7 @@ export class VerifyNothingEmpty {
           }
         }
       }
+      return VerificationResult.createValid();
     }
-    return VerificationResult.createValid();
   }
 }
