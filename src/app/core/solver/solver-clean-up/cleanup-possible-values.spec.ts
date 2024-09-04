@@ -88,7 +88,7 @@ describe(CleanupPossibleValues.name, () => {
         [all, all, all, 4],
       ];
 
-      let result = new CleanupPossibleValues("ALL_CELLS").run(grid);
+      const result = new CleanupPossibleValues("ALL_CELLS").run(grid);
       expect(result).toBeTrue();
 
       const no1: number[] = [2, 3, 4];

@@ -57,7 +57,7 @@ describe(ConvertSinglePossibleValue.name, () => {
         [all, all, all, [4]],
       ];
 
-      let result = new ConvertSinglePossibleValue("ALL_CELLS").run(grid);
+      const result = new ConvertSinglePossibleValue("ALL_CELLS").run(grid);
       expect(result).toBeTrue();
 
       expect(grid).toEqual([
