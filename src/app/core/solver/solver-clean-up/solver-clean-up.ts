@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { CleanupPossibleValues } from "@app/core/solver/solver-clean-up/cleanup-possible-values";
-import { SolverStepResponse } from "@app/core/solver/solver-response";
+import {
+  SolverResponse,
+  SolverStepResponse,
+} from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
@@ -9,18 +12,22 @@ import { isDefined } from "@app/shared/util/is-defined";
 @Injectable()
 export class SolverCleanUp extends Solver {
   override getExecutionOrder(): number {
-    return 2;
+    return 3;
   }
 
   override reset(): void {
     // nothing to do
   }
 
-  override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
+  override executeSingleStep(lastResponse: SolverResponse): SolverStepResponse {
     const response: Omit<SolverStepResponse, "branches"> = this.execute(
-      this.getCurrentBranch(branches),
+      this.getCurrentBranch(lastResponse)?.grid,
     );
-    return { ...response, branches };
+    return {
+      stepId: response.stepId,
+      failed: response.failed,
+      branches: lastResponse.branches,
+    };
   }
 
   private execute(
@@ -30,7 +37,7 @@ export class SolverCleanUp extends Solver {
       return { stepId: "CLEAN_UP", failed: true };
     }
 
-    if (new CleanupPossibleValues().run(grid)) {
+    if (new CleanupPossibleValues("ALL_CELLS").run(grid)) {
       return { stepId: "CLEANUP_POSSIBLE_VALUES", failed: false };
     }
 

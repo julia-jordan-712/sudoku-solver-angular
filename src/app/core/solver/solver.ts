@@ -1,8 +1,9 @@
 import { Logger } from "@app/core/log/logger";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import {
   SolverResponse,
   SolverStepResponse,
-} from "@app/core/solver/solver-response";
+} from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -13,12 +14,12 @@ export abstract class Solver {
 
   abstract getExecutionOrder(): number;
 
-  executeNextStep(branches: SudokuGrid[]): SolverResponse {
-    if (this.isDone(this.getCurrentBranch(branches))) {
-      return { branches, stepId: "COMPLETE", status: "COMPLETE" };
+  executeNextStep(lastResponse: SolverResponse): SolverResponse {
+    if (this.isDone(this.getCurrentBranch(lastResponse)?.grid)) {
+      return { ...lastResponse, stepId: "COMPLETE", status: "COMPLETE" };
     }
     const response: SolverStepResponse = StopWatch.monitor(
-      () => this.executeSingleStep(branches),
+      () => this.executeSingleStep(lastResponse),
       this.logger,
       { message: "Executing single step" },
     );
@@ -30,13 +31,19 @@ export abstract class Solver {
   }
 
   protected abstract executeSingleStep(
-    branches: SudokuGrid[],
+    lastResponse: SolverResponse,
   ): SolverStepResponse;
 
   abstract reset(): void;
 
-  protected getCurrentBranch(branches: SudokuGrid[]): Nullable<SudokuGrid> {
-    return branches?.slice(-1)?.[0];
+  protected getCurrentBranch(response: SolverResponse): Nullable<SolverBranch> {
+    const currentBranch: SolverBranch[] = response.branches.filter(
+      (branch: SolverBranch) => branch.isCurrentBranch(),
+    );
+    if (currentBranch.length === 1) {
+      return currentBranch[0];
+    }
+    return null;
   }
 
   protected isDone(grid: Nullable<SudokuGrid>): boolean {

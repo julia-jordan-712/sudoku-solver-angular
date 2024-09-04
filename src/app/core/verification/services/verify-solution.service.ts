@@ -1,5 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { Logger } from "@app/core/log/logger";
+import { VerifyNothingEmptyService } from "@app/core/verification/services/verify-nothing-empty.service";
 import { VerifySquareService } from "@app/core/verification/services/verify-square.service";
 import { VerifyUniquenessService } from "@app/core/verification/services/verify-uniqueness.service";
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
@@ -16,6 +17,9 @@ export class VerifySolutionService {
   private uniquenessService: VerifyUniquenessService = inject(
     VerifyUniquenessService,
   );
+  private nothingEmptyService: VerifyNothingEmptyService = inject(
+    VerifyNothingEmptyService,
+  );
 
   private logger: Logger = new Logger(VerifySolutionService.name);
 
@@ -26,36 +30,42 @@ export class VerifySolutionService {
     options: VerificationOptions = {},
   ): VerificationResult {
     return StopWatch.monitor(
-      () => {
-        if (options.size != undefined) {
-          return this.uniquenessService.verify(
-            candidate,
-            options.size,
-            options,
-          );
-        } else {
-          return this.verifyFull(candidate, options);
-        }
-      },
+      () => this.verifySudoku(candidate, options),
       this.logger,
       { message: "verify" },
     );
   }
 
-  private verifyFull(
+  private verifySudoku(
     candidate: SudokuGrid,
-    options: VerificationOptions = {},
+    options: VerificationOptions,
   ): VerificationResult {
-    const verifySquareResult: VerifySquareResult =
-      this.squareService.verify(candidate);
-    if (verifySquareResult.result.isValid()) {
-      return this.uniquenessService.verify(
-        candidate,
-        verifySquareResult.size,
-        options,
-      );
+    if (options.size != undefined) {
+      return this.verifyGridWithSize(candidate, options.size, options);
     } else {
-      return verifySquareResult.result;
+      const verifySquareResult: VerifySquareResult =
+        this.squareService.verify(candidate);
+      if (verifySquareResult.result.isValid()) {
+        return this.verifyGridWithSize(
+          candidate,
+          verifySquareResult.size,
+          options,
+        );
+      } else {
+        return verifySquareResult.result;
+      }
     }
+  }
+
+  private verifyGridWithSize(
+    candidate: SudokuGrid,
+    size: number,
+    options: VerificationOptions,
+  ): VerificationResult {
+    const result = this.nothingEmptyService.verify(candidate, options);
+    if (!result.isValid()) {
+      return result;
+    }
+    return this.uniquenessService.verify(candidate, size, options);
   }
 }

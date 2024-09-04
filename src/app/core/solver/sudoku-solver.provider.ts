@@ -1,5 +1,7 @@
 import { InjectionToken, Provider } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
+import { SolverCloseBranch } from "@app/core/solver/solver-branch/solver-close-branch";
+import { SolverOpenBranch } from "@app/core/solver/solver-branch/solver-open-branch";
 import { SolverCleanUp } from "@app/core/solver/solver-clean-up/solver-clean-up";
 import { SolverEliminate } from "@app/core/solver/solver-eliminate/solver-eliminate";
 import { SolverPrepare } from "@app/core/solver/solver-prepare/solver-prepare";
@@ -15,6 +17,11 @@ export const SOLVER_PROVIDERS: Provider[] = [
   },
   {
     provide: SOLVER_TOKEN,
+    useExisting: SolverCloseBranch,
+    multi: true,
+  },
+  {
+    provide: SOLVER_TOKEN,
     useClass: SolverCleanUp,
     multi: true,
   },
@@ -26,6 +33,11 @@ export const SOLVER_PROVIDERS: Provider[] = [
   {
     provide: SOLVER_TOKEN,
     useClass: SolverSearch,
+    multi: true,
+  },
+  {
+    provide: SOLVER_TOKEN,
+    useClass: SolverOpenBranch,
     multi: true,
   },
 ];

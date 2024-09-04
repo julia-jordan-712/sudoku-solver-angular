@@ -48,7 +48,8 @@
       "DUPLICATE_ELEMENTS": "The Sudoku contains duplicates.",
       "EMPTY": "The Sudoku is empty.",
       "NOT_A_SQUARE": "The height of the Sudoku has to equal its width.",
-      "INVALID_NUMBERS": "All numbers have to be ≥ 1 and ≤ {{limit}}."
+      "INVALID_NUMBERS": "All numbers have to be ≥ 1 and ≤ {{limit}}.",
+      "EMPTY_CELL": "Empty cells are not allowed."
     },
     "UNSUPPORTED": {
       "NOT_QUADRATIC": "Sudokus of this size are not supported."
@@ -94,7 +95,9 @@
         "ELIMINATE_FROM_SQUARE": "Eliminate values in squares which are possible only in one row/column of that square",
         "ELIMINATE_FROM_ROW_OR_COLUMN": "Eliminate values in rows/columns which are possible only in one square-section of that row/column",
         "ELIMINATE_POSSIBLE_PAIR_FROM_OTHER_CELLS": "Eliminate pairs, which are possible only twice, from other cells",
-        "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_PAIR": "Eliminate other possible values from pairs, which are possible only twice"
+        "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_PAIR": "Eliminate other possible values from pairs, which are possible only twice",
+        "BRANCH_CLOSE": "Close current branch because it became invalid",
+        "BRANCH_OPEN": "Open new branch because no progress was made during this step"
       },
       "PAUSE_AT_STEP": {
         "LABEL": "Pause at step",

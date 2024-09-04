@@ -1,7 +1,8 @@
 import { Injectable, inject } from "@angular/core";
 import { SudokuSolverState } from "@app/components/sudoku-solver/services/sudoku-solver-state";
-import { SolverResponse } from "@app/core/solver/solver-response";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
+import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
@@ -37,8 +38,12 @@ export class SudokuSolverStateService implements SudokuSolverState {
     Nullable<VerificationResult[]>
   >(undefined);
 
-  private createInitialSolverResponse(): SolverResponse {
-    return { branches: [], status: "UNKNOWN", stepId: "" };
+  private createInitialSolverResponse(puzzle?: SudokuGrid): SolverResponse {
+    return {
+      branches: puzzle ? [SolverBranch.createInitialBranch(puzzle)] : [],
+      status: "UNKNOWN",
+      stepId: "",
+    };
   }
 
   private stopWatch: StopWatch = new StopWatch();
@@ -46,7 +51,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
   getViewModels(): Observable<SudokuGridViewModel[]> {
     return combineLatest([this.response$, this.executionId$]).pipe(
       map(([response, id]) =>
-        SudokuGridViewModelConverter.createViewModelsFromGrids(
+        SudokuGridViewModelConverter.createViewModelsFromBranches(
           response.branches,
           id,
         ),
@@ -142,7 +147,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private solveNextStepAndFinishIfDone(): SolverResponse {
     const response: SolverResponse = this.solver.solveNextStep(
-      this.getResponseBranches(),
+      this.response$.getValue(),
     );
     this.response$.next(response);
     if (response.status === "COMPLETE") {
@@ -154,7 +159,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
     return response;
   }
 
-  private getResponseBranches(): SudokuGrid[] {
+  private getResponseBranches(): SolverBranch[] {
     return this.response$.getValue().branches;
   }
 
@@ -192,10 +197,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   setInitialPuzzle(puzzle: SudokuGrid): void {
     this.initialPuzzle = SudokuGridUtil.clone(puzzle);
-    this.response$.next({
-      ...this.createInitialSolverResponse(),
-      branches: [SudokuGridUtil.clone(puzzle)],
-    });
+    this.response$.next(this.createInitialSolverResponse(this.initialPuzzle));
   }
 
   setMaximumSteps(max: number): void {
@@ -226,7 +228,9 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private updateVerificationResults(): void {
     this.verificationResults$.next(
-      this.getResponseBranches().map((grid) => this.verify.verify(grid)),
+      this.getResponseBranches().map((branch: SolverBranch) =>
+        this.verify.verify(branch.grid),
+      ),
     );
   }
 }

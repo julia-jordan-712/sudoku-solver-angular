@@ -1,3 +1,4 @@
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import {
   SudokuGrid,
   SudokuGridCell,
@@ -8,52 +9,81 @@ import {
   SudokuGridRowViewModel,
   SudokuGridViewModel,
 } from "@app/shared/types/sudoku-grid-view-model";
+import { isDefined } from "@app/shared/util/is-defined";
 
 export class SudokuGridViewModelConverter {
-  public static createViewModelsFromGrids(
-    grids: SudokuGrid[],
-    id = "",
+  public static createViewModelsFromBranches(
+    branches: SolverBranch[],
+    id: string,
   ): SudokuGridViewModel[] {
-    return grids.map((grid, index) =>
-      SudokuGridViewModelConverter.createViewModelFromGrid(grid, id, index),
-    );
+    return branches
+      .sort((a, b) => b.compareTo(a))
+      .map((branch) =>
+        SudokuGridViewModelConverter.createViewModelFromGrid(branch.grid, id, {
+          id: branch.getId(),
+          isCurrent: branch.isCurrentBranch(),
+        }),
+      );
   }
 
   public static createViewModelFromGrid(
     grid: SudokuGrid,
-    id = "",
-    index = 0,
+    id: string,
+    branchInfo?: SudokuGridViewModel["branchInfo"],
   ): SudokuGridViewModel {
+    const branchId: string | undefined = branchInfo?.isCurrent
+      ? "CURRENT"
+      : branchInfo?.id;
+    const viewModelId: string = [id, branchId].filter(isDefined).join("_");
     return new SudokuGridViewModel(
-      `${id}-grid-${index}`,
-      SudokuGridViewModelConverter.createViewModelsFromRows(grid, id),
+      viewModelId,
+      SudokuGridViewModelConverter.createViewModelsFromRows(
+        grid,
+        id,
+        branchInfo,
+      ),
+      branchInfo,
     );
   }
 
   private static createViewModelsFromRows(
     rows: SudokuGridRow[],
-    id = "",
+    id: string,
+    branchInfo?: SudokuGridRowViewModel["branchInfo"],
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
-      SudokuGridViewModelConverter.createViewModelsFromRow(row, id, index),
+      SudokuGridViewModelConverter.createViewModelsFromRow(
+        row,
+        id,
+        index,
+        branchInfo,
+      ),
     );
   }
 
   private static createViewModelsFromRow(
     row: SudokuGridRow,
-    id = "",
-    index = 0,
+    id: string,
+    index: number,
+    branchInfo?: SudokuGridRowViewModel["branchInfo"],
   ): SudokuGridRowViewModel {
     return new SudokuGridRowViewModel(
-      `${id}-row-${index}`,
-      SudokuGridViewModelConverter.createViewModelsFromCells(row, id, index),
+      `${id}_row-${index}`,
+      SudokuGridViewModelConverter.createViewModelsFromCells(
+        row,
+        id,
+        index,
+        branchInfo,
+      ),
+      branchInfo,
     );
   }
 
   private static createViewModelsFromCells(
     cells: SudokuGridCell[],
-    id = "",
-    rowIndex = 0,
+    id: string,
+    rowIndex: number,
+    branchInfo?: SudokuGridCellViewModel["branchInfo"],
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
@@ -67,6 +97,7 @@ export class SudokuGridViewModelConverter {
         rowIndex,
         index,
         id,
+        branchInfo,
       ),
     );
   }
@@ -75,15 +106,17 @@ export class SudokuGridViewModelConverter {
     cell: SudokuGridCell,
     maxValue: number,
     size: number,
-    rowIndex = 0,
-    columnIndex = 0,
-    id = "",
+    rowIndex: number,
+    columnIndex: number,
+    id: string,
+    branchInfo?: SudokuGridCellViewModel["branchInfo"],
   ): SudokuGridCellViewModel {
     return new SudokuGridCellViewModel(
-      `${id}-cell-${rowIndex}-${columnIndex}`,
+      `${id}_cell-${rowIndex}-${columnIndex}`,
       cell,
       maxValue,
       size,
+      branchInfo,
     );
   }
 

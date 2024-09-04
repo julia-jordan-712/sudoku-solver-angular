@@ -179,15 +179,15 @@ describe(EliminatePossiblePairFromOtherCells.name, () => {
     });
   });
 
-  it("should only handle rows, columns and squares simultaneously for the same pair of numbers if they occur in the same index", () => {
+  it("should handle rows, columns and squares simultaneously for the same pair of numbers", () => {
     const all = [1, 2, 3, 4];
-    const onlyRowChanged = [
+    const firstRowThirdColumnFourthSquare_pair34 = [
       [[3, 4], all, [3, 4], all],
       [all, all, all, all],
       [all, all, [3, 4], all],
       [all, all, all, [3, 4]],
     ];
-    const allChanged = [
+    const firstRowFirstColumnFirstSquare_pair34 = [
       [all, [3, 4], [3, 4], all],
       [[3, 4], all, all, all],
       [[3, 4], all, all, all],
@@ -195,24 +195,28 @@ describe(EliminatePossiblePairFromOtherCells.name, () => {
     ];
 
     expect(
-      new EliminatePossiblePairFromOtherCells().run(onlyRowChanged),
+      new EliminatePossiblePairFromOtherCells().run(
+        firstRowThirdColumnFourthSquare_pair34,
+      ),
     ).toBeTrue();
-    expect(onlyRowChanged).toEqual([
+    expect(firstRowThirdColumnFourthSquare_pair34).toEqual([
       [
         [3, 4],
         [1, 2],
         [3, 4],
         [1, 2],
       ],
-      [all, all, all, all],
-      [all, all, [3, 4], all],
-      [all, all, all, [3, 4]],
+      [all, all, [1, 2], all],
+      [all, all, [3, 4], [1, 2]],
+      [all, all, [1, 2], [3, 4]],
     ]);
 
     expect(
-      new EliminatePossiblePairFromOtherCells().run(allChanged),
+      new EliminatePossiblePairFromOtherCells().run(
+        firstRowFirstColumnFirstSquare_pair34,
+      ),
     ).toBeTrue();
-    expect(allChanged).toEqual([
+    expect(firstRowFirstColumnFirstSquare_pair34).toEqual([
       [
         [1, 2],
         [3, 4],

@@ -204,31 +204,34 @@ describe(VerifyUniqueness.name, () => {
           VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
         );
       });
-    });
-  });
 
-  describe("number notes", () => {
-    const invalid = [
-      [[-5, -4 - 1, 0, 5, 6], 2, 3, 4],
-      [3, 4, 1, 2],
-      [2, 3, 4, 1],
-      [4, 1, 2, [3, 4]],
-    ];
+      it(`should recognize invalid possible number ${invalidNumber} in a 4x4 Sudoku when tracking uniqueness`, () => {
+        const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
+        grid[0][0] = [invalidNumber];
 
-    it("should ignore invalid numbers and duplicates in notes when tracking uniqueness", () => {
-      const result = new VerifyUniqueness(invalid, 4).verify({
-        trackUniquenessViolations: true,
+        const result = new VerifyUniqueness(grid, 4).verify({
+          trackUniquenessViolations: true,
+        });
+        expect(result.isValid()).toBeFalse();
+        expect(result.getErrors().length).toEqual(1);
+        expect(result.getErrors()[0]).toEqual(
+          VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
+        );
       });
-      expect(result.isValid()).toBeTrue();
-      expect(result.getErrors()).toEqual([]);
-    });
 
-    it("should ignore invalid numbers and duplicates in notes when not tracking uniqueness", () => {
-      const result = new VerifyUniqueness(invalid, 4).verify({
-        trackUniquenessViolations: false,
+      it(`should recognize invalid possible number ${invalidNumber} in a 4x4 Sudoku when not tracking uniqueness`, () => {
+        const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
+        grid[0][0] = [invalidNumber];
+
+        const result = new VerifyUniqueness(grid, 4).verify({
+          trackUniquenessViolations: false,
+        });
+        expect(result.isValid()).toBeFalse();
+        expect(result.getErrors().length).toEqual(1);
+        expect(result.getErrors()[0]).toEqual(
+          VerifyI18nKey.ERROR_INVALID_NUMBERS(4),
+        );
       });
-      expect(result.isValid()).toBeTrue();
-      expect(result.getErrors()).toEqual([]);
     });
   });
 

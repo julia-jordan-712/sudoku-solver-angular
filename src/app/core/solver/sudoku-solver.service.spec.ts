@@ -1,10 +1,10 @@
 import { TestBed } from "@angular/core/testing";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
-import { SolverResponse } from "@app/core/solver/solver-response";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
+import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleExtreme } from "@app/test/puzzles/puzzle-extreme";
@@ -37,170 +37,204 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleSimple.PUZZLE_1.puzzle,
       name: "simple puzzle 1",
-      steps: 178,
+      steps: 11,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleSimple.PUZZLE_2.puzzle,
       name: "simple puzzle 2",
-      steps: 163,
+      steps: 17,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleSimple.PUZZLE_3.puzzle,
       name: "simple puzzle 3",
-      steps: 180,
+      steps: 13,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleSimple.PUZZLE_4.puzzle,
       name: "simple puzzle 4",
-      steps: 175,
+      steps: 17,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleSimple.PUZZLE_5.puzzle,
       name: "simple puzzle 5",
-      steps: 165,
+      steps: 15,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleMedium.PUZZLE_1.puzzle,
       name: "medium puzzle 1",
-      steps: 239,
+      steps: 49,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleMedium.PUZZLE_2.puzzle,
       name: "medium puzzle 2",
-      steps: 226,
+      steps: 45,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleMedium.PUZZLE_3.puzzle,
       name: "medium puzzle 3",
-      steps: 178,
+      steps: 55,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleMedium.PUZZLE_4.puzzle,
       name: "medium puzzle 4",
-      steps: 241,
+      steps: 23,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleMedium.PUZZLE_5.puzzle,
       name: "medium puzzle 5",
-      steps: 216,
+      steps: 45,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleAdvanced.PUZZLE_1.puzzle,
       name: "advanced puzzle 1",
-      steps: 205,
+      steps: 55,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleAdvanced.PUZZLE_2.puzzle,
       name: "advanced puzzle 2",
-      steps: 235,
+      steps: 59,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleAdvanced.PUZZLE_3.puzzle,
       name: "advanced puzzle 3",
-      steps: 196,
+      steps: 61,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleAdvanced.PUZZLE_4.puzzle,
       name: "advanced puzzle 4",
-      steps: 183,
+      steps: 58,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleAdvanced.PUZZLE_5.puzzle,
       name: "advanced puzzle 5",
-      steps: 240,
+      steps: 49,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleHard.PUZZLE_1.puzzle,
       name: "hard puzzle 1",
-      steps: 235,
+      steps: 52,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleHard.PUZZLE_2.puzzle,
       name: "hard puzzle 2",
-      steps: 211,
+      steps: 56,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleHard.PUZZLE_3.puzzle,
       name: "hard puzzle 3",
-      steps: 206,
+      steps: 54,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleHard.PUZZLE_4.puzzle,
       name: "hard puzzle 4",
-      steps: 193,
+      steps: 52,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleHard.PUZZLE_5.puzzle,
       name: "hard puzzle 5",
-      steps: 246,
+      steps: 63,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleExtreme.PUZZLE_1.puzzle,
       name: "extreme puzzle 1",
-      steps: 205,
+      steps: 64,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleExtreme.PUZZLE_2.puzzle,
       name: "extreme puzzle 2",
-      steps: 210,
+      steps: 61,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleExtreme.PUZZLE_3.puzzle,
       name: "extreme puzzle 3",
-      steps: 193,
+      steps: 53,
+      branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleExtreme.PUZZLE_4.puzzle,
       name: "extreme puzzle 4",
-      steps: 76,
-      success: false,
+      steps: 106,
+      branches: 3,
+      success: true,
     },
     {
       puzzle: PuzzleExtreme.PUZZLE_5.puzzle,
       name: "extreme puzzle 5",
-      steps: 207,
+      steps: 63,
+      branches: 1,
       success: true,
     },
   ].forEach((params) => {
-    it(`should ${params.success ? "" : "fail to"} solve "${params.name}" in ${params.steps} steps`, () => {
-      let puzzle: SudokuGrid[] = [SudokuGridUtil.clone(params.puzzle)];
-
-      let step = 0;
-      let response: SolverResponse;
+    it(`should ${params.success ? "" : "fail to"} solve "${params.name}" in ${params.steps} steps and ${params.branches} branch/es`, () => {
+      let amountOfSteps = 0;
+      let amountOfBranches = 1;
+      let response: SolverResponse = {
+        branches: [
+          SolverBranch.createInitialBranch(SudokuGridUtil.clone(params.puzzle)),
+        ],
+        status: "UNKNOWN",
+        stepId: "",
+      };
       do {
-        response = service.solveNextStep(puzzle);
-        puzzle = response.branches;
-        step++;
+        const branchesBeforeStep = response.branches.length;
+        response = service.solveNextStep(response);
+        if (response.branches.length === branchesBeforeStep + 1) {
+          amountOfBranches++;
+        }
+        amountOfSteps++;
       } while (
-        step < 100000 &&
+        amountOfSteps < 100000 &&
         response.status !== "COMPLETE" &&
         response.status !== "FAILED"
       );
 
-      expect(step).toEqual(params.steps);
+      expect(amountOfSteps).toEqual(params.steps);
+      expect(amountOfBranches).toEqual(params.branches);
       if (params.success) {
         expect(response.status).toEqual("COMPLETE");
         expect(response.branches.length).toEqual(1);
@@ -208,11 +242,9 @@ describe(SudokuSolverService.name, () => {
       } else {
         expect(response.status).toEqual("FAILED");
       }
-      expect(
-        verify
-          .verify(response.branches[response.branches.length - 1])
-          .isValid(),
-      ).toBeTrue();
+      response.branches.forEach((branch) =>
+        expect(verify.verify(branch.grid).isValid()).toBeTrue(),
+      );
     });
   });
 });

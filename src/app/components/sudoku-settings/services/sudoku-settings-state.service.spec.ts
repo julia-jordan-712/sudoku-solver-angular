@@ -6,6 +6,7 @@ import {
 } from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
 import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
+import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
@@ -128,6 +129,10 @@ describe(SudokuSettingsStateService.name, () => {
 
   describe("verify", () => {
     let verifySpy: jasmine.Spy;
+    const VERIFY_OPTIONS: VerificationOptions = {
+      allowEmptyCells: true,
+      trackUniquenessViolations: true,
+    };
 
     beforeEach(() => {
       verifySpy = spyOn(verify, "verify").and.callThrough();
@@ -138,9 +143,10 @@ describe(SudokuSettingsStateService.name, () => {
       underTest.setHeightAndWidth(4, 0);
 
       expectVerification(false, done);
-      expect(verifySpy).toHaveBeenCalledOnceWith([[], [], [], []], {
-        trackUniquenessViolations: true,
-      });
+      expect(verifySpy).toHaveBeenCalledOnceWith(
+        [[], [], [], []],
+        VERIFY_OPTIONS,
+      );
     });
 
     it("should verify the grid when width is set", (done) => {
@@ -149,7 +155,7 @@ describe(SudokuSettingsStateService.name, () => {
       expectVerification(false, done);
       expect(verifySpy).toHaveBeenCalledOnceWith(
         [[undefined], [undefined], [undefined], [undefined]],
-        { trackUniquenessViolations: true },
+        VERIFY_OPTIONS,
       );
     });
 
@@ -157,9 +163,10 @@ describe(SudokuSettingsStateService.name, () => {
       underTest.setGrid(Puzzle4x4.COMPLETE);
 
       expectVerification(true, done);
-      expect(verifySpy).toHaveBeenCalledOnceWith(Puzzle4x4.COMPLETE, {
-        trackUniquenessViolations: true,
-      });
+      expect(verifySpy).toHaveBeenCalledOnceWith(
+        Puzzle4x4.COMPLETE,
+        VERIFY_OPTIONS,
+      );
     });
 
     it("should verify the grid when selection is set", (done) => {
@@ -167,9 +174,10 @@ describe(SudokuSettingsStateService.name, () => {
       underTest.setSelection(selection);
 
       expectVerification(true, done);
-      expect(verifySpy).toHaveBeenCalledOnceWith(Puzzle4x4.COMPLETE, {
-        trackUniquenessViolations: true,
-      });
+      expect(verifySpy).toHaveBeenCalledOnceWith(
+        Puzzle4x4.COMPLETE,
+        VERIFY_OPTIONS,
+      );
     });
 
     function expectVerification(valid: boolean, done: DoneFn): void {

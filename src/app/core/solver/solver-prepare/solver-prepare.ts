@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { EmptyCellsToPossibleValues } from "@app/core/solver/solver-prepare/empty-cells-to-possible-values";
-import { SolverStepResponse } from "@app/core/solver/solver-response";
+import {
+  SolverResponse,
+  SolverStepResponse,
+} from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
@@ -18,11 +21,15 @@ export class SolverPrepare extends Solver {
     this.allCellsContainValuesOrPossibleValues = false;
   }
 
-  override executeSingleStep(branches: SudokuGrid[]): SolverStepResponse {
+  override executeSingleStep(lastResponse: SolverResponse): SolverStepResponse {
     const response: Omit<SolverStepResponse, "branches"> = this.execute(
-      this.getCurrentBranch(branches),
+      this.getCurrentBranch(lastResponse)?.grid,
     );
-    return { ...response, branches };
+    return {
+      stepId: response.stepId,
+      failed: response.failed,
+      branches: lastResponse.branches,
+    };
   }
 
   private execute(
@@ -33,8 +40,9 @@ export class SolverPrepare extends Solver {
     }
 
     if (!this.allCellsContainValuesOrPossibleValues) {
-      const foundNewPossibleValues: boolean =
-        new EmptyCellsToPossibleValues().run(grid);
+      const foundNewPossibleValues: boolean = new EmptyCellsToPossibleValues(
+        "ALL_CELLS",
+      ).run(grid);
       this.allCellsContainValuesOrPossibleValues = !foundNewPossibleValues;
       if (foundNewPossibleValues) {
         return { stepId: "EMPTY_CELLS_TO_POSSIBLE_VALUES", failed: false };

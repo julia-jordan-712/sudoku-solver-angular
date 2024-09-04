@@ -1,4 +1,4 @@
-import { SolverRunnable } from "@app/core/solver/solver-runnable";
+import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
@@ -8,14 +8,28 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  * Converts empty cells into an array of possible values. The already existing values
  * per row/column/square are considered during this step - so that they are not part
  * of the possible values.
- * Only the next cell which can be converted is handled and then the solver returns.
  *
  * This step has to be executed as the first step for all empty cells - otherwise
  * there is no possible-values-array for the other algorithms to work with.
  */
 export class EmptyCellsToPossibleValues implements SolverRunnable {
+  constructor(private mode: "ONLY_NEXT_CELL" | "ALL_CELLS") {}
+
+  /**
+   * @returns true is something was changed
+   */
   run(grid: SudokuGrid): boolean {
-    return this.convertNextEmptyCellToPossibleValues(grid);
+    if (this.mode === "ONLY_NEXT_CELL") {
+      return this.convertNextEmptyCellToPossibleValues(grid);
+    } else {
+      let changeInLastStep = false;
+      let changedSomething = false;
+      do {
+        changeInLastStep = this.convertNextEmptyCellToPossibleValues(grid);
+        changedSomething = changedSomething || changeInLastStep;
+      } while (changeInLastStep);
+      return changedSomething;
+    }
   }
 
   private convertNextEmptyCellToPossibleValues(grid: SudokuGrid): boolean {

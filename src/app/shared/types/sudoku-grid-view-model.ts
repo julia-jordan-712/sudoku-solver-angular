@@ -6,6 +6,7 @@ export class SudokuGridViewModel implements ClipboardElement {
   constructor(
     readonly id: string,
     readonly rows: SudokuGridRowViewModel[],
+    readonly branchInfo?: { id: string; isCurrent: boolean },
   ) {}
 
   toClipboardString(): string {
@@ -17,6 +18,7 @@ export class SudokuGridRowViewModel implements ClipboardElement {
   constructor(
     readonly id: string,
     readonly cells: SudokuGridCellViewModel[],
+    readonly branchInfo?: { id: string; isCurrent: boolean },
   ) {}
 
   toClipboardString(): string {
@@ -30,6 +32,7 @@ export class SudokuGridCellViewModel implements ClipboardElement {
     readonly cell: SudokuGridCell,
     readonly maxValue: number,
     readonly widthAndHeight: number,
+    readonly branchInfo?: { id: string; isCurrent: boolean },
   ) {}
 
   toClipboardString(): string {

@@ -30,7 +30,10 @@ export class SudokuGridCellComponent {
 
   @Input({ required: true })
   set cell(viewModel: SudokuGridCellViewModel) {
-    this.componentService.setCell(viewModel.cell);
+    this.componentService.setCell(
+      viewModel.cell,
+      viewModel.branchInfo?.isCurrent ?? true,
+    );
     this.maxValue = viewModel.maxValue;
     this.size = viewModel.widthAndHeight;
   }

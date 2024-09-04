@@ -12,7 +12,7 @@ import {
   SudokuGridCell,
   SudokuGridRow,
 } from "@app/shared/types/sudoku-grid";
-import { isNotArray } from "@app/shared/util/is-array";
+import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 import { Objects } from "@app/shared/util/objects";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
@@ -148,14 +148,22 @@ export class VerifyUniqueness {
   }
 
   private verifyValidNumber(
-    value: SudokuGridCell,
+    cell: SudokuGridCell,
     size: number,
     result: VerificationResult,
   ): void {
-    if (isNotArray(value) && isDefined(value)) {
-      if (value <= 0 || value > size) {
+    const valueValid: (v: number) => boolean = (v: number) =>
+      v <= 0 || v > size;
+    if (isNotArray(cell) && isDefined(cell)) {
+      if (valueValid(cell)) {
         result.addError(VerifyI18nKey.ERROR_INVALID_NUMBERS(size));
       }
+    } else if (isArray(cell)) {
+      cell.forEach((value) => {
+        if (valueValid(value)) {
+          result.addError(VerifyI18nKey.ERROR_INVALID_NUMBERS(size));
+        }
+      });
     }
   }
 

@@ -10,6 +10,7 @@ import { SudokuGridCellTestComponent } from "@app/test/components/sudoku-grid-ce
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { TranslateTestingModule } from "ngx-translate-testing";
+import { v4 as randomUUID } from "uuid";
 import { SudokuGridComponent } from "./sudoku-grid.component";
 
 describe(SudokuGridComponent.name, () => {
@@ -47,8 +48,10 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, undefined, undefined],
       [undefined, undefined, undefined, undefined],
     ];
-    component.grid =
-      SudokuGridViewModelConverter.createViewModelFromGrid(testGrid);
+    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
+      testGrid,
+      randomUUID(),
+    );
     component.verification = VerificationResult.createValid();
     component.duplications = {};
     fixture.detectChanges();
@@ -63,8 +66,10 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, undefined, undefined],
       [undefined, undefined, undefined, undefined],
     ];
-    component.grid =
-      SudokuGridViewModelConverter.createViewModelFromGrid(testGrid);
+    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
+      testGrid,
+      randomUUID(),
+    );
     component.duplications = { 0: [0, 3] };
     fixture.detectChanges();
 
@@ -77,6 +82,7 @@ describe(SudokuGridComponent.name, () => {
   it("should set borders of cells correctly", () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
+      randomUUID(),
     );
     fixture.detectChanges();
 
@@ -168,6 +174,7 @@ describe(SudokuGridComponent.name, () => {
   it("should set the allowed maximum value of a cell correctly", () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
+      randomUUID(),
     );
     fixture.detectChanges();
 
@@ -190,8 +197,10 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, 4, 1],
       [4, undefined, 2, 3],
     ];
-    component.grid =
-      SudokuGridViewModelConverter.createViewModelFromGrid(input);
+    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
+      input,
+      randomUUID(),
+    );
     fixture.detectChanges();
     const changeSpy = spyOn(component.valueChange, "emit");
 
