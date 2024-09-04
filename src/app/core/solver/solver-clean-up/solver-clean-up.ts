@@ -37,7 +37,7 @@ export class SolverCleanUp extends Solver {
       return { stepId: "CLEAN_UP", failed: true };
     }
 
-    if (new CleanupPossibleValues().run(grid)) {
+    if (new CleanupPossibleValues("ALL_CELLS").run(grid)) {
       return { stepId: "CLEANUP_POSSIBLE_VALUES", failed: false };
     }
 

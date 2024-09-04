@@ -13,9 +13,7 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
  * there is no possible-values-array for the other algorithms to work with.
  */
 export class EmptyCellsToPossibleValues implements SolverRunnable {
-  constructor(
-    private mode: "ONLY_NEXT_CELL" | "ALL_CELLS" = "ONLY_NEXT_CELL",
-  ) {}
+  constructor(private mode: "ONLY_NEXT_CELL" | "ALL_CELLS") {}
 
   /**
    * @returns true is something was changed

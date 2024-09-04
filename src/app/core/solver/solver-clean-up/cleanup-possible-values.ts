@@ -5,14 +5,28 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
 /**
  * Cleans up the possible values by removing found values from the possible-values-array.
- * Only the next cell which can be cleaned up is handled and then the solver returns.
  *
  * This step has to be executed after a step which found new values - otherwise the
  * possible values do not reflect the found value.
  */
 export class CleanupPossibleValues implements SolverRunnable {
+  constructor(private mode: "ONLY_NEXT_CELL" | "ALL_CELLS") {}
+
+  /**
+   * @returns true is something was changed
+   */
   run(grid: SudokuGrid): boolean {
-    return this.cleanupNextPossibleValue(grid);
+    if (this.mode === "ONLY_NEXT_CELL") {
+      return this.cleanupNextPossibleValue(grid);
+    } else {
+      let changeInLastStep = false;
+      let changedSomething = false;
+      do {
+        changeInLastStep = this.cleanupNextPossibleValue(grid);
+        changedSomething = changedSomething || changeInLastStep;
+      } while (changeInLastStep);
+      return changedSomething;
+    }
   }
 
   private cleanupNextPossibleValue(grid: SudokuGrid): boolean {

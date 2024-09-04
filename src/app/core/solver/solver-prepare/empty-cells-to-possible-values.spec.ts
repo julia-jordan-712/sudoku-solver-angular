@@ -7,7 +7,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
   describe("only one at a time", () => {
     it("should always convert the next undefined cell into all possible values in an empty Sudoku", () => {
       const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.EMPTY);
-      let result = new EmptyCellsToPossibleValues().run(grid);
+      let result = new EmptyCellsToPossibleValues("ONLY_NEXT_CELL").run(grid);
 
       expect(result).toBeTrue();
       for (let x = 0; x < 4; x++) {
@@ -20,7 +20,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
         }
       }
 
-      result = new EmptyCellsToPossibleValues().run(grid);
+      result = new EmptyCellsToPossibleValues("ONLY_NEXT_CELL").run(grid);
       expect(result).toBeTrue();
       for (let x = 0; x < 4; x++) {
         for (let y = 0; y < 4; y++) {
@@ -45,7 +45,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
           [1, 2, 3, 4],
         ],
       ];
-      const result = new EmptyCellsToPossibleValues().run(grid);
+      const result = new EmptyCellsToPossibleValues("ONLY_NEXT_CELL").run(grid);
       expect(result).toBeFalse();
     });
 
@@ -56,7 +56,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
         [undefined, 3, 4, 1],
         [undefined, 1, 2, 3],
       ];
-      new EmptyCellsToPossibleValues().run(grid);
+      new EmptyCellsToPossibleValues("ONLY_NEXT_CELL").run(grid);
       expect(grid[0][0]).toEqual([1, 2]);
     });
 
@@ -67,7 +67,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
         [2, 3, 4, 1],
         [4, 1, 2, 3],
       ];
-      new EmptyCellsToPossibleValues().run(grid);
+      new EmptyCellsToPossibleValues("ONLY_NEXT_CELL").run(grid);
       expect(grid[0][0]).toEqual([1, 3]);
     });
 
@@ -78,7 +78,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
         [undefined, 3, 4, 1],
         [undefined, 1, 2, 3],
       ];
-      new EmptyCellsToPossibleValues().run(grid);
+      new EmptyCellsToPossibleValues("ONLY_NEXT_CELL").run(grid);
       expect(grid[0][0]).toEqual([1, 2, 3]);
     });
   });
