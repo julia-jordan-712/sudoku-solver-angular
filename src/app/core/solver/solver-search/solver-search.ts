@@ -41,7 +41,7 @@ export class SolverSearch extends Solver {
       return { stepId: "SEARCH", failed: true };
     }
 
-    if (new ConvertSinglePossibleValue().run(grid)) {
+    if (new ConvertSinglePossibleValue("ALL_CELLS").run(grid)) {
       return { stepId: "SINGLE_POSSIBLE_VALUE", failed: false };
     }
     if (this.valuesPossibleOnce.run(grid)) {

@@ -4,13 +4,27 @@ import { isArray } from "@app/shared/util/is-array";
 
 /**
  * Converts a cell where only one value remains in the array of possible values into a *found* value.
- * Only the next cell which can be converted is handled and then the solver returns.
  *
  * This step should be executed regularly after steps which potentially eliminate possible values.
  */
 export class ConvertSinglePossibleValue implements SolverRunnable {
+  constructor(private mode: "ONLY_NEXT_CELL" | "ALL_CELLS") {}
+
+  /**
+   * @returns true is something was changed
+   */
   run(grid: SudokuGrid): boolean {
-    return this.convertNextSinglePossibleValue(grid);
+    if (this.mode === "ONLY_NEXT_CELL") {
+      return this.convertNextSinglePossibleValue(grid);
+    } else {
+      let changeInLastStep = false;
+      let changedSomething = false;
+      do {
+        changeInLastStep = this.convertNextSinglePossibleValue(grid);
+        changedSomething = changedSomething || changeInLastStep;
+      } while (changeInLastStep);
+      return changedSomething;
+    }
   }
 
   private convertNextSinglePossibleValue(grid: SudokuGrid): boolean {
