@@ -5,8 +5,8 @@ import { isArray } from "@app/shared/util/is-array";
 export class SudokuGridViewModel implements ClipboardElement {
   constructor(
     readonly id: string,
-    readonly isCurrent: boolean,
     readonly rows: SudokuGridRowViewModel[],
+    readonly branchInfo?: { id: string; isCurrent: boolean },
   ) {}
 
   toClipboardString(): string {

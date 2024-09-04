@@ -814,9 +814,14 @@ describe(SudokuSolverStateService.name, () => {
 
       const viewModels: SudokuGridViewModel[] = await testSubscription.value();
       expect(viewModels.length).toEqual(4);
+
       expect(removeExecutionIdFromViewModelId(viewModels[0])).toEqual(
+        "CURRENT",
+      );
+      expect(removeExecutionIdFromViewModelId(viewModels[0])).not.toEqual(
         fourthBranch.getId(),
       );
+
       expect(removeExecutionIdFromViewModelId(viewModels[1])).toEqual(
         thirdBranch.getId(),
       );

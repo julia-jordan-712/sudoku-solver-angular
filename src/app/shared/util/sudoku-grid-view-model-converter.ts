@@ -9,6 +9,7 @@ import {
   SudokuGridRowViewModel,
   SudokuGridViewModel,
 } from "@app/shared/types/sudoku-grid-view-model";
+import { isDefined } from "@app/shared/util/is-defined";
 
 export class SudokuGridViewModelConverter {
   public static createViewModelsFromBranches(
@@ -18,23 +19,26 @@ export class SudokuGridViewModelConverter {
     return branches
       .sort((a, b) => b.compareTo(a))
       .map((branch) =>
-        SudokuGridViewModelConverter.createViewModelFromGrid(
-          branch.grid,
-          branch.isCurrentBranch(),
-          `${id}_${branch.getId()}`,
-        ),
+        SudokuGridViewModelConverter.createViewModelFromGrid(branch.grid, id, {
+          id: branch.getId(),
+          isCurrent: branch.isCurrentBranch(),
+        }),
       );
   }
 
   public static createViewModelFromGrid(
     grid: SudokuGrid,
-    isCurrent: boolean,
     id: string,
+    branchInfo?: SudokuGridViewModel["branchInfo"],
   ): SudokuGridViewModel {
+    const branchId: string | undefined = branchInfo?.isCurrent
+      ? "CURRENT"
+      : branchInfo?.id;
+    const viewModelId: string = [id, branchId].filter(isDefined).join("_");
     return new SudokuGridViewModel(
-      id,
-      isCurrent,
+      viewModelId,
       SudokuGridViewModelConverter.createViewModelsFromRows(grid, id),
+      branchInfo,
     );
   }
 

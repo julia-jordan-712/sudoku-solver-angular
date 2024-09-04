@@ -47,7 +47,7 @@ export class SudokuSolverSettingsComponent {
       .pipe(
         map(
           (viewModels: SudokuGridViewModel[]) =>
-            viewModels.filter((vm) => vm.isCurrent)[0],
+            viewModels.filter((vm) => vm.branchInfo?.isCurrent)[0],
         ),
         filter(isDefined),
         first(),
