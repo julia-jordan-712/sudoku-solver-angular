@@ -781,7 +781,7 @@ describe(SudokuSolverStateService.name, () => {
         .forEach((maxValue) => expect(maxValue).toEqual(4));
     });
 
-    it("should order multiple view models by branches", async () => {
+    it("should order multiple view models by branches with the current branch at the first position", async () => {
       const initialBranch: SolverBranch = SolverBranch.createInitialBranch(
         Puzzle4x4.INCOMPLETE_ALL_VALUES,
       );
@@ -815,16 +815,16 @@ describe(SudokuSolverStateService.name, () => {
       const viewModels: SudokuGridViewModel[] = await testSubscription.value();
       expect(viewModels.length).toEqual(4);
       expect(removeExecutionIdFromViewModelId(viewModels[0])).toEqual(
-        initialBranch.getId(),
+        fourthBranch.getId(),
       );
       expect(removeExecutionIdFromViewModelId(viewModels[1])).toEqual(
-        secondBranch.getId(),
-      );
-      expect(removeExecutionIdFromViewModelId(viewModels[2])).toEqual(
         thirdBranch.getId(),
       );
+      expect(removeExecutionIdFromViewModelId(viewModels[2])).toEqual(
+        secondBranch.getId(),
+      );
       expect(removeExecutionIdFromViewModelId(viewModels[3])).toEqual(
-        fourthBranch.getId(),
+        initialBranch.getId(),
       );
     });
 

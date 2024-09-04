@@ -70,7 +70,7 @@ describe(SudokuSolverComponent.name, () => {
     beforeEach(() => {
       spyOn(service, "getViewModels").and.returnValue(
         of(
-          SudokuGridViewModelConverter.createViewModelsFromGrids(
+          SudokuGridViewModelConverter.createViewModelsFromBranches(
             [SolverBranch.createInitialBranch(PuzzleSimple.PUZZLE_3.puzzle)],
             randomUUID(),
           ),

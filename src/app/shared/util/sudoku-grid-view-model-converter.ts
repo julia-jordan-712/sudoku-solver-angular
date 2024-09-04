@@ -11,15 +11,16 @@ import {
 } from "@app/shared/types/sudoku-grid-view-model";
 
 export class SudokuGridViewModelConverter {
-  public static createViewModelsFromGrids(
+  public static createViewModelsFromBranches(
     branches: SolverBranch[],
     id: string,
   ): SudokuGridViewModel[] {
     return branches
-      .sort((a, b) => a.compareTo(b))
+      .sort((a, b) => b.compareTo(a))
       .map((branch) =>
         SudokuGridViewModelConverter.createViewModelFromGrid(
           branch.grid,
+          branch.isCurrentBranch(),
           `${id}_${branch.getId()}`,
         ),
       );
@@ -27,10 +28,12 @@ export class SudokuGridViewModelConverter {
 
   public static createViewModelFromGrid(
     grid: SudokuGrid,
+    isCurrent: boolean,
     id: string,
   ): SudokuGridViewModel {
     return new SudokuGridViewModel(
       id,
+      isCurrent,
       SudokuGridViewModelConverter.createViewModelsFromRows(grid, id),
     );
   }

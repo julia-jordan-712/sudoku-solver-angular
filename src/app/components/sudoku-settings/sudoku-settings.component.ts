@@ -32,6 +32,7 @@ export class SudokuSettingsComponent {
       map((grid: SudokuGrid) =>
         SudokuGridViewModelConverter.createViewModelFromGrid(
           grid,
+          true,
           randomUUID(),
         ),
       ),

@@ -30,8 +30,11 @@ describe(SudokuGridRowComponentService.name, () => {
     const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.EMPTY);
     grid[0] = row;
     const viewModel: SudokuGridRowViewModel =
-      SudokuGridViewModelConverter.createViewModelFromGrid(grid, randomUUID())
-        .rows[0];
+      SudokuGridViewModelConverter.createViewModelFromGrid(
+        grid,
+        true,
+        randomUUID(),
+      ).rows[0];
     service.setRow(viewModel);
     return viewModel;
   }

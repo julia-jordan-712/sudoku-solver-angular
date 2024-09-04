@@ -51,7 +51,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
   getViewModels(): Observable<SudokuGridViewModel[]> {
     return combineLatest([this.response$, this.executionId$]).pipe(
       map(([response, id]) =>
-        SudokuGridViewModelConverter.createViewModelsFromGrids(
+        SudokuGridViewModelConverter.createViewModelsFromBranches(
           response.branches,
           id,
         ),

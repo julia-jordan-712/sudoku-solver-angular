@@ -18,6 +18,7 @@ describe(SudokuGridComponentService.name, () => {
         [undefined, undefined, 4, 1],
         [undefined, undefined, 2, 3],
       ],
+      true,
       randomUUID(),
     );
 

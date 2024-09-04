@@ -50,6 +50,7 @@ describe(SudokuGridComponent.name, () => {
     ];
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       testGrid,
+      true,
       randomUUID(),
     );
     component.verification = VerificationResult.createValid();
@@ -68,6 +69,7 @@ describe(SudokuGridComponent.name, () => {
     ];
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       testGrid,
+      true,
       randomUUID(),
     );
     component.duplications = { 0: [0, 3] };
@@ -82,6 +84,7 @@ describe(SudokuGridComponent.name, () => {
   it("should set borders of cells correctly", () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
+      true,
       randomUUID(),
     );
     fixture.detectChanges();
@@ -174,6 +177,7 @@ describe(SudokuGridComponent.name, () => {
   it("should set the allowed maximum value of a cell correctly", () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
+      true,
       randomUUID(),
     );
     fixture.detectChanges();
@@ -199,6 +203,7 @@ describe(SudokuGridComponent.name, () => {
     ];
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       input,
+      true,
       randomUUID(),
     );
     fixture.detectChanges();
