@@ -821,6 +821,17 @@ describe(SudokuSolverStateService.name, () => {
       expect(removeExecutionIdFromViewModelId(viewModels[0])).not.toEqual(
         fourthBranch.getId(),
       );
+      const expectedCurrentBranchInfo: SudokuGridViewModel["branchInfo"] = {
+        id: fourthBranch.getId(),
+        isCurrent: true,
+      };
+      expect(viewModels[0].branchInfo).toEqual(expectedCurrentBranchInfo);
+      expect(viewModels[0].rows[0].branchInfo).toEqual(
+        expectedCurrentBranchInfo,
+      );
+      expect(viewModels[0].rows[0].cells[0].branchInfo).toEqual(
+        expectedCurrentBranchInfo,
+      );
 
       expect(removeExecutionIdFromViewModelId(viewModels[1])).toEqual(
         thirdBranch.getId(),
@@ -831,6 +842,19 @@ describe(SudokuSolverStateService.name, () => {
       expect(removeExecutionIdFromViewModelId(viewModels[3])).toEqual(
         initialBranch.getId(),
       );
+      const expectedInitialBranchInfo: SudokuGridViewModel["branchInfo"] = {
+        id: initialBranch.getId(),
+        isCurrent: false,
+      };
+      expect(viewModels[3].branchInfo).toEqual(expectedInitialBranchInfo);
+      expect(viewModels[3].rows[0].branchInfo).toEqual(
+        expectedInitialBranchInfo,
+      );
+      expect(viewModels[3].rows[0].cells[0].branchInfo).toEqual(
+        expectedInitialBranchInfo,
+      );
+
+      testSubscription.destroy();
     });
 
     function removeExecutionIdFromViewModelId(

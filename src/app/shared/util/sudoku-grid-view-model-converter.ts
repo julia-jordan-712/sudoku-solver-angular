@@ -37,7 +37,11 @@ export class SudokuGridViewModelConverter {
     const viewModelId: string = [id, branchId].filter(isDefined).join("_");
     return new SudokuGridViewModel(
       viewModelId,
-      SudokuGridViewModelConverter.createViewModelsFromRows(grid, id),
+      SudokuGridViewModelConverter.createViewModelsFromRows(
+        grid,
+        id,
+        branchInfo,
+      ),
       branchInfo,
     );
   }
@@ -45,9 +49,15 @@ export class SudokuGridViewModelConverter {
   private static createViewModelsFromRows(
     rows: SudokuGridRow[],
     id: string,
+    branchInfo?: SudokuGridRowViewModel["branchInfo"],
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
-      SudokuGridViewModelConverter.createViewModelsFromRow(row, id, index),
+      SudokuGridViewModelConverter.createViewModelsFromRow(
+        row,
+        id,
+        index,
+        branchInfo,
+      ),
     );
   }
 
@@ -55,10 +65,17 @@ export class SudokuGridViewModelConverter {
     row: SudokuGridRow,
     id: string,
     index: number,
+    branchInfo?: SudokuGridRowViewModel["branchInfo"],
   ): SudokuGridRowViewModel {
     return new SudokuGridRowViewModel(
       `${id}_row-${index}`,
-      SudokuGridViewModelConverter.createViewModelsFromCells(row, id, index),
+      SudokuGridViewModelConverter.createViewModelsFromCells(
+        row,
+        id,
+        index,
+        branchInfo,
+      ),
+      branchInfo,
     );
   }
 
@@ -66,6 +83,7 @@ export class SudokuGridViewModelConverter {
     cells: SudokuGridCell[],
     id: string,
     rowIndex: number,
+    branchInfo?: SudokuGridCellViewModel["branchInfo"],
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
@@ -79,6 +97,7 @@ export class SudokuGridViewModelConverter {
         rowIndex,
         index,
         id,
+        branchInfo,
       ),
     );
   }
@@ -90,12 +109,14 @@ export class SudokuGridViewModelConverter {
     rowIndex: number,
     columnIndex: number,
     id: string,
+    branchInfo?: SudokuGridCellViewModel["branchInfo"],
   ): SudokuGridCellViewModel {
     return new SudokuGridCellViewModel(
       `${id}_cell-${rowIndex}-${columnIndex}`,
       cell,
       maxValue,
       size,
+      branchInfo,
     );
   }
 

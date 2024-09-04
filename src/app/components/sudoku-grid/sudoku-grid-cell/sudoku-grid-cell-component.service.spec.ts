@@ -18,7 +18,7 @@ describe(SudokuGridCellComponentService.name, () => {
 
       expect(await changed.value()).toEqual(false);
 
-      service.setCell(1);
+      service.setCell(1, true);
 
       expect(await changed.value()).toEqual(false);
 
@@ -28,10 +28,10 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should be changed if value changed", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell(1);
+      service.setCell(1, true);
       expect(await changed.value()).toEqual(false);
 
-      service.setCell(2);
+      service.setCell(2, true);
       expect(await changed.value()).toEqual(true);
 
       changed.destroy();
@@ -40,13 +40,13 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should NOT be changed if value equals previous value", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell(1);
+      service.setCell(1, true);
       expect(await changed.value()).toEqual(false);
 
-      service.setCell(2);
+      service.setCell(2, true);
       expect(await changed.value()).toEqual(true);
 
-      service.setCell(2);
+      service.setCell(2, true);
       expect(await changed.value()).toEqual(false);
 
       changed.destroy();
@@ -55,10 +55,10 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should be changed if value is replaced by multiple values", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell(1);
+      service.setCell(1, true);
       expect(await changed.value()).toEqual(false);
 
-      service.setCell([2, 3, 4]);
+      service.setCell([2, 3, 4], true);
       expect(await changed.value()).toEqual(true);
 
       changed.destroy();
@@ -67,23 +67,35 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should be changed if value is replaced by empty array", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell(1);
+      service.setCell(1, true);
       expect(await changed.value()).toEqual(false);
 
-      service.setCell([]);
+      service.setCell([], true);
       expect(await changed.value()).toEqual(true);
 
       changed.destroy();
     });
 
-    it("should be changed for initial values", async () => {
+    it("should be changed for initial values of current branch", async () => {
       const changed = TestSubscription.start(service.isChanged(), false);
 
       expect(await changed.value()).toEqual(false);
 
-      service.setCell([1, 2]);
+      service.setCell([1, 2], true);
 
       expect(await changed.value()).toEqual(true);
+
+      changed.destroy();
+    });
+
+    it("should NOT be changed for initial values of non-current branch", async () => {
+      const changed = TestSubscription.start(service.isChanged(), false);
+
+      expect(await changed.value()).toEqual(false);
+
+      service.setCell([1, 2], false);
+
+      expect(await changed.value()).toEqual(false);
 
       changed.destroy();
     });
@@ -91,11 +103,11 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should be changed if values changed", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell([1, 2]);
-      service.setCell([1, 2]); // setting twice because initial array value is considered as changed
+      service.setCell([1, 2], true);
+      service.setCell([1, 2], true); // setting twice because initial array value is considered as changed
       expect(await changed.value()).toEqual(false);
 
-      service.setCell([2, 3]);
+      service.setCell([2, 3], true);
       expect(await changed.value()).toEqual(true);
 
       changed.destroy();
@@ -104,14 +116,14 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should NOT be changed if values equal previous values", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell([1, 2]);
-      service.setCell([1, 2]); // setting twice because initial array value is considered as changed
+      service.setCell([1, 2], true);
+      service.setCell([1, 2], true); // setting twice because initial array value is considered as changed
       expect(await changed.value()).toEqual(false);
 
-      service.setCell([2, 3, 4]);
+      service.setCell([2, 3, 4], true);
       expect(await changed.value()).toEqual(true);
 
-      service.setCell([4, 2, 3]);
+      service.setCell([4, 2, 3], true);
       expect(await changed.value()).toEqual(false);
 
       changed.destroy();
@@ -120,11 +132,11 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should be changed if values are replaced by single value", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell([2, 3, 4]);
-      service.setCell([2, 3, 4]); // setting twice because initial array value is considered as changed
+      service.setCell([2, 3, 4], true);
+      service.setCell([2, 3, 4], true); // setting twice because initial array value is considered as changed
       expect(await changed.value()).toEqual(false);
 
-      service.setCell(1);
+      service.setCell(1, true);
       expect(await changed.value()).toEqual(true);
 
       changed.destroy();
@@ -133,11 +145,11 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should be changed if empty array is replaced by filled array", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell([]);
-      service.setCell([]); // setting twice because initial array value is considered as changed
+      service.setCell([], true);
+      service.setCell([], true); // setting twice because initial array value is considered as changed
       expect(await changed.value()).toEqual(false);
 
-      service.setCell([9]);
+      service.setCell([9], true);
       expect(await changed.value()).toEqual(true);
 
       changed.destroy();
@@ -146,11 +158,11 @@ describe(SudokuGridCellComponentService.name, () => {
     it("should be changed if empty array is replaced by single value", async () => {
       const changed = TestSubscription.start(service.isChanged());
 
-      service.setCell([]);
-      service.setCell([]); // setting twice because initial array value is considered as changed
+      service.setCell([], true);
+      service.setCell([], true); // setting twice because initial array value is considered as changed
       expect(await changed.value()).toEqual(false);
 
-      service.setCell(7);
+      service.setCell(7, true);
       expect(await changed.value()).toEqual(true);
 
       changed.destroy();
@@ -162,15 +174,15 @@ describe(SudokuGridCellComponentService.name, () => {
       const displayValue = TestSubscription.start(service.getDisplayValue());
       const displayValues = TestSubscription.start(service.getDisplayValues());
 
-      service.setCell(1);
+      service.setCell(1, true);
       expect(await displayValue.value()).toEqual(1);
       expect(await displayValues.value()).toBeNull();
 
-      service.setCell(9);
+      service.setCell(9, true);
       expect(await displayValue.value()).toEqual(9);
       expect(await displayValues.value()).toBeNull();
 
-      service.setCell([2]);
+      service.setCell([2], true);
       expect(await displayValue.value()).toBeNull();
       expect(await displayValues.value()).toEqual([2]);
 
@@ -181,8 +193,8 @@ describe(SudokuGridCellComponentService.name, () => {
 
   it("should switch between previous and current value during hover", fakeAsync(async () => {
     const displayValue = TestSubscription.start(service.getDisplayValue());
-    service.setCell(5);
-    service.setCell(7);
+    service.setCell(5, true);
+    service.setCell(7, true);
 
     service.onMouseEnter();
 
@@ -207,8 +219,8 @@ describe(SudokuGridCellComponentService.name, () => {
 
   it("should switch between previous and current values during hover", fakeAsync(async () => {
     const displayValues = TestSubscription.start(service.getDisplayValues());
-    service.setCell([1, 2, 3]);
-    service.setCell([4, 5, 6]);
+    service.setCell([1, 2, 3], true);
+    service.setCell([4, 5, 6], true);
 
     service.onMouseEnter();
 
