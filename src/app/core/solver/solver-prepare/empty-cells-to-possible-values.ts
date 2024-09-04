@@ -18,17 +18,19 @@ export class EmptyCellsToPossibleValues implements SolverRunnable {
   ) {}
 
   /**
-   * @returns true if there are empty cells left
+   * @returns true is something was changed
    */
   run(grid: SudokuGrid): boolean {
     if (this.mode === "ONLY_NEXT_CELL") {
       return this.convertNextEmptyCellToPossibleValues(grid);
     } else {
-      let emptyCellsLeft = false;
+      let changeInLastStep = false;
+      let changedSomething = false;
       do {
-        emptyCellsLeft = this.convertNextEmptyCellToPossibleValues(grid);
-      } while (emptyCellsLeft);
-      return emptyCellsLeft;
+        changeInLastStep = this.convertNextEmptyCellToPossibleValues(grid);
+        changedSomething = changedSomething || changeInLastStep;
+      } while (changeInLastStep);
+      return changedSomething;
     }
   }
 

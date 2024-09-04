@@ -87,7 +87,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
     it("should convert all undefined cells into all possible values", () => {
       const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.EMPTY);
       let result = new EmptyCellsToPossibleValues("ALL_CELLS").run(grid);
-      expect(result).toBeFalse();
+      expect(result).toBeTrue();
       expect(grid).toEqual(Puzzle4x4.INCOMPLETE_ALL_VALUES);
     });
   });
