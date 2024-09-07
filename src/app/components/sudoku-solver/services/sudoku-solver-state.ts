@@ -1,4 +1,5 @@
 import { InjectionToken } from "@angular/core";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -44,4 +45,6 @@ export interface SudokuSolverState {
 
   canRestart(): Observable<boolean>;
   restart(): void;
+
+  getVerificationResults(): Observable<Nullable<VerificationResult[]>>;
 }

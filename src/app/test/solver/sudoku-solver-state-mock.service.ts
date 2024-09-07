@@ -4,6 +4,7 @@ import {
   SUDOKU_SOLVER_STATE,
   SudokuSolverState,
 } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -83,6 +84,9 @@ export class SudokuSolverStateMockService implements SudokuSolverState {
   }
   restart(): void {
     // do nothing
+  }
+  getVerificationResults(): Observable<Nullable<VerificationResult[]>> {
+    return EMPTY;
   }
 }
 
