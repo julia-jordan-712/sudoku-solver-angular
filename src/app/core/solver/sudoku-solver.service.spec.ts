@@ -209,6 +209,20 @@ describe(SudokuSolverService.name, () => {
       branches: 1,
       success: true,
     },
+    {
+      puzzle: PuzzleExtreme.PUZZLE_6.puzzle,
+      name: "extreme puzzle 6",
+      steps: 63,
+      branches: 1,
+      success: true,
+    },
+    {
+      puzzle: PuzzleExtreme.PUZZLE_7.puzzle,
+      name: "extreme puzzle 7",
+      steps: 83,
+      branches: 1,
+      success: true,
+    },
   ].forEach((params) => {
     it(`should ${params.success ? "" : "fail to"} solve "${params.name}" in ${params.steps} steps and ${params.branches} branch/es`, () => {
       let amountOfSteps = 0;
