@@ -3,8 +3,7 @@ import { SudokuSolverState } from "@app/components/sudoku-solver/services/sudoku
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
-import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { VerifySolution } from "@app/core/verification/services/verify-solution";
 import { Nullable } from "@app/shared/types/nullable";
 import {
   SolverExecution,
@@ -15,13 +14,18 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
-import { BehaviorSubject, Observable, combineLatest, map } from "rxjs";
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  map,
+  withLatestFrom,
+} from "rxjs";
 import { v4 as randomUUID } from "uuid";
 
 @Injectable()
 export class SudokuSolverStateService implements SudokuSolverState {
   private solver: SudokuSolverService = inject(SudokuSolverService);
-  private verify: VerifySolutionService = inject(VerifySolutionService);
 
   private delay = new BehaviorSubject<number>(0);
   private execution$ = new BehaviorSubject<SolverExecution>("NOT_STARTED");
@@ -34,9 +38,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
     this.createInitialSolverResponse(),
   );
   private stepsExecuted$ = new BehaviorSubject<number>(0);
-  private verificationResults$ = new BehaviorSubject<
-    Nullable<VerificationResult[]>
-  >(undefined);
 
   private createInitialSolverResponse(puzzle?: SudokuGrid): SolverResponse {
     return {
@@ -50,11 +51,27 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   getViewModels(): Observable<SudokuGridViewModel[]> {
     return combineLatest([this.response$, this.executionId$]).pipe(
-      map(([response, id]) =>
-        SudokuGridViewModelConverter.createViewModelsFromBranches(
-          response.branches,
-          id,
-        ),
+      withLatestFrom(this.execution$),
+      map(([[response, id], state]) =>
+        response.branches
+          .sort((a, b) => b.compareTo(a))
+          .map((branch) =>
+            SudokuGridViewModelConverter.createViewModelFromGrid(
+              branch.grid,
+              id,
+              {
+                id: branch.getId(),
+                isCurrent: branch.isCurrentBranch(),
+                verificationResult:
+                  state !== "NOT_STARTED" && branch.isCurrentBranch()
+                    ? new VerifySolution().verify(branch.grid, {
+                        allowEmptyCells: false,
+                        size: branch.grid.length,
+                      })
+                    : null,
+              },
+            ),
+          ),
       ),
     );
   }
@@ -93,10 +110,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
     return this.stopWatch.timeElapsed();
   }
 
-  getVerificationResults(): Observable<Nullable<VerificationResult[]>> {
-    return this.verificationResults$.asObservable();
-  }
-
   canGoToNextStep(): Observable<boolean> {
     return this.execution$
       .asObservable()
@@ -123,17 +136,15 @@ export class SudokuSolverStateService implements SudokuSolverState {
     if (!this.stopWatch.isStarted()) {
       this.stopWatch.start();
     }
-    this.verificationResults$.next(undefined);
+
+    if (this.execution$.getValue() === "NOT_STARTED") {
+      this.execution$.next("PAUSED");
+    }
 
     this.solveNextStepAndFinishIfDone();
     this.stepsExecuted$.next(this.stepsExecuted$.getValue() + 1);
 
-    const pauseAfterStep = this.pauseAfterStep$.getValue();
-    if (
-      this.execution$.getValue() === "NOT_STARTED" ||
-      (pauseAfterStep != undefined &&
-        this.stepsExecuted$.getValue() === pauseAfterStep)
-    ) {
+    if (this.stepsExecuted$.getValue() === this.pauseAfterStep$.getValue()) {
       this.execution$.next("PAUSED");
     }
 
@@ -145,22 +156,16 @@ export class SudokuSolverStateService implements SudokuSolverState {
     }
   }
 
-  private solveNextStepAndFinishIfDone(): SolverResponse {
+  private solveNextStepAndFinishIfDone(): void {
     const response: SolverResponse = this.solver.solveNextStep(
       this.response$.getValue(),
     );
     this.response$.next(response);
     if (response.status === "COMPLETE") {
-      this.updateVerificationResults();
       this.finishExecuting("DONE");
     } else if (response.status === "FAILED") {
       this.finishExecuting("FAILED");
     }
-    return response;
-  }
-
-  private getResponseBranches(): SolverBranch[] {
-    return this.response$.getValue().branches;
   }
 
   finishExecuting(state: Extract<SolverExecution, "DONE" | "FAILED">): void {
@@ -185,7 +190,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
   private resetAllExceptSolution(): void {
     this.execution$.next("NOT_STARTED");
     this.executionId$.next(randomUUID());
-    this.verificationResults$.next(undefined);
     this.stepsExecuted$.next(0);
     this.solver.reset();
     this.stopWatch.reset();
@@ -224,13 +228,5 @@ export class SudokuSolverStateService implements SudokuSolverState {
       this.executeNextStep();
       setTimeout(() => this.scheduleNextStep(), this.delay.getValue());
     }
-  }
-
-  private updateVerificationResults(): void {
-    this.verificationResults$.next(
-      this.getResponseBranches().map((branch: SolverBranch) =>
-        this.verify.verify(branch.grid),
-      ),
-    );
   }
 }

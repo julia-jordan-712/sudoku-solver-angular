@@ -124,16 +124,19 @@ describe(SudokuSettingsComponent.name, () => {
   it("should update the verification when cell is changed but not submitted", () => {
     const grid: SudokuGridTestComponent = getSudokuGrid();
     grid.submit(Puzzle4x4.COMPLETE);
+    fixture.detectChanges();
+    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
 
-    grid.change([
+    const gridWithInvalidNumber = [
       [9, 2, 3, 4],
       [3, 4, 1, 2],
       [2, 3, 4, 1],
       [4, 1, 2, 3],
-    ]);
+    ];
+    grid.change(gridWithInvalidNumber);
     fixture.detectChanges();
 
-    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
+    expectGridToEqual(grid, gridWithInvalidNumber);
     expect(grid.verification?.isValid()).toEqual(false);
     expect(grid.duplications).toEqual({});
     expect(querySize().innerText).toEqual("4");
@@ -143,7 +146,7 @@ describe(SudokuSettingsComponent.name, () => {
     grid.change(Puzzle4x4.EMPTY_COLUMN);
     fixture.detectChanges();
 
-    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
+    expectGridToEqual(grid, Puzzle4x4.EMPTY_COLUMN);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(queryConfirm().disabled).toEqual(false);
 
@@ -225,10 +228,10 @@ describe(SudokuSettingsComponent.name, () => {
     component: SudokuGridTestComponent,
     expected: SudokuGrid,
   ): void {
-    expect(component.grid).toBeTruthy();
+    expect(component._grid).toBeTruthy();
     expect(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      SudokuGridViewModelConverter.createGridFromViewModel(component.grid!),
+      SudokuGridViewModelConverter.createGridFromViewModel(component._grid!),
     ).toEqual(expected);
   }
 });

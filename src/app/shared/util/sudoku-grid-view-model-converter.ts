@@ -1,4 +1,3 @@
-import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import {
   SudokuGrid,
   SudokuGridCell,
@@ -13,24 +12,10 @@ import {
 import { isDefined } from "@app/shared/util/is-defined";
 
 export class SudokuGridViewModelConverter {
-  public static createViewModelsFromBranches(
-    branches: SolverBranch[],
-    id: string,
-  ): SudokuGridViewModel[] {
-    return branches
-      .sort((a, b) => b.compareTo(a))
-      .map((branch) =>
-        SudokuGridViewModelConverter.createViewModelFromGrid(branch.grid, id, {
-          id: branch.getId(),
-          isCurrent: branch.isCurrentBranch(),
-        }),
-      );
-  }
-
   public static createViewModelFromGrid(
     grid: SudokuGrid,
     id: string,
-    branchInfo?: SudokuGridViewModelBranchInfo,
+    branchInfo: SudokuGridViewModelBranchInfo,
   ): SudokuGridViewModel {
     const branchId: string | undefined = branchInfo?.isCurrent
       ? "CURRENT"
@@ -50,7 +35,7 @@ export class SudokuGridViewModelConverter {
   private static createViewModelsFromRows(
     rows: SudokuGridRow[],
     id: string,
-    branchInfo?: SudokuGridViewModelBranchInfo,
+    branchInfo: SudokuGridViewModelBranchInfo,
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
       SudokuGridViewModelConverter.createViewModelsFromRow(
@@ -66,7 +51,7 @@ export class SudokuGridViewModelConverter {
     row: SudokuGridRow,
     id: string,
     index: number,
-    branchInfo?: SudokuGridViewModelBranchInfo,
+    branchInfo: SudokuGridViewModelBranchInfo,
   ): SudokuGridRowViewModel {
     return new SudokuGridRowViewModel(
       `${id}_row-${index}`,
@@ -84,7 +69,7 @@ export class SudokuGridViewModelConverter {
     cells: SudokuGridCell[],
     id: string,
     rowIndex: number,
-    branchInfo?: SudokuGridViewModelBranchInfo,
+    branchInfo: SudokuGridViewModelBranchInfo,
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
@@ -110,7 +95,7 @@ export class SudokuGridViewModelConverter {
     rowIndex: number,
     columnIndex: number,
     id: string,
-    branchInfo?: SudokuGridViewModelBranchInfo,
+    branchInfo: SudokuGridViewModelBranchInfo,
   ): SudokuGridCellViewModel {
     return new SudokuGridCellViewModel(
       `${id}_cell-${rowIndex}-${columnIndex}`,

@@ -9,6 +9,7 @@ import { VerifySolutionService } from "@app/core/verification/services/verify-so
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { combineLatest, first, of } from "rxjs";
@@ -181,10 +182,15 @@ describe(SudokuSettingsStateService.name, () => {
     });
 
     function expectVerification(valid: boolean, done: DoneFn): void {
-      underTest.verification$.pipe(first()).subscribe((verificationResult) => {
-        expect(verificationResult.isValid()).toEqual(valid);
-        done();
-      });
+      underTest
+        .getViewModel()
+        .pipe(first())
+        .subscribe((viewModel: SudokuGridViewModel) => {
+          expect(viewModel.branchInfo.verificationResult?.isValid()).toEqual(
+            valid,
+          );
+          done();
+        });
     }
   });
 

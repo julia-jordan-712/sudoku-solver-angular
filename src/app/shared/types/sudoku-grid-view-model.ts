@@ -1,3 +1,5 @@
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
 import { ClipboardElement } from "@app/shared/util/clipboard-service";
 import { isArray } from "@app/shared/util/is-array";
@@ -5,13 +7,14 @@ import { isArray } from "@app/shared/util/is-array";
 export interface SudokuGridViewModelBranchInfo {
   id: string;
   isCurrent: boolean;
+  verificationResult: Nullable<VerificationResult>;
 }
 
 export class SudokuGridViewModel implements ClipboardElement {
   constructor(
     readonly id: string,
     readonly rows: SudokuGridRowViewModel[],
-    readonly branchInfo?: SudokuGridViewModelBranchInfo,
+    readonly branchInfo: SudokuGridViewModelBranchInfo,
   ) {}
 
   toClipboardString(): string {
@@ -23,7 +26,7 @@ export class SudokuGridRowViewModel implements ClipboardElement {
   constructor(
     readonly id: string,
     readonly cells: SudokuGridCellViewModel[],
-    readonly branchInfo?: SudokuGridViewModelBranchInfo,
+    readonly branchInfo: SudokuGridViewModelBranchInfo,
   ) {}
 
   toClipboardString(): string {
@@ -37,7 +40,7 @@ export class SudokuGridCellViewModel implements ClipboardElement {
     readonly cell: SudokuGridCell,
     readonly maxValue: number,
     readonly widthAndHeight: number,
-    readonly branchInfo?: SudokuGridViewModelBranchInfo,
+    readonly branchInfo: SudokuGridViewModelBranchInfo,
   ) {}
 
   toClipboardString(): string {

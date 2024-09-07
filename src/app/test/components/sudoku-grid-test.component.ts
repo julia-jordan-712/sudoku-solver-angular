@@ -10,11 +10,14 @@ import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
   template: ``,
 })
 export class SudokuGridTestComponent {
-  @Input({ required: true })
-  grid: Nullable<SudokuGridViewModel>;
-
-  @Input()
+  _grid: Nullable<SudokuGridViewModel>;
   verification: Nullable<VerificationResult>;
+
+  @Input({ required: true })
+  set grid(grid: Nullable<SudokuGridViewModel>) {
+    this._grid = grid;
+    this.verification = grid?.branchInfo.verificationResult;
+  }
 
   @Input()
   duplications: Nullable<DuplicationColumnIndicesToRowIndices>;

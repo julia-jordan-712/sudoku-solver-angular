@@ -26,7 +26,11 @@ describe(SudokuGridCellComponent.name, () => {
   });
 
   it("should emit the input value from the child component", () => {
-    component.cell = new SudokuGridCellViewModel("id-0", 5, 9, 20);
+    component.cell = new SudokuGridCellViewModel("id-0", 5, 9, 20, {
+      id: "test-id",
+      isCurrent: true,
+      verificationResult: undefined,
+    });
     fixture.detectChanges();
     const valueChangeSpy = spyOn(component.valueChange, "emit").and.callFake(
       () => {},

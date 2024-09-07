@@ -2,10 +2,12 @@ import { TestBed, fakeAsync, flush, tick } from "@angular/core/testing";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
+import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import {
   SudokuGridCellViewModel,
   SudokuGridViewModel,
+  SudokuGridViewModelBranchInfo,
 } from "@app/shared/types/sudoku-grid-view-model";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
@@ -525,12 +527,14 @@ describe(SudokuSolverStateService.name, () => {
 
       it("should determine verification result", (done) => {
         service
-          .getVerificationResults()
+          .getViewModels()
           .pipe(first())
-          .subscribe((result) => {
+          .subscribe((viewModels) => {
+            expect(viewModels).not.toBeNull();
+            expect(viewModels?.length).toEqual(1);
+            const result = viewModels[0].branchInfo.verificationResult;
             expect(result).not.toBeNull();
-            expect(result?.length).toEqual(1);
-            expect(result?.[0].isValid()).toBeTrue();
+            expect(result?.isValid()).toBeTrue();
             done();
           });
       });
@@ -552,12 +556,16 @@ describe(SudokuSolverStateService.name, () => {
           });
       });
 
-      it("should NOT determine verification result", (done) => {
+      it("should determine verification result", (done) => {
         service
-          .getVerificationResults()
+          .getViewModels()
           .pipe(first())
-          .subscribe((result) => {
-            expect(result).toBeUndefined();
+          .subscribe((viewModels) => {
+            expect(viewModels).not.toBeNull();
+            expect(viewModels?.length).toEqual(1);
+            const result = viewModels[0].branchInfo.verificationResult;
+            expect(result).not.toBeNull();
+            expect(result?.isValid()).toBeTrue();
             done();
           });
       });
@@ -635,17 +643,6 @@ describe(SudokuSolverStateService.name, () => {
         .pipe(first())
         .subscribe((viewModels) => {
           expect(viewModels).toEqual([]);
-          done();
-        });
-    });
-
-    it("should have no verification result after reset", (done) => {
-      service.reset();
-      service
-        .getVerificationResults()
-        .pipe(first())
-        .subscribe((verification) => {
-          expect(verification).toBeUndefined();
           done();
         });
     });
@@ -782,6 +779,7 @@ describe(SudokuSolverStateService.name, () => {
     });
 
     it("should order multiple view models by branches with the current branch at the first position", async () => {
+      // arrange
       const initialBranch: SolverBranch = SolverBranch.createInitialBranch(
         Puzzle4x4.INCOMPLETE_ALL_VALUES,
       );
@@ -806,13 +804,15 @@ describe(SudokuSolverStateService.name, () => {
       SudokuSolverSpy.onSolveNextStepAndReturnBranches(solver, branches);
       service.setInitialPuzzle(Puzzle4x4.EMPTY);
 
+      // act
       const testSubscription = TestSubscription.start(
         service.getViewModels(),
         true,
       );
       service.executeNextStep();
-
       const viewModels: SudokuGridViewModel[] = await testSubscription.value();
+
+      // assert
       expect(viewModels.length).toEqual(4);
 
       expect(removeExecutionIdFromViewModelId(viewModels[0])).toEqual(
@@ -821,16 +821,19 @@ describe(SudokuSolverStateService.name, () => {
       expect(removeExecutionIdFromViewModelId(viewModels[0])).not.toEqual(
         fourthBranch.getId(),
       );
-      const expectedCurrentBranchInfo: SudokuGridViewModel["branchInfo"] = {
-        id: fourthBranch.getId(),
-        isCurrent: true,
-      };
-      expect(viewModels[0].branchInfo).toEqual(expectedCurrentBranchInfo);
+      const expectedCurrentBranchInfo: Partial<SudokuGridViewModelBranchInfo> =
+        {
+          id: fourthBranch.getId(),
+          isCurrent: true,
+        };
+      expect(viewModels[0].branchInfo).toEqual(
+        jasmine.objectContaining(expectedCurrentBranchInfo),
+      );
       expect(viewModels[0].rows[0].branchInfo).toEqual(
-        expectedCurrentBranchInfo,
+        jasmine.objectContaining(expectedCurrentBranchInfo),
       );
       expect(viewModels[0].rows[0].cells[0].branchInfo).toEqual(
-        expectedCurrentBranchInfo,
+        jasmine.objectContaining(expectedCurrentBranchInfo),
       );
 
       expect(removeExecutionIdFromViewModelId(viewModels[1])).toEqual(
@@ -842,17 +845,65 @@ describe(SudokuSolverStateService.name, () => {
       expect(removeExecutionIdFromViewModelId(viewModels[3])).toEqual(
         initialBranch.getId(),
       );
-      const expectedInitialBranchInfo: SudokuGridViewModel["branchInfo"] = {
-        id: initialBranch.getId(),
-        isCurrent: false,
-      };
-      expect(viewModels[3].branchInfo).toEqual(expectedInitialBranchInfo);
+      const expectedInitialBranchInfo: Partial<SudokuGridViewModelBranchInfo> =
+        {
+          id: initialBranch.getId(),
+          isCurrent: false,
+        };
+      expect(viewModels[3].branchInfo).toEqual(
+        jasmine.objectContaining(expectedInitialBranchInfo),
+      );
       expect(viewModels[3].rows[0].branchInfo).toEqual(
-        expectedInitialBranchInfo,
+        jasmine.objectContaining(expectedInitialBranchInfo),
       );
       expect(viewModels[3].rows[0].cells[0].branchInfo).toEqual(
-        expectedInitialBranchInfo,
+        jasmine.objectContaining(expectedInitialBranchInfo),
       );
+
+      testSubscription.destroy();
+    });
+
+    it("should only verify solution of the current branch", async () => {
+      // arrange
+      const initialBranch: SolverBranch = SolverBranch.createInitialBranch(
+        Puzzle4x4.INCOMPLETE_ALL_VALUES,
+      );
+      const secondBranch: SolverBranch = initialBranch.openBranch(
+        { row: 0, column: 0 },
+        1,
+      );
+      SudokuSolverSpy.onSolveNextStepAndReturnBranches(solver, [
+        initialBranch,
+        secondBranch,
+      ]);
+      service.setInitialPuzzle(Puzzle4x4.EMPTY);
+
+      // act
+      const testSubscription = TestSubscription.start(
+        service.getViewModels(),
+        true,
+      );
+      service.executeNextStep();
+      const viewModels: SudokuGridViewModel[] = await testSubscription.value();
+
+      // assert
+      expect(removeExecutionIdFromViewModelId(viewModels[0])).toEqual(
+        "CURRENT",
+      );
+      expect(viewModels[0].branchInfo).toEqual({
+        id: secondBranch.getId(),
+        isCurrent: true,
+        verificationResult: VerificationResult.createValid(),
+      });
+
+      expect(removeExecutionIdFromViewModelId(viewModels[1])).toEqual(
+        initialBranch.getId(),
+      );
+      expect(viewModels[1].branchInfo).toEqual({
+        id: initialBranch.getId(),
+        isCurrent: false,
+        verificationResult: null,
+      });
 
       testSubscription.destroy();
     });

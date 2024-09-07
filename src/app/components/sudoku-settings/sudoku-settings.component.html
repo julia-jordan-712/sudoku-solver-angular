@@ -27,7 +27,6 @@
   }
   <app-sudoku-grid
     [grid]="grid$ | async"
-    [verification]="verification$ | async"
     [duplications]="duplications$ | async"
     (valueChange)="onCellChange($event)"
     (valueSubmit)="onCellSubmit($event)"
@@ -36,7 +35,7 @@
   <button
     id="confirmSettings"
     class="primary"
-    [disabled]="!(verification$ | async)?.isValid()"
+    [disabled]="!(confirmEnabled$ | async)"
     (click)="submit()"
   >
     <app-icon>done</app-icon>
