@@ -18,23 +18,15 @@ import { Objects } from "@app/shared/util/objects";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
 export class VerifyUniqueness {
-  constructor(
-    private candidate: SudokuGrid,
-    private size: number,
-  ) {}
-
   verify(
+    candidate: SudokuGrid,
+    size: number,
     options: VerificationOptions = { trackUniquenessViolations: false },
   ): VerificationResult {
     return StopWatch.monitor(
       () => {
         const result: VerificationResult = VerificationResult.createValid();
-        this.verifyRowsAndColumnsAndSquares(
-          options,
-          this.candidate,
-          this.size,
-          result,
-        );
+        this.verifyRowsAndColumnsAndSquares(options, candidate, size, result);
         return result;
       },
       new Logger(VerifyUniqueness.name),

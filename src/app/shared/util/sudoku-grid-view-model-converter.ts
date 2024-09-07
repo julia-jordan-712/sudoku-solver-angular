@@ -8,6 +8,7 @@ import {
   SudokuGridCellViewModel,
   SudokuGridRowViewModel,
   SudokuGridViewModel,
+  SudokuGridViewModelBranchInfo,
 } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
 
@@ -29,7 +30,7 @@ export class SudokuGridViewModelConverter {
   public static createViewModelFromGrid(
     grid: SudokuGrid,
     id: string,
-    branchInfo?: SudokuGridViewModel["branchInfo"],
+    branchInfo?: SudokuGridViewModelBranchInfo,
   ): SudokuGridViewModel {
     const branchId: string | undefined = branchInfo?.isCurrent
       ? "CURRENT"
@@ -49,7 +50,7 @@ export class SudokuGridViewModelConverter {
   private static createViewModelsFromRows(
     rows: SudokuGridRow[],
     id: string,
-    branchInfo?: SudokuGridRowViewModel["branchInfo"],
+    branchInfo?: SudokuGridViewModelBranchInfo,
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
       SudokuGridViewModelConverter.createViewModelsFromRow(
@@ -65,7 +66,7 @@ export class SudokuGridViewModelConverter {
     row: SudokuGridRow,
     id: string,
     index: number,
-    branchInfo?: SudokuGridRowViewModel["branchInfo"],
+    branchInfo?: SudokuGridViewModelBranchInfo,
   ): SudokuGridRowViewModel {
     return new SudokuGridRowViewModel(
       `${id}_row-${index}`,
@@ -83,7 +84,7 @@ export class SudokuGridViewModelConverter {
     cells: SudokuGridCell[],
     id: string,
     rowIndex: number,
-    branchInfo?: SudokuGridCellViewModel["branchInfo"],
+    branchInfo?: SudokuGridViewModelBranchInfo,
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
@@ -109,7 +110,7 @@ export class SudokuGridViewModelConverter {
     rowIndex: number,
     columnIndex: number,
     id: string,
-    branchInfo?: SudokuGridCellViewModel["branchInfo"],
+    branchInfo?: SudokuGridViewModelBranchInfo,
   ): SudokuGridCellViewModel {
     return new SudokuGridCellViewModel(
       `${id}_cell-${rowIndex}-${columnIndex}`,

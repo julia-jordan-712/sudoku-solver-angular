@@ -6,15 +6,16 @@ import { isArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 
 export class VerifyNothingEmpty {
-  constructor(private candidate: SudokuGrid) {}
-
-  verify(options?: VerificationOptions): VerificationResult {
+  verify(
+    candidate: SudokuGrid,
+    options?: VerificationOptions,
+  ): VerificationResult {
     if (options?.allowEmptyCells) {
       return VerificationResult.createValid();
     } else {
-      for (let row = 0; row < this.candidate.length; row++) {
-        for (let column = 0; column < this.candidate[row].length; column++) {
-          const cell: SudokuGridCell = this.candidate[row][column];
+      for (let row = 0; row < candidate.length; row++) {
+        for (let column = 0; column < candidate[row].length; column++) {
+          const cell: SudokuGridCell = candidate[row][column];
           if (!isDefined(cell)) {
             return VerificationResult.createFromErrors([
               VerifyI18nKey.ERROR_EMPTY_CELL,
