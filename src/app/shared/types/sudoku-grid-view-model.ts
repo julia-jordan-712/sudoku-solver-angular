@@ -7,7 +7,6 @@ import { isArray } from "@app/shared/util/is-array";
 export interface SudokuGridViewModelBranchInfo {
   id: string;
   isCurrent: boolean;
-  verificationResult: Nullable<VerificationResult>;
 }
 
 export class SudokuGridViewModel implements ClipboardElement {
@@ -15,6 +14,7 @@ export class SudokuGridViewModel implements ClipboardElement {
     readonly id: string,
     readonly rows: SudokuGridRowViewModel[],
     readonly branchInfo: SudokuGridViewModelBranchInfo,
+    readonly verificationResult: Nullable<VerificationResult>,
   ) {}
 
   toClipboardString(): string {
@@ -27,6 +27,7 @@ export class SudokuGridRowViewModel implements ClipboardElement {
     readonly id: string,
     readonly cells: SudokuGridCellViewModel[],
     readonly branchInfo: SudokuGridViewModelBranchInfo,
+    readonly verificationResult: Nullable<VerificationResult>,
   ) {}
 
   toClipboardString(): string {
@@ -41,6 +42,7 @@ export class SudokuGridCellViewModel implements ClipboardElement {
     readonly maxValue: number,
     readonly widthAndHeight: number,
     readonly branchInfo: SudokuGridViewModelBranchInfo,
+    readonly verificationResult: Nullable<VerificationResult>,
   ) {}
 
   toClipboardString(): string {

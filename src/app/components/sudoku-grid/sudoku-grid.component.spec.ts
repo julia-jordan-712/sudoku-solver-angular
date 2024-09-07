@@ -64,8 +64,8 @@ describe(SudokuGridComponent.name, () => {
       {
         id: "test-id",
         isCurrent: true,
-        verificationResult: VerificationResult.createValid(),
       },
+      VerificationResult.createValid(),
     );
     component.duplications = {};
     fixture.detectChanges();
@@ -83,10 +83,10 @@ describe(SudokuGridComponent.name, () => {
       {
         id: "test-id",
         isCurrent: true,
-        verificationResult: VerificationResult.createFromErrors([
-          VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS,
-        ]),
       },
+      VerificationResult.createFromErrors([
+        VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS,
+      ]),
     );
     fixture.detectChanges();
 
@@ -105,7 +105,8 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       testGrid,
       randomUUID(),
-      { id: "test-id", isCurrent: true, verificationResult: undefined },
+      { id: "test-id", isCurrent: true },
+      null,
     );
     component.duplications = { 0: [0, 3] };
     fixture.detectChanges();
@@ -120,7 +121,8 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
       randomUUID(),
-      { id: "test-id", isCurrent: true, verificationResult: undefined },
+      { id: "test-id", isCurrent: true },
+      null,
     );
     fixture.detectChanges();
 
@@ -213,7 +215,8 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
       randomUUID(),
-      { id: "test-id", isCurrent: true, verificationResult: undefined },
+      { id: "test-id", isCurrent: true },
+      null,
     );
     fixture.detectChanges();
 
@@ -239,7 +242,8 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       input,
       randomUUID(),
-      { id: "test-id", isCurrent: true, verificationResult: undefined },
+      { id: "test-id", isCurrent: true },
+      null,
     );
     fixture.detectChanges();
     const changeSpy = spyOn(component.valueChange, "emit");

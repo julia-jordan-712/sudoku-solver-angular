@@ -63,11 +63,11 @@ export class SudokuSettingsStateService implements OnDestroy {
           {
             id: "Sudoku-Settings-Grid-Branch",
             isCurrent: true,
-            verificationResult: this.verify.verify(grid, {
-              allowEmptyCells: true,
-              trackUniquenessViolations: true,
-            }),
           },
+          this.verify.verify(grid, {
+            allowEmptyCells: true,
+            trackUniquenessViolations: true,
+          }),
         ),
       ),
       shareReplay({ bufferSize: 1, refCount: false }),
@@ -77,10 +77,7 @@ export class SudokuSettingsStateService implements OnDestroy {
   public readonly duplicationColumnIndicesToRowIndices$: Observable<DuplicationColumnIndicesToRowIndices> =
     defer(() =>
       this.viewModel$.pipe(
-        map(
-          (viewModel: SudokuGridViewModel) =>
-            viewModel.branchInfo.verificationResult,
-        ),
+        map((viewModel: SudokuGridViewModel) => viewModel.verificationResult),
         filter(isDefined),
         map((result: VerificationResult) =>
           this.convertDuplicates(result.getDuplicatesPerValue()),
@@ -104,7 +101,7 @@ export class SudokuSettingsStateService implements OnDestroy {
     return this.viewModel$.pipe(
       map(
         (viewModel: SudokuGridViewModel) =>
-          viewModel.branchInfo.verificationResult?.isValid() ?? false,
+          viewModel.verificationResult?.isValid() ?? false,
       ),
     );
   }

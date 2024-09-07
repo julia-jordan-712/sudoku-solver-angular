@@ -30,7 +30,7 @@ export class SudokuGridComponent {
     this._grid = grid;
     this.sqrt = grid ? Math.round(Math.sqrt(grid.rows.length)) : null;
     this.gridColumns = `repeat(${grid?.rows?.length ?? 1}, max-content)`;
-    this.verification = grid?.branchInfo.verificationResult;
+    this.verification = grid?.verificationResult;
   }
 
   @Input()

@@ -1,3 +1,5 @@
+import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { Nullable } from "@app/shared/types/nullable";
 import {
   SudokuGrid,
   SudokuGridCell,
@@ -16,6 +18,7 @@ export class SudokuGridViewModelConverter {
     grid: SudokuGrid,
     id: string,
     branchInfo: SudokuGridViewModelBranchInfo,
+    verificationResult: Nullable<VerificationResult>,
   ): SudokuGridViewModel {
     const branchId: string | undefined = branchInfo?.isCurrent
       ? "CURRENT"
@@ -27,8 +30,10 @@ export class SudokuGridViewModelConverter {
         grid,
         id,
         branchInfo,
+        verificationResult,
       ),
       branchInfo,
+      verificationResult,
     );
   }
 
@@ -36,6 +41,7 @@ export class SudokuGridViewModelConverter {
     rows: SudokuGridRow[],
     id: string,
     branchInfo: SudokuGridViewModelBranchInfo,
+    verificationResult: Nullable<VerificationResult>,
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
       SudokuGridViewModelConverter.createViewModelsFromRow(
@@ -43,6 +49,7 @@ export class SudokuGridViewModelConverter {
         id,
         index,
         branchInfo,
+        verificationResult,
       ),
     );
   }
@@ -52,6 +59,7 @@ export class SudokuGridViewModelConverter {
     id: string,
     index: number,
     branchInfo: SudokuGridViewModelBranchInfo,
+    verificationResult: Nullable<VerificationResult>,
   ): SudokuGridRowViewModel {
     return new SudokuGridRowViewModel(
       `${id}_row-${index}`,
@@ -60,8 +68,10 @@ export class SudokuGridViewModelConverter {
         id,
         index,
         branchInfo,
+        verificationResult,
       ),
       branchInfo,
+      verificationResult,
     );
   }
 
@@ -70,6 +80,7 @@ export class SudokuGridViewModelConverter {
     id: string,
     rowIndex: number,
     branchInfo: SudokuGridViewModelBranchInfo,
+    verificationResult: Nullable<VerificationResult>,
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
@@ -84,6 +95,7 @@ export class SudokuGridViewModelConverter {
         index,
         id,
         branchInfo,
+        verificationResult,
       ),
     );
   }
@@ -96,6 +108,7 @@ export class SudokuGridViewModelConverter {
     columnIndex: number,
     id: string,
     branchInfo: SudokuGridViewModelBranchInfo,
+    verificationResult: Nullable<VerificationResult>,
   ): SudokuGridCellViewModel {
     return new SudokuGridCellViewModel(
       `${id}_cell-${rowIndex}-${columnIndex}`,
@@ -103,6 +116,7 @@ export class SudokuGridViewModelConverter {
       maxValue,
       size,
       branchInfo,
+      verificationResult,
     );
   }
 

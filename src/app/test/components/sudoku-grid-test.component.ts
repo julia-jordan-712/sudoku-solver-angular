@@ -16,7 +16,7 @@ export class SudokuGridTestComponent {
   @Input({ required: true })
   set grid(grid: Nullable<SudokuGridViewModel>) {
     this._grid = grid;
-    this.verification = grid?.branchInfo.verificationResult;
+    this.verification = grid?.verificationResult;
   }
 
   @Input()

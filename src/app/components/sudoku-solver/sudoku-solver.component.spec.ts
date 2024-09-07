@@ -72,7 +72,8 @@ describe(SudokuSolverComponent.name, () => {
           SudokuGridViewModelConverter.createViewModelFromGrid(
             PuzzleSimple.PUZZLE_3.puzzle,
             randomUUID(),
-            { id: "test-id", isCurrent: true, verificationResult: undefined },
+            { id: "test-id", isCurrent: true },
+            null,
           ),
         ]),
       );

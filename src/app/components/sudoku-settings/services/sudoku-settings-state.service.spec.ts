@@ -186,9 +186,7 @@ describe(SudokuSettingsStateService.name, () => {
         .getViewModel()
         .pipe(first())
         .subscribe((viewModel: SudokuGridViewModel) => {
-          expect(viewModel.branchInfo.verificationResult?.isValid()).toEqual(
-            valid,
-          );
+          expect(viewModel.verificationResult?.isValid()).toEqual(valid);
           done();
         });
     }

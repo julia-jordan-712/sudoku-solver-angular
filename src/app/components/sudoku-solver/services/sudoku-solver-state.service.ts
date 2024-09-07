@@ -62,14 +62,13 @@ export class SudokuSolverStateService implements SudokuSolverState {
               {
                 id: branch.getId(),
                 isCurrent: branch.isCurrentBranch(),
-                verificationResult:
-                  state !== "NOT_STARTED" && branch.isCurrentBranch()
-                    ? new VerifySolution().verify(branch.grid, {
-                        allowEmptyCells: false,
-                        size: branch.grid.length,
-                      })
-                    : null,
               },
+              state !== "NOT_STARTED" && branch.isCurrentBranch()
+                ? new VerifySolution().verify(branch.grid, {
+                    allowEmptyCells: false,
+                    size: branch.grid.length,
+                  })
+                : null,
             ),
           ),
       ),

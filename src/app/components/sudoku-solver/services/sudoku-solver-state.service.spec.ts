@@ -532,7 +532,7 @@ describe(SudokuSolverStateService.name, () => {
           .subscribe((viewModels) => {
             expect(viewModels).not.toBeNull();
             expect(viewModels?.length).toEqual(1);
-            const result = viewModels[0].branchInfo.verificationResult;
+            const result = viewModels[0].verificationResult;
             expect(result).not.toBeNull();
             expect(result?.isValid()).toBeTrue();
             done();
@@ -563,7 +563,7 @@ describe(SudokuSolverStateService.name, () => {
           .subscribe((viewModels) => {
             expect(viewModels).not.toBeNull();
             expect(viewModels?.length).toEqual(1);
-            const result = viewModels[0].branchInfo.verificationResult;
+            const result = viewModels[0].verificationResult;
             expect(result).not.toBeNull();
             expect(result?.isValid()).toBeTrue();
             done();
@@ -821,19 +821,16 @@ describe(SudokuSolverStateService.name, () => {
       expect(removeExecutionIdFromViewModelId(viewModels[0])).not.toEqual(
         fourthBranch.getId(),
       );
-      const expectedCurrentBranchInfo: Partial<SudokuGridViewModelBranchInfo> =
-        {
-          id: fourthBranch.getId(),
-          isCurrent: true,
-        };
-      expect(viewModels[0].branchInfo).toEqual(
-        jasmine.objectContaining(expectedCurrentBranchInfo),
-      );
+      const expectedCurrentBranchInfo: SudokuGridViewModelBranchInfo = {
+        id: fourthBranch.getId(),
+        isCurrent: true,
+      };
+      expect(viewModels[0].branchInfo).toEqual(expectedCurrentBranchInfo);
       expect(viewModels[0].rows[0].branchInfo).toEqual(
-        jasmine.objectContaining(expectedCurrentBranchInfo),
+        expectedCurrentBranchInfo,
       );
       expect(viewModels[0].rows[0].cells[0].branchInfo).toEqual(
-        jasmine.objectContaining(expectedCurrentBranchInfo),
+        expectedCurrentBranchInfo,
       );
 
       expect(removeExecutionIdFromViewModelId(viewModels[1])).toEqual(
@@ -845,19 +842,16 @@ describe(SudokuSolverStateService.name, () => {
       expect(removeExecutionIdFromViewModelId(viewModels[3])).toEqual(
         initialBranch.getId(),
       );
-      const expectedInitialBranchInfo: Partial<SudokuGridViewModelBranchInfo> =
-        {
-          id: initialBranch.getId(),
-          isCurrent: false,
-        };
-      expect(viewModels[3].branchInfo).toEqual(
-        jasmine.objectContaining(expectedInitialBranchInfo),
-      );
+      const expectedInitialBranchInfo: SudokuGridViewModelBranchInfo = {
+        id: initialBranch.getId(),
+        isCurrent: false,
+      };
+      expect(viewModels[3].branchInfo).toEqual(expectedInitialBranchInfo);
       expect(viewModels[3].rows[0].branchInfo).toEqual(
-        jasmine.objectContaining(expectedInitialBranchInfo),
+        expectedInitialBranchInfo,
       );
       expect(viewModels[3].rows[0].cells[0].branchInfo).toEqual(
-        jasmine.objectContaining(expectedInitialBranchInfo),
+        expectedInitialBranchInfo,
       );
 
       testSubscription.destroy();
@@ -890,20 +884,14 @@ describe(SudokuSolverStateService.name, () => {
       expect(removeExecutionIdFromViewModelId(viewModels[0])).toEqual(
         "CURRENT",
       );
-      expect(viewModels[0].branchInfo).toEqual({
-        id: secondBranch.getId(),
-        isCurrent: true,
-        verificationResult: VerificationResult.createValid(),
-      });
+      expect(viewModels[0].verificationResult).toEqual(
+        VerificationResult.createValid(),
+      );
 
       expect(removeExecutionIdFromViewModelId(viewModels[1])).toEqual(
         initialBranch.getId(),
       );
-      expect(viewModels[1].branchInfo).toEqual({
-        id: initialBranch.getId(),
-        isCurrent: false,
-        verificationResult: null,
-      });
+      expect(viewModels[1].verificationResult).toBeNull();
 
       testSubscription.destroy();
     });
