@@ -1,15 +1,15 @@
-@if (viewModels$ | async; as branches) {
-  @if (branches.length > 0) {
+@if (viewModels$ | async; as viewModels) {
+  @if (viewModels.length > 0) {
     <div class="top">
       <app-sudoku-solver-actions></app-sudoku-solver-actions>
       <app-sudoku-solver-status></app-sudoku-solver-status>
       <app-sudoku-solver-steps></app-sudoku-solver-steps>
     </div>
-    @for (branch of branches; track branch.id; let i = $index) {
+    @for (viewModel of viewModels; track viewModel.id; let i = $index) {
       <div class="branch">
         <app-sudoku-grid
-          [grid]="branch"
-          [verification]="((verification$ | async) ?? [])[i]"
+          [grid]="viewModel"
+          [verification]="(verification$ | async)?.[viewModel.id]"
           [highlightNumber]="highlightNumber$ | async"
           [readonly]="true"
         ></app-sudoku-grid>

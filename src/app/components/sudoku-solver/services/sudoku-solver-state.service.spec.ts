@@ -522,18 +522,6 @@ describe(SudokuSolverStateService.name, () => {
             done();
           });
       });
-
-      it("should determine verification result", (done) => {
-        service
-          .getVerificationResults()
-          .pipe(first())
-          .subscribe((result) => {
-            expect(result).not.toBeNull();
-            expect(result?.length).toEqual(1);
-            expect(result?.[0].isValid()).toBeTrue();
-            done();
-          });
-      });
     });
 
     describe("failure", () => {
@@ -548,16 +536,6 @@ describe(SudokuSolverStateService.name, () => {
           .pipe(first())
           .subscribe((state) => {
             expect(state).toEqual("FAILED");
-            done();
-          });
-      });
-
-      it("should NOT determine verification result", (done) => {
-        service
-          .getVerificationResults()
-          .pipe(first())
-          .subscribe((result) => {
-            expect(result).toBeUndefined();
             done();
           });
       });
@@ -635,17 +613,6 @@ describe(SudokuSolverStateService.name, () => {
         .pipe(first())
         .subscribe((viewModels) => {
           expect(viewModels).toEqual([]);
-          done();
-        });
-    });
-
-    it("should have no verification result after reset", (done) => {
-      service.reset();
-      service
-        .getVerificationResults()
-        .pipe(first())
-        .subscribe((verification) => {
-          expect(verification).toBeUndefined();
           done();
         });
     });

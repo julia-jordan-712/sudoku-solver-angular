@@ -4,7 +4,6 @@ import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import {
   SolverExecution,
@@ -34,9 +33,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
     this.createInitialSolverResponse(),
   );
   private stepsExecuted$ = new BehaviorSubject<number>(0);
-  private verificationResults$ = new BehaviorSubject<
-    Nullable<VerificationResult[]>
-  >(undefined);
 
   private createInitialSolverResponse(puzzle?: SudokuGrid): SolverResponse {
     return {
@@ -93,10 +89,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
     return this.stopWatch.timeElapsed();
   }
 
-  getVerificationResults(): Observable<Nullable<VerificationResult[]>> {
-    return this.verificationResults$.asObservable();
-  }
-
   canGoToNextStep(): Observable<boolean> {
     return this.execution$
       .asObservable()
@@ -123,7 +115,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
     if (!this.stopWatch.isStarted()) {
       this.stopWatch.start();
     }
-    this.verificationResults$.next(undefined);
 
     this.solveNextStepAndFinishIfDone();
     this.stepsExecuted$.next(this.stepsExecuted$.getValue() + 1);
@@ -151,7 +142,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
     );
     this.response$.next(response);
     if (response.status === "COMPLETE") {
-      this.updateVerificationResults();
       this.finishExecuting("DONE");
     } else if (response.status === "FAILED") {
       this.finishExecuting("FAILED");
@@ -185,7 +175,6 @@ export class SudokuSolverStateService implements SudokuSolverState {
   private resetAllExceptSolution(): void {
     this.execution$.next("NOT_STARTED");
     this.executionId$.next(randomUUID());
-    this.verificationResults$.next(undefined);
     this.stepsExecuted$.next(0);
     this.solver.reset();
     this.stopWatch.reset();
@@ -224,13 +213,5 @@ export class SudokuSolverStateService implements SudokuSolverState {
       this.executeNextStep();
       setTimeout(() => this.scheduleNextStep(), this.delay.getValue());
     }
-  }
-
-  private updateVerificationResults(): void {
-    this.verificationResults$.next(
-      this.getResponseBranches().map((branch: SolverBranch) =>
-        this.verify.verify(branch.grid),
-      ),
-    );
   }
 }
