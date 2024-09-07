@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { DuplicationColumnIndicesToRowIndices } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -18,9 +17,6 @@ export class SudokuGridTestComponent {
     this._grid = grid;
     this.verification = grid?.verificationResult;
   }
-
-  @Input()
-  duplications: Nullable<DuplicationColumnIndicesToRowIndices>;
 
   @Output()
   valueChange: EventEmitter<SudokuGrid> = new EventEmitter();

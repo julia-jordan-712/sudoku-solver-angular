@@ -45,9 +45,6 @@ export class SudokuGridRowComponent implements OnChanges {
   borderBottom = false;
 
   @Input()
-  columnsWithDuplicates: Nullable<number[]>;
-
-  @Input()
   set highlightNumber(highlightNumber: Nullable<number>) {
     this.componentService.setHighlightNumber(highlightNumber);
   }

@@ -1,4 +1,5 @@
 import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { CellPosition } from "@app/shared/types/cell-position";
 import { Nullable } from "@app/shared/types/nullable";
 import {
   SudokuGrid,
@@ -113,6 +114,7 @@ export class SudokuGridViewModelConverter {
     return new SudokuGridCellViewModel(
       `${id}_cell-${rowIndex}-${columnIndex}`,
       cell,
+      new CellPosition(rowIndex, columnIndex),
       maxValue,
       size,
       branchInfo,

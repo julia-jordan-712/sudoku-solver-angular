@@ -5,6 +5,7 @@ import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
+import { CellPosition } from "@app/shared/types/cell-position";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
@@ -67,7 +68,6 @@ describe(SudokuGridComponent.name, () => {
       },
       VerificationResult.createValid(),
     );
-    component.duplications = {};
     fixture.detectChanges();
 
     expect(queryGrid().innerText).toEqual("1\n2\n3\n4");
@@ -102,13 +102,16 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, undefined, undefined],
       [undefined, undefined, undefined, undefined],
     ];
+    const verificationResult = VerificationResult.createFromErrors([]);
+    verificationResult.addDuplicates({
+      1: [new CellPosition(0, 0), new CellPosition(0, 3)],
+    });
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       testGrid,
       randomUUID(),
       { id: "test-id", isCurrent: true },
-      null,
+      verificationResult,
     );
-    component.duplications = { 0: [0, 3] };
     fixture.detectChanges();
 
     expect(getCellComponent(0).isDuplicate).toEqual(true);

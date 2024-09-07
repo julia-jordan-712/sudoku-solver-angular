@@ -3,8 +3,6 @@ import {
   SudokuGridComponentService,
   SudokuGridRowChangeEvent,
 } from "@app/components/sudoku-grid/sudoku-grid-component.service";
-import { DuplicationColumnIndicesToRowIndices } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
-import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
@@ -19,7 +17,6 @@ export class SudokuGridComponent {
   _grid: Nullable<SudokuGridViewModel>;
   sqrt: Nullable<number>;
   gridColumns = "";
-  verification: Nullable<VerificationResult>;
 
   private componentService: SudokuGridComponentService = inject(
     SudokuGridComponentService,
@@ -30,11 +27,8 @@ export class SudokuGridComponent {
     this._grid = grid;
     this.sqrt = grid ? Math.round(Math.sqrt(grid.rows.length)) : null;
     this.gridColumns = `repeat(${grid?.rows?.length ?? 1}, max-content)`;
-    this.verification = grid?.verificationResult;
   }
 
-  @Input()
-  duplications: Nullable<DuplicationColumnIndicesToRowIndices>;
   @Input()
   highlightNumber: Nullable<number>;
   @Input()

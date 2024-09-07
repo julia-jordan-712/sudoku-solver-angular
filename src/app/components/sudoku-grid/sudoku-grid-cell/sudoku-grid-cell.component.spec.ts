@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SudokuGridCellComponentService } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-component.service";
 import { SudokuGridCellMultipleValuesComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-multiple-values/sudoku-grid-cell-multiple-values.component";
 import { SudokuGridCellSingleValueComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-single-value/sudoku-grid-cell-single-value.component";
+import { CellPosition } from "@app/shared/types/cell-position";
 import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { SudokuGridCellComponent } from "./sudoku-grid-cell.component";
 
@@ -29,6 +30,7 @@ describe(SudokuGridCellComponent.name, () => {
     component.cell = new SudokuGridCellViewModel(
       "id-0",
       5,
+      new CellPosition(0, 0),
       9,
       20,
       { id: "test-id", isCurrent: true },

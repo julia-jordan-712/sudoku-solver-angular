@@ -13,10 +13,7 @@ import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { combineLatest, first, of } from "rxjs";
-import {
-  DuplicationColumnIndicesToRowIndices,
-  SudokuSettingsStateService,
-} from "./sudoku-settings-state.service";
+import { SudokuSettingsStateService } from "./sudoku-settings-state.service";
 
 describe(SudokuSettingsStateService.name, () => {
   let gridUpdate: SudokuSettingsGridUpdateService;
@@ -190,28 +187,5 @@ describe(SudokuSettingsStateService.name, () => {
           done();
         });
     }
-  });
-
-  it("should convert the duplicates into a more UI-friendly form", (done) => {
-    const duplicateElements: SudokuGrid = [
-      [1, 2, 3, 4],
-      [3, 4, 1, 2],
-      [2, 3, 4, 1],
-      [3, 1, 2, 3],
-    ];
-    const expected: DuplicationColumnIndicesToRowIndices = {
-      1: [0], // second row, first column
-      2: [1], // third row, second column
-      3: [0, 3], // fourth row, first and last column
-    };
-
-    underTest.setGrid(duplicateElements);
-
-    underTest.duplicationColumnIndicesToRowIndices$
-      .pipe(first())
-      .subscribe((indices) => {
-        expect(indices).toEqual(expected);
-        done();
-      });
   });
 });

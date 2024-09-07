@@ -6,16 +6,10 @@ import {
 import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
 import { Logger } from "@app/core/log/logger";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
-import { VerificationResult } from "@app/core/verification/types/verification-result";
-import { Index } from "@app/shared/types";
-import { CellPosition } from "@app/shared/types/cell-position";
 import { Nullable } from "@app/shared/types/nullable";
-import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
-import { Objects } from "@app/shared/util/objects";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import {
   BehaviorSubject,
@@ -73,18 +67,6 @@ export class SudokuSettingsStateService implements OnDestroy {
       shareReplay({ bufferSize: 1, refCount: false }),
     ),
   );
-
-  public readonly duplicationColumnIndicesToRowIndices$: Observable<DuplicationColumnIndicesToRowIndices> =
-    defer(() =>
-      this.viewModel$.pipe(
-        map((viewModel: SudokuGridViewModel) => viewModel.verificationResult),
-        filter(isDefined),
-        map((result: VerificationResult) =>
-          this.convertDuplicates(result.getDuplicatesPerValue()),
-        ),
-        shareReplay({ bufferSize: 1, refCount: false }),
-      ),
-    );
 
   ngOnDestroy(): void {
     this.confirmed$.complete();
@@ -174,30 +156,4 @@ export class SudokuSettingsStateService implements OnDestroy {
       ),
     );
   }
-
-  private convertDuplicates(
-    duplicates: VerificationDuplicates,
-  ): DuplicationColumnIndicesToRowIndices {
-    return StopWatch.monitor(
-      () => {
-        const cellPositions: CellPosition[] = Objects.uniqueArray(
-          Object.values(duplicates).flat(),
-          (a, b) => a.equals(b),
-        );
-        return Objects.arrayToArrayIndex(
-          cellPositions,
-          (c) => c.x.toString(),
-          (c) => c.y,
-        );
-      },
-      this.logger,
-      { message: "Convert duplicates" },
-    );
-  }
 }
-
-/**
- * The column indices of cells which contain a duplicate mapped
- * to the row index of these cells.
- */
-export type DuplicationColumnIndicesToRowIndices = Index<number[]>;
