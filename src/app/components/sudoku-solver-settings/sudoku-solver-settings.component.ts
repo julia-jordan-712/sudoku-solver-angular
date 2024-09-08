@@ -16,8 +16,8 @@ export class SudokuSolverSettingsComponent {
   private clipboard = inject(ClipboardService);
 
   show$: Observable<boolean> = this.state
-    .getViewModels()
-    .pipe(map((viewModels) => viewModels.length > 0));
+    .getCurrentBranch()
+    .pipe(map(isDefined));
   delay$: Observable<number> = this.state.getDelay();
   maxSteps$: Observable<number> = this.state.getMaximumSteps();
   pauseAfterStep$: Observable<Nullable<number>> =
@@ -43,15 +43,8 @@ export class SudokuSolverSettingsComponent {
 
   copyCurrentSudoku(): void {
     this.state
-      .getViewModels()
-      .pipe(
-        map(
-          (viewModels: SudokuGridViewModel[]) =>
-            viewModels.filter((vm) => vm.branchInfo?.isCurrent)[0],
-        ),
-        filter(isDefined),
-        first(),
-      )
+      .getCurrentBranch()
+      .pipe(first(), filter(isDefined))
       .subscribe((grid: SudokuGridViewModel) =>
         this.clipboard.copyToClipboard(grid),
       );

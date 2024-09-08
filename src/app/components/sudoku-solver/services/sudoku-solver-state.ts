@@ -9,7 +9,8 @@ export const SUDOKU_SOLVER_STATE: InjectionToken<SudokuSolverState> =
   new InjectionToken<SudokuSolverState>("SUDOKU_SOLVER_STATE");
 
 export interface SudokuSolverState {
-  getViewModels(): Observable<SudokuGridViewModel[]>;
+  getCurrentBranch(): Observable<Nullable<SudokuGridViewModel>>;
+  getAdditionalBranches(): Observable<SudokuGridViewModel[]>;
   getExecutionState(): Observable<SolverExecution>;
 
   getDelay(): Observable<number>;

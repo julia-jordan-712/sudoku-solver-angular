@@ -12,7 +12,10 @@ import { EMPTY, Observable } from "rxjs";
 
 @Injectable()
 export class SudokuSolverStateMockService implements SudokuSolverState {
-  getViewModels(): Observable<SudokuGridViewModel[]> {
+  getCurrentBranch(): Observable<Nullable<SudokuGridViewModel>> {
+    return EMPTY;
+  }
+  getAdditionalBranches(): Observable<SudokuGridViewModel[]> {
     return EMPTY;
   }
   getExecutionState(): Observable<SolverExecution> {

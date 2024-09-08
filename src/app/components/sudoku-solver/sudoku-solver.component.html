@@ -1,10 +1,23 @@
-@if (viewModels$ | async; as branches) {
-  @if (branches.length > 0) {
+@if (additionalBranches$ | async; as branches) {
+  @if (currentBranch$ | async; as currentBranch) {
     <div class="top">
       <app-sudoku-solver-actions></app-sudoku-solver-actions>
       <app-sudoku-solver-status></app-sudoku-solver-status>
       <app-sudoku-solver-steps></app-sudoku-solver-steps>
     </div>
+    @if (branches.length > 0) {
+      <h2>{{ "BRANCH.CURRENT.TITLE" | translate }}</h2>
+    }
+    <div class="branch">
+      <app-sudoku-grid
+        [grid]="currentBranch"
+        [highlightNumber]="highlightNumber$ | async"
+        [readonly]="true"
+      ></app-sudoku-grid>
+    </div>
+  }
+  @if (branches.length > 0) {
+    <h2>{{ "BRANCH.ADDITIONAL.TITLE" | translate }}</h2>
     @for (branch of branches; track branch.id; let i = $index) {
       <div class="branch">
         <app-sudoku-grid

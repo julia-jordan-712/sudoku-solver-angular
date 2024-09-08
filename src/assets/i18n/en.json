@@ -114,5 +114,13 @@
         "TOOLTIP": "Highlights all occurrences of this number in the Sudoku."
       }
     }
+  },
+  "BRANCH": {
+    "CURRENT": {
+      "TITLE": "Current solution"
+    },
+    "ADDITIONAL": {
+      "TITLE": "Copy of the state before the new branch was created"
+    }
   }
 }

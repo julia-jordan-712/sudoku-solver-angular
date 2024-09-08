@@ -67,15 +67,15 @@ describe(SudokuSolverComponent.name, () => {
 
   describe("enabling of buttons", () => {
     beforeEach(() => {
-      spyOn(service, "getViewModels").and.returnValue(
-        of([
+      spyOn(service, "getCurrentBranch").and.returnValue(
+        of(
           SudokuGridViewModelConverter.createViewModelFromGrid(
             PuzzleSimple.PUZZLE_3.puzzle,
             randomUUID(),
             { id: "test-id", isCurrent: true },
             null,
           ),
-        ]),
+        ),
       );
       SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
       fixture = TestBed.createComponent(SudokuSolverComponent);

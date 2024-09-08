@@ -18,7 +18,9 @@ import {
   BehaviorSubject,
   Observable,
   combineLatest,
+  defer,
   map,
+  shareReplay,
   withLatestFrom,
 } from "rxjs";
 import { v4 as randomUUID } from "uuid";
@@ -49,8 +51,8 @@ export class SudokuSolverStateService implements SudokuSolverState {
 
   private stopWatch: StopWatch = new StopWatch();
 
-  getViewModels(): Observable<SudokuGridViewModel[]> {
-    return combineLatest([this.response$, this.executionId$]).pipe(
+  private readonly viewModels$: Observable<SudokuGridViewModel[]> = defer(() =>
+    combineLatest([this.response$, this.executionId$]).pipe(
       withLatestFrom(this.execution$),
       map(([[response, id], state]) =>
         response.branches
@@ -71,6 +73,24 @@ export class SudokuSolverStateService implements SudokuSolverState {
                 : null,
             ),
           ),
+      ),
+      shareReplay({ bufferSize: 1, refCount: false }),
+    ),
+  );
+
+  getCurrentBranch(): Observable<Nullable<SudokuGridViewModel>> {
+    return this.viewModels$.pipe(
+      map(
+        (viewModels: SudokuGridViewModel[]) =>
+          viewModels.filter((viewModel) => viewModel.branchInfo.isCurrent)?.[0],
+      ),
+    );
+  }
+
+  getAdditionalBranches(): Observable<SudokuGridViewModel[]> {
+    return this.viewModels$.pipe(
+      map((viewModels: SudokuGridViewModel[]) =>
+        viewModels.filter((viewModel) => !viewModel.branchInfo.isCurrent),
       ),
     );
   }
