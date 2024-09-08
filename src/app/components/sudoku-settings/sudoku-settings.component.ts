@@ -1,11 +1,13 @@
 import { Component, inject } from "@angular/core";
-import { SudokuSettingsStateService } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
+import { SudokuPuzzleActions } from "@app/components/sudoku-settings/state/sudoku-puzzle.actions";
+import { SudokuPuzzleSelectors } from "@app/components/sudoku-settings/state/sudoku-puzzle.selectors";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-settings/state/sudoku-puzzle.state";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
+import { Store } from "@ngrx/store";
 import { Observable, filter, first } from "rxjs";
 
 @Component({
@@ -14,27 +16,35 @@ import { Observable, filter, first } from "rxjs";
   styleUrls: ["./sudoku-settings.component.scss"],
 })
 export class SudokuSettingsComponent {
-  private settingState = inject(SudokuSettingsStateService);
+  private store: Store = inject(Store);
   private solverState = inject(SUDOKU_SOLVER_STATE);
 
-  confirmEnabled$: Observable<boolean> = this.settingState.isConfirmEnabled();
-  confirmed$: Observable<boolean> = this.settingState.isConfirmed();
-  size$: Observable<Nullable<number>> = this.settingState.getHeight();
-  grid$: Observable<SudokuGridViewModel> = this.settingState.getViewModel();
+  confirmEnabled$: Observable<boolean> = this.store.select(
+    SudokuPuzzleSelectors.selectIsConfirmEnabled,
+  );
+  confirmed$: Observable<boolean> = this.store.select(
+    SudokuPuzzleSelectors.selectIsConfirmed,
+  );
+  size$: Observable<Nullable<number>> = this.store.select(
+    SudokuPuzzleSelectors.selectHeight,
+  );
+  grid$: Observable<SudokuGridViewModel> = this.store
+    .select(SudokuPuzzleSelectors.selectViewModel)
+    .pipe(filter(isDefined));
   selectionItems$: Observable<SudokuDropdownSelectionItem[]> =
-    this.settingState.getSelectionItems();
+    this.store.select(SudokuPuzzleSelectors.selectSelectionOptions);
   selectedItem$: Observable<Nullable<SudokuDropdownSelectionItem>> =
-    this.settingState.getSelectedItem();
+    this.store.select(SudokuPuzzleSelectors.selectSelectedOption);
 
   changeSettings(): void {
-    this.settingState.setConfirmed(false);
+    this.store.dispatch(SudokuPuzzleActions.setConfirmed({ confirmed: false }));
     this.solverState.reset();
   }
 
   submit(): void {
-    this.settingState.setConfirmed(true);
-    this.settingState
-      .getGrid()
+    this.store.dispatch(SudokuPuzzleActions.setConfirmed({ confirmed: true }));
+    this.store
+      .select(SudokuPuzzleSelectors.selectSudoku)
       .pipe(first(), filter(isDefined))
       .subscribe((puzzle: SudokuGrid) =>
         this.solverState.setInitialPuzzle(puzzle),
@@ -42,19 +52,20 @@ export class SudokuSettingsComponent {
   }
 
   onSelect(option: SudokuDropdownSelectionItem): void {
-    this.settingState.setSelection(option);
+    this.store.dispatch(SudokuPuzzleActions.setSelectedOption({ option }));
   }
 
   onCellChange(grid: SudokuGrid): void {
-    this.settingState.verifyGrid(grid);
+    this.store.dispatch(SudokuPuzzleActions.setSudoku({ sudoku: grid }));
   }
 
   onCellSubmit(grid: SudokuGrid): void {
-    this.settingState.setGrid(grid);
+    this.store.dispatch(SudokuPuzzleActions.setSudoku({ sudoku: grid }));
   }
 
   setSize(size: number): void {
-    this.settingState.clearSelection();
-    this.settingState.setHeightAndWidth(size, size);
+    this.store.dispatch(SudokuPuzzleActions.clearSelectedOption());
+    this.store.dispatch(SudokuPuzzleActions.setHeight({ height: size }));
+    this.store.dispatch(SudokuPuzzleActions.setWidth({ width: size }));
   }
 }
