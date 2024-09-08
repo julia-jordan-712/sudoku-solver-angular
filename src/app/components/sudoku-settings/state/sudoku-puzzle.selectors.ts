@@ -11,6 +11,31 @@ const selectState = createFeatureSelector<SudokuPuzzleState>(
   SudokuPuzzleReducer.featureKey,
 );
 
+const selectIsConfirmed = createSelector(
+  selectState,
+  (state: SudokuPuzzleState) => state.isConfirmed,
+);
+
+const selectHeight = createSelector(
+  selectState,
+  (state: SudokuPuzzleState) => state.height,
+);
+
+const selectWidth = createSelector(
+  selectState,
+  (state: SudokuPuzzleState) => state.width,
+);
+
+const selectSelectionOptions = createSelector(
+  selectState,
+  (state: SudokuPuzzleState) => state.selectionOptions.options,
+);
+
+const selectSelectedOption = createSelector(
+  selectState,
+  (state: SudokuPuzzleState) => state.selectionOptions.selected,
+);
+
 const selectSudoku = createSelector(
   selectState,
   (state: SudokuPuzzleState) => state.sudoku,
@@ -43,6 +68,12 @@ const selectIsConfirmEnabled = createSelector(
 
 export const SudokuPuzzleSelectors = {
   selectState,
-  selectViewModel,
+  selectHeight,
+  selectIsConfirmed,
   selectIsConfirmEnabled,
+  selectSelectedOption,
+  selectSelectionOptions,
+  selectSudoku,
+  selectViewModel,
+  selectWidth,
 };
