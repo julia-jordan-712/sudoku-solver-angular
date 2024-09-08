@@ -242,7 +242,6 @@ describe(SudokuSettingsComponent.name, () => {
   ): void {
     expect(component._grid).toBeTruthy();
     expect(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       SudokuGridViewModelConverter.createGridFromViewModel(component._grid!),
     ).toEqual(expected);
   }
