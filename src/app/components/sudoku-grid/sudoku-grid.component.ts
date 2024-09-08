@@ -3,8 +3,6 @@ import {
   SudokuGridComponentService,
   SudokuGridRowChangeEvent,
 } from "@app/components/sudoku-grid/sudoku-grid-component.service";
-import { DuplicationColumnIndicesToRowIndices } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
-import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
@@ -31,10 +29,6 @@ export class SudokuGridComponent {
     this.gridColumns = `repeat(${grid?.rows?.length ?? 1}, max-content)`;
   }
 
-  @Input()
-  verification: Nullable<VerificationResult>;
-  @Input()
-  duplications: Nullable<DuplicationColumnIndicesToRowIndices>;
   @Input()
   highlightNumber: Nullable<number>;
   @Input()

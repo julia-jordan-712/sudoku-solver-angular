@@ -10,12 +10,14 @@ export class SudokuGridCellTestComponent {
   size: number | undefined;
   maxValue: number | undefined;
   _cell: SudokuGridCell | undefined;
+  isDuplicate = false;
 
   @Input({ required: true })
   set cell(cell: SudokuGridCellViewModel) {
     this._cell = cell.cell;
     this.maxValue = cell.maxValue;
     this.size = cell.widthAndHeight;
+    this.isDuplicate = cell.isDuplicate();
   }
 
   @Input()
@@ -29,9 +31,6 @@ export class SudokuGridCellTestComponent {
 
   @Input()
   borderLeft = false;
-
-  @Input()
-  isDuplicate = false;
 
   @Input()
   highlight = false;

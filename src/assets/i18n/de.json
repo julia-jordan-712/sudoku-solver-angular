@@ -113,6 +113,17 @@
         "LABEL": "Nummer hervorheben",
         "TOOLTIP": "Hebt alle Vorkommen dieser Nummer im Sudoku hervor."
       }
+    },
+    "BRANCHES": {
+      "REQUIRED": "Zweige"
+    }
+  },
+  "BRANCH": {
+    "CURRENT": {
+      "TITLE": "Aktuelle Lösung"
+    },
+    "ADDITIONAL": {
+      "TITLE": "Kopie des Zustands vor der Erstellung des neuen Zweigs"
     }
   }
 }

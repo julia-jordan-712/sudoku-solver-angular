@@ -22,8 +22,8 @@ describe(VerifyUniqueness.name, () => {
         params.desc ? params.desc : JSON.stringify(params.input)
       }`, () => {
         expect(
-          new VerifyUniqueness(params.input, params.input.length)
-            .verify()
+          new VerifyUniqueness()
+            .verify(params.input, params.input.length)
             .isValid(),
         ).toBeTrue();
       });
@@ -38,7 +38,7 @@ describe(VerifyUniqueness.name, () => {
       ];
 
       it("should recognize duplicate elements but not track their positions by default", () => {
-        const result = new VerifyUniqueness(duplicateElements, 4).verify();
+        const result = new VerifyUniqueness().verify(duplicateElements, 4);
         expect(result.isValid()).toBeFalse();
         expect(result.getErrors().length).toEqual(1);
         expect(result.getErrors()[0]).toEqual(
@@ -49,7 +49,7 @@ describe(VerifyUniqueness.name, () => {
       });
 
       it("should find duplicate element positions when they are tracked", () => {
-        const result = new VerifyUniqueness(duplicateElements, 4).verify({
+        const result = new VerifyUniqueness().verify(duplicateElements, 4, {
           trackUniquenessViolations: true,
         });
         expect(result.isValid()).toBeFalse();
@@ -102,10 +102,10 @@ describe(VerifyUniqueness.name, () => {
       it(`should recognize a valid solution when duplicates are not tracked: ${
         params.desc ? params.desc : JSON.stringify(params.input)
       }`, () => {
-        const result = new VerifyUniqueness(
+        const result = new VerifyUniqueness().verify(
           params.input,
           params.input.length,
-        ).verify();
+        );
         expect(result.isValid()).toBeTrue();
         expect(result.getErrors()).toEqual([]);
       });
@@ -113,10 +113,11 @@ describe(VerifyUniqueness.name, () => {
       it(`should recognize a valid solution when duplicates are tracked: ${
         params.desc ? params.desc : JSON.stringify(params.input)
       }`, () => {
-        const result = new VerifyUniqueness(
+        const result = new VerifyUniqueness().verify(
           params.input,
           params.input.length,
-        ).verify({ trackUniquenessViolations: true });
+          { trackUniquenessViolations: true },
+        );
         expect(result.isValid()).toBeTrue();
         expect(result.getErrors()).toEqual([]);
       });
@@ -140,10 +141,10 @@ describe(VerifyUniqueness.name, () => {
       },
     ].forEach((params) => {
       it(`${params.title} when duplicates are not tracked`, () => {
-        const result = new VerifyUniqueness(
+        const result = new VerifyUniqueness().verify(
           params.input,
           params.input.length,
-        ).verify();
+        );
         expect(result.isValid()).toBeFalse();
         expect(result.getErrors().length).toEqual(1);
         expect(result.getErrors()[0]).toEqual(
@@ -152,10 +153,11 @@ describe(VerifyUniqueness.name, () => {
       });
 
       it(`${params.title} when duplicates are tracked`, () => {
-        const result = new VerifyUniqueness(
+        const result = new VerifyUniqueness().verify(
           params.input,
           params.input.length,
-        ).verify({ trackUniquenessViolations: true });
+          { trackUniquenessViolations: true },
+        );
         expect(result.isValid()).toBeFalse();
         expect(result.getErrors().length).toEqual(1);
         expect(result.getErrors()[0]).toEqual(
@@ -180,7 +182,7 @@ describe(VerifyUniqueness.name, () => {
         grid[0][0] = invalidNumber;
         grid[3][3] = invalidNumber;
 
-        const result = new VerifyUniqueness(grid, 4).verify({
+        const result = new VerifyUniqueness().verify(grid, 4, {
           trackUniquenessViolations: true,
         });
         expect(result.isValid()).toBeFalse();
@@ -195,7 +197,7 @@ describe(VerifyUniqueness.name, () => {
         grid[0][0] = invalidNumber;
         grid[3][3] = invalidNumber;
 
-        const result = new VerifyUniqueness(grid, 4).verify({
+        const result = new VerifyUniqueness().verify(grid, 4, {
           trackUniquenessViolations: false,
         });
         expect(result.isValid()).toBeFalse();
@@ -209,7 +211,7 @@ describe(VerifyUniqueness.name, () => {
         const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
         grid[0][0] = [invalidNumber];
 
-        const result = new VerifyUniqueness(grid, 4).verify({
+        const result = new VerifyUniqueness().verify(grid, 4, {
           trackUniquenessViolations: true,
         });
         expect(result.isValid()).toBeFalse();
@@ -223,7 +225,7 @@ describe(VerifyUniqueness.name, () => {
         const grid: SudokuGrid = SudokuGridUtil.clone(Puzzle4x4.COMPLETE);
         grid[0][0] = [invalidNumber];
 
-        const result = new VerifyUniqueness(grid, 4).verify({
+        const result = new VerifyUniqueness().verify(grid, 4, {
           trackUniquenessViolations: false,
         });
         expect(result.isValid()).toBeFalse();

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { IconModule } from "@app/components/icon/icon.module";
+import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
+import { CellPosition } from "@app/shared/types/cell-position";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { DropdownInputTestComponent } from "@app/test/components/dropdown-input-test.component";
@@ -59,7 +61,7 @@ describe(SudokuSettingsComponent.name, () => {
     fixture.detectChanges();
     expectGridToEqual(grid, Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
-    expect(grid.duplications).toEqual({});
+    expect(grid.verification?.getDuplicatesPerValue()).toEqual({});
     expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
     expect(queryConfirm().disabled).toEqual(false);
@@ -68,6 +70,12 @@ describe(SudokuSettingsComponent.name, () => {
   it("should update the grid when cell change is submitted", () => {
     const grid: SudokuGridTestComponent = getSudokuGrid();
 
+    /**
+     * Value 4 is duplicated in
+     * - last column: first row and last row -> position (0,3) and (3,3)
+     * - last row: first column and last column -> position (3,0) and (3,3)
+     * - last square: position (2,2) and (3,3)
+     */
     const gridWithDuplications = [
       [1, 2, 3, 4],
       [3, 4, 1, 2],
@@ -78,11 +86,15 @@ describe(SudokuSettingsComponent.name, () => {
     fixture.detectChanges();
     expectGridToEqual(grid, gridWithDuplications);
     expect(grid.verification?.isValid()).toEqual(false);
-    expect(grid.duplications).toEqual({
-      0: [3], // first row, last column
-      2: [2], // third row, third column
-      3: [0, 3], // last row, first and last column
-    });
+    const duplicates: VerificationDuplicates | undefined =
+      grid.verification?.getDuplicatesPerValue();
+    expect(Object.keys(duplicates ?? {}).length).toEqual(1);
+    expect(duplicates?.[4]).toEqual([
+      new CellPosition(3, 0),
+      new CellPosition(3, 3),
+      new CellPosition(0, 3),
+      new CellPosition(2, 2),
+    ]);
     expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(true);
@@ -101,7 +113,7 @@ describe(SudokuSettingsComponent.name, () => {
       [2, 3, 4],
     ]);
     expect(grid.verification?.isValid()).toEqual(false);
-    expect(grid.duplications).toEqual({});
+    expect(grid.verification?.getDuplicatesPerValue()).toEqual({});
     expect(querySize().innerText).toEqual("3");
     expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(true);
@@ -115,7 +127,7 @@ describe(SudokuSettingsComponent.name, () => {
       [undefined, undefined, undefined, undefined],
     ]);
     expect(grid.verification?.isValid()).toEqual(true);
-    expect(grid.duplications).toEqual({});
+    expect(grid.verification?.getDuplicatesPerValue()).toEqual({});
     expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(false);
@@ -124,18 +136,21 @@ describe(SudokuSettingsComponent.name, () => {
   it("should update the verification when cell is changed but not submitted", () => {
     const grid: SudokuGridTestComponent = getSudokuGrid();
     grid.submit(Puzzle4x4.COMPLETE);
+    fixture.detectChanges();
+    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
 
-    grid.change([
+    const gridWithInvalidNumber = [
       [9, 2, 3, 4],
       [3, 4, 1, 2],
       [2, 3, 4, 1],
       [4, 1, 2, 3],
-    ]);
+    ];
+    grid.change(gridWithInvalidNumber);
     fixture.detectChanges();
 
-    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
+    expectGridToEqual(grid, gridWithInvalidNumber);
     expect(grid.verification?.isValid()).toEqual(false);
-    expect(grid.duplications).toEqual({});
+    expect(grid.verification?.getDuplicatesPerValue()).toEqual({});
     expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("PUZZLE.NONE");
     expect(queryConfirm().disabled).toEqual(true);
@@ -143,7 +158,7 @@ describe(SudokuSettingsComponent.name, () => {
     grid.change(Puzzle4x4.EMPTY_COLUMN);
     fixture.detectChanges();
 
-    expectGridToEqual(grid, Puzzle4x4.COMPLETE);
+    expectGridToEqual(grid, Puzzle4x4.EMPTY_COLUMN);
     expect(grid.verification?.isValid()).toEqual(true);
     expect(queryConfirm().disabled).toEqual(false);
 
@@ -168,7 +183,7 @@ describe(SudokuSettingsComponent.name, () => {
 
     expectGridToEqual(grid, Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
-    expect(grid.duplications).toEqual({});
+    expect(grid.verification?.getDuplicatesPerValue()).toEqual({});
     expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
 
@@ -188,7 +203,7 @@ describe(SudokuSettingsComponent.name, () => {
     expect(queryChangeSettings()).toBeNull();
     expectGridToEqual(grid, Puzzle4x4.COMPLETE);
     expect(grid.verification?.isValid()).toEqual(true);
-    expect(grid.duplications).toEqual({});
+    expect(grid.verification?.getDuplicatesPerValue()).toEqual({});
     expect(querySize().innerText).toEqual("4");
     expect(queryDropdown().innerText).toEqual("Puzzle 4x4");
   });
@@ -225,10 +240,10 @@ describe(SudokuSettingsComponent.name, () => {
     component: SudokuGridTestComponent,
     expected: SudokuGrid,
   ): void {
-    expect(component.grid).toBeTruthy();
+    expect(component._grid).toBeTruthy();
     expect(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      SudokuGridViewModelConverter.createGridFromViewModel(component.grid!),
+      SudokuGridViewModelConverter.createGridFromViewModel(component._grid!),
     ).toEqual(expected);
   }
 });

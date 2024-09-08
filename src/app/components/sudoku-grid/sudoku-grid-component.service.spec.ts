@@ -19,6 +19,8 @@ describe(SudokuGridComponentService.name, () => {
         [undefined, undefined, 2, 3],
       ],
       randomUUID(),
+      { id: "test-id", isCurrent: true },
+      null,
     );
 
   beforeEach(() => {

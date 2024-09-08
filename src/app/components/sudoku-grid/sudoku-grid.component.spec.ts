@@ -4,7 +4,10 @@ import { SudokuGridComponentService } from "@app/components/sudoku-grid/sudoku-g
 import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row.component";
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
+import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
+import { CellPosition } from "@app/shared/types/cell-position";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { SudokuGridCellTestComponent } from "@app/test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
@@ -26,7 +29,15 @@ describe(SudokuGridComponent.name, () => {
       ],
       imports: [
         SudokuVerificationModule,
-        TranslateTestingModule.withTranslations({}),
+        TranslateTestingModule.withTranslations({
+          en: {
+            VERIFY: {
+              ERROR: {
+                DUPLICATE_ELEMENTS: "The Sudoku contains duplicates.",
+              },
+            },
+          },
+        }),
       ],
       providers: [
         SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
@@ -51,12 +62,37 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       testGrid,
       randomUUID(),
+      {
+        id: "test-id",
+        isCurrent: true,
+      },
+      VerificationResult.createValid(),
     );
-    component.verification = VerificationResult.createValid();
-    component.duplications = {};
     fixture.detectChanges();
 
     expect(queryGrid().innerText).toEqual("1\n2\n3\n4");
+  });
+
+  it("should display the verification from the view model", () => {
+    const testGrid: SudokuGrid = SudokuGridUtil.clone(
+      Puzzle4x4.INCOMPLETE_INVALID_ROW,
+    );
+    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
+      testGrid,
+      randomUUID(),
+      {
+        id: "test-id",
+        isCurrent: true,
+      },
+      VerificationResult.createFromErrors([
+        VerifyI18nKey.ERROR_DUPLICATE_ELEMENTS,
+      ]),
+    );
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.innerText).toContain(
+      "The Sudoku contains duplicates",
+    );
   });
 
   it("should set correctly whether a cell is a duplicate", () => {
@@ -66,11 +102,16 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, undefined, undefined],
       [undefined, undefined, undefined, undefined],
     ];
+    const verificationResult = VerificationResult.createFromErrors([]);
+    verificationResult.addDuplicates({
+      1: [new CellPosition(0, 0), new CellPosition(0, 3)],
+    });
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       testGrid,
       randomUUID(),
+      { id: "test-id", isCurrent: true },
+      verificationResult,
     );
-    component.duplications = { 0: [0, 3] };
     fixture.detectChanges();
 
     expect(getCellComponent(0).isDuplicate).toEqual(true);
@@ -83,6 +124,8 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
       randomUUID(),
+      { id: "test-id", isCurrent: true },
+      null,
     );
     fixture.detectChanges();
 
@@ -175,6 +218,8 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
       randomUUID(),
+      { id: "test-id", isCurrent: true },
+      null,
     );
     fixture.detectChanges();
 
@@ -200,6 +245,8 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       input,
       randomUUID(),
+      { id: "test-id", isCurrent: true },
+      null,
     );
     fixture.detectChanges();
     const changeSpy = spyOn(component.valueChange, "emit");

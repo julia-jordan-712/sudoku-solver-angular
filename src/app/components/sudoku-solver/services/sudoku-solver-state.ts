@@ -1,5 +1,4 @@
 import { InjectionToken } from "@angular/core";
-import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -10,7 +9,8 @@ export const SUDOKU_SOLVER_STATE: InjectionToken<SudokuSolverState> =
   new InjectionToken<SudokuSolverState>("SUDOKU_SOLVER_STATE");
 
 export interface SudokuSolverState {
-  getViewModels(): Observable<SudokuGridViewModel[]>;
+  getCurrentBranch(): Observable<Nullable<SudokuGridViewModel>>;
+  getAdditionalBranches(): Observable<SudokuGridViewModel[]>;
   getExecutionState(): Observable<SolverExecution>;
 
   getDelay(): Observable<number>;
@@ -18,6 +18,7 @@ export interface SudokuSolverState {
 
   getLastStep(): Observable<string>;
 
+  getBranchesRequired(): Observable<number>;
   getStepsExecuted(): Observable<number>;
   getMaximumSteps(): Observable<number>;
   setMaximumSteps(max: number): void;
@@ -45,6 +46,4 @@ export interface SudokuSolverState {
 
   canRestart(): Observable<boolean>;
   restart(): void;
-
-  getVerificationResults(): Observable<Nullable<VerificationResult[]>>;
 }

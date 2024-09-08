@@ -6,14 +6,14 @@ import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 describe(VerifySquare.name, () => {
   it("should recognize a valid solution and return its size", () => {
     const valid = PuzzleSimple.PUZZLE_1.puzzle;
-    expect(new VerifySquare(valid).verifyAndGetSize()).toEqual({
+    expect(new VerifySquare().verifyAndGetSize(valid)).toEqual({
       result: VerificationResult.createValid(),
       size: valid.length,
     });
   });
 
   it("should find error for empty input", () => {
-    expect(new VerifySquare([]).verifyAndGetSize()).toEqual({
+    expect(new VerifySquare().verifyAndGetSize([])).toEqual({
       result: VerificationResult.createFromErrors([VerifyI18nKey.ERROR_EMPTY]),
       size: 0,
     });
@@ -24,7 +24,7 @@ describe(VerifySquare.name, () => {
       [1, 2, 3],
       [4, 5, 6],
     ];
-    expect(new VerifySquare(notSquare).verifyAndGetSize()).toEqual({
+    expect(new VerifySquare().verifyAndGetSize(notSquare)).toEqual({
       result: VerificationResult.createFromErrors([
         VerifyI18nKey.ERROR_NOT_A_SQUARE,
       ]),
@@ -65,14 +65,14 @@ describe(VerifySquare.name, () => {
       }
 
       if (params.error) {
-        expect(new VerifySquare(candidate).verifyAndGetSize()).toEqual({
+        expect(new VerifySquare().verifyAndGetSize(candidate)).toEqual({
           result: VerificationResult.createFromErrors([
             VerifyI18nKey.UNSUPPORTED_NOT_QUADRATIC,
           ]),
           size: params.size,
         });
       } else {
-        expect(new VerifySquare(candidate).verifyAndGetSize()).toEqual({
+        expect(new VerifySquare().verifyAndGetSize(candidate)).toEqual({
           result: VerificationResult.createValid(),
           size: params.size,
         });

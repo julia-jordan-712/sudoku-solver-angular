@@ -4,7 +4,6 @@ import {
   SUDOKU_SOLVER_STATE,
   SudokuSolverState,
 } from "@app/components/sudoku-solver/services/sudoku-solver-state";
-import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -13,7 +12,10 @@ import { EMPTY, Observable } from "rxjs";
 
 @Injectable()
 export class SudokuSolverStateMockService implements SudokuSolverState {
-  getViewModels(): Observable<SudokuGridViewModel[]> {
+  getCurrentBranch(): Observable<Nullable<SudokuGridViewModel>> {
+    return EMPTY;
+  }
+  getAdditionalBranches(): Observable<SudokuGridViewModel[]> {
     return EMPTY;
   }
   getExecutionState(): Observable<SolverExecution> {
@@ -26,6 +28,9 @@ export class SudokuSolverStateMockService implements SudokuSolverState {
     // do nothing
   }
   getLastStep(): Observable<string> {
+    return EMPTY;
+  }
+  getBranchesRequired(): Observable<number> {
     return EMPTY;
   }
   getStepsExecuted(): Observable<number> {
@@ -84,9 +89,6 @@ export class SudokuSolverStateMockService implements SudokuSolverState {
   }
   restart(): void {
     // do nothing
-  }
-  getVerificationResults(): Observable<Nullable<VerificationResult[]>> {
-    return EMPTY;
   }
 }
 

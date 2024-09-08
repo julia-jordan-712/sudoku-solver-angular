@@ -6,13 +6,11 @@ import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 
 export class VerifySquare {
-  constructor(private candidate: SudokuGrid) {}
-
-  verifyAndGetSize(): VerifySquareResult {
+  verifyAndGetSize(candidate: SudokuGrid): VerifySquareResult {
     return StopWatch.monitor(
       () => {
         const result: VerificationResult = VerificationResult.createValid();
-        const size: number = this.verifyIsSquare(this.candidate, result);
+        const size: number = this.verifyIsSquare(candidate, result);
         if (result.isValid()) {
           this.verifyConsistsOfSquares(size, result);
         }

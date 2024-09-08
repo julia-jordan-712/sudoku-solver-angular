@@ -36,14 +36,19 @@ export class VerificationResult {
   }
 
   addDuplicates(duplicates: VerificationDuplicates): void {
-    this.duplicates = Objects.mergeArrayIndex(
-      this.duplicates ?? {},
-      duplicates,
+    this.duplicates = Objects.uniqueArrayIndex(
+      Objects.mergeArrayIndex(this.duplicates ?? {}, duplicates),
+      (a, b) => a.equals(b),
     );
   }
 
+  // visible for testing
   hasTrackedDuplicates(): boolean {
-    return this.errors.length !== 0 && this.duplicates != undefined;
+    return (
+      this.errors.length !== 0 &&
+      this.duplicates != undefined &&
+      Object.keys(this.duplicates).length > 0
+    );
   }
 
   getDuplicatesPerValue(): VerificationDuplicates {

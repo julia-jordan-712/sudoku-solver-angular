@@ -9,7 +9,6 @@
     ) {
       <app-sudoku-grid-row
         [row]="row"
-        [columnsWithDuplicates]="duplications?.[i]"
         [borderTop]="first"
         [borderBottom]="last || (sqrt ? (i + 1) % sqrt === 0 : false)"
         [highlightNumber]="highlightNumber"
@@ -20,6 +19,6 @@
     }
   </div>
   <app-sudoku-verification
-    [verification]="verification"
+    [verification]="_grid.verificationResult"
   ></app-sudoku-verification>
 }

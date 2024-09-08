@@ -15,11 +15,11 @@ import {
   SudokuSolverState,
 } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
+import { SudokuSolverBranchesComponent } from "@app/components/sudoku-solver/sudoku-solver-branches/sudoku-solver-branches.component";
 import { SudokuSolverStatusComponent } from "@app/components/sudoku-solver/sudoku-solver-status/sudoku-solver-status.component";
 import { SudokuSolverStepsComponent } from "@app/components/sudoku-solver/sudoku-solver-steps/sudoku-solver-steps.component";
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
-import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
@@ -40,6 +40,7 @@ describe(SudokuSolverComponent.name, () => {
       declarations: [
         SudokuSolverComponent,
         SudokuSolverActionsComponent,
+        SudokuSolverBranchesComponent,
         SudokuSolverStatusComponent,
         SudokuSolverStepsComponent,
       ],
@@ -68,11 +69,13 @@ describe(SudokuSolverComponent.name, () => {
 
   describe("enabling of buttons", () => {
     beforeEach(() => {
-      spyOn(service, "getViewModels").and.returnValue(
+      spyOn(service, "getCurrentBranch").and.returnValue(
         of(
-          SudokuGridViewModelConverter.createViewModelsFromBranches(
-            [SolverBranch.createInitialBranch(PuzzleSimple.PUZZLE_3.puzzle)],
+          SudokuGridViewModelConverter.createViewModelFromGrid(
+            PuzzleSimple.PUZZLE_3.puzzle,
             randomUUID(),
+            { id: "test-id", isCurrent: true },
+            null,
           ),
         ),
       );
