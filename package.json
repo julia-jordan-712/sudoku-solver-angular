@@ -9,7 +9,13 @@
     "test": "ng test",
     "lint": "ng lint",
     "prettier": "prettier --write  \"./**/*\"",
-    "format": "npm run prettier && ng lint --fix"
+    "format": "npm run prettier && ng lint --fix",
+    "generate-store": "ng generate @ngrx/schematics:store",
+    "generate-feature-store": "ng generate @ngrx/schematics:feature --api false",
+    "generate-action": "ng generate @ngrx/schematics:action",
+    "generate-reducer": "ng generate @ngrx/schematics:reducer",
+    "generate-selector": "ng generate @ngrx/schematics:selector",
+    "generate-effect": "ng generate @ngrx/schematics:effect"
   },
   "private": true,
   "dependencies": {
