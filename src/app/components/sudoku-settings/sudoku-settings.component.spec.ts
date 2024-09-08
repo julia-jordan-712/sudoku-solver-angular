@@ -13,7 +13,7 @@ import { SudokuGridTestComponent } from "@app/test/components/sudoku-grid-test.c
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
-import { provideMockStore } from "@ngrx/store/testing";
+import { TestState } from "@app/test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
 
 describe(SudokuSettingsComponent.name, () => {
@@ -31,7 +31,7 @@ describe(SudokuSettingsComponent.name, () => {
       providers: [
         ...SOLVER_TEST_PROVIDERS,
         ...SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
-        provideMockStore({ initialState: {} }),
+        ...TestState.mockStoreProviders(),
       ],
     }).compileComponents();
   });

@@ -13,6 +13,7 @@ export class SudokuDropdownSelectionTestData {
     i18nKey: { key: "PUZZLE.NONE" },
     grid: undefined,
   };
+
   public static readonly ITEMS: SudokuDropdownSelectionItem[] = [
     SudokuDropdownSelectionTestData.NO_SELECTION_ITEM,
     ...SudokuDropdownSelectionTestData.createItems(),

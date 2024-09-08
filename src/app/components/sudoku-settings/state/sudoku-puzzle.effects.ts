@@ -14,13 +14,6 @@ export class SudokuPuzzleEffects {
     private gridUpdate: SudokuSettingsGridUpdateService,
   ) {}
 
-  clearSelectedOptionOnHeightOrWidthChangeEffect$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(SudokuPuzzleActions.setHeight, SudokuPuzzleActions.setWidth),
-      map((_) => SudokuPuzzleActions.clearSelectedOption()),
-    ),
-  );
-
   setGridOnSelectedOptionChangeEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SudokuPuzzleActions.setSelectedOption),

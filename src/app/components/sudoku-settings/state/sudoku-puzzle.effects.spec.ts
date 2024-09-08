@@ -1,5 +1,5 @@
 import { TestBed } from "@angular/core/testing";
-import { provideMockActions } from "@ngrx/effects/testing";
+import { TestState } from "@app/test/state/test-state";
 import { Observable } from "rxjs";
 import { SudokuPuzzleEffects } from "./sudoku-puzzle.effects";
 
@@ -9,7 +9,10 @@ describe(SudokuPuzzleEffects.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SudokuPuzzleEffects, provideMockActions(() => actions$)],
+      providers: [
+        SudokuPuzzleEffects,
+        ...TestState.mockStoreProviders({ actions$ }),
+      ],
     });
 
     effects = TestBed.inject(SudokuPuzzleEffects);

@@ -21,9 +21,9 @@ export class SudokuSettingsComponent {
   confirmed$: Observable<boolean> = this.settingState.isConfirmed();
   size$: Observable<Nullable<number>> = this.settingState.getHeight();
   grid$: Observable<SudokuGridViewModel> = this.settingState.getViewModel();
-  selectionItems: SudokuDropdownSelectionItem[] =
+  selectionItems$: Observable<SudokuDropdownSelectionItem[]> =
     this.settingState.getSelectionItems();
-  selectedItem$: Observable<SudokuDropdownSelectionItem> =
+  selectedItem$: Observable<Nullable<SudokuDropdownSelectionItem>> =
     this.settingState.getSelectedItem();
 
   changeSettings(): void {

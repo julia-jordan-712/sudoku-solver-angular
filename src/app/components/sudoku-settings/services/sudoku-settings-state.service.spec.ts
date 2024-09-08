@@ -8,6 +8,7 @@ import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
+import { TestState } from "@app/test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { combineLatest, first } from "rxjs";
 import { SudokuSettingsStateService } from "./sudoku-settings-state.service";
@@ -22,6 +23,7 @@ describe(SudokuSettingsStateService.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateTestingModule.withTranslations({})],
+      providers: TestState.mockStoreProviders(),
     });
     gridUpdate = TestBed.inject(SudokuSettingsGridUpdateService);
     verify = TestBed.inject(VerifySolutionService);
