@@ -15,6 +15,7 @@ import {
   SudokuSolverState,
 } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
+import { SudokuSolverBranchesComponent } from "@app/components/sudoku-solver/sudoku-solver-branches/sudoku-solver-branches.component";
 import { SudokuSolverStatusComponent } from "@app/components/sudoku-solver/sudoku-solver-status/sudoku-solver-status.component";
 import { SudokuSolverStepsComponent } from "@app/components/sudoku-solver/sudoku-solver-steps/sudoku-solver-steps.component";
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
@@ -39,6 +40,7 @@ describe(SudokuSolverComponent.name, () => {
       declarations: [
         SudokuSolverComponent,
         SudokuSolverActionsComponent,
+        SudokuSolverBranchesComponent,
         SudokuSolverStatusComponent,
         SudokuSolverStepsComponent,
       ],

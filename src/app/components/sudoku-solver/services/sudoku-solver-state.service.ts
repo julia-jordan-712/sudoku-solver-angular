@@ -39,6 +39,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
   private response$ = new BehaviorSubject<SolverResponse>(
     this.createInitialSolverResponse(),
   );
+  private branchesRequired$ = new BehaviorSubject<number>(1);
   private stepsExecuted$ = new BehaviorSubject<number>(0);
 
   private createInitialSolverResponse(puzzle?: SudokuGrid): SolverResponse {
@@ -125,6 +126,10 @@ export class SudokuSolverStateService implements SudokuSolverState {
     return this.stepsExecuted$.asObservable();
   }
 
+  getBranchesRequired(): Observable<number> {
+    return this.branchesRequired$.asObservable();
+  }
+
   getTimeElapsed(): number {
     return this.stopWatch.timeElapsed();
   }
@@ -179,6 +184,13 @@ export class SudokuSolverStateService implements SudokuSolverState {
     const response: SolverResponse = this.solver.solveNextStep(
       this.response$.getValue(),
     );
+    const numberOfNewBranchesCreated =
+      response.branches.length - this.response$.getValue().branches.length;
+    if (numberOfNewBranchesCreated > 0) {
+      this.branchesRequired$.next(
+        this.branchesRequired$.getValue() + numberOfNewBranchesCreated,
+      );
+    }
     this.response$.next(response);
     if (response.status === "COMPLETE") {
       this.finishExecuting("DONE");
@@ -210,6 +222,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
     this.execution$.next("NOT_STARTED");
     this.executionId$.next(randomUUID());
     this.stepsExecuted$.next(0);
+    this.branchesRequired$.next(1);
     this.solver.reset();
     this.stopWatch.reset();
   }

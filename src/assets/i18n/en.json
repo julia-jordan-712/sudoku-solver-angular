@@ -113,6 +113,9 @@
         "LABEL": "Highlight number",
         "TOOLTIP": "Highlights all occurrences of this number in the Sudoku."
       }
+    },
+    "BRANCHES": {
+      "REQUIRED": "Branches"
     }
   },
   "BRANCH": {

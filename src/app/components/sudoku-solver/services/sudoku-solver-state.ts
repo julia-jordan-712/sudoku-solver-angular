@@ -18,6 +18,7 @@ export interface SudokuSolverState {
 
   getLastStep(): Observable<string>;
 
+  getBranchesRequired(): Observable<number>;
   getStepsExecuted(): Observable<number>;
   getMaximumSteps(): Observable<number>;
   setMaximumSteps(max: number): void;

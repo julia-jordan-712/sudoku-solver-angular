@@ -113,6 +113,9 @@
         "LABEL": "Nummer hervorheben",
         "TOOLTIP": "Hebt alle Vorkommen dieser Nummer im Sudoku hervor."
       }
+    },
+    "BRANCHES": {
+      "REQUIRED": "Zweige"
     }
   },
   "BRANCH": {

@@ -30,6 +30,9 @@ export class SudokuSolverStateMockService implements SudokuSolverState {
   getLastStep(): Observable<string> {
     return EMPTY;
   }
+  getBranchesRequired(): Observable<number> {
+    return EMPTY;
+  }
   getStepsExecuted(): Observable<number> {
     return EMPTY;
   }
