@@ -6,6 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
+import { I18nKey } from "@app/shared/types/i18n-key";
 import { Nullable } from "@app/shared/types/nullable";
 import { ObjectWithId } from "@app/shared/types/object-with-id";
 import { Observable } from "rxjs";
@@ -45,5 +46,7 @@ export class DropdownInputComponent<T extends DropdownInputOption>
 }
 
 export interface DropdownInputOption extends ObjectWithId {
-  name: Observable<string>;
+  name?: string;
+  name$?: Observable<string>;
+  i18nKey?: I18nKey;
 }

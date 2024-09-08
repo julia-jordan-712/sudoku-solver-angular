@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
-import { SudokuDropdownSelectionItem } from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
 import { SudokuSettingsStateService } from "@app/components/sudoku-settings/services/sudoku-settings-state.service";
+import { SudokuDropdownSelectionItem } from "@app/components/sudoku-settings/state/sudoku-puzzle.state";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";

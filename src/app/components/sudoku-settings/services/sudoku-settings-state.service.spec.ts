@@ -1,10 +1,7 @@
 import { TestBed } from "@angular/core/testing";
-
-import {
-  SudokuDropdownSelectionItem,
-  SudokuDropdownSelectionService,
-} from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
+import { SudokuDropdownSelectionService } from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
 import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
+import { SudokuDropdownSelectionItem } from "@app/components/sudoku-settings/state/sudoku-puzzle.state";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { Nullable } from "@app/shared/types/nullable";
@@ -12,7 +9,7 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { combineLatest, first, of } from "rxjs";
+import { combineLatest, first } from "rxjs";
 import { SudokuSettingsStateService } from "./sudoku-settings-state.service";
 
 describe(SudokuSettingsStateService.name, () => {
@@ -31,8 +28,8 @@ describe(SudokuSettingsStateService.name, () => {
     underTest = TestBed.inject(SudokuSettingsStateService);
 
     selectionItems = [
-      { id: "None", name: of(""), grid: undefined },
-      { id: "Puzzle4x4.COMPLETE", name: of(""), grid: Puzzle4x4.COMPLETE },
+      { id: "None", name: "", grid: undefined },
+      { id: "Puzzle4x4.COMPLETE", name: "", grid: Puzzle4x4.COMPLETE },
     ];
     spyOn(
       TestBed.inject(SudokuDropdownSelectionService),

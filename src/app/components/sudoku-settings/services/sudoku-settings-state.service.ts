@@ -1,10 +1,7 @@
 import { Injectable, OnDestroy, inject } from "@angular/core";
-import {
-  SudokuDropdownSelectionItem,
-  SudokuDropdownSelectionService,
-} from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
+import { SudokuDropdownSelectionService } from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
 import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
-import { Logger } from "@app/core/log/logger";
+import { SudokuDropdownSelectionItem } from "@app/components/sudoku-settings/state/sudoku-puzzle.state";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -25,8 +22,6 @@ import {
   providedIn: "root",
 })
 export class SudokuSettingsStateService implements OnDestroy {
-  private logger: Logger = new Logger(SudokuSettingsStateService.name);
-
   private gridUpdate = inject(SudokuSettingsGridUpdateService);
   private dropdownSelection = inject(SudokuDropdownSelectionService);
   private verify = inject(VerifySolutionService);
@@ -37,10 +32,7 @@ export class SudokuSettingsStateService implements OnDestroy {
   private gridSubmitted$ = new BehaviorSubject<Nullable<SudokuGrid>>(undefined);
   private gridVerify$ = new BehaviorSubject<Nullable<SudokuGrid>>(undefined);
 
-  private dropdownSelectionItems = [
-    this.dropdownSelection.NO_SELECTION_ITEM,
-    ...this.dropdownSelection.getItems(),
-  ];
+  private dropdownSelectionItems = this.dropdownSelection.getItems();
   private dropdownSelectionItem$ =
     new BehaviorSubject<SudokuDropdownSelectionItem>(
       this.dropdownSelection.NO_SELECTION_ITEM,

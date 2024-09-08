@@ -13,7 +13,6 @@ import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { of } from "rxjs";
 import { SudokuSettingsComponent } from "./sudoku-settings.component";
 
 describe(SudokuSettingsComponent.name, () => {
@@ -54,8 +53,8 @@ describe(SudokuSettingsComponent.name, () => {
     const grid: SudokuGridTestComponent = getSudokuGrid();
 
     dropdown.change({
-      id: "",
-      name: of("Puzzle 4x4"),
+      id: "some-id",
+      name: "Puzzle 4x4",
       grid: Puzzle4x4.COMPLETE,
     });
     fixture.detectChanges();
@@ -175,8 +174,8 @@ describe(SudokuSettingsComponent.name, () => {
     const grid: SudokuGridTestComponent = getSudokuGrid();
 
     dropdown.change({
-      id: "",
-      name: of("Puzzle 4x4"),
+      id: "some-id",
+      name: "Puzzle 4x4",
       grid: Puzzle4x4.COMPLETE,
     });
     fixture.detectChanges();
