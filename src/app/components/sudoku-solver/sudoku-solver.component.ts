@@ -3,7 +3,7 @@ import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudo
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
-import { filter, Observable } from "rxjs";
+import { filter, map, Observable } from "rxjs";
 
 @Component({
   selector: "app-sudoku-solver",
@@ -12,6 +12,9 @@ import { filter, Observable } from "rxjs";
 })
 export class SudokuSolverComponent {
   private state = inject(SUDOKU_SOLVER_STATE);
+  show$: Observable<boolean> = this.state
+    .getCurrentBranch()
+    .pipe(map(isDefined));
   currentBranch$: Observable<SudokuGridViewModel> = this.state
     .getCurrentBranch()
     .pipe(filter(isDefined));
