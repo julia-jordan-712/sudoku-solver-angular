@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { IconModule } from "@app/components/icon/icon.module";
+import { SudokuSettingsComponent } from "@app/components/sudoku-settings/sudoku-settings.component";
 import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -12,8 +13,8 @@ import { SudokuGridTestComponent } from "@app/test/components/sudoku-grid-test.c
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
+import { provideMockStore } from "@ngrx/store/testing";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { SudokuSettingsComponent } from "./sudoku-settings.component";
 
 describe(SudokuSettingsComponent.name, () => {
   let fixture: ComponentFixture<SudokuSettingsComponent>;
@@ -30,6 +31,7 @@ describe(SudokuSettingsComponent.name, () => {
       providers: [
         ...SOLVER_TEST_PROVIDERS,
         ...SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
+        provideMockStore({ initialState: {} }),
       ],
     }).compileComponents();
   });
