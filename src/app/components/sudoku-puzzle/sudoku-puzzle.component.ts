@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
-import { SudokuPuzzleActions } from "@app/components/sudoku-settings/state/sudoku-puzzle.actions";
-import { SudokuPuzzleSelectors } from "@app/components/sudoku-settings/state/sudoku-puzzle.selectors";
-import { SudokuDropdownSelectionItem } from "@app/components/sudoku-settings/state/sudoku-puzzle.state";
+import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
+import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
+import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -11,11 +11,11 @@ import { Store } from "@ngrx/store";
 import { Observable, filter, first } from "rxjs";
 
 @Component({
-  selector: "app-sudoku-settings",
-  templateUrl: "./sudoku-settings.component.html",
-  styleUrls: ["./sudoku-settings.component.scss"],
+  selector: "app-sudoku-puzzle",
+  templateUrl: "./sudoku-puzzle.component.html",
+  styleUrls: ["./sudoku-puzzle.component.scss"],
 })
-export class SudokuSettingsComponent {
+export class SudokuPuzzleComponent {
   private store: Store = inject(Store);
   private solverState = inject(SUDOKU_SOLVER_STATE);
 

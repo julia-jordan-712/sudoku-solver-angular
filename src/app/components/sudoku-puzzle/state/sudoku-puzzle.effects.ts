@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
-import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
-import { SudokuPuzzleSelectors } from "@app/components/sudoku-settings/state/sudoku-puzzle.selectors";
+import { SudokuPuzzleGridUpdateService } from "@app/components/sudoku-puzzle/services/sudoku-puzzle-grid-update.service";
+import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
+import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { map, switchMap, withLatestFrom } from "rxjs/operators";
-import { SudokuPuzzleActions } from "./sudoku-puzzle.actions";
 
 @Injectable()
 export class SudokuPuzzleEffects {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private gridUpdate: SudokuSettingsGridUpdateService,
+    private gridUpdate: SudokuPuzzleGridUpdateService,
   ) {}
 
   setGridOnSelectedOptionChangeEffect$ = createEffect(() =>

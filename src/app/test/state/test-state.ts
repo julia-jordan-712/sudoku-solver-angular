@@ -1,6 +1,6 @@
-import { SudokuDropdownSelectionTestData } from "@app/components/sudoku-settings/state/sudoku-dropdown-selection-test-data";
-import { SudokuPuzzleReducer } from "@app/components/sudoku-settings/state/sudoku-puzzle.reducer";
-import { SudokuPuzzleState } from "@app/components/sudoku-settings/state/sudoku-puzzle.state";
+import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
+import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
+import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { AppState } from "@app/state";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { provideMockStore } from "@ngrx/store/testing";
@@ -26,12 +26,12 @@ export class TestState {
   public static createTestSudokuPuzzleState(): SudokuPuzzleState {
     return {
       isConfirmed: false,
-      sudoku: SudokuDropdownSelectionTestData.ITEMS?.[0].grid,
-      height: SudokuDropdownSelectionTestData.ITEMS?.[0].grid?.length,
-      width: SudokuDropdownSelectionTestData.ITEMS?.[0].grid?.length,
+      sudoku: SudokuPuzzleSelectionTestData.ITEMS?.[0].grid,
+      height: SudokuPuzzleSelectionTestData.ITEMS?.[0].grid?.length,
+      width: SudokuPuzzleSelectionTestData.ITEMS?.[0].grid?.length,
       selectionOptions: {
-        options: SudokuDropdownSelectionTestData.ITEMS,
-        selected: SudokuDropdownSelectionTestData.ITEMS?.[0],
+        options: SudokuPuzzleSelectionTestData.ITEMS,
+        selected: SudokuPuzzleSelectionTestData.ITEMS?.[0],
       },
     };
   }

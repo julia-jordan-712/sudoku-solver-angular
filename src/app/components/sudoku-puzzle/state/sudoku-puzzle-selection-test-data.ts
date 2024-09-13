@@ -1,4 +1,4 @@
-import { SudokuDropdownSelectionItem } from "@app/components/sudoku-settings/state/sudoku-puzzle.state";
+import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleExtreme } from "@app/test/puzzles/puzzle-extreme";
@@ -7,7 +7,7 @@ import { PuzzleMedium } from "@app/test/puzzles/puzzle-medium";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { TestPuzzle } from "@app/test/puzzles/test-puzzle";
 
-export class SudokuDropdownSelectionTestData {
+export class SudokuPuzzleSelectionTestData {
   public static readonly NO_SELECTION_ITEM: SudokuDropdownSelectionItem = {
     id: "None",
     i18nKey: { key: "PUZZLE.NONE" },
@@ -15,8 +15,8 @@ export class SudokuDropdownSelectionTestData {
   };
 
   public static readonly ITEMS: SudokuDropdownSelectionItem[] = [
-    SudokuDropdownSelectionTestData.NO_SELECTION_ITEM,
-    ...SudokuDropdownSelectionTestData.createItems(),
+    SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
+    ...SudokuPuzzleSelectionTestData.createItems(),
   ];
 
   private static createItems(): SudokuDropdownSelectionItem[] {
@@ -42,7 +42,7 @@ export class SudokuDropdownSelectionTestData {
     }).forEach(([category, testPuzzles]) => {
       testPuzzles.forEach((testPuzzle: TestPuzzle, index: number) => {
         const testPuzzleItem =
-          SudokuDropdownSelectionTestData.testPuzzleToSelectionItems(
+          SudokuPuzzleSelectionTestData.testPuzzleToSelectionItems(
             testPuzzle,
             category as TestPuzzleCategory,
             index + 1,

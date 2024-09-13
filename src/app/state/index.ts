@@ -1,4 +1,4 @@
-import { SudokuPuzzleReducer } from "@app/components/sudoku-settings/state/sudoku-puzzle.reducer";
+import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import { ActionReducerMap, MetaReducer } from "@ngrx/store";
 import { environment } from "src/environments/environment";
 

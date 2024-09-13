@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { IconModule } from "@app/components/icon/icon.module";
-import { SudokuSettingsComponent } from "@app/components/sudoku-settings/sudoku-settings.component";
+import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzzle.component";
 import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -16,13 +16,13 @@ import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provi
 import { TestState } from "@app/test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
 
-describe(SudokuSettingsComponent.name, () => {
-  let fixture: ComponentFixture<SudokuSettingsComponent>;
+describe(SudokuPuzzleComponent.name, () => {
+  let fixture: ComponentFixture<SudokuPuzzleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        SudokuSettingsComponent,
+        SudokuPuzzleComponent,
         DropdownInputTestComponent,
         SelectionListTestComponent,
         SudokuGridTestComponent,
@@ -37,7 +37,7 @@ describe(SudokuSettingsComponent.name, () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SudokuSettingsComponent);
+    fixture = TestBed.createComponent(SudokuPuzzleComponent);
     fixture.detectChanges();
   });
 
