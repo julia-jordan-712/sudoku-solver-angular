@@ -1,21 +1,21 @@
 import { TestBed } from "@angular/core/testing";
-import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
+import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
 import { TestState } from "@app/test/state/test-state";
 import { Observable } from "rxjs";
 
-describe(SudokuPuzzleEffects.name, () => {
+describe(SudokuSolverEffects.name, () => {
   let actions$: Observable<any>;
-  let effects: SudokuPuzzleEffects;
+  let effects: SudokuSolverEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        SudokuPuzzleEffects,
+        SudokuSolverEffects,
         ...TestState.mockStoreProviders({ actions$ }),
       ],
     });
 
-    effects = TestBed.inject(SudokuPuzzleEffects);
+    effects = TestBed.inject(SudokuSolverEffects);
   });
 
   it("should be created", () => {
