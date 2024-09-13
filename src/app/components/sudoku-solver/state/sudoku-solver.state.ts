@@ -3,7 +3,7 @@ import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
-interface SudokuSolverExecutionInfo {
+export interface SudokuSolverStateExecutionInfo {
   /** Id for the current run of the solver */
   id: string;
   /** maximum steps to be executed to prevent endless loops */
@@ -23,7 +23,7 @@ interface SudokuSolverExecutionInfo {
   };
 }
 
-interface SudokuSolverViewInfo {
+export interface SudokuSolverStateViewInfo {
   /** total amount of branches that were opened since the solver started */
   amountOfBranches: number;
   /** delay in milliseconds between solver steps */
@@ -35,8 +35,8 @@ interface SudokuSolverViewInfo {
 }
 
 export interface SudokuSolverState {
-  executionInfo: SudokuSolverExecutionInfo;
+  executionInfo: SudokuSolverStateExecutionInfo;
   puzzle: Nullable<SudokuGrid>;
   response: SolverResponse;
-  viewInfo: SudokuSolverViewInfo;
+  viewInfo: SudokuSolverStateViewInfo;
 }
