@@ -45,6 +45,10 @@
       }
     },
     {
+      "files": ["*.cy.ty"],
+      "extends": ["plugin:eslint-plugin-cypress/recommended"]
+    },
+    {
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {
