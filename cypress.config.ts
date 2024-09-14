@@ -11,10 +11,19 @@ export default defineConfig({
           sourceRoot: "src",
           buildOptions: {
             outputPath: "dist/sudoku-solver-angular",
+            tsConfig: "tsconfig.cy.json",
+            inlineStyleLanguage: "scss",
+            assets: ["src/favicon.ico", "src/assets"],
+            styles: ["src/styles/styles.scss"],
+            stylePreprocessorOptions: {
+              includePaths: ["src/styles"],
+            },
           },
         },
       },
     },
     specPattern: "**/*.cy.ts",
+    viewportHeight: 700,
+    viewportWidth: 1000,
   },
 });
