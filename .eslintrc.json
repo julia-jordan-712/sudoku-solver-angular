@@ -45,7 +45,7 @@
       }
     },
     {
-      "files": ["*.cy.ty"],
+      "files": ["*.cy.ts"],
       "extends": ["plugin:eslint-plugin-cypress/recommended"]
     },
     {
