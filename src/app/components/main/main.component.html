@@ -7,11 +7,11 @@
 </div>
 <div class="sidebar">
   <app-sudoku-solver-settings></app-sudoku-solver-settings>
-  <div class="languages">
-    <button (click)="changeLanguage('en')">
+  <div class="languages" data-cy="language-selector">
+    <button (click)="changeLanguage('en')" data-cy="lang-en">
       <app-icon>language</app-icon> English
     </button>
-    <button (click)="changeLanguage('de')">
+    <button (click)="changeLanguage('de')" data-cy="lang-de">
       <app-icon>language</app-icon> Deutsch
     </button>
   </div>
