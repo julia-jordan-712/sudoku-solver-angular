@@ -148,19 +148,16 @@ const selectTimeElapsed = createSelector(selectTimeInfo, (time) =>
 const selectCurrentBranchViewModel = createSelector(
   selectCurrentResponseBranch,
   selectExecutionId,
-  selectExecutionStatus,
-  (branch: Nullable<SolverBranch>, id: string, status: SolverExecution) =>
+  (branch: Nullable<SolverBranch>, id: string) =>
     branch != null
       ? SudokuGridViewModelConverter.createViewModelFromGrid(
           branch.grid,
           id,
           { id: branch.getId(), isCurrent: true },
-          status !== "NOT_STARTED"
-            ? new VerifySolution().verify(branch.grid, {
-                allowEmptyCells: false,
-                size: branch.grid.length,
-              })
-            : null,
+          new VerifySolution().verify(branch.grid, {
+            allowEmptyCells: false,
+            size: branch.grid.length,
+          }),
         )
       : null,
 );

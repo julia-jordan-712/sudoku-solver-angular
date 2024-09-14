@@ -15,6 +15,7 @@
           [grid]="currentBranch"
           [highlightNumber]="highlightNumber$ | async"
           [readonly]="true"
+          [showVerification]="(isStarted$ | async) ?? true"
         ></app-sudoku-grid>
       </div>
     }
