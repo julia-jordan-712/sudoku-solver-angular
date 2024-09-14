@@ -28,6 +28,5 @@ export const SudokuSolverActions = createActionGroup({
       >;
       numberOfNewBranchesCreated: number;
     }>(),
-    "step schedule": emptyProps(),
   },
 });

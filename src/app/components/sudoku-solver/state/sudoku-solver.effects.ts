@@ -10,7 +10,15 @@ import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { isDefined } from "@app/shared/util/is-defined";
 import { Store } from "@ngrx/store";
-import { delayWhen, filter, map, tap, withLatestFrom } from "rxjs";
+import {
+  delayWhen,
+  filter,
+  first,
+  interval,
+  map,
+  tap,
+  withLatestFrom,
+} from "rxjs";
 
 @Injectable()
 export class SudokuSolverEffects {
@@ -43,17 +51,18 @@ export class SudokuSolverEffects {
     { dispatch: false },
   );
 
-  scheduleNextStepOnStartOrStepResult$ = createEffect(() =>
+  executeFirstStepOnStart$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SudokuSolverActions.solverStart, SudokuSolverActions.stepResult),
-      map(() => SudokuSolverActions.stepSchedule()),
+      ofType(SudokuSolverActions.solverStart),
+      map(() => SudokuSolverActions.stepExecute()),
     ),
   );
 
-  scheduleNextStepToBeExecuted$ = createEffect(() =>
+  scheduleNextStepOnStepResult$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SudokuSolverActions.stepSchedule),
-      delayWhen(() => this.store.select(SudokuSolverSelectors.selectDelay)),
+      ofType(SudokuSolverActions.stepResult),
+      withLatestFrom(this.store.select(SudokuSolverSelectors.selectDelay)),
+      delayWhen(([_action, delay]) => interval(delay).pipe(first())),
       withLatestFrom(
         this.store.select(SudokuSolverSelectors.selectExecutionStatus),
       ),
