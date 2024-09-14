@@ -41,4 +41,5 @@
 //   }
 // }
 
+import "./cy-body";
 import "./cy-mount";

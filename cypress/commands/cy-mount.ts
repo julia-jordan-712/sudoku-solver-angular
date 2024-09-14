@@ -1,4 +1,5 @@
 import { Type } from "@angular/core";
+import { CyChainable } from "@cypress/types/cy-chainable";
 import {
   MountConfig,
   mount as mountOriginal,
@@ -18,7 +19,7 @@ function mount<T>(
   component: Type<T>,
   modules: Type<any> | Type<any>[],
   config?: MountConfig<T>,
-): Cypress.Chainable<MountResponse<T>> {
+): CyChainable<MountResponse<T>> {
   const mountConfig: MountConfig<T> = { ...(config ?? {}) };
   mountConfig.imports = [
     ...(mountConfig.imports ?? []),
