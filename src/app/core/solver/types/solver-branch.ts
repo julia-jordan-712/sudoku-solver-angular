@@ -35,12 +35,25 @@ export class SolverBranch {
     this.grid = grid;
     this.id = id;
     this.parentId = parentId;
+    this.childId = undefined;
     this.branchingPoint = point;
     this.isOpen = true;
   }
 
   public static createInitialBranch(grid: SudokuGrid): SolverBranch {
     return new SolverBranch(SudokuGridUtil.clone(grid), randomUUID());
+  }
+
+  public static cloneBranch(branch: SolverBranch): SolverBranch {
+    const clonedBranch: SolverBranch = new SolverBranch(
+      SudokuGridUtil.clone(branch.grid),
+      branch.id,
+      branch.parentId,
+      branch.branchingPoint,
+    );
+    clonedBranch.childId = branch.childId;
+    clonedBranch.isOpen = branch.isOpen;
+    return clonedBranch;
   }
 
   public openBranch(cell: BranchingPoint, value: number): SolverBranch {

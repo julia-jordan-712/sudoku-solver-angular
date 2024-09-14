@@ -2,6 +2,6 @@
 @if (lastStepI18nKey$ | async; as lastStepI18nKey) {
   <div>
     {{ "SOLVER.STEPS.LAST" | translate }}:
-    {{ lastStepI18nKey | translate }}
+    {{ lastStepI18nKey.key | translate: lastStepI18nKey.params }}
   </div>
 }

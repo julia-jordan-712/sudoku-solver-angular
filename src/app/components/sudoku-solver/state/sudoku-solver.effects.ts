@@ -114,7 +114,7 @@ export class SudokuSolverEffects {
     if (
       status !== "DONE" &&
       status !== "FAILED" &&
-      executedSteps + 1 === maxSteps
+      executedSteps + 1 >= maxSteps
     ) {
       // this step reaches the maximum steps
       return "FAILED";

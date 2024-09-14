@@ -39,7 +39,7 @@ export class SudokuSolverReducer {
       SudokuSolverReducer.resetWithPuzzleAndResponse(
         state,
         action.puzzle,
-        SudokuSolverReducer.initialState.response,
+        SudokuSolverReducer.createInitialSolverResponse(action.puzzle),
       ),
     ),
     on(SudokuSolverActions.setDelay, (state, action) =>

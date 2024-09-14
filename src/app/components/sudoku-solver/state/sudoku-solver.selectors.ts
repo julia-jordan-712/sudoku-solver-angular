@@ -7,6 +7,7 @@ import {
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolution } from "@app/core/verification/services/verify-solution";
+import { I18nKey } from "@app/shared/types/i18n-key";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
@@ -111,12 +112,15 @@ const selectHighlightNumber = createSelector(
 
 const selectLastStepI18nKey = createSelector(
   selectResponse,
-  (response: SolverResponse) => `SOLVER.STEPS.STEP.${response.stepId}`,
+  (response: SolverResponse) =>
+    response.stepId
+      ? ({ key: `SOLVER.STEPS.STEP.${response.stepId}` } satisfies I18nKey)
+      : null,
 );
 
 const selectMaxSteps = createSelector(
   selectSettings,
-  (settings: SudokuSolverStateSettings) => settings.delay,
+  (settings: SudokuSolverStateSettings) => settings.maxSteps,
 );
 
 const selectStepToBePausedAfter = createSelector(
