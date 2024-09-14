@@ -99,14 +99,19 @@ const selectCanPause = createSelector(
   (status: SolverExecution) => status === "RUNNING",
 );
 
+const selectHasCurrentBranch = createSelector(
+  selectCurrentResponseBranch,
+  (branch: Nullable<SolverBranch>) => !!branch,
+);
+
 const selectHighlightNumber = createSelector(
   selectSettings,
   (settings: SudokuSolverStateSettings) => settings.highlightNumber,
 );
 
-const selectLastStepDescription = createSelector(
+const selectLastStepI18nKey = createSelector(
   selectResponse,
-  (response: SolverResponse) => response.stepId,
+  (response: SolverResponse) => `SOLVER.STEPS.STEP.${response.stepId}`,
 );
 
 const selectMaxSteps = createSelector(
@@ -182,9 +187,10 @@ export const SudokuSolverSelectors = {
   selectCanStart,
   selectExecutedSteps,
   selectExecutionStatus,
+  selectHasCurrentBranch,
   selectHighlightNumber,
   selectInitialPuzzle,
-  selectLastStepDescription,
+  selectLastStepI18nKey,
   selectMaxSteps,
   selectResponse,
   selectStepToBePausedAfter,

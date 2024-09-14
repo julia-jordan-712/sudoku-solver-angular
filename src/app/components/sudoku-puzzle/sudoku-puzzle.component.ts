@@ -2,13 +2,13 @@ import { Component, inject } from "@angular/core";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
 import { Store } from "@ngrx/store";
-import { Observable, filter, first } from "rxjs";
+import { Observable, filter } from "rxjs";
 
 @Component({
   selector: "app-sudoku-puzzle",
@@ -17,7 +17,6 @@ import { Observable, filter, first } from "rxjs";
 })
 export class SudokuPuzzleComponent {
   private store: Store = inject(Store);
-  private solverState = inject(SUDOKU_SOLVER_STATE);
 
   confirmEnabled$: Observable<boolean> = this.store.select(
     SudokuPuzzleSelectors.selectIsConfirmEnabled,
@@ -38,17 +37,12 @@ export class SudokuPuzzleComponent {
 
   changeSettings(): void {
     this.store.dispatch(SudokuPuzzleActions.setConfirmed({ confirmed: false }));
-    this.solverState.reset();
+    this.store.dispatch(SudokuSolverActions.solverReset());
   }
 
   submit(): void {
     this.store.dispatch(SudokuPuzzleActions.setConfirmed({ confirmed: true }));
-    this.store
-      .select(SudokuPuzzleSelectors.selectSudoku)
-      .pipe(first(), filter(isDefined))
-      .subscribe((puzzle: SudokuGrid) =>
-        this.solverState.setInitialPuzzle(puzzle),
-      );
+    this.store.dispatch(SudokuSolverActions.initializeFromPuzzleState());
   }
 
   onSelect(option: SudokuDropdownSelectionItem): void {

@@ -28,7 +28,7 @@ export class SudokuSolverReducer {
     settings: {
       delay: 0,
       highlightNumber: null,
-      maxSteps: 10_000,
+      maxSteps: 1_000,
       pauseAfterStep: null,
     },
   };

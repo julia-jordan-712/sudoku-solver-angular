@@ -20,7 +20,10 @@
       {{
         "SOLVER.STATUS.DONE"
           | translate
-            : { time: getTime() | number: "1.1-1" : this.translate.currentLang }
+            : {
+                time:
+                  time$ | async | number: "1.1-1" : this.translate.currentLang,
+              }
       }}
     </div>
   }

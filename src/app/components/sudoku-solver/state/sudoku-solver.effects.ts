@@ -1,14 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 
+import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
+import { isDefined } from "@app/shared/util/is-defined";
 import { Store } from "@ngrx/store";
-import { delayWhen, map, tap, withLatestFrom } from "rxjs";
+import { delayWhen, filter, map, tap, withLatestFrom } from "rxjs";
 
 @Injectable()
 export class SudokuSolverEffects {
@@ -17,6 +19,16 @@ export class SudokuSolverEffects {
     private store: Store,
     private solver: SudokuSolverService,
   ) {}
+
+  initialize$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SudokuSolverActions.initializeFromPuzzleState),
+      withLatestFrom(this.store.select(SudokuPuzzleSelectors.selectSudoku)),
+      map(([_action, puzzle]) => puzzle),
+      filter(isDefined),
+      map((puzzle) => SudokuSolverActions.setInitialPuzzle({ puzzle: puzzle })),
+    ),
+  );
 
   resetSolverOnReset$ = createEffect(
     () =>

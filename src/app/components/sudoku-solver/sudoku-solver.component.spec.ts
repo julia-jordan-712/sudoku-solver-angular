@@ -25,6 +25,7 @@ import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
+import { TestState } from "@app/test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { of } from "rxjs";
 import { v4 as randomUUID } from "uuid";
@@ -56,7 +57,7 @@ describe(SudokuSolverComponent.name, () => {
         { provide: SUDOKU_SOLVER_STATE, useExisting: SudokuSolverStateService },
         SudokuGridComponentService,
         SudokuGridRowComponentService,
-        SudokuGridComponentService,
+        ...TestState.mockStoreProviders(),
       ],
     });
     service = TestBed.inject(SUDOKU_SOLVER_STATE);
