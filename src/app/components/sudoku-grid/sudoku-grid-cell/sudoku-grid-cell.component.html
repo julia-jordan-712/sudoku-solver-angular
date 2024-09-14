@@ -1,5 +1,6 @@
 @if (displayValues$ | async; as displayValues) {
   <app-sudoku-grid-cell-multiple-values
+    [attr.data-cy]="dataCy"
     [values]="displayValues"
     [size]="size"
     [maxValue]="maxValue"
@@ -9,6 +10,7 @@
   ></app-sudoku-grid-cell-multiple-values>
 } @else {
   <app-sudoku-grid-cell-single-value
+    [attr.data-cy]="dataCy"
     [value]="displayValue$ | async"
     [size]="size"
     [maxValue]="maxValue"

@@ -27,7 +27,6 @@ export class SudokuGridCellComponent {
   displayValues$: Observable<Nullable<number[]>> =
     this.componentService.getDisplayValues();
   changed$: Observable<boolean> = this.componentService.isChanged();
-  isDuplicate = false;
 
   @Input({ required: true })
   set cell(viewModel: SudokuGridCellViewModel) {
@@ -35,13 +34,16 @@ export class SudokuGridCellComponent {
       viewModel.cell,
       viewModel.branchInfo?.isCurrent ?? true,
     );
+    this.dataCy = `cell-${viewModel.cellPosition.x}-${viewModel.cellPosition.y}`;
     this.isDuplicate = viewModel.isDuplicate();
     this.maxValue = viewModel.maxValue;
     this.size = viewModel.widthAndHeight;
   }
 
-  size = 32;
+  dataCy = "";
+  isDuplicate = false;
   maxValue = 1;
+  size = 32;
 
   @Input()
   @HostBinding("class.border-top")
