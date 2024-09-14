@@ -47,7 +47,7 @@ export class SudokuSolverReducer {
     ),
     on(SudokuSolverActions.setMaximumSteps, (state, action) =>
       SudokuSolverReducer.toNewSettings(state, {
-        maxSteps: action.maxSteps,
+        maxSteps: Math.max(0, action.maxSteps),
       }),
     ),
     on(SudokuSolverActions.setNumberToBeHighlighted, (state, action) =>
@@ -57,7 +57,8 @@ export class SudokuSolverReducer {
     ),
     on(SudokuSolverActions.setStepToBePausedAfter, (state, action) =>
       SudokuSolverReducer.toNewSettings(state, {
-        pauseAfterStep: action.pauseStep,
+        pauseAfterStep:
+          action.pauseStep != null ? Math.max(0, action.pauseStep) : null,
       }),
     ),
     on(
@@ -89,11 +90,34 @@ export class SudokuSolverReducer {
         status: "PAUSED",
       }),
     ),
-    on(SudokuSolverActions.solverFinish, (state, action) =>
+    on(SudokuSolverActions.stepExecute, (state, _action) =>
       SudokuSolverReducer.toNewExecutionInfo(state, {
-        status: action.status,
+        time: {
+          ...state.executionInfo.time,
+          started: state.executionInfo.time.started ?? Date.now(),
+        },
       }),
     ),
+    on(SudokuSolverActions.stepResult, (state, action) => ({
+      ...state,
+      executionInfo: {
+        id: state.executionInfo.id,
+        status: action.status,
+        stepsExecuted: state.executionInfo.stepsExecuted + 1,
+        amountOfBranches:
+          state.executionInfo.amountOfBranches +
+          action.numberOfNewBranchesCreated,
+        time: {
+          started: state.executionInfo.time.started,
+          stopped:
+            action.status === "DONE" || action.status === "FAILED"
+              ? Date.now()
+              : null,
+          lastStep: Date.now(),
+        },
+      },
+      response: action.response,
+    })),
   );
 
   private static createInitialSolverResponse(
