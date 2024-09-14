@@ -6,8 +6,8 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 export interface SudokuSolverStateExecutionInfo {
   /** Id for the current run of the solver */
   id: string;
-  /** maximum steps to be executed to prevent endless loops */
-  maxSteps: number;
+  /** total amount of branches that were opened during the current run */
+  amountOfBranches: number;
   /** current status of running the solver */
   status: SolverExecution;
   /** steps which were executed so far during this run */
@@ -23,13 +23,13 @@ export interface SudokuSolverStateExecutionInfo {
   };
 }
 
-export interface SudokuSolverStateViewInfo {
-  /** total amount of branches that were opened since the solver started */
-  amountOfBranches: number;
+export interface SudokuSolverStateSettings {
   /** delay in milliseconds between solver steps */
   delay: number;
   /** the number to be highlighted in the Sudoku to be solved */
   highlightNumber: Nullable<number>;
+  /** maximum steps to be executed to prevent endless loops */
+  maxSteps: number;
   /** the solver is to be paused when this step is reached */
   pauseAfterStep: Nullable<number>;
 }
@@ -38,5 +38,5 @@ export interface SudokuSolverState {
   executionInfo: SudokuSolverStateExecutionInfo;
   puzzle: Nullable<SudokuGrid>;
   response: SolverResponse;
-  viewInfo: SudokuSolverStateViewInfo;
+  settings: SudokuSolverStateSettings;
 }

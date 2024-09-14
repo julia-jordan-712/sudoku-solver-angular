@@ -2,7 +2,7 @@ import { SudokuSolverReducer } from "@app/components/sudoku-solver/state/sudoku-
 import {
   SudokuSolverState,
   SudokuSolverStateExecutionInfo,
-  SudokuSolverStateViewInfo,
+  SudokuSolverStateSettings,
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
@@ -31,16 +31,17 @@ const selectInitialPuzzle = createSelector(
   (state: SudokuSolverState) => state.puzzle,
 );
 
-const selectViewInfo = createSelector(
+const selectSettings = createSelector(
   selectState,
-  (state: SudokuSolverState) => state.viewInfo,
+  (state: SudokuSolverState) => state.settings,
 );
 
 // ------------------------------------------------------------------
 
 const selectAmountOfBranches = createSelector(
-  selectViewInfo,
-  (viewInfo: SudokuSolverStateViewInfo) => viewInfo.amountOfBranches,
+  selectExecutionInfo,
+  (executionInfo: SudokuSolverStateExecutionInfo) =>
+    executionInfo.amountOfBranches,
 );
 
 const selectAdditionalSortedResponseBranches = createSelector(
@@ -58,8 +59,8 @@ const selectCurrentResponseBranch = createSelector(
 );
 
 const selectDelay = createSelector(
-  selectViewInfo,
-  (viewInfo: SudokuSolverStateViewInfo) => viewInfo.delay,
+  selectSettings,
+  (settings: SudokuSolverStateSettings) => settings.delay,
 );
 
 const selectExecutedSteps = createSelector(
@@ -99,8 +100,8 @@ const selectCanPause = createSelector(
 );
 
 const selectHighlightNumber = createSelector(
-  selectViewInfo,
-  (viewInfo: SudokuSolverStateViewInfo) => viewInfo.highlightNumber,
+  selectSettings,
+  (settings: SudokuSolverStateSettings) => settings.highlightNumber,
 );
 
 const selectLastStepDescription = createSelector(
@@ -109,13 +110,13 @@ const selectLastStepDescription = createSelector(
 );
 
 const selectMaxSteps = createSelector(
-  selectViewInfo,
-  (viewInfo: SudokuSolverStateViewInfo) => viewInfo.delay,
+  selectSettings,
+  (settings: SudokuSolverStateSettings) => settings.delay,
 );
 
 const selectStepToBePausedAfter = createSelector(
-  selectViewInfo,
-  (viewInfo: SudokuSolverStateViewInfo) => viewInfo.pauseAfterStep,
+  selectSettings,
+  (settings: SudokuSolverStateSettings) => settings.pauseAfterStep,
 );
 
 const selectTimeInfo = createSelector(
