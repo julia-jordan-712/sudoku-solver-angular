@@ -3,12 +3,14 @@ import { NgModule } from "@angular/core";
 import { IconModule } from "@app/components/icon/icon.module";
 import { NumberInputModule } from "@app/components/interactions/number-input/number-input.module";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
+import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
+import { SudokuSolverActionsComponent } from "@app/components/sudoku-solver/sudoku-solver-actions/sudoku-solver-actions.component";
 import { SudokuSolverBranchesComponent } from "@app/components/sudoku-solver/sudoku-solver-branches/sudoku-solver-branches.component";
+import { SudokuSolverStatusComponent } from "@app/components/sudoku-solver/sudoku-solver-status/sudoku-solver-status.component";
+import { SudokuSolverStepsComponent } from "@app/components/sudoku-solver/sudoku-solver-steps/sudoku-solver-steps.component";
+import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
+import { EffectsModule } from "@ngrx/effects";
 import { TranslateModule } from "@ngx-translate/core";
-import { SudokuSolverActionsComponent } from "./sudoku-solver-actions/sudoku-solver-actions.component";
-import { SudokuSolverStatusComponent } from "./sudoku-solver-status/sudoku-solver-status.component";
-import { SudokuSolverStepsComponent } from "./sudoku-solver-steps/sudoku-solver-steps.component";
-import { SudokuSolverComponent } from "./sudoku-solver.component";
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { SudokuSolverComponent } from "./sudoku-solver.component";
   ],
   imports: [
     CommonModule,
+    EffectsModule.forFeature([SudokuSolverEffects]),
     IconModule,
     NumberInputModule,
     SudokuGridModule,

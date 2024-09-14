@@ -44,8 +44,7 @@ export class TestSubscription<T> {
   value(): Promise<T> {
     return lastValueFrom(
       this.value$.asObservable().pipe(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        filter((_) => this.values$.getValue().length > 0),
+        filter(() => this.values$.getValue().length > 0),
         first(),
       ),
     );

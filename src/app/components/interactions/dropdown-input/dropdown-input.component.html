@@ -2,7 +2,17 @@
 <select [ngModel]="selectedItem" (ngModelChange)="onChange($event)" #inputField>
   @for (item of items; track item.id) {
     <option [ngValue]="item">
-      {{ item.name | async }}
+      @if (item.name && item.name !== "") {
+        {{ item.name }}
+      } @else {
+        @if (item.name$ | async; as name) {
+          {{ name }}
+        } @else {
+          @if (item.i18nKey) {
+            {{ item.i18nKey.key | translate: item.i18nKey.params }}
+          }
+        }
+      }
     </option>
   }
 </select>

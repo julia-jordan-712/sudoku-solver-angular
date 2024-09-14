@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { IconModule } from "@app/components/icon/icon.module";
+import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzzle.component";
 import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -12,17 +13,16 @@ import { SudokuGridTestComponent } from "@app/test/components/sudoku-grid-test.c
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
+import { TestState } from "@app/test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { of } from "rxjs";
-import { SudokuSettingsComponent } from "./sudoku-settings.component";
 
-describe(SudokuSettingsComponent.name, () => {
-  let fixture: ComponentFixture<SudokuSettingsComponent>;
+describe(SudokuPuzzleComponent.name, () => {
+  let fixture: ComponentFixture<SudokuPuzzleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        SudokuSettingsComponent,
+        SudokuPuzzleComponent,
         DropdownInputTestComponent,
         SelectionListTestComponent,
         SudokuGridTestComponent,
@@ -31,12 +31,13 @@ describe(SudokuSettingsComponent.name, () => {
       providers: [
         ...SOLVER_TEST_PROVIDERS,
         ...SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
+        ...TestState.mockStoreProviders(),
       ],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SudokuSettingsComponent);
+    fixture = TestBed.createComponent(SudokuPuzzleComponent);
     fixture.detectChanges();
   });
 
@@ -54,8 +55,8 @@ describe(SudokuSettingsComponent.name, () => {
     const grid: SudokuGridTestComponent = getSudokuGrid();
 
     dropdown.change({
-      id: "",
-      name: of("Puzzle 4x4"),
+      id: "some-id",
+      name: "Puzzle 4x4",
       grid: Puzzle4x4.COMPLETE,
     });
     fixture.detectChanges();
@@ -175,8 +176,8 @@ describe(SudokuSettingsComponent.name, () => {
     const grid: SudokuGridTestComponent = getSudokuGrid();
 
     dropdown.change({
-      id: "",
-      name: of("Puzzle 4x4"),
+      id: "some-id",
+      name: "Puzzle 4x4",
       grid: Puzzle4x4.COMPLETE,
     });
     fixture.detectChanges();
@@ -242,7 +243,6 @@ describe(SudokuSettingsComponent.name, () => {
   ): void {
     expect(component._grid).toBeTruthy();
     expect(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       SudokuGridViewModelConverter.createGridFromViewModel(component._grid!),
     ).toEqual(expected);
   }

@@ -1,5 +1,7 @@
 import { Component, inject } from "@angular/core";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
+import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
+import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 
 @Component({
@@ -8,25 +10,33 @@ import { Observable } from "rxjs";
   styleUrls: ["./sudoku-solver-actions.component.scss"],
 })
 export class SudokuSolverActionsComponent {
-  private state = inject(SUDOKU_SOLVER_STATE);
-  canStart$: Observable<boolean> = this.state.canStartExecuting();
-  canPause$: Observable<boolean> = this.state.canPauseExecuting();
-  canGoToNext$: Observable<boolean> = this.state.canGoToNextStep();
-  canRestart$: Observable<boolean> = this.state.canRestart();
+  private store = inject(Store);
+  canStart$: Observable<boolean> = this.store.select(
+    SudokuSolverSelectors.selectCanStart,
+  );
+  canPause$: Observable<boolean> = this.store.select(
+    SudokuSolverSelectors.selectCanPause,
+  );
+  canGoToNext$: Observable<boolean> = this.store.select(
+    SudokuSolverSelectors.selectCanGoToNextStep,
+  );
+  canRestart$: Observable<boolean> = this.store.select(
+    SudokuSolverSelectors.selectCanRestart,
+  );
 
   start(): void {
-    this.state.startExecuting();
+    this.store.dispatch(SudokuSolverActions.solverStart());
   }
 
   pause(): void {
-    this.state.pauseExecuting();
+    this.store.dispatch(SudokuSolverActions.solverPause());
   }
 
   next(): void {
-    this.state.executeNextStep();
+    this.store.dispatch(SudokuSolverActions.stepExecute());
   }
 
   restart(): void {
-    this.state.restart();
+    this.store.dispatch(SudokuSolverActions.solverRestart());
   }
 }

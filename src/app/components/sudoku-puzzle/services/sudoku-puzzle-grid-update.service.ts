@@ -12,8 +12,8 @@ import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 @Injectable({
   providedIn: "root",
 })
-export class SudokuSettingsGridUpdateService {
-  private logger: Logger = new Logger(SudokuSettingsGridUpdateService.name);
+export class SudokuPuzzleGridUpdateService {
+  private logger: Logger = new Logger(SudokuPuzzleGridUpdateService.name);
 
   updateGrid(
     value: SudokuGrid,

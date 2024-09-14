@@ -1,5 +1,6 @@
 import { Component, inject } from "@angular/core";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
+import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 
 @Component({
@@ -8,6 +9,8 @@ import { Observable } from "rxjs";
   styleUrl: "./sudoku-solver-branches.component.scss",
 })
 export class SudokuSolverBranchesComponent {
-  private state = inject(SUDOKU_SOLVER_STATE);
-  branches$: Observable<number> = this.state.getBranchesRequired();
+  private store = inject(Store);
+  branches$: Observable<number> = this.store.select(
+    SudokuSolverSelectors.selectAmountOfBranches,
+  );
 }

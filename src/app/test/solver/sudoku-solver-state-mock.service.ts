@@ -39,25 +39,25 @@ export class SudokuSolverStateMockService implements SudokuSolverState {
   getMaximumSteps(): Observable<number> {
     return EMPTY;
   }
-  setMaximumSteps(max: number): void {
+  setMaximumSteps(_max: number): void {
     // do nothing
   }
   getPauseAfterStep(): Observable<Nullable<number>> {
     return EMPTY;
   }
-  setPauseAfterStep(step: Nullable<number>): void {
+  setPauseAfterStep(_step: Nullable<number>): void {
     // do nothing
   }
   getHighlightNumber(): Observable<Nullable<number>> {
     return EMPTY;
   }
-  setHighlightNumber(value: Nullable<number>): void {
+  setHighlightNumber(_value: Nullable<number>): void {
     // do nothing
   }
   getTimeElapsed(): number {
     return -1;
   }
-  setInitialPuzzle(puzzle: SudokuGrid): void {
+  setInitialPuzzle(_puzzle: SudokuGrid): void {
     // do nothing
   }
   canStartExecuting(): Observable<boolean> {

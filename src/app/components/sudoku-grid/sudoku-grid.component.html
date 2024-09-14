@@ -18,7 +18,9 @@
       ></app-sudoku-grid-row>
     }
   </div>
-  <app-sudoku-verification
-    [verification]="_grid.verificationResult"
-  ></app-sudoku-verification>
+  @if (showVerification) {
+    <app-sudoku-verification
+      [verification]="_grid.verificationResult"
+    ></app-sudoku-verification>
+  }
 }

@@ -5,10 +5,7 @@ import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolution } from "@app/core/verification/services/verify-solution";
 import { Nullable } from "@app/shared/types/nullable";
-import {
-  SolverExecution,
-  SolverExecutionState,
-} from "@app/shared/types/solver-execution";
+import { SolverExecution } from "@app/shared/types/solver-execution";
 import { StopWatch } from "@app/shared/types/stopwatch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
@@ -173,7 +170,8 @@ export class SudokuSolverStateService implements SudokuSolverState {
     }
 
     if (
-      !SolverExecutionState.isFinished(this.execution$.getValue()) &&
+      this.execution$.getValue() !== "DONE" &&
+      this.execution$.getValue() !== "FAILED" &&
       this.stepsExecuted$.getValue() >= this.maxSteps$.getValue()
     ) {
       this.finishExecuting("FAILED");

@@ -9,7 +9,13 @@
     "test": "ng test",
     "lint": "ng lint",
     "prettier": "prettier --write  \"./**/*\"",
-    "format": "npm run prettier && ng lint --fix"
+    "format": "npm run prettier && ng lint --fix",
+    "generate-store": "ng generate @ngrx/schematics:store",
+    "generate-feature-store": "ng generate @ngrx/schematics:feature --api false",
+    "generate-action": "ng generate @ngrx/schematics:action",
+    "generate-reducer": "ng generate @ngrx/schematics:reducer",
+    "generate-selector": "ng generate @ngrx/schematics:selector",
+    "generate-effect": "ng generate @ngrx/schematics:effect"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +29,13 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "@ngrx/component-store": "^18.0.2",
+    "@ngrx/effects": "^18.0.2",
+    "@ngrx/eslint-plugin": "^18.0.2",
+    "@ngrx/operators": "^18.0.2",
+    "@ngrx/schematics": "^18.0.2",
+    "@ngrx/store": "^18.0.2",
+    "@ngrx/store-devtools": "^18.0.2",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "rxjs": "~7.8.1",

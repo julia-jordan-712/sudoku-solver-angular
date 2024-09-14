@@ -1,15 +1,14 @@
 import { TestBed } from "@angular/core/testing";
-
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { SudokuSettingsGridUpdateService } from "./sudoku-settings-grid-update.service";
+import { SudokuPuzzleGridUpdateService } from "./sudoku-puzzle-grid-update.service";
 
-describe(SudokuSettingsGridUpdateService.name, () => {
-  let service: SudokuSettingsGridUpdateService;
+describe(SudokuPuzzleGridUpdateService.name, () => {
+  let service: SudokuPuzzleGridUpdateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SudokuSettingsGridUpdateService);
+    service = TestBed.inject(SudokuPuzzleGridUpdateService);
   });
 
   [

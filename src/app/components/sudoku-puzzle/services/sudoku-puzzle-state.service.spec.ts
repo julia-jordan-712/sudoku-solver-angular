@@ -1,38 +1,37 @@
 import { TestBed } from "@angular/core/testing";
-
-import {
-  SudokuDropdownSelectionItem,
-  SudokuDropdownSelectionService,
-} from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
-import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
+import { SudokuDropdownSelectionService } from "@app/components/sudoku-puzzle/services/sudoku-dropdown-selection.service";
+import { SudokuPuzzleGridUpdateService } from "@app/components/sudoku-puzzle/services/sudoku-puzzle-grid-update.service";
+import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
+import { TestState } from "@app/test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { combineLatest, first, of } from "rxjs";
-import { SudokuSettingsStateService } from "./sudoku-settings-state.service";
+import { combineLatest, first } from "rxjs";
+import { SudokuPuzzleStateService } from "./sudoku-puzzle-state.service";
 
-describe(SudokuSettingsStateService.name, () => {
-  let gridUpdate: SudokuSettingsGridUpdateService;
+describe(SudokuPuzzleStateService.name, () => {
+  let gridUpdate: SudokuPuzzleGridUpdateService;
   let verify: VerifySolutionService;
-  let underTest: SudokuSettingsStateService;
+  let underTest: SudokuPuzzleStateService;
 
   let selectionItems: SudokuDropdownSelectionItem[];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateTestingModule.withTranslations({})],
+      providers: TestState.mockStoreProviders(),
     });
-    gridUpdate = TestBed.inject(SudokuSettingsGridUpdateService);
+    gridUpdate = TestBed.inject(SudokuPuzzleGridUpdateService);
     verify = TestBed.inject(VerifySolutionService);
-    underTest = TestBed.inject(SudokuSettingsStateService);
+    underTest = TestBed.inject(SudokuPuzzleStateService);
 
     selectionItems = [
-      { id: "None", name: of(""), grid: undefined },
-      { id: "Puzzle4x4.COMPLETE", name: of(""), grid: Puzzle4x4.COMPLETE },
+      { id: "None", name: "", grid: undefined },
+      { id: "Puzzle4x4.COMPLETE", name: "", grid: Puzzle4x4.COMPLETE },
     ];
     spyOn(
       TestBed.inject(SudokuDropdownSelectionService),

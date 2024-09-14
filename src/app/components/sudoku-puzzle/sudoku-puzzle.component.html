@@ -8,7 +8,7 @@
   <div class="settings">
     <app-dropdown-input
       [label]="'SETTINGS.SELECT' | translate"
-      [items]="selectionItems"
+      [items]="selectionItems$ | async"
       [selectedItem]="selectedItem$ | async"
       (selected)="onSelect($event)"
     ></app-dropdown-input>

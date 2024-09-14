@@ -1,9 +1,7 @@
 <div>{{ "SOLVER.STEPS.CALCULATED" | translate }}: {{ steps$ | async }}</div>
-@if (!!(lastStep$ | async)) {
-  @if (lastStepI18nKey$ | async; as lastStepI18nKey) {
-    <div>
-      {{ "SOLVER.STEPS.LAST" | translate }}:
-      {{ lastStepI18nKey | translate }}
-    </div>
-  }
+@if (lastStepI18nKey$ | async; as lastStepI18nKey) {
+  <div>
+    {{ "SOLVER.STEPS.LAST" | translate }}:
+    {{ lastStepI18nKey.key | translate: lastStepI18nKey.params }}
+  </div>
 }
