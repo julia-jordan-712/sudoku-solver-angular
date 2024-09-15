@@ -257,6 +257,24 @@ describe(SudokuSettingsComponent.name, () => {
     underTest.sudoku.verification.shouldBeValid();
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
   });
+
+  it("should not mark cells as changed when switching between dropdowns", () => {
+    underTest.dropdown.dropdown.get().select("4x4 | Solved");
+
+    for (let row = 0; row <= 3; row++) {
+      for (let column = 0; column <= 3; column++) {
+        underTest.sudoku.cell(row, column).shouldBeChanged(false);
+      }
+    }
+
+    underTest.dropdown.dropdown.get().select("4x4 | Empty");
+
+    for (let row = 0; row <= 3; row++) {
+      for (let column = 0; column <= 3; column++) {
+        underTest.sudoku.cell(row, column).shouldBeChanged(false);
+      }
+    }
+  });
 });
 
 @Component({

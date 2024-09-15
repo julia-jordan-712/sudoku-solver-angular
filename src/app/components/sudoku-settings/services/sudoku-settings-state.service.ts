@@ -19,6 +19,7 @@ import {
   map,
   shareReplay,
 } from "rxjs";
+import { v4 as randomUUID } from "uuid";
 
 @Injectable({
   providedIn: "root",
@@ -51,7 +52,7 @@ export class SudokuSettingsStateService implements OnDestroy {
           grid
             ? SudokuGridViewModelConverter.createViewModelFromGrid(
                 grid,
-                "Sudoku-Settings-Grid-View-Model-Id",
+                randomUUID(),
                 {
                   id: "Sudoku-Settings-Grid-Branch",
                   isCurrent: true,
