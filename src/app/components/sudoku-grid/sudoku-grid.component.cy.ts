@@ -22,8 +22,8 @@ describe(SudokuGridComponent.name, () => {
       grid: SudokuGrid;
       verification?: VerificationResult;
     },
-  ) {
-    return cy.mount(SudokuGridWrapperComponent, SudokuGridModule, {
+  ): void {
+    cy.mount(SudokuGridWrapperComponent, SudokuGridModule, {
       ...input,
       grid: SudokuGridViewModelConverter.createViewModelFromGrid(
         SudokuGridUtil.clone(input.grid),
@@ -129,7 +129,7 @@ describe(SudokuGridComponent.name, () => {
 });
 
 @Component({
-  selector: "test-wrapper",
+  selector: "app-test-wrapper",
   template: `<app-sudoku-grid
     [grid]="grid"
     [highlightNumber]="highlightNumber"
@@ -146,6 +146,6 @@ class SudokuGridWrapperComponent {
   @Input()
   readonly: Nullable<boolean>;
 
-  onValueChange(grid: SudokuGrid): void {}
-  onValueSubmit(grid: SudokuGrid): void {}
+  onValueChange(_grid: SudokuGrid): void {}
+  onValueSubmit(_grid: SudokuGrid): void {}
 }

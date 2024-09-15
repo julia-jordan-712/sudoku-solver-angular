@@ -10,8 +10,8 @@ import { SudokuVerificationComponent } from "./sudoku-verification.component";
 describe(SudokuVerificationComponent.name, () => {
   const underTest: CySudokuVerification = new CySudokuVerification();
 
-  function setup(input: CyComponentInput<SudokuVerificationComponent>) {
-    return cy.mount(
+  function setup(input: CyComponentInput<SudokuVerificationComponent>): void {
+    cy.mount(
       SudokuVerificationWrapperComponent,
       SudokuVerificationModule,
       input,
@@ -55,7 +55,7 @@ describe(SudokuVerificationComponent.name, () => {
 });
 
 @Component({
-  selector: "test-wrapper",
+  selector: "app-test-wrapper",
   template: `<app-sudoku-verification
     [verification]="verification"
   ></app-sudoku-verification>`,
