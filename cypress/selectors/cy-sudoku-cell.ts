@@ -27,12 +27,32 @@ export class CySudokuCell {
     );
   }
 
+  shouldBeChanged(changed = true): void {
+    this.shouldHaveClass(changed, "changed");
+  }
+
   shouldBeDuplicate(duplicate = true): void {
+    this.shouldHaveClass(duplicate, "duplicate");
+  }
+
+  shouldBeFocused(focused = true): void {
+    this.shouldHaveClass(focused, "focused");
+  }
+
+  shouldBeHighlighted(highlighted = true): void {
+    this.shouldHaveClass(highlighted, "highlight");
+  }
+
+  shouldBeInvalid(invalid = true): void {
+    this.shouldHaveClass(invalid, "invalid");
+  }
+
+  private shouldHaveClass(should: boolean, cssClass: string): void {
     const selectable = new CySelectable({
       dataCy: this.dataCy,
-      class: "duplicate",
+      class: cssClass,
     });
-    if (duplicate) {
+    if (should) {
       selectable.get().should("be.visible");
     } else {
       selectable.get().should("not.exist");
