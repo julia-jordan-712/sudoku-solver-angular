@@ -237,7 +237,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
   }
 
   setMaximumSteps(max: number): void {
-    this.maxSteps$.next(Math.max(1, max));
+    this.maxSteps$.next(Math.max(0, max));
   }
 
   setPauseAfterStep(step: Nullable<number>): void {

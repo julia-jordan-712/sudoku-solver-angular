@@ -24,4 +24,9 @@ export class CyPuzzleInput {
     this.selector,
   );
   public readonly sudoku = new CySudoku({}, this.selector);
+
+  selectFromDropdownAndConfirm(name: string): void {
+    this.dropdown.dropdown.get().select(name);
+    this.buttonConfirm.get().click();
+  }
 }

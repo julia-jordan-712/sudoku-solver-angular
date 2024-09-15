@@ -15,12 +15,11 @@ export class CySolverStatus extends CySelectable {
   }
 
   shouldBe(expectedStatus: SolverExecution): void {
+    new CySelectable({ dataCy: expectedStatus }, this.elementSelector)
+      .get()
+      .should("be.visible");
     for (const status of SOLVER_EXECUTION) {
-      if (status === expectedStatus) {
-        new CySelectable({ dataCy: status }, this.elementSelector)
-          .get()
-          .should("be.visible");
-      } else {
+      if (status !== expectedStatus) {
         new CySelectable({ dataCy: status }, this.elementSelector)
           .get()
           .should("not.exist");

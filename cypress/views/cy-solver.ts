@@ -32,4 +32,16 @@ export class CySolver extends CySelectable {
       this.elementSelector,
     );
   }
+
+  clickNext(): void {
+    this.actions.next.get().click();
+  }
+
+  clickPause(): void {
+    this.actions.pause.get().click();
+  }
+
+  clickStart(): void {
+    this.actions.start.get().click();
+  }
 }

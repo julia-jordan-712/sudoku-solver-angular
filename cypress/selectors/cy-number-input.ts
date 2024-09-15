@@ -18,4 +18,8 @@ export class CyNumberInput extends CySelectableWithLabel {
       ...parents,
     );
   }
+
+  setValue(value: number): void {
+    this.input.get().type("{selectall}").type(value.toString());
+  }
 }
