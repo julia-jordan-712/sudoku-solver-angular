@@ -12,6 +12,7 @@
       }
       <div class="branch">
         <app-sudoku-grid
+          data-cy="current-branch"
           [grid]="currentBranch"
           [highlightNumber]="highlightNumber$ | async"
           [readonly]="true"
@@ -23,6 +24,7 @@
       @for (branch of branches; track branch.id; let i = $index) {
         <div class="branch">
           <app-sudoku-grid
+            [attr.data-cy]="'additional-branch-' + i"
             [grid]="branch"
             [highlightNumber]="highlightNumber$ | async"
             [readonly]="true"
