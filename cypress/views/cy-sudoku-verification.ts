@@ -7,8 +7,8 @@ import {
 } from "@cypress/types/cy-selector";
 
 export class CySudokuVerification extends CySelectable {
-  private readonly valid: CySelectable;
-  private readonly invalid: CySelectable;
+  public readonly valid: CySelectable;
+  public readonly invalid: CySelectable;
 
   constructor(element?: CySelectorWithoutTag, ...parents: CySelector[]) {
     const elementSelector = new CySelectorTag(
