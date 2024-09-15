@@ -1,3 +1,5 @@
+import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import { isDefined } from "@app/shared/util/is-defined";
 import { CySudokuCell } from "@cypress/selectors/cy-sudoku-cell";
 import { CySelectable } from "@cypress/types/cy-selectable";
 import {
@@ -24,5 +26,30 @@ export class CySudoku extends CySelectable {
       this.elementSelector,
       ...this.parentsSelector,
     );
+  }
+
+  shouldEqual(sudoku: SudokuGrid) {
+    for (let row = 0; row < sudoku.length; row++) {
+      for (let column = 0; column < sudoku[row].length; column++) {
+        const cyCell: CySudokuCell = this.cell(row, column);
+        const cell: SudokuGridCell = sudoku[row][column];
+        if (Array.isArray(cell)) {
+          cyCell.possibleValues
+            .get()
+            .should("be.visible")
+            .should("have.text", cell.join(""));
+          cyCell.value.get().should("not.exist");
+        } else if (isDefined(cell)) {
+          cyCell.possibleValues.get().should("not.exist");
+          cyCell.value
+            .get()
+            .should("be.visible")
+            .should("have.value", cell.toString());
+        } else {
+          cyCell.possibleValues.get().should("not.exist");
+          cyCell.value.get().should("be.visible").should("have.value", "");
+        }
+      }
+    }
   }
 }

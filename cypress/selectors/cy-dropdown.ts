@@ -10,7 +10,7 @@ export class CyDropdown extends CySelectableWithLabel {
   public readonly dropdown: CySelectable<HTMLSelectElement>;
 
   constructor(element?: CySelectorWithoutTag, ...parents: CySelector[]) {
-    const elementSelector = new CySelectorTag("app-dropdown", element);
+    const elementSelector = new CySelectorTag("app-dropdown-input", element);
     super(elementSelector, ...parents);
     this.dropdown = new CySelectable<HTMLSelectElement>(
       { tag: "select" },

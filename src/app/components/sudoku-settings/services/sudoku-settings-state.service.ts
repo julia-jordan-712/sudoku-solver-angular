@@ -4,7 +4,6 @@ import {
   SudokuDropdownSelectionService,
 } from "@app/components/sudoku-settings/services/sudoku-dropdown-selection.service";
 import { SudokuSettingsGridUpdateService } from "@app/components/sudoku-settings/services/sudoku-settings-grid-update.service";
-import { Logger } from "@app/core/log/logger";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -25,8 +24,6 @@ import {
   providedIn: "root",
 })
 export class SudokuSettingsStateService implements OnDestroy {
-  private logger: Logger = new Logger(SudokuSettingsStateService.name);
-
   private gridUpdate = inject(SudokuSettingsGridUpdateService);
   private dropdownSelection = inject(SudokuDropdownSelectionService);
   private verify = inject(VerifySolutionService);
@@ -46,27 +43,29 @@ export class SudokuSettingsStateService implements OnDestroy {
       this.dropdownSelection.NO_SELECTION_ITEM,
     );
 
-  private readonly viewModel$: Observable<SudokuGridViewModel> = defer(() =>
-    combineLatest([this.gridSubmitted$, this.gridVerify$]).pipe(
-      map(([gridSubmitted, gridVerify]) => gridVerify ?? gridSubmitted),
-      filter(isDefined),
-      map((grid: SudokuGrid) =>
-        SudokuGridViewModelConverter.createViewModelFromGrid(
-          grid,
-          "Sudoku-Settings-Grid-View-Model-Id",
-          {
-            id: "Sudoku-Settings-Grid-Branch",
-            isCurrent: true,
-          },
-          this.verify.verify(grid, {
-            allowEmptyCells: true,
-            trackUniquenessViolations: true,
-          }),
+  private readonly viewModel$: Observable<Nullable<SudokuGridViewModel>> =
+    defer(() =>
+      combineLatest([this.gridSubmitted$, this.gridVerify$]).pipe(
+        map(([gridSubmitted, gridVerify]) => gridVerify ?? gridSubmitted),
+        map((grid: Nullable<SudokuGrid>) =>
+          grid
+            ? SudokuGridViewModelConverter.createViewModelFromGrid(
+                grid,
+                "Sudoku-Settings-Grid-View-Model-Id",
+                {
+                  id: "Sudoku-Settings-Grid-Branch",
+                  isCurrent: true,
+                },
+                this.verify.verify(grid, {
+                  allowEmptyCells: true,
+                  trackUniquenessViolations: true,
+                }),
+              )
+            : null,
         ),
+        shareReplay({ bufferSize: 1, refCount: false }),
       ),
-      shareReplay({ bufferSize: 1, refCount: false }),
-    ),
-  );
+    );
 
   ngOnDestroy(): void {
     this.confirmed$.complete();
@@ -82,8 +81,8 @@ export class SudokuSettingsStateService implements OnDestroy {
   isConfirmEnabled(): Observable<boolean> {
     return this.viewModel$.pipe(
       map(
-        (viewModel: SudokuGridViewModel) =>
-          viewModel.verificationResult?.isValid() ?? false,
+        (viewModel: Nullable<SudokuGridViewModel>) =>
+          viewModel?.verificationResult?.isValid() ?? false,
       ),
     );
   }
@@ -105,7 +104,7 @@ export class SudokuSettingsStateService implements OnDestroy {
   }
 
   getViewModel(): Observable<SudokuGridViewModel> {
-    return this.viewModel$;
+    return this.viewModel$.pipe(filter(isDefined));
   }
 
   getSelectionItems(): SudokuDropdownSelectionItem[] {

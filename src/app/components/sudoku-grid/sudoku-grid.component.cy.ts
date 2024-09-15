@@ -45,45 +45,7 @@ describe(SudokuGridComponent.name, () => {
     ];
     setup({ grid: testGrid });
 
-    // first row
-    underTest.cell(0, 0).possibleValues.get().should("not.exist");
-    underTest.cell(0, 0).value.get().should("have.value", "1");
-    underTest.cell(0, 1).possibleValues.get().should("not.exist");
-    underTest.cell(0, 1).value.get().should("have.value", "2");
-    underTest.cell(0, 2).possibleValues.get().should("not.exist");
-    underTest.cell(0, 2).value.get().should("have.value", "3");
-    underTest.cell(0, 3).possibleValues.get().should("have.text", "4");
-    underTest.cell(0, 3).value.get().should("not.exist");
-
-    // second row
-    underTest.cell(1, 0).possibleValues.get().should("not.exist");
-    underTest.cell(1, 0).value.get().should("have.value", "3");
-    underTest.cell(1, 1).possibleValues.get().should("not.exist");
-    underTest.cell(1, 1).value.get().should("have.value", "");
-    underTest.cell(1, 2).possibleValues.get().should("not.exist");
-    underTest.cell(1, 2).value.get().should("have.value", "1");
-    underTest.cell(1, 3).possibleValues.get().should("not.exist");
-    underTest.cell(1, 3).value.get().should("have.value", "2");
-
-    // third row
-    underTest.cell(2, 0).possibleValues.get().should("have.text", "2");
-    underTest.cell(2, 0).value.get().should("not.exist");
-    underTest.cell(2, 1).possibleValues.get().should("have.text", "13");
-    underTest.cell(2, 1).value.get().should("not.exist");
-    underTest.cell(2, 2).possibleValues.get().should("have.text", "4");
-    underTest.cell(2, 2).value.get().should("not.exist");
-    underTest.cell(2, 3).possibleValues.get().should("have.text", "14");
-    underTest.cell(2, 3).value.get().should("not.exist");
-
-    // last row
-    underTest.cell(3, 0).possibleValues.get().should("not.exist");
-    underTest.cell(3, 0).value.get().should("have.value", "4");
-    underTest.cell(3, 1).possibleValues.get().should("have.text", "1");
-    underTest.cell(3, 1).value.get().should("not.exist");
-    underTest.cell(3, 2).possibleValues.get().should("not.exist");
-    underTest.cell(3, 2).value.get().should("have.value", "2");
-    underTest.cell(3, 3).possibleValues.get().should("not.exist");
-    underTest.cell(3, 3).value.get().should("have.value", "3");
+    underTest.shouldEqual(testGrid);
   });
 
   describe("enter values", () => {

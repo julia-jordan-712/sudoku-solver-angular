@@ -13,6 +13,6 @@ export class CySelectionList extends CySelectableWithLabel {
   }
 
   button(index = 0): CyHtmlChain<HTMLButtonElement> {
-    return new CyButton(this.elementSelector).get().eq(index);
+    return new CyButton({}, this.elementSelector).get().eq(index);
   }
 }
