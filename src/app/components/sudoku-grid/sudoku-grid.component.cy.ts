@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { SudokuGridComponent } from "@app/components/sudoku-grid/sudoku-grid.component";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
 import { VerifySolution } from "@app/core/verification/services/verify-solution";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
@@ -13,7 +14,6 @@ import { CySudoku } from "@cypress/selectors/cy-sudoku";
 import { CySudokuCell } from "@cypress/selectors/cy-sudoku-cell";
 import { CyComponentInput } from "@cypress/types/cy-component-input";
 import { v4 as randomUUID } from "uuid";
-import { SudokuGridComponent } from "./sudoku-grid.component";
 
 describe(SudokuGridComponent.name, () => {
   const underTest: CySudoku = new CySudoku();
