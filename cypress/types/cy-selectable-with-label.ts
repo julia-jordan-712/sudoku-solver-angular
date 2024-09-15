@@ -6,13 +6,16 @@ export class CySelectableWithLabel extends CySelectable {
   public readonly label: CySelectable<HTMLLabelElement>;
   public readonly icon: CyIcon;
 
-  constructor(element: CySelector, ...parents: CySelector[]) {
+  constructor(
+    element: CySelector & { icon?: string },
+    ...parents: CySelector[]
+  ) {
     super(element, ...parents);
     this.label = new CySelectable<HTMLLabelElement>(
       { tag: "label" },
       element,
       ...parents,
     );
-    this.icon = new CyIcon(element, ...parents);
+    this.icon = new CyIcon(element.icon ?? "info", element, ...parents);
   }
 }

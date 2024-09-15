@@ -7,19 +7,19 @@
   <div>{{ "SETTINGS.HINTS.SELECT_OR_SIZE" | translate }}</div>
   <div class="settings">
     <app-dropdown-input
+      data-cy="existing-sudoku-selection"
       [label]="'SETTINGS.SELECT' | translate"
       [items]="selectionItems"
       [selectedItem]="selectedItem$ | async"
       (selected)="onSelect($event)"
-      data-cy="existing-sudoku-selection"
     ></app-dropdown-input>
     <app-selection-list
+      data-cy="sudoku-size-selection"
       id="sizeInput"
       [label]="'SETTINGS.SIZE' | translate"
       [value]="size$ | async"
       [values]="[4, 9, 16, 25]"
       (valueChange)="setSize($event)"
-      data-cy="sudoku-size-selection"
     ></app-selection-list>
   </div>
   @if (((grid$ | async)?.rows?.length ?? 0) > 0) {
