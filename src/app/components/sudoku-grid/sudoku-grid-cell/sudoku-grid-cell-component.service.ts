@@ -53,7 +53,7 @@ export class SudokuGridCellComponentService {
     if (highlightChangedCells) {
       const previousValueChanged: boolean =
         this.previousValue != null && this.previousValue !== this.value;
-      const previousValuesChanged: boolean = !Objects.arraysEqualIgnoringOrder(
+      const previousValuesChanged = !Objects.arraysEqualIgnoringOrder(
         this.previousValues,
         this.values,
       );
