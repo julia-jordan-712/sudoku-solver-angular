@@ -1,5 +1,7 @@
 :host {
-  display: contents;
+  display: flex;
+  gap: 1em;
+  align-items: flex-end;
 }
 
 .grid {

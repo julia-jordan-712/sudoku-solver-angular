@@ -27,21 +27,21 @@ export class SudokuGridCellComponent {
   displayValues$: Observable<Nullable<number[]>> =
     this.componentService.getDisplayValues();
   changed$: Observable<boolean> = this.componentService.isChanged();
-  isDuplicate = false;
 
   @Input({ required: true })
   set cell(viewModel: SudokuGridCellViewModel) {
     this.componentService.setCell(
       viewModel.cell,
-      viewModel.branchInfo?.isCurrent ?? true,
+      viewModel.data.highlightChangedCells,
     );
     this.isDuplicate = viewModel.isDuplicate();
-    this.maxValue = viewModel.maxValue;
-    this.size = viewModel.widthAndHeight;
+    this.maxValue = viewModel.data.maxValue;
+    this.size = viewModel.data.widthAndHeight;
   }
 
-  size = 32;
+  isDuplicate = false;
   maxValue = 1;
+  size = 32;
 
   @Input()
   @HostBinding("class.border-top")

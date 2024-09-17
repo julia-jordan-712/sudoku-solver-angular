@@ -1,6 +1,4 @@
-import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { CellPosition } from "@app/shared/types/cell-position";
-import { Nullable } from "@app/shared/types/nullable";
 import {
   SudokuGrid,
   SudokuGridCell,
@@ -10,7 +8,6 @@ import {
   SudokuGridCellViewModel,
   SudokuGridRowViewModel,
   SudokuGridViewModel,
-  SudokuGridViewModelBranchInfo,
 } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
 
@@ -18,39 +15,30 @@ export class SudokuGridViewModelConverter {
   public static createViewModelFromGrid(
     grid: SudokuGrid,
     id: string,
-    branchInfo: SudokuGridViewModelBranchInfo,
-    verificationResult: Nullable<VerificationResult>,
+    data: SudokuGridViewModel["data"],
   ): SudokuGridViewModel {
-    const branchId: string | undefined = branchInfo?.isCurrent
+    const branchId: string | undefined = data.branchInfo?.isCurrent
       ? "CURRENT"
-      : branchInfo?.id;
+      : data.branchInfo?.id;
     const viewModelId: string = [id, branchId].filter(isDefined).join("_");
     return new SudokuGridViewModel(
       viewModelId,
-      SudokuGridViewModelConverter.createViewModelsFromRows(
-        grid,
-        id,
-        branchInfo,
-        verificationResult,
-      ),
-      branchInfo,
-      verificationResult,
+      SudokuGridViewModelConverter.createViewModelsFromRows(grid, id, data),
+      data,
     );
   }
 
   private static createViewModelsFromRows(
     rows: SudokuGridRow[],
     id: string,
-    branchInfo: SudokuGridViewModelBranchInfo,
-    verificationResult: Nullable<VerificationResult>,
+    data: SudokuGridViewModel["data"],
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
       SudokuGridViewModelConverter.createViewModelsFromRow(
         row,
         id,
         index,
-        branchInfo,
-        verificationResult,
+        data,
       ),
     );
   }
@@ -59,8 +47,7 @@ export class SudokuGridViewModelConverter {
     row: SudokuGridRow,
     id: string,
     index: number,
-    branchInfo: SudokuGridViewModelBranchInfo,
-    verificationResult: Nullable<VerificationResult>,
+    data: SudokuGridViewModel["data"],
   ): SudokuGridRowViewModel {
     return new SudokuGridRowViewModel(
       `${id}_row-${index}`,
@@ -68,11 +55,9 @@ export class SudokuGridViewModelConverter {
         row,
         id,
         index,
-        branchInfo,
-        verificationResult,
+        data,
       ),
-      branchInfo,
-      verificationResult,
+      data,
     );
   }
 
@@ -80,8 +65,7 @@ export class SudokuGridViewModelConverter {
     cells: SudokuGridCell[],
     id: string,
     rowIndex: number,
-    branchInfo: SudokuGridViewModelBranchInfo,
-    verificationResult: Nullable<VerificationResult>,
+    data: SudokuGridViewModel["data"],
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
@@ -90,35 +74,34 @@ export class SudokuGridViewModelConverter {
     return cells.map((cell, index) =>
       SudokuGridViewModelConverter.createViewModelsFromCell(
         cell,
+        id,
+        data,
         maxValue,
         size,
         rowIndex,
         index,
-        id,
-        branchInfo,
-        verificationResult,
       ),
     );
   }
 
   private static createViewModelsFromCell(
     cell: SudokuGridCell,
+    id: string,
+    data: SudokuGridViewModel["data"],
     maxValue: number,
     size: number,
     rowIndex: number,
     columnIndex: number,
-    id: string,
-    branchInfo: SudokuGridViewModelBranchInfo,
-    verificationResult: Nullable<VerificationResult>,
   ): SudokuGridCellViewModel {
     return new SudokuGridCellViewModel(
       `${id}_cell-${rowIndex}-${columnIndex}`,
       cell,
-      new CellPosition(rowIndex, columnIndex),
-      maxValue,
-      size,
-      branchInfo,
-      verificationResult,
+      {
+        ...data,
+        cellPosition: new CellPosition(rowIndex, columnIndex),
+        maxValue,
+        widthAndHeight: size,
+      },
     );
   }
 

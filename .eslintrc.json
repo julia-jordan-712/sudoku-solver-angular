@@ -5,7 +5,7 @@
     {
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["tsconfig.json"],
+        "project": ["tsconfig.eslint.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -43,6 +43,11 @@
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-explicit-any": "off"
       }
+    },
+    {
+      "files": ["*.cy.ts"],
+      "extends": ["plugin:eslint-plugin-cypress/recommended"],
+      "rules": { "@typescript-eslint/no-unused-vars": "off" }
     },
     {
       "files": ["*.html"],

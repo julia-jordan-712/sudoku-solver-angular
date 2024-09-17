@@ -5,6 +5,7 @@ import { SudokuGridCellMultipleValuesComponent } from "@app/components/sudoku-gr
 import { SudokuGridCellSingleValueComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-single-value/sudoku-grid-cell-single-value.component";
 import { CellPosition } from "@app/shared/types/cell-position";
 import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { SudokuGridViewModelMock } from "@app/test/sudoku/sudoku-grid-view-model.mock";
 import { SudokuGridCellComponent } from "./sudoku-grid-cell.component";
 
 describe(SudokuGridCellComponent.name, () => {
@@ -27,15 +28,12 @@ describe(SudokuGridCellComponent.name, () => {
   });
 
   it("should emit the input value from the child component", () => {
-    component.cell = new SudokuGridCellViewModel(
-      "id-0",
-      5,
-      new CellPosition(0, 0),
-      9,
-      20,
-      { id: "test-id", isCurrent: true },
-      null,
-    );
+    component.cell = new SudokuGridCellViewModel("id-0", 5, {
+      ...SudokuGridViewModelMock.DATA,
+      cellPosition: new CellPosition(0, 0),
+      maxValue: 9,
+      widthAndHeight: 20,
+    });
     fixture.detectChanges();
     const valueChangeSpy = spyOn(component.valueChange, "emit").and.callFake(
       () => {},
