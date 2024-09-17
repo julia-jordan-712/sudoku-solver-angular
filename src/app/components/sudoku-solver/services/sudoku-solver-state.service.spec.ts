@@ -515,7 +515,7 @@ describe(SudokuSolverStateService.name, () => {
         .getCurrentBranch()
         .pipe(first())
         .subscribe((viewModel) => {
-          const result = viewModel?.verificationResult;
+          const result = viewModel?.data.verificationResult;
           expect(result).not.toBeNull();
           expect(result?.isValid()).toBeTrue();
           done();
@@ -530,7 +530,7 @@ describe(SudokuSolverStateService.name, () => {
         .getCurrentBranch()
         .pipe(first())
         .subscribe((viewModel) => {
-          const result = viewModel?.verificationResult;
+          const result = viewModel?.data.verificationResult;
           expect(result).not.toBeNull();
           expect(result?.isValid()).toBeTrue();
           done();
@@ -564,9 +564,11 @@ describe(SudokuSolverStateService.name, () => {
       service.executeNextStep();
 
       // assert
-      expect((await currentBranch.value()).verificationResult).not.toBeNull();
       expect(
-        (await additionalBranches.value())[0].verificationResult,
+        (await currentBranch.value()).data.verificationResult,
+      ).not.toBeNull();
+      expect(
+        (await additionalBranches.value())[0].data.verificationResult,
       ).toBeNull();
 
       currentBranch.destroy();
@@ -777,7 +779,7 @@ describe(SudokuSolverStateService.name, () => {
       const viewModel: SudokuGridViewModel = await testSubscription.value();
 
       viewModel.rows
-        .flatMap((row) => row.cells.map((cell) => cell.maxValue))
+        .flatMap((row) => row.cells.map((cell) => cell.data.maxValue))
         .forEach((maxValue) => expect(maxValue).toEqual(4));
     });
 
@@ -830,11 +832,13 @@ describe(SudokuSolverStateService.name, () => {
         id: currentBranch.getId(),
         isCurrent: true,
       };
-      expect(currentViewModel.branchInfo).toEqual(expectedCurrentBranchInfo);
-      expect(currentViewModel.rows[0].branchInfo).toEqual(
+      expect(currentViewModel.data.branchInfo).toEqual(
         expectedCurrentBranchInfo,
       );
-      expect(currentViewModel.rows[0].cells[0].branchInfo).toEqual(
+      expect(currentViewModel.rows[0].data.branchInfo).toEqual(
+        expectedCurrentBranchInfo,
+      );
+      expect(currentViewModel.rows[0].cells[0].data.branchInfo).toEqual(
         expectedCurrentBranchInfo,
       );
 
@@ -848,13 +852,13 @@ describe(SudokuSolverStateService.name, () => {
         id: initialBranch.getId(),
         isCurrent: false,
       };
-      expect(additionalViewModels[1].branchInfo).toEqual(
+      expect(additionalViewModels[1].data.branchInfo).toEqual(
         expectedInitialBranchInfo,
       );
-      expect(additionalViewModels[1].rows[0].branchInfo).toEqual(
+      expect(additionalViewModels[1].rows[0].data.branchInfo).toEqual(
         expectedInitialBranchInfo,
       );
-      expect(additionalViewModels[1].rows[0].cells[0].branchInfo).toEqual(
+      expect(additionalViewModels[1].rows[0].cells[0].data.branchInfo).toEqual(
         expectedInitialBranchInfo,
       );
 
@@ -911,11 +915,11 @@ describe(SudokuSolverStateService.name, () => {
         id: fourthBranch.getId(),
         isCurrent: false,
       };
-      expect(viewModels[0].branchInfo).toEqual(expectedCurrentBranchInfo);
-      expect(viewModels[0].rows[0].branchInfo).toEqual(
+      expect(viewModels[0].data.branchInfo).toEqual(expectedCurrentBranchInfo);
+      expect(viewModels[0].rows[0].data.branchInfo).toEqual(
         expectedCurrentBranchInfo,
       );
-      expect(viewModels[0].rows[0].cells[0].branchInfo).toEqual(
+      expect(viewModels[0].rows[0].cells[0].data.branchInfo).toEqual(
         expectedCurrentBranchInfo,
       );
 
@@ -932,11 +936,11 @@ describe(SudokuSolverStateService.name, () => {
         id: initialBranch.getId(),
         isCurrent: false,
       };
-      expect(viewModels[3].branchInfo).toEqual(expectedInitialBranchInfo);
-      expect(viewModels[3].rows[0].branchInfo).toEqual(
+      expect(viewModels[3].data.branchInfo).toEqual(expectedInitialBranchInfo);
+      expect(viewModels[3].rows[0].data.branchInfo).toEqual(
         expectedInitialBranchInfo,
       );
-      expect(viewModels[3].rows[0].cells[0].branchInfo).toEqual(
+      expect(viewModels[3].rows[0].cells[0].data.branchInfo).toEqual(
         expectedInitialBranchInfo,
       );
 

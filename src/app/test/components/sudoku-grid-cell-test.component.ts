@@ -15,8 +15,8 @@ export class SudokuGridCellTestComponent {
   @Input({ required: true })
   set cell(cell: SudokuGridCellViewModel) {
     this._cell = cell.cell;
-    this.maxValue = cell.maxValue;
-    this.size = cell.widthAndHeight;
+    this.maxValue = cell.data.maxValue;
+    this.size = cell.data.widthAndHeight;
     this.isDuplicate = cell.isDuplicate();
   }
 

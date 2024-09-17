@@ -8,6 +8,7 @@ import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-
 import { SudokuGridCellTestComponent } from "@app/test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
+import { SudokuGridViewModelMock } from "@app/test/sudoku/sudoku-grid-view-model.mock";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { v4 as randomUUID } from "uuid";
 import { SudokuGridComponent } from "./sudoku-grid.component";
@@ -42,8 +43,7 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
       randomUUID(),
-      { id: "test-id", isCurrent: true },
-      null,
+      SudokuGridViewModelMock.DATA,
     );
     fixture.detectChanges();
 
@@ -136,8 +136,7 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       Puzzle4x4.COMPLETE,
       randomUUID(),
-      { id: "test-id", isCurrent: true },
-      null,
+      SudokuGridViewModelMock.DATA,
     );
     fixture.detectChanges();
 
@@ -163,8 +162,7 @@ describe(SudokuGridComponent.name, () => {
     component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
       input,
       randomUUID(),
-      { id: "test-id", isCurrent: true },
-      null,
+      SudokuGridViewModelMock.DATA,
     );
     fixture.detectChanges();
     const changeSpy = spyOn(component.valueChange, "emit");

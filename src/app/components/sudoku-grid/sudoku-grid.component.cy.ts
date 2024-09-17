@@ -22,7 +22,7 @@ describe(SudokuGridComponent.name, () => {
     input: Omit<CyComponentInput<SudokuGridComponent>, "grid"> & {
       grid: SudokuGrid;
       verification?: VerificationResult;
-      isCurrent?: boolean;
+      highlightChangedCells?: boolean;
     },
   ): void {
     cy.mount(SudokuGridWrapperComponent, SudokuGridModule, {
@@ -30,8 +30,11 @@ describe(SudokuGridComponent.name, () => {
       grid: SudokuGridViewModelConverter.createViewModelFromGrid(
         SudokuGridUtil.clone(input.grid),
         randomUUID(),
-        { id: "test-id", isCurrent: input.isCurrent ?? false },
-        input.verification,
+        {
+          branchInfo: { id: "test-id", isCurrent: false },
+          verificationResult: input.verification,
+          highlightChangedCells: input.highlightChangedCells ?? false,
+        },
       ),
     });
   }

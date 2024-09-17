@@ -19,7 +19,6 @@ import {
   map,
   shareReplay,
 } from "rxjs";
-import { v4 as randomUUID } from "uuid";
 
 @Injectable({
   providedIn: "root",
@@ -52,15 +51,18 @@ export class SudokuSettingsStateService implements OnDestroy {
           grid
             ? SudokuGridViewModelConverter.createViewModelFromGrid(
                 grid,
-                randomUUID(),
+                "Sudoku-Settings-Grid-View-Model-Id",
                 {
-                  id: "Sudoku-Settings-Grid-Branch",
-                  isCurrent: true,
+                  branchInfo: {
+                    id: "Sudoku-Settings-Grid-Branch",
+                    isCurrent: true,
+                  },
+                  verificationResult: this.verify.verify(grid, {
+                    allowEmptyCells: true,
+                    trackUniquenessViolations: true,
+                  }),
+                  highlightChangedCells: false,
                 },
-                this.verify.verify(grid, {
-                  allowEmptyCells: true,
-                  trackUniquenessViolations: true,
-                }),
               )
             : null,
         ),
@@ -83,7 +85,7 @@ export class SudokuSettingsStateService implements OnDestroy {
     return this.viewModel$.pipe(
       map(
         (viewModel: Nullable<SudokuGridViewModel>) =>
-          viewModel?.verificationResult?.isValid() ?? false,
+          viewModel?.data.verificationResult?.isValid() ?? false,
       ),
     );
   }

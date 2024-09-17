@@ -32,11 +32,11 @@ export class SudokuGridCellComponent {
   set cell(viewModel: SudokuGridCellViewModel) {
     this.componentService.setCell(
       viewModel.cell,
-      viewModel.branchInfo?.isCurrent ?? true,
+      viewModel.data.highlightChangedCells,
     );
     this.isDuplicate = viewModel.isDuplicate();
-    this.maxValue = viewModel.maxValue;
-    this.size = viewModel.widthAndHeight;
+    this.maxValue = viewModel.data.maxValue;
+    this.size = viewModel.data.widthAndHeight;
   }
 
   isDuplicate = false;

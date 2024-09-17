@@ -35,7 +35,7 @@ export class SudokuGridCellComponentService {
     return this.changed$.asObservable();
   }
 
-  setCell(cell: SudokuGridCell, isInCurrentBranch: boolean): void {
+  setCell(cell: SudokuGridCell, highlightChangedCells: boolean): void {
     this.previousValue = this.value;
     this.previousValues = this.values;
 
@@ -50,16 +50,15 @@ export class SudokuGridCellComponentService {
     this.displayValue$.next(this.value);
     this.displayValues$.next(this.values);
 
-    const previousValueChanged: boolean =
-      this.previousValue != null && this.previousValue !== this.value;
-    const previousAndCurrentValuesDiffer = !Objects.arraysEqualIgnoringOrder(
-      this.previousValues,
-      this.values,
-    );
-    const previousValuesChanged: boolean = isInCurrentBranch
-      ? previousAndCurrentValuesDiffer
-      : this.previousValues != null && previousAndCurrentValuesDiffer;
-    this.changed$.next(previousValueChanged || previousValuesChanged);
+    if (highlightChangedCells) {
+      const previousValueChanged: boolean =
+        this.previousValue != null && this.previousValue !== this.value;
+      const previousValuesChanged: boolean = !Objects.arraysEqualIgnoringOrder(
+        this.previousValues,
+        this.values,
+      );
+      this.changed$.next(previousValueChanged || previousValuesChanged);
+    }
   }
 
   onMouseEnter(): void {

@@ -14,8 +14,11 @@ export class SudokuGridViewModel implements ClipboardElement {
   constructor(
     readonly id: string,
     readonly rows: SudokuGridRowViewModel[],
-    readonly branchInfo: SudokuGridViewModelBranchInfo,
-    readonly verificationResult: Nullable<VerificationResult>,
+    readonly data: {
+      readonly branchInfo: SudokuGridViewModelBranchInfo;
+      readonly verificationResult: Nullable<VerificationResult>;
+      readonly highlightChangedCells: boolean;
+    },
   ) {}
 
   toClipboardString(): string {
@@ -27,8 +30,11 @@ export class SudokuGridRowViewModel implements ClipboardElement {
   constructor(
     readonly id: string,
     readonly cells: SudokuGridCellViewModel[],
-    readonly branchInfo: SudokuGridViewModelBranchInfo,
-    readonly verificationResult: Nullable<VerificationResult>,
+    readonly data: {
+      readonly branchInfo: SudokuGridViewModelBranchInfo;
+      readonly verificationResult: Nullable<VerificationResult>;
+      readonly highlightChangedCells: boolean;
+    },
   ) {}
 
   toClipboardString(): string {
@@ -40,17 +46,24 @@ export class SudokuGridCellViewModel implements ClipboardElement {
   constructor(
     readonly id: string,
     readonly cell: SudokuGridCell,
-    readonly cellPosition: CellPosition,
-    readonly maxValue: number,
-    readonly widthAndHeight: number,
-    readonly branchInfo: SudokuGridViewModelBranchInfo,
-    readonly verificationResult: Nullable<VerificationResult>,
+    readonly data: {
+      readonly cellPosition: CellPosition;
+      readonly branchInfo: SudokuGridViewModelBranchInfo;
+      readonly highlightChangedCells: boolean;
+      readonly maxValue: number;
+      readonly verificationResult: Nullable<VerificationResult>;
+      readonly widthAndHeight: number;
+    },
   ) {}
 
   isDuplicate(): boolean {
-    return Object.values(this.verificationResult?.getDuplicatesPerValue() ?? {})
+    return Object.values(
+      this.data.verificationResult?.getDuplicatesPerValue() ?? {},
+    )
       .flat()
-      .some((duplicatePosition) => duplicatePosition.equals(this.cellPosition));
+      .some((duplicatePosition) =>
+        duplicatePosition.equals(this.data.cellPosition),
+      );
   }
 
   toClipboardString(): string {
