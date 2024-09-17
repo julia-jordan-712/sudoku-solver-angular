@@ -34,13 +34,11 @@ export class SudokuGridCellComponent {
       viewModel.cell,
       viewModel.branchInfo?.isCurrent ?? true,
     );
-    this.dataCy = `cell-${viewModel.cellPosition.x}-${viewModel.cellPosition.y}`;
     this.isDuplicate = viewModel.isDuplicate();
     this.maxValue = viewModel.maxValue;
     this.size = viewModel.widthAndHeight;
   }
 
-  dataCy = "";
   isDuplicate = false;
   maxValue = 1;
   size = 32;
