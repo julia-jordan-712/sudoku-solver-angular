@@ -1,3 +1,4 @@
+import { CyInputField } from "@cypress/selectors/cy-input-field";
 import { CySelectable } from "@cypress/types/cy-selectable";
 import { CySelector } from "@cypress/types/cy-selector";
 
@@ -6,7 +7,7 @@ export class CySudokuCell {
   private readonly dataCy: string;
 
   public readonly possibleValues: CySelectable;
-  public readonly value: CySelectable<HTMLInputElement>;
+  public readonly value: CyInputField;
 
   constructor(
     position: { row: number; column: number },
@@ -19,14 +20,13 @@ export class CySudokuCell {
       { tag: this.hostSelector },
       ...parents,
     );
-    this.value = new CySelectable<HTMLInputElement>(
-      { tag: "input" },
+    this.value = new CyInputField(
+      {},
       { dataCy: this.dataCy },
       { tag: this.hostSelector },
       ...parents,
     );
   }
-
   shouldBeChanged(changed = true): void {
     this.shouldHaveClass(changed, "changed");
   }

@@ -102,7 +102,7 @@ describe(MainComponent.name, () => {
     beforeEach(() => {
       puzzleInput.dropdown.dropdown.get().select("4x4 | Empty");
       puzzleInput.buttonConfirm.get().click();
-      solverSettings.delay.setValue(200);
+      solverSettings.delay.input.setValue(200);
     });
 
     it("should allow to start initially", () => {
@@ -161,7 +161,7 @@ describe(MainComponent.name, () => {
     });
 
     it("should allow to restart when done", () => {
-      solverSettings.delay.setValue(0);
+      solverSettings.delay.input.setValue(0);
       solver.clickStart();
 
       solver.steps.get().should("contain.text", "29");
@@ -177,7 +177,7 @@ describe(MainComponent.name, () => {
     function selectEmptySudoku(): void {
       puzzleInput.dropdown.dropdown.get().select("4x4 | Empty");
       puzzleInput.buttonConfirm.get().click();
-      solverSettings.maxSteps.setValue(4);
+      solverSettings.maxSteps.input.setValue(4);
     }
 
     function selectNearlyDoneSudoku(): void {
@@ -188,7 +188,7 @@ describe(MainComponent.name, () => {
         .should("have.value", "1")
         .clear();
       puzzleInput.buttonConfirm.get().click();
-      solverSettings.maxSteps.setValue(4);
+      solverSettings.maxSteps.input.setValue(4);
     }
 
     describe("when running", () => {
@@ -232,8 +232,8 @@ describe(MainComponent.name, () => {
       puzzleInput.dropdown.dropdown.get().select(4);
       puzzleInput.buttonConfirm.get().click();
 
-      solverSettings.maxSteps.setValue(4);
-      solverSettings.pauseAtStep.setValue(2);
+      solverSettings.maxSteps.input.setValue(4);
+      solverSettings.pauseAtStep.input.setValue(2);
     });
 
     it("should pause when the step is reached and allow to continue running", () => {

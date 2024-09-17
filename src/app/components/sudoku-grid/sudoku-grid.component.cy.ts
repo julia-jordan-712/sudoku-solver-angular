@@ -55,7 +55,7 @@ describe(SudokuGridComponent.name, () => {
 
       cell.value.get().focus();
       cell.shouldBeFocused();
-      cell.value.get().type("1").should("have.value", "1");
+      cell.value.setValue(1);
       cell.shouldBeFocused();
       cell.value.get().blur().should("have.value", "1");
       cell.shouldBeFocused(false);
@@ -121,32 +121,33 @@ describe(SudokuGridComponent.name, () => {
       const cell: CySudokuCell = underTest.cell(0, 0);
 
       // max allowed value
-      cell.value.get().type("4").should("have.value", "4");
+      cell.value.setValue(4);
       cell.shouldBeInvalid(false);
-      cell.value.get().clear().should("have.value", "").blur();
+      cell.value.clear().blur();
       cell.shouldBeInvalid(false);
 
       // zero
-      cell.value.get().type("0").should("have.value", "0");
+      cell.value.setValue(0);
       cell.shouldBeInvalid();
-      cell.value.get().clear().should("have.value", "").blur();
+      cell.value.clear().blur();
       cell.shouldBeInvalid(false);
 
       // negative number
-      cell.value.get().type("-2").should("have.value", "-2");
+      cell.value.setValue(-2);
       cell.shouldBeInvalid();
-      cell.value.get().clear().should("have.value", "").blur();
+      cell.value.clear().blur();
       cell.shouldBeInvalid(false);
 
       // number which is too large
       cell.value
         .get()
+        .should("be.enabled")
         .type("1")
         .should("have.value", "1")
         .type("4")
         .should("have.value", "14");
       cell.shouldBeInvalid();
-      cell.value.get().clear().should("have.value", "").blur();
+      cell.value.clear().blur();
       cell.shouldBeInvalid(false);
     });
   });

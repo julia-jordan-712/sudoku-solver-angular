@@ -1,4 +1,4 @@
-import { CySelectable } from "@cypress/types/cy-selectable";
+import { CyInputField } from "@cypress/selectors/cy-input-field";
 import { CySelectableWithLabel } from "@cypress/types/cy-selectable-with-label";
 import {
   CySelector,
@@ -7,19 +7,11 @@ import {
 } from "@cypress/types/cy-selector";
 
 export class CyNumberInput extends CySelectableWithLabel {
-  public readonly input: CySelectable<HTMLInputElement>;
+  public readonly input: CyInputField;
 
   constructor(element?: CySelectorWithoutTag, ...parents: CySelector[]) {
     const elementSelector = new CySelectorTag("app-number-input", element);
     super(elementSelector, ...parents);
-    this.input = new CySelectable<HTMLInputElement>(
-      { tag: "input" },
-      elementSelector,
-      ...parents,
-    );
-  }
-
-  setValue(value: number): void {
-    this.input.get().type("{selectall}").type(value.toString());
+    this.input = new CyInputField({}, elementSelector, ...parents);
   }
 }

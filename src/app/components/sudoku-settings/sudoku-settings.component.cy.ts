@@ -95,7 +95,7 @@ describe(SudokuSettingsComponent.name, () => {
      * - last row: first column and last column -> position (3,0) and (3,3)
      * - last square: position (2,2) and (3,3)
      */
-    underTest.sudoku.cell(3, 3).value.get().type("4");
+    underTest.sudoku.cell(3, 3).value.setValue(4);
 
     underTest.sudoku.verification.shouldBeInvalid("duplicates");
     underTest.sudoku.cell(0, 3).shouldBeDuplicate();
@@ -104,7 +104,7 @@ describe(SudokuSettingsComponent.name, () => {
     underTest.sudoku.cell(3, 3).shouldBeDuplicate();
     underTest.buttonConfirm.get().should("be.disabled");
 
-    underTest.sudoku.cell(3, 3).value.get().clear();
+    underTest.sudoku.cell(3, 3).value.clear();
 
     underTest.sudoku.verification.shouldBeValid();
     underTest.sudoku.cell(3, 3).shouldBeDuplicate(false);
