@@ -12,13 +12,10 @@ export class CyInputField extends CySelectable<HTMLInputElement> {
   }
 
   clear(): CyHtmlChain<HTMLInputElement> {
-    return this.get().should("be.enabled").clear();
+    return this.get().clear();
   }
 
   setValue(value: number): CyHtmlChain<HTMLInputElement> {
-    return this.get()
-      .should("be.enabled")
-      .type("{selectall}")
-      .type(value.toString());
+    return this.get().type("{selectall}").type(value.toString());
   }
 }
