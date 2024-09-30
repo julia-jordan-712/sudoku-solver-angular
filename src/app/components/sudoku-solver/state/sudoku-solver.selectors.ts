@@ -150,15 +150,14 @@ const selectCurrentBranchViewModel = createSelector(
   selectExecutionId,
   (branch: Nullable<SolverBranch>, id: string) =>
     branch != null
-      ? SudokuGridViewModelConverter.createViewModelFromGrid(
-          branch.grid,
-          id,
-          { id: branch.getId(), isCurrent: true },
-          new VerifySolution().verify(branch.grid, {
+      ? SudokuGridViewModelConverter.createViewModelFromGrid(branch.grid, id, {
+          branchInfo: { id: branch.getId(), isCurrent: true },
+          verificationResult: new VerifySolution().verify(branch.grid, {
             allowEmptyCells: false,
             size: branch.grid.length,
           }),
-        )
+          highlightChangedCells: true,
+        })
       : null,
 );
 
@@ -167,12 +166,11 @@ const selectAdditionalBranchViewModels = createSelector(
   selectExecutionId,
   (branches: SolverBranch[], id: string) =>
     branches.map((branch) =>
-      SudokuGridViewModelConverter.createViewModelFromGrid(
-        branch.grid,
-        id,
-        { id: branch.getId(), isCurrent: false },
-        null,
-      ),
+      SudokuGridViewModelConverter.createViewModelFromGrid(branch.grid, id, {
+        branchInfo: { id: branch.getId(), isCurrent: false },
+        verificationResult: null,
+        highlightChangedCells: false,
+      }),
     ),
 );
 

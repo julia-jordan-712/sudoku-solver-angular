@@ -119,8 +119,11 @@ export class SudokuSolverTestState extends SudokuSolverStateMockService {
         ? SudokuGridViewModelConverter.createViewModelFromGrid(
             SudokuGridUtil.clone(this.grid),
             "test-id",
-            { id: "test-id", isCurrent: true },
-            null,
+            {
+              branchInfo: { id: "test-id", isCurrent: true },
+              verificationResult: null,
+              highlightChangedCells: false,
+            },
           )
         : null,
     );

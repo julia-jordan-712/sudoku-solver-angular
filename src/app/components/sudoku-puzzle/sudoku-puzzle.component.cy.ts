@@ -1,19 +1,19 @@
 import { Component } from "@angular/core";
-import { SudokuSettingsModule } from "@app/components/sudoku-settings/sudoku-settings.module";
+import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzzle.component";
+import { SudokuPuzzleModule } from "@app/components/sudoku-puzzle/sudoku-puzzle.module";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
-import { SudokuSettingsComponent } from "./sudoku-settings.component";
 
-describe(SudokuSettingsComponent.name, () => {
+describe(SudokuPuzzleComponent.name, () => {
   const underTest: CyPuzzleInput = new CyPuzzleInput();
 
   beforeEach(() => {
     cy.mount(
-      SudokuSettingsWrapperComponent,
-      SudokuSettingsModule,
+      SudokuPuzzleWrapperComponent,
+      SudokuPuzzleModule,
       {},
       {
         providers: [
@@ -279,6 +279,6 @@ describe(SudokuSettingsComponent.name, () => {
 
 @Component({
   selector: "app-test-wrapper",
-  template: `<app-sudoku-settings></app-sudoku-settings>`,
+  template: `<app-sudoku-puzzle></app-sudoku-puzzle>`,
 })
-class SudokuSettingsWrapperComponent {}
+class SudokuPuzzleWrapperComponent {}

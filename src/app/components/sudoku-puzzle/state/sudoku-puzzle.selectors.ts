@@ -49,13 +49,16 @@ const selectViewModel = createSelector(
           sudoku,
           "Sudoku-Puzzle-View-Model-Id",
           {
-            id: "Sudoku-Puzzle-Branch",
-            isCurrent: true,
+            branchInfo: {
+              id: "Sudoku-Puzzle-Branch",
+              isCurrent: true,
+            },
+            verificationResult: new VerifySolution().verify(sudoku, {
+              allowEmptyCells: true,
+              trackUniquenessViolations: true,
+            }),
+            highlightChangedCells: false,
           },
-          new VerifySolution().verify(sudoku, {
-            allowEmptyCells: true,
-            trackUniquenessViolations: true,
-          }),
         )
       : null,
 );
@@ -63,7 +66,7 @@ const selectViewModel = createSelector(
 const selectIsConfirmEnabled = createSelector(
   selectViewModel,
   (viewModel: Nullable<SudokuGridViewModel>) =>
-    viewModel?.verificationResult?.isValid() ?? false,
+    viewModel?.data?.verificationResult?.isValid() ?? false,
 );
 
 export const SudokuPuzzleSelectors = {
