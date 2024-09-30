@@ -2,7 +2,7 @@
   <h2>{{ "SETTINGS.TITLE" | translate }}</h2>
   <div class="inputs">
     <app-number-input
-      id="delay"
+      data-cy="delay"
       [label]="'SOLVER.DELAY.DELAY' | translate"
       [value]="delay$ | async"
       inputWidth="5em"
@@ -10,7 +10,7 @@
       (valueChange)="setDelay($event)"
     ></app-number-input>
     <app-number-input
-      id="maxSteps"
+      data-cy="maxSteps"
       [label]="'SOLVER.STEPS.MAX.MAX' | translate"
       [value]="maxSteps$ | async"
       inputWidth="5em"
@@ -18,7 +18,7 @@
       (valueChange)="setMaxSteps($event)"
     ></app-number-input>
     <app-number-input
-      id="pauseAtStep"
+      data-cy="pauseAtStep"
       [label]="'SOLVER.STEPS.PAUSE_AT_STEP.LABEL' | translate"
       [value]="pauseAfterStep$ | async"
       inputWidth="5em"
@@ -26,14 +26,14 @@
       (valueChange)="setPauseAfterStep($event)"
     ></app-number-input>
     <app-number-input
-      id="highlightValue"
+      data-cy="highlightValue"
       [label]="'SOLVER.HIGHLIGHT.NUMBER.LABEL' | translate"
       [value]="highlightNumber$ | async"
       inputWidth="5em"
       [tooltip]="'SOLVER.HIGHLIGHT.NUMBER.TOOLTIP' | translate"
       (valueChange)="setHighlightNumber($event)"
     ></app-number-input>
-    <button (click)="copyCurrentSudoku()">
+    <button data-cy="copySudoku" (click)="copyCurrentSudoku()">
       <app-icon>content_copy</app-icon>
       {{ "PUZZLE.COPY_TO_CLIPBOARD" | translate }}
     </button>

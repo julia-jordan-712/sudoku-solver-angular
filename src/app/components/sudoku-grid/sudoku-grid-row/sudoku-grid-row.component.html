@@ -9,6 +9,9 @@
     ) {
       <app-sudoku-grid-cell
         [cell]="cell"
+        [attr.data-cy]="
+          'cell-' + cell.data.cellPosition.x + '-' + cell.data.cellPosition.y
+        "
         [borderTop]="borderTop"
         [borderRight]="last || (sqrt ? (i + 1) % sqrt === 0 : false)"
         [borderBottom]="borderBottom"

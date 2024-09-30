@@ -60,15 +60,19 @@ export class SudokuSolverStateService implements SudokuSolverState {
               branch.grid,
               id,
               {
-                id: branch.getId(),
-                isCurrent: branch.isCurrentBranch(),
+                branchInfo: {
+                  id: branch.getId(),
+                  isCurrent: branch.isCurrentBranch(),
+                },
+                verificationResult:
+                  state !== "NOT_STARTED" && branch.isCurrentBranch()
+                    ? new VerifySolution().verify(branch.grid, {
+                        allowEmptyCells: false,
+                        size: branch.grid.length,
+                      })
+                    : null,
+                highlightChangedCells: branch.isCurrentBranch(),
               },
-              state !== "NOT_STARTED" && branch.isCurrentBranch()
-                ? new VerifySolution().verify(branch.grid, {
-                    allowEmptyCells: false,
-                    size: branch.grid.length,
-                  })
-                : null,
             ),
           ),
       ),
@@ -80,7 +84,9 @@ export class SudokuSolverStateService implements SudokuSolverState {
     return this.viewModels$.pipe(
       map(
         (viewModels: SudokuGridViewModel[]) =>
-          viewModels.filter((viewModel) => viewModel.branchInfo.isCurrent)?.[0],
+          viewModels.filter(
+            (viewModel) => viewModel.data.branchInfo.isCurrent,
+          )?.[0],
       ),
     );
   }
@@ -88,7 +94,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
   getAdditionalBranches(): Observable<SudokuGridViewModel[]> {
     return this.viewModels$.pipe(
       map((viewModels: SudokuGridViewModel[]) =>
-        viewModels.filter((viewModel) => !viewModel.branchInfo.isCurrent),
+        viewModels.filter((viewModel) => !viewModel.data.branchInfo.isCurrent),
       ),
     );
   }
@@ -235,7 +241,7 @@ export class SudokuSolverStateService implements SudokuSolverState {
   }
 
   setMaximumSteps(max: number): void {
-    this.maxSteps$.next(Math.max(1, max));
+    this.maxSteps$.next(Math.max(0, max));
   }
 
   setPauseAfterStep(step: Nullable<number>): void {

@@ -10,25 +10,23 @@
       @if (branches.length > 0) {
         <h2>{{ "BRANCH.CURRENT.TITLE" | translate }}</h2>
       }
-      <div class="branch">
-        <app-sudoku-grid
-          [grid]="currentBranch"
-          [highlightNumber]="highlightNumber$ | async"
-          [readonly]="true"
-          [showVerification]="(isStarted$ | async) ?? true"
-        ></app-sudoku-grid>
-      </div>
+      <app-sudoku-grid
+        data-cy="current-branch"
+        [grid]="currentBranch"
+        [highlightNumber]="highlightNumber$ | async"
+        [readonly]="true"
+        [showVerification]="(isStarted$ | async) ?? true"
+      ></app-sudoku-grid>
     }
     @if (branches.length > 0) {
       <h2>{{ "BRANCH.ADDITIONAL.TITLE" | translate }}</h2>
       @for (branch of branches; track branch.id; let i = $index) {
-        <div class="branch">
-          <app-sudoku-grid
-            [grid]="branch"
-            [highlightNumber]="highlightNumber$ | async"
-            [readonly]="true"
-          ></app-sudoku-grid>
-        </div>
+        <app-sudoku-grid
+          [attr.data-cy]="'additional-branch-' + i"
+          [grid]="branch"
+          [highlightNumber]="highlightNumber$ | async"
+          [readonly]="true"
+        ></app-sudoku-grid>
       }
     }
   }

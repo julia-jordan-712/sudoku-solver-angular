@@ -1,22 +1,22 @@
 {{ "SOLVER.STATUS.TITLE" | translate }}:
 @switch (state$ | async) {
   @case ("NOT_STARTED") {
-    <div class="state">
+    <div data-cy="NOT_STARTED" class="state">
       {{ "SOLVER.STATUS.NOT_STARTED" | translate }}
     </div>
   }
   @case ("RUNNING") {
-    <div class="state">
+    <div data-cy="RUNNING" class="state">
       {{ "SOLVER.STATUS.RUNNING" | translate }}
     </div>
   }
   @case ("PAUSED") {
-    <div class="state">
+    <div data-cy="PAUSED" class="state">
       {{ "SOLVER.STATUS.PAUSED" | translate }}
     </div>
   }
   @case ("DONE") {
-    <div class="state success">
+    <div data-cy="DONE" class="state success">
       {{
         "SOLVER.STATUS.DONE"
           | translate
@@ -28,7 +28,7 @@
     </div>
   }
   @case ("FAILED") {
-    <div class="state failure">
+    <div data-cy="FAILED" class="state failure">
       {{ "SOLVER.STATUS.FAILED" | translate }}
     </div>
   }

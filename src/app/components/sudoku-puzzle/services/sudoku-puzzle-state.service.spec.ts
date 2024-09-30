@@ -182,7 +182,7 @@ describe(SudokuPuzzleStateService.name, () => {
         .getViewModel()
         .pipe(first())
         .subscribe((viewModel: SudokuGridViewModel) => {
-          expect(viewModel.verificationResult?.isValid()).toEqual(valid);
+          expect(viewModel.data.verificationResult?.isValid()).toEqual(valid);
           done();
         });
     }
