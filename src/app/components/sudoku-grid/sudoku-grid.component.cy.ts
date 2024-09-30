@@ -12,31 +12,36 @@ import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { CySudoku } from "@cypress/selectors/cy-sudoku";
 import { CySudokuCell } from "@cypress/selectors/cy-sudoku-cell";
-import { CyComponentInput } from "@cypress/types/cy-component-input";
-import { v4 as randomUUID } from "uuid";
+import { CyComponent, CyComponentInput } from "@cypress/types/cy-component";
+
+type TestInput = Omit<CyComponentInput<SudokuGridWrapperComponent>, "grid"> & {
+  grid: SudokuGrid;
+  verification?: VerificationResult;
+  highlightChangedCells?: boolean;
+};
 
 describe(SudokuGridComponent.name, () => {
   const underTest: CySudoku = new CySudoku();
 
-  function setup(
-    input: Omit<CyComponentInput<SudokuGridComponent>, "grid"> & {
-      grid: SudokuGrid;
-      verification?: VerificationResult;
-      highlightChangedCells?: boolean;
-    },
-  ): void {
-    cy.mount(SudokuGridWrapperComponent, SudokuGridModule, {
-      ...input,
-      grid: SudokuGridViewModelConverter.createViewModelFromGrid(
-        SudokuGridUtil.clone(input.grid),
-        randomUUID(),
-        {
-          branchInfo: { id: "test-id", isCurrent: false },
-          verificationResult: input.verification,
-          highlightChangedCells: input.highlightChangedCells ?? false,
-        },
-      ),
-    });
+  function setup(input: TestInput): CyComponent<SudokuGridWrapperComponent> {
+    return new CyComponent(
+      cy.mount(SudokuGridWrapperComponent, SudokuGridModule, {
+        ...input,
+        grid: createViewModel(input),
+      }),
+    );
+  }
+
+  function createViewModel(input: TestInput): SudokuGridViewModel {
+    return SudokuGridViewModelConverter.createViewModelFromGrid(
+      SudokuGridUtil.clone(input.grid),
+      "Sudoku-Grid-Cy-Test",
+      {
+        branchInfo: { id: "test-id", isCurrent: false },
+        verificationResult: input.verification,
+        highlightChangedCells: input.highlightChangedCells ?? false,
+      },
+    );
   }
 
   it("should display the values from the grid", () => {
@@ -195,6 +200,225 @@ describe(SudokuGridComponent.name, () => {
       underTest.cell(3, 1).shouldBeHighlighted(false);
       underTest.cell(3, 2).shouldBeHighlighted(false);
       underTest.cell(3, 3).shouldBeHighlighted(true);
+    });
+  });
+
+  describe("changed values", () => {
+    const testGrid: SudokuGrid = [
+      [1, 2, 3, [4]],
+      [3, undefined, 1, 2],
+      [[2], [1, 3], [4], [1, 4]],
+      [4, [1], 2, 3],
+    ];
+
+    it("should mark a cell as changed when it changes from one value to another", () => {
+      const grid = SudokuGridUtil.clone(testGrid);
+      const component = setup({
+        grid: grid,
+        highlightChangedCells: true,
+      });
+      underTest.cell(0, 0).shouldBeChanged(false);
+      underTest.cell(1, 0).shouldBeChanged(false);
+
+      // change cell and do NOT highlight change
+      grid[1][0] = 2;
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: false,
+        }),
+      });
+      underTest.cell(0, 0).shouldBeChanged(false);
+      underTest.cell(1, 0).shouldBeChanged(false);
+
+      // change cell and highlight change
+      grid[0][0] = 2;
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: true,
+        }),
+      });
+      underTest.cell(1, 0).shouldBeChanged(false);
+      underTest.cell(0, 0).shouldBeChanged(true);
+    });
+
+    it("should mark a cell as changed when its possible values change", () => {
+      const grid = SudokuGridUtil.clone(testGrid);
+      const component = setup({
+        grid: grid,
+        highlightChangedCells: false,
+      });
+      underTest.cell(2, 1).shouldBeChanged(false);
+
+      // change cell and do NOT highlight change
+      grid[2][1] = [1, 2, 3];
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: false,
+        }),
+      });
+      underTest.cell(2, 1).shouldBeChanged(false);
+
+      // change cell and highlight change
+      grid[2][1] = [1, 3];
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: true,
+        }),
+      });
+      underTest.cell(2, 1).shouldBeChanged(true);
+    });
+
+    it("should NOT mark a cell as changed when undefined changes to a value", () => {
+      const grid = SudokuGridUtil.clone(testGrid);
+      const component = setup({
+        grid: grid,
+        highlightChangedCells: true,
+      });
+      underTest.cell(1, 1).shouldBeChanged(false);
+
+      grid[1][1] = 4;
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: true,
+        }),
+      });
+      underTest.cell(1, 1).shouldBeChanged(false);
+    });
+
+    it("should mark a cell as changed when undefined changes to possible values", () => {
+      const grid = SudokuGridUtil.clone(testGrid);
+      const component = setup({
+        grid: grid,
+        highlightChangedCells: true,
+      });
+      underTest.cell(1, 1).shouldBeChanged(false);
+
+      grid[1][1] = [1];
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: true,
+        }),
+      });
+      underTest.cell(1, 1).shouldBeChanged(true);
+    });
+
+    it("should mark a cell as changed when possible values change to real values", () => {
+      const grid = SudokuGridUtil.clone(testGrid);
+      const component = setup({
+        grid: grid,
+        highlightChangedCells: true,
+      });
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: true,
+        }),
+      });
+      underTest.cell(0, 3).shouldBeChanged(false);
+      underTest.cell(2, 0).shouldBeChanged(false);
+
+      grid[0][3] = 4;
+      grid[2][0] = 2;
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: true,
+        }),
+      });
+      underTest.cell(0, 3).shouldBeChanged(true);
+      underTest.cell(2, 0).shouldBeChanged(true);
+    });
+
+    it("should mark a cell as changed when real values change to possible values", () => {
+      const grid = SudokuGridUtil.clone(testGrid);
+      const component = setup({
+        grid: grid,
+        highlightChangedCells: true,
+      });
+      underTest.cell(0, 0).shouldBeChanged(false);
+      underTest.cell(3, 3).shouldBeChanged(false);
+
+      grid[0][0] = [1];
+      grid[3][3] = [3];
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: true,
+        }),
+      });
+      underTest.cell(0, 0).shouldBeChanged(true);
+      underTest.cell(3, 3).shouldBeChanged(true);
+    });
+
+    it("should switch between previous and current value when hovering over changed cell", () => {
+      const grid = [
+        [1, 2, 3, [4]],
+        [3, undefined, 1, 2],
+        [[2], [1, 3], [4], [1, 4]],
+        [4, [1], 2, 3],
+      ];
+      const component = setup({
+        grid: grid,
+        highlightChangedCells: true,
+      });
+      grid[0][0] = [2, 3];
+      grid[1][1] = [1, 2, 3, 4];
+      grid[0][3] = 4;
+      grid[2][1] = [1];
+      grid[3][0] = 2;
+      component.setInput({
+        grid: createViewModel({
+          grid: grid,
+          highlightChangedCells: true,
+        }),
+      });
+      cy.clock();
+
+      underTest.cell(0, 0).shouldBeChanged(true);
+      underTest.cell(0, 0).possibleValues.get().should("have.text", "23");
+      underTest.cell(0, 0).get().trigger("mouseenter");
+      cy.tick(501);
+      underTest.cell(0, 0).value.get().should("have.value", "1");
+      underTest.cell(0, 0).get().trigger("mouseleave");
+      underTest.cell(0, 0).possibleValues.get().should("have.text", "23");
+
+      underTest.cell(1, 1).shouldBeChanged(true);
+      underTest.cell(1, 1).possibleValues.get().should("have.text", "1234");
+      underTest.cell(1, 1).get().trigger("mouseenter");
+      cy.tick(501);
+      underTest.cell(1, 1).get().should("have.text", "");
+      underTest.cell(1, 1).get().trigger("mouseleave");
+      underTest.cell(1, 1).possibleValues.get().should("have.text", "1234");
+
+      underTest.cell(0, 3).shouldBeChanged(true);
+      underTest.cell(0, 3).value.get().should("have.value", "4");
+      underTest.cell(0, 3).get().trigger("mouseenter");
+      cy.tick(501);
+      underTest.cell(0, 3).possibleValues.get().should("have.text", "4");
+      underTest.cell(0, 3).get().trigger("mouseleave");
+      underTest.cell(0, 3).value.get().should("have.value", "4");
+
+      underTest.cell(2, 1).shouldBeChanged(true);
+      underTest.cell(2, 1).possibleValues.get().should("have.text", "1");
+      underTest.cell(2, 1).get().trigger("mouseenter");
+      cy.tick(501);
+      underTest.cell(2, 1).possibleValues.get().should("have.text", "13");
+      underTest.cell(2, 1).get().trigger("mouseleave");
+      underTest.cell(2, 1).possibleValues.get().should("have.text", "1");
+
+      underTest.cell(3, 0).shouldBeChanged(true);
+      underTest.cell(3, 0).value.get().should("have.value", "2");
+      underTest.cell(3, 0).get().trigger("mouseenter");
+      cy.tick(501);
+      underTest.cell(3, 0).value.get().should("have.value", "4");
+      underTest.cell(3, 0).get().trigger("mouseleave");
+      underTest.cell(3, 0).value.get().should("have.value", "2");
     });
   });
 });

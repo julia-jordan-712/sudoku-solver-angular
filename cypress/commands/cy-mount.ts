@@ -1,6 +1,6 @@
 import { Type } from "@angular/core";
 import { CyChainable } from "@cypress/types/cy-chainable";
-import { CyComponentInput } from "@cypress/types/cy-component-input";
+import { CyComponentInput } from "@cypress/types/cy-component";
 import {
   MountConfig,
   mount as mountOriginal,
