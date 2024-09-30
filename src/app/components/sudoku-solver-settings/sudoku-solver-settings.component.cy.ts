@@ -1,41 +1,35 @@
-import { Component } from "@angular/core";
+import { Component, inject, Input, OnChanges } from "@angular/core";
+import { appStoreImports } from "@app/app.module";
 import { SudokuSolverSettingsComponent } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.component";
 import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.module";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { SudokuSolverStateMockService } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
+import { CyComponentInput } from "@cypress/types/cy-component-input";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
-import { Observable, of } from "rxjs";
+import { Store } from "@ngrx/store";
 
 describe(SudokuSolverSettingsComponent.name, () => {
   const underTest: CySolverSettings = new CySolverSettings();
 
-  function setup(grid?: SudokuGrid): void {
-    const testState: SudokuSolverTestState = new SudokuSolverTestState(grid);
+  function setup(
+    input: CyComponentInput<SudokuSolverSettingsWrapperComponent>,
+  ): void {
     cy.mount(
       SudokuSolverSettingsWrapperComponent,
       SudokuSolverSettingsModule,
-      {},
+      input,
       {
-        providers: [
-          ...SOLVER_TEST_PROVIDERS,
-          {
-            provide: SUDOKU_SOLVER_STATE,
-            useValue: testState,
-          },
-        ],
+        imports: appStoreImports,
+        providers: SOLVER_TEST_PROVIDERS,
       },
     );
   }
 
   it("should not display anything if there is no sudoku", () => {
-    setup();
+    setup({ grid: null });
     underTest.delay.get().should("not.exist");
     underTest.maxSteps.get().should("not.exist");
     underTest.pauseAtStep.get().should("not.exist");
@@ -44,7 +38,7 @@ describe(SudokuSolverSettingsComponent.name, () => {
   });
 
   it("should display an input field for the delay", () => {
-    setup(Puzzle4x4.COMPLETE);
+    setup({ grid: Puzzle4x4.COMPLETE, delay: 100 });
     underTest.delay.label.get().should("have.text", "Delay:");
     underTest.delay.icon.get().should("be.visible");
     underTest.delay.icon
@@ -58,7 +52,7 @@ describe(SudokuSolverSettingsComponent.name, () => {
   });
 
   it("should display an input field for the maximum steps", () => {
-    setup(Puzzle4x4.COMPLETE);
+    setup({ grid: Puzzle4x4.COMPLETE, maxSteps: 10000 });
     underTest.maxSteps.label.get().should("have.text", "Maximum steps:");
     underTest.maxSteps.icon.get().should("be.visible");
     underTest.maxSteps.icon
@@ -72,7 +66,7 @@ describe(SudokuSolverSettingsComponent.name, () => {
   });
 
   it("should display an input field for the step to pause at", () => {
-    setup(Puzzle4x4.COMPLETE);
+    setup({ grid: Puzzle4x4.COMPLETE, pause: 7 });
     underTest.pauseAtStep.label.get().should("have.text", "Pause at step:");
     underTest.pauseAtStep.icon.get().should("be.visible");
     underTest.pauseAtStep.icon
@@ -86,7 +80,7 @@ describe(SudokuSolverSettingsComponent.name, () => {
   });
 
   it("should display an input field for highlighting a number", () => {
-    setup(Puzzle4x4.COMPLETE);
+    setup({ grid: Puzzle4x4.COMPLETE, highlight: 2 });
     underTest.highlightNumber.label
       .get()
       .should("have.text", "Highlight number:");
@@ -106,38 +100,41 @@ describe(SudokuSolverSettingsComponent.name, () => {
   selector: "app-test-wrapper",
   template: `<app-sudoku-solver-settings></app-sudoku-solver-settings>`,
 })
-class SudokuSolverSettingsWrapperComponent {}
+class SudokuSolverSettingsWrapperComponent implements OnChanges {
+  private store: Store = inject(Store);
 
-export class SudokuSolverTestState extends SudokuSolverStateMockService {
-  constructor(private grid: Nullable<SudokuGrid>) {
-    super();
-  }
+  @Input()
+  delay = 0;
 
-  override getCurrentBranch(): Observable<Nullable<SudokuGridViewModel>> {
-    return of(
-      this.grid
-        ? SudokuGridViewModelConverter.createViewModelFromGrid(
-            SudokuGridUtil.clone(this.grid),
-            "test-id",
-            {
-              branchInfo: { id: "test-id", isCurrent: true },
-              verificationResult: null,
-              highlightChangedCells: false,
-            },
-          )
-        : null,
+  @Input()
+  grid: Nullable<SudokuGrid>;
+
+  @Input()
+  highlight: number | undefined;
+
+  @Input()
+  maxSteps = 0;
+
+  @Input()
+  pause: number | undefined;
+
+  ngOnChanges(): void {
+    this.store.dispatch(SudokuSolverActions.setDelay({ delay: this.delay }));
+    this.store.dispatch(
+      SudokuSolverActions.setMaximumSteps({ maxSteps: this.maxSteps }),
     );
-  }
-  override getDelay(): Observable<number> {
-    return of(100);
-  }
-  override getMaximumSteps(): Observable<number> {
-    return of(10_000);
-  }
-  override getPauseAfterStep(): Observable<Nullable<number>> {
-    return of(7);
-  }
-  override getHighlightNumber(): Observable<Nullable<number>> {
-    return of(2);
+    this.store.dispatch(
+      SudokuSolverActions.setNumberToBeHighlighted({
+        highlight: this.highlight,
+      }),
+    );
+    this.store.dispatch(
+      SudokuSolverActions.setStepToBePausedAfter({ pauseStep: this.pause }),
+    );
+    if (this.grid) {
+      this.store.dispatch(
+        SudokuSolverActions.setInitialPuzzle({ puzzle: this.grid }),
+      );
+    }
   }
 }

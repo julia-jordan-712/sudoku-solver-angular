@@ -1,7 +1,6 @@
+import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
-import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
@@ -19,14 +18,8 @@ describe(MainComponent.name, () => {
       MainModule,
       {},
       {
-        providers: [
-          ...SOLVER_PROVIDERS,
-          SudokuSolverStateService,
-          {
-            provide: SUDOKU_SOLVER_STATE,
-            useExisting: SudokuSolverStateService,
-          },
-        ],
+        imports: appStoreImports,
+        providers: SOLVER_PROVIDERS,
       },
     );
   });

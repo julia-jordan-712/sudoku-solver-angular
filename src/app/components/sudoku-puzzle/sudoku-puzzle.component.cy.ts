@@ -1,10 +1,9 @@
 import { Component } from "@angular/core";
+import { appStoreImports } from "@app/app.module";
 import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzzle.component";
 import { SudokuPuzzleModule } from "@app/components/sudoku-puzzle/sudoku-puzzle.module";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
-import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 
 describe(SudokuPuzzleComponent.name, () => {
@@ -15,12 +14,7 @@ describe(SudokuPuzzleComponent.name, () => {
       SudokuPuzzleWrapperComponent,
       SudokuPuzzleModule,
       {},
-      {
-        providers: [
-          ...SOLVER_TEST_PROVIDERS,
-          ...SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
-        ],
-      },
+      { imports: appStoreImports },
     );
   });
 

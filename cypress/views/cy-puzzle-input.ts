@@ -5,7 +5,7 @@ import { CySudoku } from "@cypress/selectors/cy-sudoku";
 import { CySelector } from "@cypress/types/cy-selector";
 
 export class CyPuzzleInput {
-  private readonly selector: CySelector = { tag: "app-sudoku-settings" };
+  private readonly selector: CySelector = { tag: "app-sudoku-puzzle" };
 
   public readonly buttonConfirm = new CyButton(
     { id: "confirmSettings" },

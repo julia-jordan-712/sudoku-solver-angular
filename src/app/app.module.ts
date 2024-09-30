@@ -5,7 +5,7 @@ import {
   withInterceptorsFromDi,
 } from "@angular/common/http";
 import localeDe from "@angular/common/locales/de";
-import { NgModule } from "@angular/core";
+import { ModuleWithProviders, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "@app/app-routing.module";
 import { AppComponent } from "@app/app.component";
@@ -23,6 +23,11 @@ import { environment } from "src/environments/environment";
 
 registerLocaleData(localeDe);
 
+export const appStoreImports: ModuleWithProviders<any>[] = [
+  StoreModule.forRoot(reducers, { metaReducers }),
+  EffectsModule.forRoot([]),
+];
+
 @NgModule({
   declarations: [AppComponent],
   bootstrap: [AppComponent],
@@ -38,8 +43,7 @@ registerLocaleData(localeDe);
       },
     }),
     MainModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([]),
+    ...appStoreImports,
     environment.production ? [] : StoreDevtoolsModule.instrument(),
   ],
   providers: [
