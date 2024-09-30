@@ -4,6 +4,7 @@ import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzz
 import { SudokuPuzzleModule } from "@app/components/sudoku-puzzle/sudoku-puzzle.module";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { CySelectionList } from "@cypress/selectors/cy-selection-list";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 
 describe(SudokuPuzzleComponent.name, () => {
@@ -33,35 +34,35 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.sizeSelector.label.get().should("have.text", "Size:");
     underTest.sizeSelector.icon.get().should("not.exist");
     underTest.sizeSelector
-      .button(0)
+      .index(0)
       .should("be.visible")
       .should("be.enabled")
-      .should("not.have.class", "selected")
+      .should("not.have.class", CySelectionList.CLASS_SELECTED)
       .should("contain.text", "4");
     underTest.sizeSelector
-      .button(1)
+      .index(1)
       .should("be.visible")
       .should("be.enabled")
-      .should("not.have.class", "selected")
+      .should("not.have.class", CySelectionList.CLASS_SELECTED)
       .should("contain.text", "9");
     underTest.sizeSelector
-      .button(2)
+      .index(2)
       .should("be.visible")
       .should("be.enabled")
-      .should("not.have.class", "selected")
+      .should("not.have.class", CySelectionList.CLASS_SELECTED)
       .should("contain.text", "16");
     underTest.sizeSelector
-      .button(3)
+      .index(3)
       .should("be.visible")
       .should("be.enabled")
-      .should("not.have.class", "selected")
+      .should("not.have.class", CySelectionList.CLASS_SELECTED)
       .should("contain.text", "25");
-    underTest.sizeSelector.button(4).should("not.exist");
+    underTest.sizeSelector.index(4).should("not.exist");
 
     underTest.sudoku.get().should("exist").should("not.be.visible");
   });
 
-  it("should update the grid when dropdown changes", () => {
+  it("should update the grid and other fields when dropdown changes", () => {
     underTest.dropdown.dropdown.get().select("4x4 | Solved");
 
     underTest.sudoku.get().should("be.visible");
@@ -71,13 +72,23 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.buttonConfirm.get().should("be.enabled");
 
     underTest.sizeSelector
-      .button(0)
-      .should("contain.text", "4")
-      .should("have.class", "selected");
+      .text("4")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
     underTest.sizeSelector
-      .button(1)
-      .should("contain.text", "9")
-      .should("not.have.class", "selected");
+      .text("9")
+      .should("not.have.class", CySelectionList.CLASS_SELECTED);
+
+    // change dropdown to different value
+    underTest.dropdown.dropdown.get().select("4x4 | Empty");
+
+    underTest.sudoku.get().should("be.visible");
+    underTest.sudoku.shouldEqual(Puzzle4x4.EMPTY);
+    underTest.sudoku.verification.shouldBeValid();
+
+    underTest.buttonConfirm.get().should("be.enabled");
+    underTest.sizeSelector
+      .text("4")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
   });
 
   it("should update the grid when cell change is submitted", () => {
@@ -105,12 +116,25 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.buttonConfirm.get().should("be.enabled");
   });
 
+  it("should initialize an empty grid when only the size is set", () => {
+    underTest.sudoku.get().should("not.be.visible");
+    underTest.buttonConfirm.get().should("be.disabled");
+
+    underTest.sizeSelector.text("4").click();
+    underTest.sudoku.shouldEqual(Puzzle4x4.EMPTY);
+    underTest.sudoku.verification.shouldBeValid();
+    underTest.buttonConfirm.get().should("be.enabled");
+    underTest.sizeSelector
+      .text("4")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
+  });
+
   it("should update the grid when size changes", () => {
     underTest.dropdown.dropdown.get().select("9x9 | Simple | Puzzle 1");
 
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_1.puzzle);
 
-    underTest.sizeSelector.button(0).should("contain.text", "4").click();
+    underTest.sizeSelector.text("4").click();
 
     underTest.sudoku.shouldEqual([
       [undefined, 8, undefined, 4],
@@ -124,7 +148,7 @@ describe(SudokuPuzzleComponent.name, () => {
     );
     underTest.buttonConfirm.get().should("be.disabled");
 
-    underTest.sizeSelector.button(1).should("contain.text", "9").click();
+    underTest.sizeSelector.text("9").click();
 
     underTest.sudoku.shouldEqual([
       [
@@ -225,9 +249,8 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.buttonConfirm.get().should("be.enabled");
     underTest.dropdown.get().should("contain.text", "9x9 | Simple | Puzzle 3");
     underTest.sizeSelector
-      .button(1)
-      .should("contain.text", "9")
-      .should("have.class", "selected");
+      .text("9")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
     underTest.sudoku.verification.shouldBeValid();
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
 
@@ -245,9 +268,8 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.buttonConfirm.get().should("be.enabled");
     underTest.dropdown.get().should("contain.text", "9x9 | Simple | Puzzle 3");
     underTest.sizeSelector
-      .button(1)
-      .should("contain.text", "9")
-      .should("have.class", "selected");
+      .text("9")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
     underTest.sudoku.verification.shouldBeValid();
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
   });

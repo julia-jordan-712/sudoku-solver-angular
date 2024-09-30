@@ -2,6 +2,8 @@ import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { CySelectionList } from "@cypress/selectors/cy-selection-list";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
@@ -253,5 +255,38 @@ describe(MainComponent.name, () => {
       solver.status.shouldBe("PAUSED");
       solver.steps.get().should("contain.text", "Steps: 3");
     });
+  });
+
+  it("should re-initialize puzzle input with the previous state after confirm, solve and change-settings again", () => {
+    // pre-assert puzzle input
+    puzzleInput.dropdown.dropdown.get().select("9x9 | Simple | Puzzle 3");
+    puzzleInput.dropdown
+      .get()
+      .should("contain.text", "9x9 | Simple | Puzzle 3");
+    puzzleInput.sizeSelector
+      .text("9")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sudoku.verification.shouldBeValid();
+    puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
+
+    // confirm and run solver
+    puzzleInput.buttonConfirm.get().click();
+
+    solver.actions.start.get().click();
+    solver.status.shouldBe("DONE");
+    solver.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.solution);
+
+    // go back to puzzle input and assert previous state
+    puzzleInput.buttonReopen.get().click();
+
+    puzzleInput.buttonConfirm.get().should("be.enabled");
+    puzzleInput.dropdown
+      .get()
+      .should("contain.text", "9x9 | Simple | Puzzle 3");
+    puzzleInput.sizeSelector
+      .text("9")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sudoku.verification.shouldBeValid();
+    puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
   });
 });

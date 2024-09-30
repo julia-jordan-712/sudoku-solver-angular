@@ -125,33 +125,44 @@ describe(SudokuGridComponent.name, () => {
 
       // max allowed value
       cell.value.setValue(4);
-      cell.shouldBeInvalid(false);
+      cell.shouldBeValid();
       cell.value.clear().blur();
-      cell.shouldBeInvalid(false);
+      cell.shouldBeValid();
+
+      // min allowed value
+      cell.value.setValue(1);
+      cell.shouldBeValid();
+      cell.value.clear().blur();
+      cell.shouldBeValid();
 
       // zero
       cell.value.setValue(0);
-      cell.shouldBeInvalid();
+      cell.shouldBeValid(false);
       cell.value.clear().blur();
-      cell.shouldBeInvalid(false);
+      cell.shouldBeValid();
 
       // negative number
       cell.value.setValue(-2);
-      cell.shouldBeInvalid();
+      cell.shouldBeValid(false);
       cell.value.clear().blur();
-      cell.shouldBeInvalid(false);
+      cell.shouldBeValid();
 
       // number which is too large
+      cell.value.setValue(5);
+      cell.shouldBeValid(false);
+      cell.value.clear().blur();
+      cell.shouldBeValid();
+
       cell.value
         .get()
         .should("be.enabled")
-        .type("1")
-        .should("have.value", "1")
         .type("4")
-        .should("have.value", "14");
-      cell.shouldBeInvalid();
+        .should("have.value", "4")
+        .type("1")
+        .should("have.value", "41");
+      cell.shouldBeValid(false);
       cell.value.clear().blur();
-      cell.shouldBeInvalid(false);
+      cell.shouldBeValid();
     });
   });
 

@@ -46,8 +46,8 @@ export class CySudokuCell extends CySelectable {
     return this.shouldHaveClass(highlighted, "highlight");
   }
 
-  shouldBeInvalid(invalid = true): CyHtmlChain {
-    return this.shouldHaveClass(invalid, "invalid");
+  shouldBeValid(valid = true): CyHtmlChain {
+    return this.shouldHaveClass(!valid, "invalid");
   }
 
   private shouldHaveClass(should: boolean, cssClass: string): CyHtmlChain {
