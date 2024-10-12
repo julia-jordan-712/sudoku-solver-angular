@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "cy-headless": "npx cypress run --component --browser chrome",
+    "cy-headed": "npx cypress run --component --browser chrome --headed --no-exit --spec",
     "cy-open": "npx cypress open --component --browser chrome",
     "build": "ng build",
     "format": "npm run prettier && ng lint --fix",

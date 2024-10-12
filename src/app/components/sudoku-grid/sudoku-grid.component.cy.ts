@@ -312,14 +312,9 @@ describe(SudokuGridComponent.name, () => {
       const grid = SudokuGridUtil.clone(testGrid);
       const component = setup({
         grid: grid,
-        highlightChangedCells: true,
+        highlightChangedCells: false,
       });
-      component.setInput({
-        grid: createViewModel({
-          grid: grid,
-          highlightChangedCells: true,
-        }),
-      });
+
       underTest.cell(0, 3).shouldBeChanged(false);
       underTest.cell(2, 0).shouldBeChanged(false);
 
@@ -357,28 +352,30 @@ describe(SudokuGridComponent.name, () => {
     });
 
     it("should switch between previous and current value when hovering over changed cell", () => {
-      const grid = [
+      cy.clock();
+      const firstGrid = [
         [1, 2, 3, [4]],
         [3, undefined, 1, 2],
         [[2], [1, 3], [4], [1, 4]],
         [4, [1], 2, 3],
       ];
       const component = setup({
-        grid: grid,
-        highlightChangedCells: true,
+        grid: firstGrid,
+        highlightChangedCells: false,
       });
-      grid[0][0] = [2, 3];
-      grid[1][1] = [1, 2, 3, 4];
-      grid[0][3] = 4;
-      grid[2][1] = [1];
-      grid[3][0] = 2;
+      underTest.shouldEqual(firstGrid);
+      const secondGrid = [
+        [[2, 3], 2, 3, 4],
+        [3, [1, 2, 3, 4], 1, 2],
+        [[2], [1], [4], [1, 4]],
+        [2, [1], 2, 3],
+      ];
       component.setInput({
         grid: createViewModel({
-          grid: grid,
+          grid: secondGrid,
           highlightChangedCells: true,
         }),
       });
-      cy.clock();
 
       underTest.cell(0, 0).shouldBeChanged(true);
       underTest.cell(0, 0).possibleValues.get().should("have.text", "23");
