@@ -7,7 +7,6 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { SudokuGridCellTestComponent } from "@app/test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { SUDOKU_SOLVER_STATE_MOCK_PROVIDER } from "@app/test/solver/sudoku-solver-state-mock.service";
 import { SudokuGridViewModelMock } from "@app/test/sudoku/sudoku-grid-view-model.mock";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { v4 as randomUUID } from "uuid";
@@ -28,10 +27,7 @@ describe(SudokuGridComponent.name, () => {
         SudokuVerificationModule,
         TranslateTestingModule.withTranslations({}),
       ],
-      providers: [
-        SUDOKU_SOLVER_STATE_MOCK_PROVIDER,
-        SudokuGridComponentService,
-      ],
+      providers: [SudokuGridComponentService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SudokuGridComponent);
