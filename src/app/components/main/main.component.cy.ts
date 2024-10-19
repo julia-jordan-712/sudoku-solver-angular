@@ -163,6 +163,7 @@ describe(MainComponent.name, () => {
     solver.actions.start.get().click();
     solver.status.shouldBe("DONE");
     solver.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.solution);
+    solver.steps.get().should("contain.text", "Steps: 13");
 
     // go back to puzzle input and assert previous state
     puzzleInput.buttonReopen.get().click();

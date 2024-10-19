@@ -96,10 +96,9 @@ export class SudokuSolverSpy {
       return [SolverBranch.createInitialBranch(grid)];
     } else {
       return response.branches.map((branch) => {
-        if (branch.isCurrentBranch()) {
-          branch.grid = grid;
-        }
-        return branch;
+        const clonedBranch = SolverBranch.cloneBranch(branch);
+        clonedBranch.grid = grid;
+        return clonedBranch;
       });
     }
   }

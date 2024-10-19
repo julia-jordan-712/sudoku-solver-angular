@@ -129,6 +129,14 @@ describe(SudokuSolverComponent.name, () => {
       underTest.actions.pause.get().should("be.disabled");
       underTest.actions.next.get().should("be.disabled");
       underTest.actions.restart.get().should("be.enabled");
+
+      underTest.sudoku.shouldEqual([
+        [1, 2, 3, 4],
+        [3, 4, 1, 2],
+        [2, 1, 4, 3],
+        [4, 3, 2, 1],
+      ]);
+      underTest.sudoku.verification.shouldBeValid();
     });
   });
 });
