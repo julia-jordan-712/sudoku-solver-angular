@@ -15,7 +15,7 @@
         [grid]="currentBranch"
         [highlightNumber]="highlightNumber$ | async"
         [readonly]="true"
-        [showVerification]="(isStarted$ | async) ?? true"
+        [showVerification]="(hideVerification$ | async) !== false"
       ></app-sudoku-grid>
     }
     @if (branches.length > 0) {

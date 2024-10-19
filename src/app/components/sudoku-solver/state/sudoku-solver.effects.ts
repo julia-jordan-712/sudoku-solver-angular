@@ -1,6 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
@@ -9,16 +8,10 @@ import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
 import { isDefined } from "@app/shared/util/is-defined";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { concatLatestFrom } from "@ngrx/operators";
 import { Store } from "@ngrx/store";
-import {
-  delayWhen,
-  filter,
-  first,
-  interval,
-  map,
-  tap,
-  withLatestFrom,
-} from "rxjs";
+import { delayWhen, filter, first, interval, map, tap } from "rxjs";
 
 @Injectable()
 export class SudokuSolverEffects {
@@ -28,42 +21,47 @@ export class SudokuSolverEffects {
     private solver: SudokuSolverService,
   ) {}
 
-  initialize$ = createEffect(() =>
-    this.actions$.pipe(
+  initialize$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(SudokuSolverActions.initializeFromPuzzleState),
-      withLatestFrom(this.store.select(SudokuPuzzleSelectors.selectSudoku)),
+      concatLatestFrom(() =>
+        this.store.select(SudokuPuzzleSelectors.selectSudoku),
+      ),
       map(([_action, puzzle]) => puzzle),
       filter(isDefined),
       map((puzzle) => SudokuSolverActions.setInitialPuzzle({ puzzle: puzzle })),
-    ),
-  );
+    );
+  });
 
   resetSolverOnReset$ = createEffect(
-    () =>
-      this.actions$.pipe(
+    () => {
+      return this.actions$.pipe(
         ofType(
           SudokuSolverActions.solverReset,
           SudokuSolverActions.solverRestart,
           SudokuSolverActions.solverCancel,
         ),
         tap(() => this.solver.reset()),
-      ),
+      );
+    },
     { dispatch: false },
   );
 
-  executeFirstStepOnStart$ = createEffect(() =>
-    this.actions$.pipe(
+  executeFirstStepOnStart$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(SudokuSolverActions.solverStart),
       map(() => SudokuSolverActions.stepExecute()),
-    ),
-  );
+    );
+  });
 
-  scheduleNextStepOnStepResult$ = createEffect(() =>
-    this.actions$.pipe(
+  scheduleNextStepOnStepResult$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(SudokuSolverActions.stepResult),
-      withLatestFrom(this.store.select(SudokuSolverSelectors.selectDelay)),
+      concatLatestFrom(() =>
+        this.store.select(SudokuSolverSelectors.selectDelay),
+      ),
       delayWhen(([_action, delay]) => interval(delay).pipe(first())),
-      withLatestFrom(
+      concatLatestFrom(() =>
         this.store.select(SudokuSolverSelectors.selectExecutionStatus),
       ),
       map(([_action, status]) =>
@@ -71,21 +69,23 @@ export class SudokuSolverEffects {
           ? SudokuSolverActions.stepExecute()
           : SudokuSolverActions.stepDoNothing(),
       ),
-    ),
-  );
+    );
+  });
 
-  executeNextStep$ = createEffect(() =>
-    this.actions$.pipe(
+  executeNextStep$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(SudokuSolverActions.stepExecute),
-      withLatestFrom(this.store.select(SudokuSolverSelectors.selectResponse)),
+      concatLatestFrom(() =>
+        this.store.select(SudokuSolverSelectors.selectResponse),
+      ),
       map(([_action, response]) => this.solver.solveNextStep(response)),
-      withLatestFrom(
+      concatLatestFrom(() => [
         this.store.select(SudokuSolverSelectors.selectResponse),
         this.store.select(SudokuSolverSelectors.selectMaxSteps),
         this.store.select(SudokuSolverSelectors.selectExecutedSteps),
         this.store.select(SudokuSolverSelectors.selectExecutionStatus),
         this.store.select(SudokuSolverSelectors.selectStepToBePausedAfter),
-      ),
+      ]),
       map(
         ([
           newResponse,
@@ -110,8 +110,8 @@ export class SudokuSolverEffects {
             ),
           }),
       ),
-    ),
-  );
+    );
+  });
 
   private determineNewStatus(
     newResponse: SolverResponse,

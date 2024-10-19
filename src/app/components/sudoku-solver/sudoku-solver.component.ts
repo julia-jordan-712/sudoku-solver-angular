@@ -4,7 +4,7 @@ import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
 import { Store } from "@ngrx/store";
-import { filter, map, Observable } from "rxjs";
+import { filter, Observable } from "rxjs";
 
 @Component({
   selector: "app-sudoku-solver",
@@ -26,7 +26,7 @@ export class SudokuSolverComponent {
   highlightNumber$: Observable<Nullable<number>> = this.store.select(
     SudokuSolverSelectors.selectHighlightNumber,
   );
-  isStarted$: Observable<boolean> = this.store
-    .select(SudokuSolverSelectors.selectExecutionStatus)
-    .pipe(map((status) => status !== "NOT_STARTED"));
+  hideVerification$: Observable<boolean> = this.store.select(
+    SudokuSolverSelectors.selectHideVerification,
+  );
 }

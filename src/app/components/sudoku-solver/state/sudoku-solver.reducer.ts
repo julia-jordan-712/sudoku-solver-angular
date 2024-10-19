@@ -35,89 +35,110 @@ export class SudokuSolverReducer {
 
   public static readonly reducer = createReducer(
     SudokuSolverReducer.initialState,
-    on(SudokuSolverActions.setInitialPuzzle, (state, action) =>
-      SudokuSolverReducer.resetWithPuzzleAndResponse(
-        state,
-        action.puzzle,
-        SudokuSolverReducer.createInitialSolverResponse(action.puzzle),
-      ),
+    on(
+      SudokuSolverActions.setInitialPuzzle,
+      (state, action): SudokuSolverState =>
+        SudokuSolverReducer.resetWithPuzzleAndResponse(
+          state,
+          action.puzzle,
+          SudokuSolverReducer.createInitialSolverResponse(action.puzzle),
+        ),
     ),
-    on(SudokuSolverActions.setDelay, (state, action) =>
-      SudokuSolverReducer.toNewSettings(state, { delay: action.delay }),
+    on(
+      SudokuSolverActions.setDelay,
+      (state, action): SudokuSolverState =>
+        SudokuSolverReducer.toNewSettings(state, { delay: action.delay }),
     ),
-    on(SudokuSolverActions.setMaximumSteps, (state, action) =>
-      SudokuSolverReducer.toNewSettings(state, {
-        maxSteps: Math.max(0, action.maxSteps),
-      }),
+    on(
+      SudokuSolverActions.setMaximumSteps,
+      (state, action): SudokuSolverState =>
+        SudokuSolverReducer.toNewSettings(state, {
+          maxSteps: Math.max(0, action.maxSteps),
+        }),
     ),
-    on(SudokuSolverActions.setNumberToBeHighlighted, (state, action) =>
-      SudokuSolverReducer.toNewSettings(state, {
-        highlightNumber: action.highlight,
-      }),
+    on(
+      SudokuSolverActions.setNumberToBeHighlighted,
+      (state, action): SudokuSolverState =>
+        SudokuSolverReducer.toNewSettings(state, {
+          highlightNumber: action.highlight,
+        }),
     ),
-    on(SudokuSolverActions.setStepToBePausedAfter, (state, action) =>
-      SudokuSolverReducer.toNewSettings(state, {
-        pauseAfterStep:
-          action.pauseStep != null ? Math.max(0, action.pauseStep) : null,
-      }),
+    on(
+      SudokuSolverActions.setStepToBePausedAfter,
+      (state, action): SudokuSolverState =>
+        SudokuSolverReducer.toNewSettings(state, {
+          pauseAfterStep:
+            action.pauseStep != null ? Math.max(0, action.pauseStep) : null,
+        }),
     ),
     on(
       SudokuSolverActions.solverReset,
       SudokuSolverActions.solverCancel,
-      (state, _action) =>
+      (state): SudokuSolverState =>
         SudokuSolverReducer.resetWithPuzzleAndResponse(
           state,
           SudokuSolverReducer.initialState.puzzle,
           SudokuSolverReducer.initialState.response,
         ),
     ),
-    on(SudokuSolverActions.solverRestart, (state, _action) =>
-      SudokuSolverReducer.resetWithPuzzleAndResponse(
-        state,
-        state.puzzle,
-        SudokuSolverReducer.createInitialSolverResponse(
-          state.puzzle ?? undefined,
+    on(
+      SudokuSolverActions.solverRestart,
+      (state): SudokuSolverState =>
+        SudokuSolverReducer.resetWithPuzzleAndResponse(
+          state,
+          state.puzzle,
+          SudokuSolverReducer.createInitialSolverResponse(
+            state.puzzle ?? undefined,
+          ),
         ),
-      ),
     ),
-    on(SudokuSolverActions.solverStart, (state, _action) =>
-      SudokuSolverReducer.toNewExecutionInfo(state, {
-        status: "RUNNING",
-      }),
+    on(
+      SudokuSolverActions.solverStart,
+      (state): SudokuSolverState =>
+        SudokuSolverReducer.toNewExecutionInfo(state, {
+          status: "RUNNING",
+        }),
     ),
-    on(SudokuSolverActions.solverPause, (state, _action) =>
-      SudokuSolverReducer.toNewExecutionInfo(state, {
-        status: "PAUSED",
-      }),
+    on(
+      SudokuSolverActions.solverPause,
+      (state): SudokuSolverState =>
+        SudokuSolverReducer.toNewExecutionInfo(state, {
+          status: "PAUSED",
+        }),
     ),
-    on(SudokuSolverActions.stepExecute, (state, _action) =>
-      SudokuSolverReducer.toNewExecutionInfo(state, {
-        time: {
-          ...state.executionInfo.time,
-          started: state.executionInfo.time.started ?? Date.now(),
+    on(
+      SudokuSolverActions.stepExecute,
+      (state): SudokuSolverState =>
+        SudokuSolverReducer.toNewExecutionInfo(state, {
+          time: {
+            ...state.executionInfo.time,
+            started: state.executionInfo.time.started ?? Date.now(),
+          },
+        }),
+    ),
+    on(
+      SudokuSolverActions.stepResult,
+      (state, action): SudokuSolverState => ({
+        ...state,
+        executionInfo: {
+          id: state.executionInfo.id,
+          status: action.status,
+          stepsExecuted: state.executionInfo.stepsExecuted + 1,
+          amountOfBranches:
+            state.executionInfo.amountOfBranches +
+            action.numberOfNewBranchesCreated,
+          time: {
+            started: state.executionInfo.time.started,
+            stopped:
+              action.status === "DONE" || action.status === "FAILED"
+                ? Date.now()
+                : null,
+            lastStep: Date.now(),
+          },
         },
+        response: action.response,
       }),
     ),
-    on(SudokuSolverActions.stepResult, (state, action) => ({
-      ...state,
-      executionInfo: {
-        id: state.executionInfo.id,
-        status: action.status,
-        stepsExecuted: state.executionInfo.stepsExecuted + 1,
-        amountOfBranches:
-          state.executionInfo.amountOfBranches +
-          action.numberOfNewBranchesCreated,
-        time: {
-          started: state.executionInfo.time.started,
-          stopped:
-            action.status === "DONE" || action.status === "FAILED"
-              ? Date.now()
-              : null,
-          lastStep: Date.now(),
-        },
-      },
-      response: action.response,
-    })),
   );
 
   private static createInitialSolverResponse(

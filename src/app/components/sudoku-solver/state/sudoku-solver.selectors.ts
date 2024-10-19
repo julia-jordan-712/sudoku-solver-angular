@@ -105,6 +105,11 @@ const selectHasCurrentBranch = createSelector(
   (branch: Nullable<SolverBranch>) => !!branch,
 );
 
+const selectHideVerification = createSelector(
+  selectExecutionStatus,
+  (status: SolverExecution) => status !== "NOT_STARTED",
+);
+
 const selectHighlightNumber = createSelector(
   selectSettings,
   (settings: SudokuSolverStateSettings) => settings.highlightNumber,
@@ -141,6 +146,16 @@ const selectTimeElapsed = createSelector(selectTimeInfo, (time) =>
       : time.lastStep != null
         ? time.lastStep - time.started
         : null,
+);
+
+const selectTimeElapsedMilliseconds = createSelector(
+  selectTimeElapsed,
+  (time) => time ?? 0,
+);
+
+const selectTimeElapsedSeconds = createSelector(
+  selectTimeElapsedMilliseconds,
+  (time) => time / 1000,
 );
 
 // ------------------------------------------------------------------
@@ -187,11 +202,13 @@ export const SudokuSolverSelectors = {
   selectExecutedSteps,
   selectExecutionStatus,
   selectHasCurrentBranch,
+  selectHideVerification,
   selectHighlightNumber,
   selectInitialPuzzle,
   selectLastStepI18nKey,
   selectMaxSteps,
   selectResponse,
   selectStepToBePausedAfter,
-  selectTimeElapsed,
+  selectTimeElapsedMilliseconds,
+  selectTimeElapsedSeconds,
 };

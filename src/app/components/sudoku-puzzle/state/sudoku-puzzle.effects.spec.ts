@@ -11,7 +11,7 @@ describe(SudokuPuzzleEffects.name, () => {
     TestBed.configureTestingModule({
       providers: [
         SudokuPuzzleEffects,
-        ...TestState.mockStoreProviders({ actions$ }),
+        ...TestState.mockStateProviders({ actions$ }),
       ],
     });
 

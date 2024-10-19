@@ -438,6 +438,8 @@ class SudokuGridWrapperComponent {
   @Input()
   readonly: Nullable<boolean>;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onValueChange(_grid: SudokuGrid): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onValueSubmit(_grid: SudokuGrid): void {}
 }

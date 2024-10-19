@@ -14,14 +14,14 @@ import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { TranslateHttpLoaderFactory } from "@app/core/translate/translate-loader-factory";
 import { metaReducers, reducers } from "@app/state";
 import { EffectsModule } from "@ngrx/effects";
-import { StoreModule } from "@ngrx/store";
+import { StoreModule, StoreRootModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { environment } from "src/environments/environment";
 
 registerLocaleData(localeDe);
 
-export const appStoreImports: ModuleWithProviders<any>[] = [
+export const appStoreImports: ModuleWithProviders<StoreRootModule>[] = [
   StoreModule.forRoot(reducers, { metaReducers }),
   EffectsModule.forRoot([]),
 ];

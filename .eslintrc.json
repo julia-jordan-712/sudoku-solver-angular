@@ -52,8 +52,15 @@
     },
     {
       "files": ["*.cy.ts"],
-      "extends": ["plugin:eslint-plugin-cypress/recommended"],
-      "rules": { "@typescript-eslint/no-unused-vars": "off" }
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:eslint-plugin-cypress/recommended",
+        "plugin:@ngrx/all"
+      ],
+      "rules": {
+        "@ngrx/avoid-dispatching-multiple-actions-sequentially": "off"
+      }
     },
     {
       "files": ["*.html"],

@@ -1,3 +1,4 @@
+import { Provider } from "@angular/core";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
@@ -8,14 +9,18 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { AppState } from "@app/state";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { provideMockActions } from "@ngrx/effects/testing";
-import { provideMockStore } from "@ngrx/store/testing";
+import { MockStoreConfig, provideMockStore } from "@ngrx/store/testing";
 import { EMPTY, Observable } from "rxjs";
 
+interface TestStateMockStateConfig extends MockStoreConfig<AppState> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions$?: Observable<any>;
+}
+
 export class TestState {
-  public static mockStoreProviders = (config?: {
-    initialState?: AppState;
-    actions$?: Observable<any>;
-  }) => [
+  public static mockStateProviders: (
+    config?: TestStateMockStateConfig,
+  ) => Provider[] = (config?: TestStateMockStateConfig) => [
     provideMockStore({
       initialState: config?.initialState ?? TestState.createTestAppState(),
     }),

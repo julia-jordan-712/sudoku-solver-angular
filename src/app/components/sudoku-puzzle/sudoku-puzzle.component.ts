@@ -2,7 +2,6 @@ import { Component, inject } from "@angular/core";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
-import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
@@ -36,17 +35,15 @@ export class SudokuPuzzleComponent {
     this.store.select(SudokuPuzzleSelectors.selectSelectedOption);
 
   changeSettings(): void {
-    this.store.dispatch(SudokuPuzzleActions.setConfirmed({ confirmed: false }));
-    this.store.dispatch(SudokuSolverActions.solverReset());
+    this.store.dispatch(SudokuPuzzleActions.changeSettings());
   }
 
   submit(): void {
-    this.store.dispatch(SudokuPuzzleActions.setConfirmed({ confirmed: true }));
-    this.store.dispatch(SudokuSolverActions.initializeFromPuzzleState());
+    this.store.dispatch(SudokuPuzzleActions.submitSettings());
   }
 
   onSelect(option: SudokuDropdownSelectionItem): void {
-    this.store.dispatch(SudokuPuzzleActions.setSelectedOption({ option }));
+    this.store.dispatch(SudokuPuzzleActions.userSetSelectedOption({ option }));
   }
 
   onCellChange(grid: SudokuGrid): void {
@@ -58,8 +55,8 @@ export class SudokuPuzzleComponent {
   }
 
   setSize(size: number): void {
-    this.store.dispatch(SudokuPuzzleActions.clearSelectedOption());
-    this.store.dispatch(SudokuPuzzleActions.setHeight({ height: size }));
-    this.store.dispatch(SudokuPuzzleActions.setWidth({ width: size }));
+    this.store.dispatch(
+      SudokuPuzzleActions.userChangeSize({ height: size, width: size }),
+    );
   }
 }

@@ -19,33 +19,52 @@ export class SudokuPuzzleReducer {
 
   public static readonly reducer = createReducer(
     SudokuPuzzleReducer.initialState,
-    on(SudokuPuzzleActions.clearSelectedOption, (state, _) => ({
-      ...state,
-      selectionOptions: { ...state.selectionOptions, selected: undefined },
-    })),
-    on(SudokuPuzzleActions.setConfirmed, (state, action) => ({
-      ...state,
-      isConfirmed: action.confirmed,
-    })),
-    on(SudokuPuzzleActions.setHeight, (state, action) => ({
-      ...state,
-      height: action.height,
-    })),
-    on(SudokuPuzzleActions.setSelectedOption, (state, action) => ({
-      ...state,
-      selectionOptions: {
-        ...state.selectionOptions,
-        selected: action.option,
-      },
-    })),
-    on(SudokuPuzzleActions.setSudoku, (state, action) => ({
-      ...state,
-      sudoku: action.sudoku,
-    })),
-    on(SudokuPuzzleActions.setWidth, (state, action) => ({
-      ...state,
-      width: action.width,
-    })),
+    on(
+      SudokuPuzzleActions.changeSettings,
+      (state): SudokuPuzzleState => ({
+        ...state,
+        isConfirmed: false,
+      }),
+    ),
+    on(
+      SudokuPuzzleActions.clearSelectedOption,
+      (state): SudokuPuzzleState => ({
+        ...state,
+        selectionOptions: { ...state.selectionOptions, selected: undefined },
+      }),
+    ),
+    on(
+      SudokuPuzzleActions.userSetSelectedOption,
+      (state, action): SudokuPuzzleState => ({
+        ...state,
+        selectionOptions: {
+          ...state.selectionOptions,
+          selected: action.option,
+        },
+      }),
+    ),
+    on(
+      SudokuPuzzleActions.setSize,
+      (state, action): SudokuPuzzleState => ({
+        ...state,
+        height: action.height != undefined ? action.height : state.height,
+        width: action.width != undefined ? action.width : state.width,
+      }),
+    ),
+    on(
+      SudokuPuzzleActions.setSudoku,
+      (state, action): SudokuPuzzleState => ({
+        ...state,
+        sudoku: action.sudoku,
+      }),
+    ),
+    on(
+      SudokuPuzzleActions.submitSettings,
+      (state): SudokuPuzzleState => ({
+        ...state,
+        isConfirmed: true,
+      }),
+    ),
   );
 }
 

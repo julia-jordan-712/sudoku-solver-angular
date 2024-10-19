@@ -16,7 +16,7 @@ describe(SudokuSolverEffects.name, () => {
         SudokuSolverService,
         ...SOLVER_PROVIDERS,
         SudokuSolverEffects,
-        ...TestState.mockStoreProviders({ initialState, actions$ }),
+        ...TestState.mockStateProviders({ initialState, actions$ }),
       ],
     });
 

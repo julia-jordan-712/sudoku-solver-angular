@@ -225,14 +225,16 @@ describe("SudokuSolverState", () => {
 
     it("should not have any time passed before it is started", fakeAsync(() => {
       SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
-      const time = store.selectSignal(SudokuSolverSelectors.selectTimeElapsed);
-      expect(time()).toBeNull();
+      const time = store.selectSignal(
+        SudokuSolverSelectors.selectTimeElapsedMilliseconds,
+      );
+      expect(time()).toBe(0);
 
       store.dispatch(SudokuSolverActions.solverStart());
-      expect(time()).toEqual(0);
+      expect(time()).toBe(0);
 
       tick(1);
-      expect(time()).toEqual(1);
+      expect(time()).toBe(1);
 
       discardPeriodicTasks();
       flush();
@@ -240,14 +242,16 @@ describe("SudokuSolverState", () => {
 
     it("should increase as time passes on", fakeAsync(() => {
       SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
-      const time = store.selectSignal(SudokuSolverSelectors.selectTimeElapsed);
+      const time = store.selectSignal(
+        SudokuSolverSelectors.selectTimeElapsedMilliseconds,
+      );
       store.dispatch(SudokuSolverActions.solverStart());
 
       tick(1);
-      expect(time()).toEqual(1);
+      expect(time()).toBe(1);
 
       tick(2);
-      expect(time()).toEqual(3);
+      expect(time()).toBe(3);
 
       discardPeriodicTasks();
       flush();
@@ -255,16 +259,18 @@ describe("SudokuSolverState", () => {
 
     it("should still increase while paused", fakeAsync(() => {
       SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
-      const time = store.selectSignal(SudokuSolverSelectors.selectTimeElapsed);
+      const time = store.selectSignal(
+        SudokuSolverSelectors.selectTimeElapsedMilliseconds,
+      );
       store.dispatch(SudokuSolverActions.solverStart());
       tick(1);
-      expect(time()).toEqual(1);
+      expect(time()).toBe(1);
 
       store.dispatch(SudokuSolverActions.solverPause());
       tick(5);
       store.dispatch(SudokuSolverActions.stepExecute());
 
-      expect(time()).toEqual(6);
+      expect(time()).toBe(6);
 
       discardPeriodicTasks();
       flush();
@@ -272,11 +278,13 @@ describe("SudokuSolverState", () => {
 
     it("should stop on success", fakeAsync(() => {
       SudokuSolverSpy.onSolveNextStepAndReturnSuccess(solver);
-      const time = store.selectSignal(SudokuSolverSelectors.selectTimeElapsed);
+      const time = store.selectSignal(
+        SudokuSolverSelectors.selectTimeElapsedMilliseconds,
+      );
       store.dispatch(SudokuSolverActions.solverStart());
 
       tick(10);
-      expect(time()).toEqual(0); // because succeeded immediately
+      expect(time()).toBe(0); // because succeeded immediately
 
       discardPeriodicTasks();
       flush();
@@ -284,11 +292,13 @@ describe("SudokuSolverState", () => {
 
     it("should stop on failure", fakeAsync(() => {
       SudokuSolverSpy.onSolveNextStepAndReturnFailure(solver);
-      const time = store.selectSignal(SudokuSolverSelectors.selectTimeElapsed);
+      const time = store.selectSignal(
+        SudokuSolverSelectors.selectTimeElapsedMilliseconds,
+      );
       store.dispatch(SudokuSolverActions.solverStart());
 
       tick(10);
-      expect(time()).toEqual(0); // because failed immediately
+      expect(time()).toBe(0); // because failed immediately
 
       discardPeriodicTasks();
       flush();
