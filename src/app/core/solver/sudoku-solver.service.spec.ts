@@ -1,6 +1,4 @@
 import { TestBed } from "@angular/core/testing";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
-import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
@@ -19,14 +17,7 @@ describe(SudokuSolverService.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        ...SOLVER_PROVIDERS,
-        SudokuSolverStateService,
-        {
-          provide: SUDOKU_SOLVER_STATE,
-          useExisting: SudokuSolverStateService,
-        },
-      ],
+      providers: [...SOLVER_PROVIDERS],
     });
 
     service = TestBed.inject(SudokuSolverService);

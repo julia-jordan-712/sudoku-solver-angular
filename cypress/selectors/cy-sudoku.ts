@@ -17,7 +17,11 @@ export class CySudoku extends CySelectable {
     const elementSelector = new CySelectorTag("app-sudoku-grid", element);
     super(elementSelector, ...parents);
     this.parentsSelector = parents;
-    this.verification = new CySudokuVerification(elementSelector, ...parents);
+    this.verification = new CySudokuVerification(
+      {},
+      elementSelector,
+      ...parents,
+    );
   }
 
   cell(row: number, column: number): CySudokuCell {

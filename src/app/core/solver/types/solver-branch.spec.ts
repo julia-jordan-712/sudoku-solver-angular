@@ -387,4 +387,86 @@ describe(SolverBranch.name, () => {
       });
     });
   });
+
+  describe("clone branch", () => {
+    let initialBranch: SolverBranch;
+    let middleBranch: SolverBranch;
+    let currentBranch: SolverBranch;
+
+    beforeEach(() => {
+      initialBranch = SolverBranch.createInitialBranch(
+        Puzzle4x4.INCOMPLETE_ALL_VALUES,
+      );
+      middleBranch = initialBranch.openBranch({ row: 0, column: 0 }, 1);
+      currentBranch = middleBranch.openBranch({ row: 1, column: 1 }, 2);
+
+      expect(initialBranch.isCurrentBranch()).toBeFalse();
+      expect(middleBranch.isCurrentBranch()).toBeFalse();
+      expect(currentBranch.isCurrentBranch()).toBeTrue();
+
+      expect(initialBranch.isInitialBranch()).toBeTrue();
+      expect(middleBranch.isInitialBranch()).toBeFalse();
+      expect(currentBranch.isInitialBranch()).toBeFalse();
+
+      expect(initialBranch.isOpenBranch()).toBeTrue();
+      expect(middleBranch.isOpenBranch()).toBeTrue();
+      expect(currentBranch.isOpenBranch()).toBeTrue();
+    });
+
+    it("should clone initial branch correctly", () => {
+      const result = SolverBranch.cloneBranch(initialBranch);
+
+      expect(result).toEqual(initialBranch);
+      expect(result).not.toBe(initialBranch);
+      expect(result.grid).not.toBe(initialBranch.grid);
+    });
+
+    it("should clone middle branch correctly", () => {
+      const result = SolverBranch.cloneBranch(middleBranch);
+
+      expect(result).toEqual(middleBranch);
+      expect(result).not.toBe(middleBranch);
+      expect(result.grid).not.toBe(middleBranch.grid);
+    });
+
+    it("should clone current branch correctly", () => {
+      const result = SolverBranch.cloneBranch(currentBranch);
+
+      expect(result).toEqual(currentBranch);
+      expect(result).not.toBe(currentBranch);
+      expect(result.grid).not.toBe(currentBranch.grid);
+    });
+
+    describe("closing cloned branch", () => {
+      it("should only affect the cloned branch and not the original branch", () => {
+        const currentBranchClone: SolverBranch =
+          SolverBranch.cloneBranch(currentBranch);
+        expect(currentBranchClone.isClosedBranch()).toBeFalse();
+        expect(currentBranch.isClosedBranch()).toBeFalse();
+
+        currentBranchClone.closeBranch([
+          initialBranch,
+          middleBranch,
+          currentBranchClone,
+        ]);
+
+        expect(currentBranchClone.isClosedBranch()).toBeTrue();
+        expect(currentBranch.isClosedBranch()).toBeFalse();
+      });
+    });
+
+    describe("opening branch from cloned branch", () => {
+      it("should only affect the cloned branch and not the original branch", () => {
+        const currentBranchClone: SolverBranch =
+          SolverBranch.cloneBranch(currentBranch);
+        expect(currentBranchClone.isCurrentBranch()).toBeTrue();
+        expect(currentBranch.isCurrentBranch()).toBeTrue();
+
+        currentBranchClone.openBranch({ row: 2, column: 2 }, 3);
+
+        expect(currentBranchClone.isCurrentBranch()).toBeFalse();
+        expect(currentBranch.isCurrentBranch()).toBeTrue();
+      });
+    });
+  });
 });

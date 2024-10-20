@@ -5,9 +5,8 @@
   "include": [],
   "references": [
     { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.cy.json" },
-    { "path": "./tsconfig.eslint.json" },
-    { "path": "./tsconfig.spec.json" }
+    { "path": "./tsconfig.spec.json" },
+    { "path": "./tsconfig.cy.json" }
   ],
   "exclude": ["node_modules"]
 }

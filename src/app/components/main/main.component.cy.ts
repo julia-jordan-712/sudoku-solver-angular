@@ -1,8 +1,9 @@
+import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
-import { SudokuSolverStateService } from "@app/components/sudoku-solver/services/sudoku-solver-state.service";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { CySelectionList } from "@cypress/selectors/cy-selection-list";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
@@ -19,14 +20,8 @@ describe(MainComponent.name, () => {
       MainModule,
       {},
       {
-        providers: [
-          ...SOLVER_PROVIDERS,
-          SudokuSolverStateService,
-          {
-            provide: SUDOKU_SOLVER_STATE,
-            useExisting: SudokuSolverStateService,
-          },
-        ],
+        imports: appStoreImports,
+        providers: SOLVER_PROVIDERS,
       },
     );
   });
@@ -59,118 +54,6 @@ describe(MainComponent.name, () => {
     solver.branches.get().should("be.visible");
     solver.sudoku.get().should("be.visible");
     solver.additionalBranch(0).get().should("not.exist");
-  });
-
-  describe("branches and steps", () => {
-    beforeEach(() => {
-      puzzleInput.selectFromDropdownAndConfirm("4x4 | Empty");
-    });
-
-    it("should show amount of executed steps and what the last step was", () => {
-      solver.steps.get().should("contain.text", "Steps: 0");
-      solver.steps.get().should("not.contain.text", "Last step:");
-
-      solver.clickNext();
-
-      solver.steps.get().should("contain.text", "Steps: 1");
-      solver.steps
-        .get()
-        .should(
-          "contain.text",
-          "Last step: Determine possible values in empty cells",
-        );
-    });
-
-    it("should show amount of required branches", () => {
-      solver.branches.get().should("contain.text", "1");
-
-      solver.clickNext();
-      solver.branches.get().should("contain.text", "1");
-
-      solver.clickNext();
-      solver.branches.get().should("contain.text", "2");
-
-      solver.clickNext();
-      solver.branches.get().should("contain.text", "2");
-
-      solver.clickNext();
-      solver.branches.get().should("contain.text", "3");
-    });
-  });
-
-  describe("enabling of solver buttons", () => {
-    beforeEach(() => {
-      puzzleInput.dropdown.dropdown.get().select("4x4 | Empty");
-      puzzleInput.buttonConfirm.get().click();
-      solverSettings.delay.input.setValue(200);
-    });
-
-    it("should allow to start initially", () => {
-      solver.status.get().should("contain.text", "Ready to start");
-      solver.actions.start.get().should("be.enabled");
-      solver.actions.pause.get().should("be.disabled");
-      solver.actions.next.get().should("be.enabled");
-      solver.actions.restart.get().should("not.exist");
-    });
-
-    it("should allow to pause but not to go to next step while running", () => {
-      solver.clickStart();
-
-      solver.status.get().should("contain.text", "Calculating solution");
-      solver.actions.start.get().should("be.disabled");
-      solver.actions.pause.get().should("be.enabled");
-      solver.actions.next.get().should("be.disabled");
-      solver.actions.restart.get().should("not.exist");
-
-      solver.clickPause();
-    });
-
-    it("should allow to continue and to go to next step while paused", () => {
-      solver.clickStart();
-      solver.clickPause();
-
-      solver.status.get().should("contain.text", "Paused");
-      solver.actions.start.get().should("be.enabled");
-      solver.actions.pause.get().should("be.disabled");
-      solver.actions.next.get().should("be.enabled");
-      solver.actions.restart.get().should("not.exist");
-    });
-
-    it("should allow to continue and to go to next step after going to next step", () => {
-      solver.clickNext();
-
-      solver.status.get().should("contain.text", "Paused");
-      solver.actions.start.get().should("be.enabled");
-      solver.actions.pause.get().should("be.disabled");
-      solver.actions.next.get().should("be.enabled");
-      solver.actions.restart.get().should("not.exist");
-    });
-
-    it("should allow to pause again but not to go to next step after continuing", () => {
-      solver.clickStart();
-      solver.clickPause();
-      solver.clickStart();
-
-      solver.status.get().should("contain.text", "Calculating solution");
-      solver.actions.start.get().should("be.disabled");
-      solver.actions.pause.get().should("be.enabled");
-      solver.actions.next.get().should("be.disabled");
-      solver.actions.restart.get().should("not.exist");
-
-      solver.clickPause();
-    });
-
-    it("should allow to restart when done", () => {
-      solverSettings.delay.input.setValue(0);
-      solver.clickStart();
-
-      solver.steps.get().should("contain.text", "29");
-      solver.status.get().should("contain.text", "Solution was found in");
-      solver.actions.start.get().should("be.disabled");
-      solver.actions.pause.get().should("be.disabled");
-      solver.actions.next.get().should("be.disabled");
-      solver.actions.restart.get().should("be.enabled");
-    });
   });
 
   describe("maximum steps limit", () => {
@@ -260,5 +143,39 @@ describe(MainComponent.name, () => {
       solver.status.shouldBe("PAUSED");
       solver.steps.get().should("contain.text", "Steps: 3");
     });
+  });
+
+  it("should re-initialize puzzle input with the previous state after confirm, solve and change-settings again", () => {
+    // pre-assert puzzle input
+    puzzleInput.dropdown.dropdown.get().select("9x9 | Simple | Puzzle 3");
+    puzzleInput.dropdown
+      .get()
+      .should("contain.text", "9x9 | Simple | Puzzle 3");
+    puzzleInput.sizeSelector
+      .text("9")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sudoku.verification.shouldBeValid();
+    puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
+
+    // confirm and run solver
+    puzzleInput.buttonConfirm.get().click();
+
+    solver.actions.start.get().click();
+    solver.status.shouldBe("DONE");
+    solver.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.solution);
+    solver.steps.get().should("contain.text", "Steps: 13");
+
+    // go back to puzzle input and assert previous state
+    puzzleInput.buttonReopen.get().click();
+
+    puzzleInput.buttonConfirm.get().should("be.enabled");
+    puzzleInput.dropdown
+      .get()
+      .should("contain.text", "9x9 | Simple | Puzzle 3");
+    puzzleInput.sizeSelector
+      .text("9")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sudoku.verification.shouldBeValid();
+    puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
   });
 });

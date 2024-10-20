@@ -5,20 +5,23 @@ import { DropdownInputModule } from "@app/components/interactions/dropdown-input
 import { NumberInputModule } from "@app/components/interactions/number-input/number-input.module";
 import { SelectionListModule } from "@app/components/interactions/selection-list/selection-list.module";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
+import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
+import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzzle.component";
+import { EffectsModule } from "@ngrx/effects";
 import { TranslateModule } from "@ngx-translate/core";
-import { SudokuSettingsComponent } from "./sudoku-settings.component";
 
 @NgModule({
-  declarations: [SudokuSettingsComponent],
+  declarations: [SudokuPuzzleComponent],
   imports: [
     CommonModule,
     DropdownInputModule,
+    EffectsModule.forFeature([SudokuPuzzleEffects]),
     IconModule,
     NumberInputModule,
     SelectionListModule,
     SudokuGridModule,
     TranslateModule,
   ],
-  exports: [SudokuSettingsComponent],
+  exports: [SudokuPuzzleComponent],
 })
-export class SudokuSettingsModule {}
+export class SudokuPuzzleModule {}

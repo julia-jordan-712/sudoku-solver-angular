@@ -8,11 +8,17 @@ import {
 } from "@cypress/types/cy-selector";
 
 export class CySelectionList extends CySelectableWithLabel {
+  public static readonly CLASS_SELECTED = "selected";
+
   constructor(element?: CySelectorWithoutTag, ...parents: CySelector[]) {
     super(new CySelectorTag("app-selection-list", element), ...parents);
   }
 
-  button(index = 0): CyHtmlChain<HTMLButtonElement> {
+  index(index = 0): CyHtmlChain<HTMLButtonElement> {
     return new CyButton({}, this.elementSelector).get().eq(index);
+  }
+
+  text(text: string): CyHtmlChain<HTMLButtonElement> {
+    return new CyButton({}, this.elementSelector).get().contains(text);
   }
 }

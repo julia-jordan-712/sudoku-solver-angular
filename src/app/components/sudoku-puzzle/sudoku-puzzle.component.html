@@ -9,7 +9,7 @@
     <app-dropdown-input
       data-cy="existing-sudoku-selection"
       [label]="'SETTINGS.SELECT' | translate"
-      [items]="selectionItems"
+      [items]="selectionItems$ | async"
       [selectedItem]="selectedItem$ | async"
       (selected)="onSelect($event)"
     ></app-dropdown-input>

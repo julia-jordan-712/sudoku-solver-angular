@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { SOLVER_TOKEN } from "@app/core/solver/sudoku-solver.provider";
+import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 
 @Injectable({
@@ -20,7 +21,8 @@ export class SudokuSolverService {
   }
 
   solveNextStep(lastResponse: SolverResponse): SolverResponse {
-    let response: SolverResponse = lastResponse;
+    let response: SolverResponse =
+      this.cloneIntoNonReadonlySolverResponse(lastResponse);
     for (const solver of this.solvers) {
       response = solver.executeNextStep(response);
       if (response.status !== "FAILED") {
@@ -28,5 +30,17 @@ export class SudokuSolverService {
       }
     }
     return response;
+  }
+
+  private cloneIntoNonReadonlySolverResponse(
+    lastResponse: SolverResponse,
+  ): SolverResponse {
+    return {
+      status: lastResponse.status,
+      stepId: lastResponse.stepId,
+      branches: lastResponse.branches.map((branch) =>
+        SolverBranch.cloneBranch(branch),
+      ),
+    };
   }
 }

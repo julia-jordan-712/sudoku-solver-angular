@@ -1,6 +1,7 @@
 import { Component, inject } from "@angular/core";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SolverExecution } from "@app/shared/types/solver-execution";
+import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable } from "rxjs";
 
@@ -12,10 +13,11 @@ import { Observable } from "rxjs";
 export class SudokuSolverStatusComponent {
   translate = inject(TranslateService);
 
-  private state = inject(SUDOKU_SOLVER_STATE);
-  state$: Observable<SolverExecution> = this.state.getExecutionState();
-
-  getTime(): number {
-    return this.state.getTimeElapsed() / 1000;
-  }
+  private store = inject(Store);
+  state$: Observable<SolverExecution> = this.store.select(
+    SudokuSolverSelectors.selectExecutionStatus,
+  );
+  time$: Observable<number> = this.store.select(
+    SudokuSolverSelectors.selectTimeElapsedSeconds,
+  );
 }

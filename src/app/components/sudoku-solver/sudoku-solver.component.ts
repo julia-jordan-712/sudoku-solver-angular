@@ -1,9 +1,10 @@
 import { Component, inject } from "@angular/core";
-import { SUDOKU_SOLVER_STATE } from "@app/components/sudoku-solver/services/sudoku-solver-state";
+import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
-import { filter, map, Observable } from "rxjs";
+import { Store } from "@ngrx/store";
+import { filter, Observable } from "rxjs";
 
 @Component({
   selector: "app-sudoku-solver",
@@ -11,15 +12,21 @@ import { filter, map, Observable } from "rxjs";
   styleUrls: ["./sudoku-solver.component.scss"],
 })
 export class SudokuSolverComponent {
-  private state = inject(SUDOKU_SOLVER_STATE);
-  show$: Observable<boolean> = this.state
-    .getCurrentBranch()
-    .pipe(map(isDefined));
-  currentBranch$: Observable<SudokuGridViewModel> = this.state
-    .getCurrentBranch()
+  private store = inject(Store);
+
+  show$: Observable<boolean> = this.store.select(
+    SudokuSolverSelectors.selectHasCurrentBranch,
+  );
+  currentBranch$: Observable<SudokuGridViewModel> = this.store
+    .select(SudokuSolverSelectors.selectCurrentBranchViewModel)
     .pipe(filter(isDefined));
-  additionalBranches$: Observable<SudokuGridViewModel[]> =
-    this.state.getAdditionalBranches();
-  highlightNumber$: Observable<Nullable<number>> =
-    this.state.getHighlightNumber();
+  additionalBranches$: Observable<SudokuGridViewModel[]> = this.store.select(
+    SudokuSolverSelectors.selectAdditionalBranchViewModels,
+  );
+  highlightNumber$: Observable<Nullable<number>> = this.store.select(
+    SudokuSolverSelectors.selectHighlightNumber,
+  );
+  hideVerification$: Observable<boolean> = this.store.select(
+    SudokuSolverSelectors.selectHideVerification,
+  );
 }
