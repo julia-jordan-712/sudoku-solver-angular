@@ -6,7 +6,7 @@
       "files": ["*.ts"],
       "parserOptions": {
         "project": ["tsconfig.eslint.json"],
-        "createDefaultProgram": true
+        "sourceType": "module"
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
@@ -39,6 +39,10 @@
     },
     {
       "files": ["*.spec.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.eslint.json"],
+        "sourceType": "module"
+      },
       "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
@@ -52,6 +56,10 @@
     },
     {
       "files": ["*.cy.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.eslint.json"],
+        "sourceType": "module"
+      },
       "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@typescript-eslint/recommended",

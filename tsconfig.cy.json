@@ -5,5 +5,5 @@
     "types": ["node"]
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["src/**/*.cy.ts"]
+  "include": ["cypress/**/*.ts", "cypress/**/*.d.ts", "src/**/*.cy.ts"]
 }
