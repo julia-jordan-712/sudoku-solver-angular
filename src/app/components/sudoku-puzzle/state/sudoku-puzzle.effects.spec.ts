@@ -1,24 +1,31 @@
 import { TestBed } from "@angular/core/testing";
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
+import { AppState } from "@app/state";
 import { TestState } from "@app/test/state/test-state";
+import { provideMockActions } from "@ngrx/effects/testing";
+import { provideMockStore } from "@ngrx/store/testing";
 import { Observable } from "rxjs";
 
 describe(SudokuPuzzleEffects.name, () => {
   let actions$: Observable<any>;
-  let effects: SudokuPuzzleEffects;
+  let underTest: SudokuPuzzleEffects;
 
-  beforeEach(() => {
+  function setup(initialState?: AppState): void {
     TestBed.configureTestingModule({
       providers: [
         SudokuPuzzleEffects,
-        ...TestState.mockStateProviders({ actions$ }),
+        provideMockStore({
+          initialState: initialState ?? TestState.createEmptyAppState(),
+        }),
+        provideMockActions(() => actions$),
       ],
     });
 
-    effects = TestBed.inject(SudokuPuzzleEffects);
-  });
+    underTest = TestBed.inject(SudokuPuzzleEffects);
+  }
 
   it("should be created", () => {
-    expect(effects).toBeTruthy();
+    setup();
+    expect(underTest).toBeTruthy();
   });
 });

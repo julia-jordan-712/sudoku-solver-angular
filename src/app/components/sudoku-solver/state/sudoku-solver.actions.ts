@@ -4,6 +4,11 @@ import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
+export type SudokuSolverActionStepResultExecutionStatus = Extract<
+  SolverExecution,
+  "RUNNING" | "PAUSED" | "DONE" | "FAILED"
+>;
+
 export const SudokuSolverActions = createActionGroup({
   source: "SudokuSolver",
   events: {
@@ -22,10 +27,7 @@ export const SudokuSolverActions = createActionGroup({
     "step do nothing": emptyProps(),
     "step result": props<{
       response: SolverResponse;
-      status: Extract<
-        SolverExecution,
-        "RUNNING" | "PAUSED" | "DONE" | "FAILED"
-      >;
+      status: SudokuSolverActionStepResultExecutionStatus;
       numberOfNewBranchesCreated: number;
     }>(),
   },

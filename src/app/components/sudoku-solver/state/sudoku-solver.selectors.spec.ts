@@ -1,6 +1,7 @@
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SudokuSolverState } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
+import { SolverExecution } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import {
   SudokuGridCellViewModel,
@@ -25,15 +26,97 @@ describe("SudokuSolver Selectors", () => {
     it("should verify solution of the current branch", () => {
       // arrange
       const testState = createTestStateWithCurrentBranchGrid(
-        Puzzle4x4.COMPLETE,
+        Puzzle4x4.INCOMPLETE_ALL_VALUES,
       );
 
+      // act
       const result: SudokuGridViewModel | null =
         SudokuSolverSelectors.selectCurrentBranchViewModel(testState);
 
+      // assert
       expect(result).not.toBeNull();
       expect(result?.data.verificationResult).toBeTruthy();
       expect(result?.data.verificationResult?.isValid()).toBeTrue();
+    });
+
+    it("should consider duplicates as invalid", () => {
+      // arrange
+      const testState = createTestStateWithCurrentBranchGrid([
+        [1, 2, 3, 4],
+        [3, 1, 1, 2],
+        [2, 3, 4, 1],
+        [4, 1, 2, 3],
+      ]);
+
+      // act
+      const result: SudokuGridViewModel | null =
+        SudokuSolverSelectors.selectCurrentBranchViewModel(testState);
+
+      // assert
+      expect(result).not.toBeNull();
+      expect(result?.data.verificationResult).toBeTruthy();
+      expect(result?.data.verificationResult?.isValid()).toBeFalse();
+      expect(result?.data.verificationResult?.getErrors()).toContain({
+        key: "VERIFY.ERROR.DUPLICATE_ELEMENTS",
+      });
+    });
+
+    it("should trust size to be correct and not verify it all the time again and again", () => {
+      // arrange
+      const testState = createTestStateWithCurrentBranchGrid([
+        [1, 2, 3],
+        [3, 4, 1],
+        [2, 3, 4],
+        [4, 1, 2],
+      ]);
+
+      // act
+      const result: SudokuGridViewModel | null =
+        SudokuSolverSelectors.selectCurrentBranchViewModel(testState);
+
+      // assert
+      expect(result).not.toBeNull();
+      expect(result?.data.verificationResult).toBeTruthy();
+      expect(result?.data.verificationResult?.isValid()).toBeTrue();
+    });
+
+    it("should consider cells with empty array as invalid", () => {
+      // arrange
+      const testState = createTestStateWithCurrentBranchGrid([
+        [1, 2, 3, 4],
+        [3, [], 1, 2],
+        [2, 3, 4, 1],
+        [4, 1, 2, 3],
+      ]);
+
+      // act
+      const result: SudokuGridViewModel | null =
+        SudokuSolverSelectors.selectCurrentBranchViewModel(testState);
+
+      // assert
+      expect(result).not.toBeNull();
+      expect(result?.data.verificationResult).toBeTruthy();
+      expect(result?.data.verificationResult?.isValid()).toBeFalse();
+      expect(result?.data.verificationResult?.getErrors()).toContain({
+        key: "VERIFY.ERROR.EMPTY_CELL",
+      });
+    });
+
+    it("should consider undefined cells as invalid", () => {
+      // arrange
+      const testState = createTestStateWithCurrentBranchGrid(Puzzle4x4.EMPTY);
+
+      // act
+      const result: SudokuGridViewModel | null =
+        SudokuSolverSelectors.selectCurrentBranchViewModel(testState);
+
+      // assert
+      expect(result).not.toBeNull();
+      expect(result?.data.verificationResult).toBeTruthy();
+      expect(result?.data.verificationResult?.isValid()).toBeFalse();
+      expect(result?.data.verificationResult?.getErrors()).toContain({
+        key: "VERIFY.ERROR.EMPTY_CELL",
+      });
     });
 
     it("should NOT verify solution of the additional branches", () => {
@@ -54,11 +137,66 @@ describe("SudokuSolver Selectors", () => {
         currentBranch,
       ];
 
+      // act
       const result: SudokuGridViewModel[] =
         SudokuSolverSelectors.selectAdditionalBranchViewModels(testState);
 
+      // assert
       expect(result.length).toEqual(1);
       expect(result?.[0]?.data.verificationResult).toBeNull();
+    });
+  });
+
+  describe("state transitions", () => {
+    [
+      {
+        executionStatus: "NOT_STARTED" satisfies SolverExecution,
+        can: { goToNextStep: true, restart: false, start: true, pause: false },
+      },
+      {
+        executionStatus: "PAUSED" satisfies SolverExecution,
+        can: { goToNextStep: true, restart: false, start: true, pause: false },
+      },
+      {
+        executionStatus: "RUNNING" satisfies SolverExecution,
+        can: { goToNextStep: false, restart: false, start: false, pause: true },
+      },
+      {
+        executionStatus: "DONE" satisfies SolverExecution,
+        can: { goToNextStep: false, restart: true, start: false, pause: false },
+      },
+      {
+        executionStatus: "FAILED" satisfies SolverExecution,
+        can: { goToNextStep: false, restart: true, start: false, pause: false },
+      },
+    ].forEach((params) => {
+      const testState: AppState = TestState.createEmptyAppState();
+      testState.sudokuSolver.executionInfo.status =
+        params.executionStatus as SolverExecution;
+
+      it(`should ${params.can.goToNextStep ? "" : "NOT"} be able to go to next step in status ${params.executionStatus}`, () => {
+        expect(SudokuSolverSelectors.selectCanGoToNextStep(testState)).toEqual(
+          params.can.goToNextStep,
+        );
+      });
+
+      it(`should ${params.can.restart ? "" : "NOT"} be able to restart in status ${params.executionStatus}`, () => {
+        expect(SudokuSolverSelectors.selectCanRestart(testState)).toEqual(
+          params.can.restart,
+        );
+      });
+
+      it(`should ${params.can.start ? "" : "NOT"} be able to start in status ${params.executionStatus}`, () => {
+        expect(SudokuSolverSelectors.selectCanStart(testState)).toEqual(
+          params.can.start,
+        );
+      });
+
+      it(`should ${params.can.pause ? "" : "NOT"} be able to pause in status ${params.executionStatus}`, () => {
+        expect(SudokuSolverSelectors.selectCanPause(testState)).toEqual(
+          params.can.pause,
+        );
+      });
     });
   });
 
@@ -109,29 +247,45 @@ describe("SudokuSolver Selectors", () => {
         .flatMap((row) => row.cells.map((cell) => cell.data.maxValue))
         .forEach((maxValue) => expect(maxValue).toEqual(4));
     });
+
+    it("should highlight changed cells", async () => {
+      expect(
+        SudokuSolverSelectors.selectCurrentBranchViewModel(
+          createTestStateWithCurrentBranchGrid(Puzzle4x4.EMPTY),
+        )?.data.highlightChangedCells,
+      ).toBeTrue();
+    });
   });
 
   describe("additional branches view models", () => {
+    const initialBranch: SolverBranch = SolverBranch.createInitialBranch(
+      Puzzle4x4.INCOMPLETE_ALL_VALUES,
+    );
+    const secondBranch: SolverBranch = initialBranch.openBranch(
+      { row: 0, column: 0 },
+      1,
+    );
+    const thirdBranch: SolverBranch = secondBranch.openBranch(
+      { row: 1, column: 1 },
+      2,
+    );
+    const fourthBranch: SolverBranch = thirdBranch.openBranch(
+      { row: 2, column: 3 },
+      3,
+    );
+    const currentBranch: SolverBranch = fourthBranch.openBranch(
+      { row: 3, column: 1 },
+      4,
+    );
+
     it("should not include current branch in additional branches", async () => {
       // arrange
-      const initialBranch: SolverBranch = SolverBranch.createInitialBranch(
-        Puzzle4x4.INCOMPLETE_ALL_VALUES,
-      );
-      const secondBranch: SolverBranch = initialBranch.openBranch(
-        { row: 0, column: 0 },
-        1,
-      );
-      const currentBranch: SolverBranch = secondBranch.openBranch(
-        { row: 1, column: 1 },
-        2,
-      );
-      const branches: SolverBranch[] = [
+      const testState = TestState.createTestAppState();
+      testState.sudokuSolver.response.branches = [
         initialBranch,
         currentBranch,
         secondBranch,
       ];
-      const testState = TestState.createTestAppState();
-      testState.sudokuSolver.response.branches = branches;
 
       // act
       const currentViewModel: SudokuGridViewModel =
@@ -185,34 +339,14 @@ describe("SudokuSolver Selectors", () => {
 
     it("should order multiple view models by branches", async () => {
       // arrange
-      const initialBranch: SolverBranch = SolverBranch.createInitialBranch(
-        Puzzle4x4.INCOMPLETE_ALL_VALUES,
-      );
-      const secondBranch: SolverBranch = initialBranch.openBranch(
-        { row: 0, column: 0 },
-        1,
-      );
-      const thirdBranch: SolverBranch = secondBranch.openBranch(
-        { row: 1, column: 1 },
-        2,
-      );
-      const fourthBranch: SolverBranch = thirdBranch.openBranch(
-        { row: 2, column: 3 },
-        3,
-      );
-      const currentBranch: SolverBranch = fourthBranch.openBranch(
-        { row: 3, column: 1 },
-        4,
-      );
-      const branches: SolverBranch[] = [
+      const testState = TestState.createTestAppState();
+      testState.sudokuSolver.response.branches = [
         thirdBranch,
         fourthBranch,
         initialBranch,
         currentBranch,
         secondBranch,
       ];
-      const testState = TestState.createTestAppState();
-      testState.sudokuSolver.response.branches = branches;
 
       // act
       const viewModels: SudokuGridViewModel[] =
@@ -256,6 +390,24 @@ describe("SudokuSolver Selectors", () => {
       expect(viewModels[3].rows[0].cells[0].data.branchInfo).toEqual(
         expectedInitialBranchInfo,
       );
+    });
+
+    it("should NOT highlight changed cells", async () => {
+      const testState = TestState.createTestAppState();
+      testState.sudokuSolver.response.branches = [
+        thirdBranch,
+        fourthBranch,
+        initialBranch,
+        currentBranch,
+        secondBranch,
+      ];
+
+      const result =
+        SudokuSolverSelectors.selectAdditionalBranchViewModels(testState);
+
+      result.forEach((viewModel) => {
+        expect(viewModel.data.highlightChangedCells).toBeFalse();
+      });
     });
   });
 

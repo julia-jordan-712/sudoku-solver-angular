@@ -7,15 +7,16 @@ import {
 } from "@angular/core/testing";
 import { appStoreImports } from "@app/app.module";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
+import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
-import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";
+import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { EffectsModule } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 
@@ -27,9 +28,10 @@ describe("SudokuSolverState", () => {
     TestBed.configureTestingModule({
       imports: [
         ...appStoreImports,
+        EffectsModule.forFeature([SudokuPuzzleEffects]),
         EffectsModule.forFeature([SudokuSolverEffects]),
       ],
-      providers: [SudokuSolverService, ...SOLVER_PROVIDERS],
+      providers: [...SOLVER_TEST_PROVIDERS],
     });
 
     solver = TestBed.inject(SudokuSolverService);
@@ -300,6 +302,61 @@ describe("SudokuSolverState", () => {
       tick(10);
       expect(time()).toBe(0); // because failed immediately
 
+      discardPeriodicTasks();
+      flush();
+    }));
+  });
+
+  describe("scheduling next solver step", () => {
+    it("should wait for the 'delay' in milliseconds between steps while running", fakeAsync(() => {
+      // arrange
+      const spy = SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
+      store.dispatch(SudokuSolverActions.setMaximumSteps({ maxSteps: 3 }));
+      store.dispatch(SudokuSolverActions.setDelay({ delay: 100 }));
+
+      // act & assert
+      store.dispatch(SudokuSolverActions.solverStart());
+      expect(spy).toHaveBeenCalledTimes(1);
+      spy.calls.reset();
+
+      // act & assert
+      tick(1);
+      expect(spy).not.toHaveBeenCalled();
+      tick(98);
+      expect(spy).not.toHaveBeenCalled();
+      tick(1);
+      expect(spy).toHaveBeenCalledTimes(1);
+      spy.calls.reset();
+
+      // act & assert
+      tick(100);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      // cleanup
+      discardPeriodicTasks();
+      flush();
+    }));
+
+    it("should not schedule another step when pausing", fakeAsync(() => {
+      // arrange
+      const spy = SudokuSolverSpy.onSolveNextStepAndReturnPreviousGrid(solver);
+      store.dispatch(SudokuSolverActions.setMaximumSteps({ maxSteps: 3 }));
+      store.dispatch(SudokuSolverActions.setDelay({ delay: 10 }));
+
+      // pre-assert
+      store.dispatch(SudokuSolverActions.solverStart());
+      tick(10);
+      expect(spy).toHaveBeenCalledTimes(2);
+      spy.calls.reset();
+
+      // act
+      store.dispatch(SudokuSolverActions.solverPause());
+
+      // assert
+      tick(100);
+      expect(spy).not.toHaveBeenCalled();
+
+      // cleanup
       discardPeriodicTasks();
       flush();
     }));

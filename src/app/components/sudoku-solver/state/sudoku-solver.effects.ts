@@ -33,7 +33,7 @@ export class SudokuSolverEffects {
     );
   });
 
-  resetSolverOnReset$ = createEffect(
+  resetSolverOnResetOrRestartOrCancel$ = createEffect(
     () => {
       return this.actions$.pipe(
         ofType(
@@ -64,7 +64,7 @@ export class SudokuSolverEffects {
       concatLatestFrom(() =>
         this.store.select(SudokuSolverSelectors.selectExecutionStatus),
       ),
-      map(([_action, status]) =>
+      map(([[_action, _delay], status]) =>
         status === "RUNNING"
           ? SudokuSolverActions.stepExecute()
           : SudokuSolverActions.stepDoNothing(),
@@ -120,22 +120,21 @@ export class SudokuSolverEffects {
     pauseAfterStep: Nullable<number>,
     status: SolverExecution,
   ): "RUNNING" | "PAUSED" | "DONE" | "FAILED" {
-    if (
-      status !== "DONE" &&
-      status !== "FAILED" &&
-      executedSteps + 1 >= maxSteps
-    ) {
-      // this step reaches the maximum steps
-      return "FAILED";
-    } else if (pauseAfterStep != null && executedSteps + 1 === pauseAfterStep) {
-      // this step reaches the step to be paused at
-      return "PAUSED";
-    } else if (newResponse.status === "COMPLETE") {
+    if (newResponse.status === "COMPLETE") {
       return "DONE";
     } else if (newResponse.status === "FAILED") {
       return "FAILED";
-    }
-    {
+    } else {
+      if (executedSteps + 1 >= maxSteps) {
+        // this step reaches the maximum steps
+        return "FAILED";
+      } else if (
+        pauseAfterStep != null &&
+        executedSteps + 1 === pauseAfterStep
+      ) {
+        // this step reaches the step to be paused at
+        return "PAUSED";
+      }
       return status === "NOT_STARTED" ? "PAUSED" : status;
     }
   }
