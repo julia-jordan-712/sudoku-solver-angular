@@ -1,0 +1,12 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <mask id="circle-mask">
+      <circle cx="12" cy="12" r="12" fill="white" />
+    </mask>
+  </defs>
+  <g mask="url(#circle-mask)">
+    <rect width="24" height="8" x="0" y="0" fill="black"/>
+    <rect width="24" height="8" x="0" y="8" fill="red"/>
+    <rect width="24" height="8" x="0" y="16" fill="yellow"/>
+  </g>
+</svg>
