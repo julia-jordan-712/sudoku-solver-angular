@@ -1,5 +1,5 @@
-@if (type === "mat") {
-  <mat-icon class="icon">{{ icon }}</mat-icon>
+@if (type === "svg") {
+  <app-svg-icon class="icon" [icon]="icon"></app-svg-icon>
 } @else {
-  <img class="icon" [src]="'assets/icons/' + icon + '.svg'" />
+  <mat-icon class="icon">{{ icon }}</mat-icon>
 }
