@@ -1,12 +1,20 @@
-<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <mask id="circle-mask">
-      <circle cx="12" cy="12" r="12" fill="white" />
+      <circle cx="12" cy="12" r="10.5" fill="white" />
     </mask>
+    <filter id="shadow" color-interpolation-filters="sRGB">
+      <feDropShadow dx="-0.5" dy="-0.5" stdDeviation="0.5" flood-opacity="0.15"/>
+      <feDropShadow dx="-0.5" dy="0.5" stdDeviation="0.5" flood-opacity="0.15"/>
+      <feDropShadow dx="0.5" dy="-0.5" stdDeviation="0.5" flood-opacity="0.15"/>
+      <feDropShadow dx="0.5" dy="0.5" stdDeviation="0.5" flood-opacity="0.15"/>
+    </filter>
   </defs>
-  <g mask="url(#circle-mask)">
-    <rect width="24" height="8" x="0" y="0" fill="black"/>
-    <rect width="24" height="8" x="0" y="8" fill="red"/>
-    <rect width="24" height="8" x="0" y="16" fill="yellow"/>
+  <g filter="url(#shadow)">
+    <g mask="url(#circle-mask)">
+      <rect width="24" height="8" x="0" y="0" fill="black"/>
+      <rect width="24" height="8" x="0" y="8" fill="rgb(225, 0, 0)"/>
+      <rect width="24" height="8" x="0" y="16" fill="rgb(245, 245, 0)"/>
+    </g>
   </g>
 </svg>

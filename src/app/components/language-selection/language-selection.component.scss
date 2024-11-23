@@ -1,6 +1,20 @@
+$language-button-size: 24px;
+
 :host {
   display: flex;
   margin: 1em;
   gap: 0.5em;
-  flex-direction: column;
+}
+
+button {
+  height: unset;
+  width: unset;
+  color: unset;
+  padding: 0;
+  border: none;
+}
+
+app-icon {
+  width: $language-button-size;
+  height: $language-button-size;
 }
