@@ -1,0 +1,20 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="cut-top-and-bottom">
+      <rect width="24" height="15" x="0" y="4.5"/>
+    </clipPath>
+  </defs>
+  <rect width="24" height="15" x="0" y="4.5" fill="rgb(0, 0, 150)" />
+  <g clip-path="url(#cut-top-and-bottom)">
+    <rect width="24" height="3.35" x="0" y="2.5" fill="white" transform="skewY(32) translate(0,0.3)" />
+    <rect width="24" height="3.35" x="0" y="2.5" fill="white" transform="skewY(-32) translate(0,15.4)" />
+    <rect width="12" height="1" x="0" y="2.5" fill="rgb(220, 0, 0)" transform="skewY(32) translate(0,2)" />
+    <rect width="12" height="1" x="12" y="2.5" fill="rgb(220, 0, 0)" transform="skewY(32) translate(0,1)" />
+    <rect width="12" height="1" x="0" y="2.5" fill="rgb(220, 0, 0)" transform="skewY(-32) translate(0,17)" />
+    <rect width="12" height="1" x="12" y="2.5" fill="rgb(220, 0, 0)" transform="skewY(-32) translate(0,16)" />
+  </g>
+  <rect width="24" height="4.5" x="0" y="9.75" fill="white"/>
+  <rect width="4.5" height="15" x="9.75" y="4.5" fill="white"/>
+  <rect width="24" height="2.5" x="0" y="10.75" fill="rgb(220, 0, 0)"/>
+  <rect width="2.5" height="15" x="10.75" y="4.5" fill="rgb(220, 0, 0)"/>
+</svg>
