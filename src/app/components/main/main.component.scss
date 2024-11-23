@@ -27,11 +27,4 @@
   min-width: fit-content;
   flex-shrink: 1;
   border-left: $border;
-
-  .languages {
-    display: flex;
-    margin: 1em;
-    gap: 0.5em;
-    flex-direction: column;
-  }
 }
