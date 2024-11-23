@@ -9,7 +9,7 @@
   } @else {
     <div class="container invalid">
       <span class="bold">
-        <app-icon icon="report" type="mat"></app-icon>
+        <app-icon icon="error" type="svg"></app-icon>
         {{ "VERIFY.RESULT.INVALID" | translate }}
       </span>
       @for (error of verification.getErrors(); track error.key) {
