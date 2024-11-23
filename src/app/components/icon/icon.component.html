@@ -1,1 +1,5 @@
-<mat-icon><ng-content></ng-content></mat-icon>
+@if (type === "mat") {
+  <mat-icon class="icon">{{ icon }}</mat-icon>
+} @else {
+  <img class="icon" [src]="'assets/icons/' + icon + '.svg'" />
+}

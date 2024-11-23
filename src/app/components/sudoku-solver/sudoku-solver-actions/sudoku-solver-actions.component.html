@@ -5,7 +5,7 @@
   [title]="'SOLVER.ACTIONS.START' | translate"
   (click)="start()"
 >
-  <app-icon>play_arrow</app-icon>
+  <app-icon icon="play_arrow" type="mat"></app-icon>
 </button>
 <button
   id="pause"
@@ -14,7 +14,7 @@
   [title]="'SOLVER.ACTIONS.PAUSE' | translate"
   (click)="pause()"
 >
-  <app-icon>pause</app-icon>
+  <app-icon icon="pause" type="mat"></app-icon>
 </button>
 <button
   id="next"
@@ -23,7 +23,7 @@
   [title]="'SOLVER.ACTIONS.NEXT' | translate"
   (click)="next()"
 >
-  <app-icon>skip_next</app-icon>
+  <app-icon icon="skip_next" type="mat"></app-icon>
 </button>
 @if (canRestart$ | async) {
   <button
@@ -32,6 +32,6 @@
     [title]="'SOLVER.ACTIONS.RESTART' | translate"
     (click)="restart()"
   >
-    <app-icon>restart_alt</app-icon>
+    <app-icon icon="restart_alt" type="mat"></app-icon>
   </button>
 }

@@ -1,6 +1,6 @@
 @if (confirmed$ | async) {
   <button id="changeSettings" (click)="changeSettings()">
-    <app-icon>edit</app-icon>
+    <app-icon icon="edit" type="mat"></app-icon>
     {{ "SETTINGS.CHANGE" | translate }}
   </button>
 } @else {
@@ -39,7 +39,7 @@
     [disabled]="(confirmEnabled$ | async) === false"
     (click)="submit()"
   >
-    <app-icon>done</app-icon>
+    <app-icon icon="done" type="mat"></app-icon>
     {{ "SETTINGS.DONE" | translate }}
   </button>
 }
