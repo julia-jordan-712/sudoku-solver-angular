@@ -1,0 +1,9 @@
+<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="cut">
+      <rect width="20" height="20" x="5.5" y="5.5"/>
+    </clipPath>
+  </defs>
+  <path d="M6.5 22 v-16 q 0 -2 2 -2 h11 q 2 0 2 2 v16 q 0 2 -2 2 h-11 q -2 0 -2 -2 v-1 h2 q 0 1 1 1 h9 q 1 0 1 -1 v-14 q 0 -1 -1 -1 h-9 q -1 0 -1 1 v16"/>
+  <path d="M2.5 18 v-16 q 0 -2 2 -2 h11 v2 h-10 q -1 0 -1 1 v 15"/>
+</svg>
