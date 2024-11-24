@@ -1,3 +1,4 @@
+import { provideHttpClient } from "@angular/common/http";
 import { Type } from "@angular/core";
 import { CyChainable } from "@cypress/types/cy-chainable";
 import { CyComponentInput } from "@cypress/types/cy-component";
@@ -23,6 +24,7 @@ function mount<T>(
   config?: MountConfig<T>,
 ): CyChainable<MountResponse<T>> {
   const mountConfig: MountConfig<T> = { ...(config ?? {}) };
+
   mountConfig.imports = [
     ...(mountConfig.imports ?? []),
     TranslateTestingModule.withTranslations({
@@ -33,6 +35,13 @@ function mount<T>(
     }).withDefaultLanguage("en"),
   ];
   mountConfig.imports.push(module);
+
+  mountConfig.providers = [
+    // providing http client is necessary to be able to load SVG icons
+    provideHttpClient(),
+    ...(mountConfig.providers ?? []),
+  ];
+
   if (componentInput) {
     mountConfig.componentProperties = componentInput;
   }

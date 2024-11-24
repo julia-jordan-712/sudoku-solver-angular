@@ -1,4 +1,3 @@
-import { provideHttpClient } from "@angular/common/http";
 import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
@@ -22,7 +21,7 @@ describe(MainComponent.name, () => {
       {},
       {
         imports: appStoreImports,
-        providers: [...SOLVER_PROVIDERS, provideHttpClient()],
+        providers: [...SOLVER_PROVIDERS],
       },
     );
   });
