@@ -9,7 +9,7 @@ import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { AppActions } from "@app/state";
+import { AppActions } from "@app/state/app-state";
 import { createReducer, on } from "@ngrx/store";
 import { v4 as randomUUID } from "uuid";
 

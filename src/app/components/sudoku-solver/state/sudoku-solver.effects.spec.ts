@@ -12,7 +12,7 @@ import {
   SolverResponseStatus,
 } from "@app/core/solver/types/solver-response";
 import { SolverExecution } from "@app/shared/types/solver-execution";
-import { AppState } from "@app/state";
+import { AppState } from "@app/state/app-state";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";

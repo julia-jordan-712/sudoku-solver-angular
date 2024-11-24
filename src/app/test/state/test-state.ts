@@ -5,7 +5,7 @@ import { SudokuSolverReducer } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverState } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { AppState } from "@app/state";
+import { AppState } from "@app/state/app-state";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 
 export class TestState {

@@ -2,7 +2,7 @@ import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudok
 import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { AppState } from "@app/state";
+import { AppState } from "@app/state/app-state";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TestState } from "@app/test/state/test-state";
 

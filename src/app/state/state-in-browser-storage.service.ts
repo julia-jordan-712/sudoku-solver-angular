@@ -1,7 +1,7 @@
 import { inject, Injectable, SecurityContext } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Logger } from "@app/core/log/logger";
-import { AppActions, AppState } from "@app/state";
+import { AppActions, AppState } from "@app/state/app-state";
 import { Store } from "@ngrx/store";
 import { take } from "rxjs";
 

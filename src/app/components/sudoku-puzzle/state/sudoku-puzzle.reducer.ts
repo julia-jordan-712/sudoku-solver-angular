@@ -1,7 +1,7 @@
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
-import { AppActions } from "@app/state";
+import { AppActions } from "@app/state/app-state";
 import { createReducer, on } from "@ngrx/store";
 
 export class SudokuPuzzleReducer {
