@@ -22,7 +22,7 @@ export class SudokuPuzzleReducer {
     this.initialState,
     on(
       AppActions.init,
-      (_state, action): SudokuPuzzleState => action.state.sudokuPuzzle,
+      (_state, action): SudokuPuzzleState => ({ ...action.state.sudokuPuzzle }),
     ),
     on(
       SudokuPuzzleActions.changeSettings,

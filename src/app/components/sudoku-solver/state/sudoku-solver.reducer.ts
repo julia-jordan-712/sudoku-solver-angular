@@ -38,7 +38,15 @@ export class SudokuSolverReducer {
     this.initialState,
     on(
       AppActions.init,
-      (_state, action): SudokuSolverState => action.state.sudokuSolver,
+      (_state, action): SudokuSolverState => ({
+        ...action.state.sudokuSolver,
+        response: {
+          ...action.state.sudokuSolver.response,
+          branches: action.state.sudokuSolver.response.branches.map((branch) =>
+            SolverBranch.cloneBranch(branch),
+          ),
+        },
+      }),
     ),
     on(
       SudokuSolverActions.setInitialPuzzle,
