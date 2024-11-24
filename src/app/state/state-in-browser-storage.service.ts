@@ -17,14 +17,14 @@ export class StateInBrowserStorageService {
 
   setStateFromBrowser(): Promise<void> {
     const state = this.getItem<AppState>(this.STORAGE_KEY);
+    this.removeItem(this.STORAGE_KEY);
     if (state) {
       this.store.dispatch(AppActions.init({ state: state }));
-      this.removeItem(this.STORAGE_KEY);
       this.log.logInfo("State set from browser storage");
       return Promise.resolve();
     } else {
       this.log.logInfo("Could not read state from browser storage");
-      return Promise.reject();
+      return Promise.resolve();
     }
   }
 
