@@ -10,7 +10,9 @@ describe(SudokuPuzzleReducer.name, () => {
     it("should return the previous state", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      expect(SudokuPuzzleReducer.reducer(testState, {} as any)).toBe(testState);
+      expect(new SudokuPuzzleReducer().reducer(testState, {} as any)).toBe(
+        testState,
+      );
     });
   });
 
@@ -20,7 +22,7 @@ describe(SudokuPuzzleReducer.name, () => {
         it("should return the previous state", () => {
           const testState: SudokuPuzzleState =
             TestState.createTestSudokuPuzzleState();
-          expect(SudokuPuzzleReducer.reducer(testState, action)).toBe(
+          expect(new SudokuPuzzleReducer().reducer(testState, action)).toBe(
             testState,
           );
         });
@@ -35,7 +37,7 @@ describe(SudokuPuzzleReducer.name, () => {
       testState.isConfirmed = true;
       const action = SudokuPuzzleActions.changeSettings();
 
-      const result = SudokuPuzzleReducer.reducer(testState, action);
+      const result = new SudokuPuzzleReducer().reducer(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -53,7 +55,7 @@ describe(SudokuPuzzleReducer.name, () => {
         SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM;
       const action = SudokuPuzzleActions.clearSelectedOption();
 
-      const result = SudokuPuzzleReducer.reducer(testState, action);
+      const result = new SudokuPuzzleReducer().reducer(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -77,7 +79,7 @@ describe(SudokuPuzzleReducer.name, () => {
       testState.width = 2;
       const action = SudokuPuzzleActions.setSize({ height: 4, width: 4 });
 
-      const result = SudokuPuzzleReducer.reducer(testState, action);
+      const result = new SudokuPuzzleReducer().reducer(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -95,7 +97,7 @@ describe(SudokuPuzzleReducer.name, () => {
       testState.width = 2;
       const action = SudokuPuzzleActions.setSize({});
 
-      const result = SudokuPuzzleReducer.reducer(testState, action);
+      const result = new SudokuPuzzleReducer().reducer(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -115,7 +117,7 @@ describe(SudokuPuzzleReducer.name, () => {
         testState.sudoku = Puzzle4x4.INCOMPLETE_ALL_VALUES;
         const action = SudokuPuzzleActions.setSudoku({ sudoku: sudoku });
 
-        const result = SudokuPuzzleReducer.reducer(testState, action);
+        const result = new SudokuPuzzleReducer().reducer(testState, action);
 
         expect(result).toEqual({
           ...testState,
@@ -133,7 +135,7 @@ describe(SudokuPuzzleReducer.name, () => {
       testState.isConfirmed = false;
       const action = SudokuPuzzleActions.submitSettings();
 
-      const result = SudokuPuzzleReducer.reducer(testState, action);
+      const result = new SudokuPuzzleReducer().reducer(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -153,7 +155,7 @@ describe(SudokuPuzzleReducer.name, () => {
         option: SudokuPuzzleSelectionTestData.ITEMS[2],
       });
 
-      const result = SudokuPuzzleReducer.reducer(testState, action);
+      const result = new SudokuPuzzleReducer().reducer(testState, action);
 
       expect(result).toEqual({
         ...testState,

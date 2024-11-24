@@ -18,7 +18,9 @@ describe(SudokuSolverReducer.name, () => {
     it("should return the previous state", () => {
       const testState: SudokuSolverState =
         TestState.createTestSudokuSolverState();
-      expect(SudokuSolverReducer.reducer(testState, {} as any)).toBe(testState);
+      expect(new SudokuSolverReducer().reducer(testState, {} as any)).toBe(
+        testState,
+      );
     });
   });
 
@@ -30,7 +32,9 @@ describe(SudokuSolverReducer.name, () => {
       it("should return the previous state", () => {
         const testState: SudokuSolverState =
           TestState.createTestSudokuSolverState();
-        expect(SudokuSolverReducer.reducer(testState, action)).toBe(testState);
+        expect(new SudokuSolverReducer().reducer(testState, action)).toBe(
+          testState,
+        );
       });
     });
   });
@@ -45,7 +49,7 @@ describe(SudokuSolverReducer.name, () => {
         settings: { ...testState.settings, delay: 123 },
       };
 
-      const result = SudokuSolverReducer.reducer(testState, action);
+      const result = new SudokuSolverReducer().reducer(testState, action);
 
       expect(result).toEqual(expectedState);
       expect(result.settings.delay).not.toEqual(testState.settings.delay);
@@ -69,13 +73,13 @@ describe(SudokuSolverReducer.name, () => {
     });
 
     it("should set the puzzle to the value from the action", () => {
-      expect(SudokuSolverReducer.reducer(testState, action).puzzle).toEqual(
-        PuzzleExtreme.PUZZLE_7.puzzle,
-      );
+      expect(
+        new SudokuSolverReducer().reducer(testState, action).puzzle,
+      ).toEqual(PuzzleExtreme.PUZZLE_7.puzzle);
     });
 
     it("should adapt the response to the value from the action", () => {
-      const result: SudokuSolverState = SudokuSolverReducer.reducer(
+      const result: SudokuSolverState = new SudokuSolverReducer().reducer(
         testState,
         action,
       );
@@ -88,7 +92,7 @@ describe(SudokuSolverReducer.name, () => {
     });
 
     it("should reset the execution info", () => {
-      const result: SudokuSolverState = SudokuSolverReducer.reducer(
+      const result: SudokuSolverState = new SudokuSolverReducer().reducer(
         testState,
         action,
       );
@@ -97,9 +101,9 @@ describe(SudokuSolverReducer.name, () => {
     });
 
     it("should not change the settings", () => {
-      expect(SudokuSolverReducer.reducer(testState, action).settings).toEqual(
-        testState.settings,
-      );
+      expect(
+        new SudokuSolverReducer().reducer(testState, action).settings,
+      ).toEqual(testState.settings);
     });
   });
 
@@ -113,7 +117,7 @@ describe(SudokuSolverReducer.name, () => {
         settings: { ...testState.settings, maxSteps: 777 },
       };
 
-      const result = SudokuSolverReducer.reducer(testState, action);
+      const result = new SudokuSolverReducer().reducer(testState, action);
 
       expect(result).toEqual(expectedState);
       expect(result.settings.maxSteps).not.toEqual(testState.settings.maxSteps);
@@ -132,7 +136,7 @@ describe(SudokuSolverReducer.name, () => {
         settings: { ...testState.settings, highlightNumber: 4 },
       };
 
-      const result = SudokuSolverReducer.reducer(testState, action);
+      const result = new SudokuSolverReducer().reducer(testState, action);
 
       expect(result).toEqual(expectedState);
       expect(result.settings.highlightNumber).not.toEqual(
@@ -153,7 +157,7 @@ describe(SudokuSolverReducer.name, () => {
         settings: { ...testState.settings, pauseAfterStep: 987 },
       };
 
-      const result = SudokuSolverReducer.reducer(testState, action);
+      const result = new SudokuSolverReducer().reducer(testState, action);
 
       expect(result).toEqual(expectedState);
       expect(result.settings.pauseAfterStep).not.toEqual(
@@ -169,28 +173,28 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should clear the initial puzzle", () => {
       expect(
-        SudokuSolverReducer.reducer(testState, action).puzzle,
+        new SudokuSolverReducer().reducer(testState, action).puzzle,
       ).toBeUndefined();
     });
 
     it("should clear the response", () => {
       expectResponseToBeCleared(
-        SudokuSolverReducer.reducer(testState, action),
+        new SudokuSolverReducer().reducer(testState, action),
         testState,
       );
     });
 
     it("should clear the execution status", () => {
       expectExecutionInfoToBeReset(
-        SudokuSolverReducer.reducer(testState, action),
+        new SudokuSolverReducer().reducer(testState, action),
         testState,
       );
     });
 
     it("should keep the settings unchanged", () => {
-      expect(SudokuSolverReducer.reducer(testState, action).settings).toEqual(
-        testState.settings,
-      );
+      expect(
+        new SudokuSolverReducer().reducer(testState, action).settings,
+      ).toEqual(testState.settings);
     });
   });
 
@@ -202,7 +206,7 @@ describe(SudokuSolverReducer.name, () => {
 
       const action = SudokuSolverActions.solverPause();
 
-      expect(SudokuSolverReducer.reducer(testState, action)).toEqual({
+      expect(new SudokuSolverReducer().reducer(testState, action)).toEqual({
         ...testState,
         executionInfo: { ...testState.executionInfo, status: "PAUSED" },
       });
@@ -216,28 +220,28 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should clear the initial puzzle", () => {
       expect(
-        SudokuSolverReducer.reducer(testState, action).puzzle,
+        new SudokuSolverReducer().reducer(testState, action).puzzle,
       ).toBeUndefined();
     });
 
     it("should clear the response", () => {
       expectResponseToBeCleared(
-        SudokuSolverReducer.reducer(testState, action),
+        new SudokuSolverReducer().reducer(testState, action),
         testState,
       );
     });
 
     it("should clear the execution status", () => {
       expectExecutionInfoToBeReset(
-        SudokuSolverReducer.reducer(testState, action),
+        new SudokuSolverReducer().reducer(testState, action),
         testState,
       );
     });
 
     it("should keep the settings unchanged", () => {
-      expect(SudokuSolverReducer.reducer(testState, action).settings).toEqual(
-        testState.settings,
-      );
+      expect(
+        new SudokuSolverReducer().reducer(testState, action).settings,
+      ).toEqual(testState.settings);
     });
   });
 
@@ -249,22 +253,22 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should clear the execution status", () => {
       expectExecutionInfoToBeReset(
-        SudokuSolverReducer.reducer(testState, action),
+        new SudokuSolverReducer().reducer(testState, action),
         testState,
       );
     });
 
     it("should reset the response to the initial puzzle", () => {
-      const result = SudokuSolverReducer.reducer(testState, action);
+      const result = new SudokuSolverReducer().reducer(testState, action);
 
       expect(result.puzzle).toEqual(PuzzleHard.PUZZLE_3.puzzle);
       expectResponseToBeResetTo(PuzzleHard.PUZZLE_3.puzzle, result, testState);
     });
 
     it("should keep the settings unchanged", () => {
-      expect(SudokuSolverReducer.reducer(testState, action).settings).toEqual(
-        testState.settings,
-      );
+      expect(
+        new SudokuSolverReducer().reducer(testState, action).settings,
+      ).toEqual(testState.settings);
     });
   });
 
@@ -282,7 +286,7 @@ describe(SudokuSolverReducer.name, () => {
     it("should change the execution status", () => {
       expect(testState.executionInfo.status).not.toEqual("RUNNING");
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.solverStart(),
         ).executionInfo.status,
@@ -296,7 +300,7 @@ describe(SudokuSolverReducer.name, () => {
         lastStep: null,
       });
 
-      const result = SudokuSolverReducer.reducer(
+      const result = new SudokuSolverReducer().reducer(
         testState,
         SudokuSolverActions.solverStart(),
       );
@@ -307,7 +311,7 @@ describe(SudokuSolverReducer.name, () => {
     });
 
     it("should not change the execution info regarding branches and steps", () => {
-      const result = SudokuSolverReducer.reducer(
+      const result = new SudokuSolverReducer().reducer(
         testState,
         SudokuSolverActions.solverStart(),
       );
@@ -323,7 +327,7 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should keep the settings unchanged", () => {
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.solverStart(),
         ).settings,
@@ -332,7 +336,7 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should keep the puzzle unchanged", () => {
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.solverStart(),
         ).puzzle,
@@ -341,7 +345,7 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should keep the response unchanged", () => {
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.solverStart(),
         ).response,
@@ -364,7 +368,7 @@ describe(SudokuSolverReducer.name, () => {
       it(`should not change the execution status ${executionStatus}`, () => {
         testState.executionInfo.status = executionStatus;
         expect(
-          SudokuSolverReducer.reducer(
+          new SudokuSolverReducer().reducer(
             testState,
             SudokuSolverActions.stepExecute(),
           ).executionInfo.status,
@@ -375,7 +379,7 @@ describe(SudokuSolverReducer.name, () => {
     it("should start the timer - if it is not started yet", () => {
       testState.executionInfo.time.started = null;
 
-      const result = SudokuSolverReducer.reducer(
+      const result = new SudokuSolverReducer().reducer(
         testState,
         SudokuSolverActions.stepExecute(),
       );
@@ -388,7 +392,7 @@ describe(SudokuSolverReducer.name, () => {
     it("should leave the timer unchanged - if it is started", () => {
       testState.executionInfo.time.started = 123456;
 
-      const result = SudokuSolverReducer.reducer(
+      const result = new SudokuSolverReducer().reducer(
         testState,
         SudokuSolverActions.stepExecute(),
       );
@@ -399,7 +403,7 @@ describe(SudokuSolverReducer.name, () => {
     });
 
     it("should not change the execution info regarding branches and steps", () => {
-      const result = SudokuSolverReducer.reducer(
+      const result = new SudokuSolverReducer().reducer(
         testState,
         SudokuSolverActions.stepExecute(),
       );
@@ -415,7 +419,7 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should keep the settings unchanged", () => {
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.stepExecute(),
         ).settings,
@@ -424,7 +428,7 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should keep the puzzle unchanged", () => {
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.stepExecute(),
         ).puzzle,
@@ -433,7 +437,7 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should keep the response unchanged", () => {
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.stepExecute(),
         ).response,
@@ -463,7 +467,7 @@ describe(SudokuSolverReducer.name, () => {
         branches: [initialBranch, currentBranch],
       };
 
-      const result = SudokuSolverReducer.reducer(
+      const result = new SudokuSolverReducer().reducer(
         testState,
         SudokuSolverActions.stepResult({
           response: newResponse,
@@ -485,7 +489,7 @@ describe(SudokuSolverReducer.name, () => {
           };
 
           expect(
-            SudokuSolverReducer.reducer(
+            new SudokuSolverReducer().reducer(
               testState,
               SudokuSolverActions.stepResult({
                 response: emptySolverResponse,
@@ -505,7 +509,7 @@ describe(SudokuSolverReducer.name, () => {
           };
 
           expect(
-            SudokuSolverReducer.reducer(
+            new SudokuSolverReducer().reducer(
               testState,
               SudokuSolverActions.stepResult({
                 response: emptySolverResponse,
@@ -527,7 +531,7 @@ describe(SudokuSolverReducer.name, () => {
           };
 
           expect(
-            SudokuSolverReducer.reducer(
+            new SudokuSolverReducer().reducer(
               testState,
               SudokuSolverActions.stepResult({
                 response: emptySolverResponse,
@@ -549,7 +553,7 @@ describe(SudokuSolverReducer.name, () => {
           };
 
           expect(
-            SudokuSolverReducer.reducer(
+            new SudokuSolverReducer().reducer(
               testState,
               SudokuSolverActions.stepResult({
                 response: emptySolverResponse,
@@ -573,13 +577,14 @@ describe(SudokuSolverReducer.name, () => {
       it(`should set the execution status to ${executionStatus} from the action`, () => {
         testState.executionInfo.status = "NOT_STARTED";
         expect(
-          SudokuSolverReducer.reducer(testState, action).executionInfo.status,
+          new SudokuSolverReducer().reducer(testState, action).executionInfo
+            .status,
         ).toEqual(executionStatus);
       });
 
       it(`should not change the execution id (for execution status ${executionStatus})`, () => {
         expect(
-          SudokuSolverReducer.reducer(testState, action).executionInfo.id,
+          new SudokuSolverReducer().reducer(testState, action).executionInfo.id,
         ).toEqual(testState.executionInfo.id);
       });
     });
@@ -587,7 +592,7 @@ describe(SudokuSolverReducer.name, () => {
     it("should increase the amount of steps by one", () => {
       testState.executionInfo.stepsExecuted = 8;
 
-      const result = SudokuSolverReducer.reducer(
+      const result = new SudokuSolverReducer().reducer(
         testState,
         SudokuSolverActions.stepResult({
           response: emptySolverResponse,
@@ -602,7 +607,7 @@ describe(SudokuSolverReducer.name, () => {
     it("should increase the amount of branches by the new created branches from the response", () => {
       testState.executionInfo.amountOfBranches = 4;
 
-      const result = SudokuSolverReducer.reducer(
+      const result = new SudokuSolverReducer().reducer(
         testState,
         SudokuSolverActions.stepResult({
           response: emptySolverResponse,
@@ -616,7 +621,7 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should keep the puzzle unchanged", () => {
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.stepResult({
             response: emptySolverResponse,
@@ -629,7 +634,7 @@ describe(SudokuSolverReducer.name, () => {
 
     it("should keep the settings unchanged", () => {
       expect(
-        SudokuSolverReducer.reducer(
+        new SudokuSolverReducer().reducer(
           testState,
           SudokuSolverActions.stepResult({
             response: emptySolverResponse,

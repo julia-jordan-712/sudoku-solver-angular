@@ -9,13 +9,14 @@ import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { createFeature, createReducer, on } from "@ngrx/store";
+import { AppActions } from "@app/state";
+import { createReducer, on } from "@ngrx/store";
 import { v4 as randomUUID } from "uuid";
 
 export class SudokuSolverReducer {
   public static readonly featureKey = "sudokuSolver";
 
-  public static readonly initialState: SudokuSolverState = {
+  public readonly initialState: SudokuSolverState = {
     executionInfo: {
       id: randomUUID(),
       amountOfBranches: 1,
@@ -24,7 +25,7 @@ export class SudokuSolverReducer {
       time: { started: null, stopped: null, lastStep: null },
     },
     puzzle: undefined,
-    response: SudokuSolverReducer.createInitialSolverResponse(),
+    response: this.createInitialSolverResponse(),
     settings: {
       delay: 0,
       highlightNumber: null,
@@ -33,40 +34,44 @@ export class SudokuSolverReducer {
     },
   };
 
-  public static readonly reducer = createReducer(
-    SudokuSolverReducer.initialState,
+  public readonly reducer = createReducer(
+    this.initialState,
+    on(
+      AppActions.init,
+      (_state, action): SudokuSolverState => action.state.sudokuSolver,
+    ),
     on(
       SudokuSolverActions.setInitialPuzzle,
       (state, action): SudokuSolverState =>
-        SudokuSolverReducer.resetWithPuzzleAndResponse(
+        this.resetWithPuzzleAndResponse(
           state,
           action.puzzle,
-          SudokuSolverReducer.createInitialSolverResponse(action.puzzle),
+          this.createInitialSolverResponse(action.puzzle),
         ),
     ),
     on(
       SudokuSolverActions.setDelay,
       (state, action): SudokuSolverState =>
-        SudokuSolverReducer.toNewSettings(state, { delay: action.delay }),
+        this.toNewSettings(state, { delay: action.delay }),
     ),
     on(
       SudokuSolverActions.setMaximumSteps,
       (state, action): SudokuSolverState =>
-        SudokuSolverReducer.toNewSettings(state, {
+        this.toNewSettings(state, {
           maxSteps: Math.max(0, action.maxSteps),
         }),
     ),
     on(
       SudokuSolverActions.setNumberToBeHighlighted,
       (state, action): SudokuSolverState =>
-        SudokuSolverReducer.toNewSettings(state, {
+        this.toNewSettings(state, {
           highlightNumber: action.highlight,
         }),
     ),
     on(
       SudokuSolverActions.setStepToBePausedAfter,
       (state, action): SudokuSolverState =>
-        SudokuSolverReducer.toNewSettings(state, {
+        this.toNewSettings(state, {
           pauseAfterStep:
             action.pauseStep != null ? Math.max(0, action.pauseStep) : null,
         }),
@@ -75,41 +80,39 @@ export class SudokuSolverReducer {
       SudokuSolverActions.solverReset,
       SudokuSolverActions.solverCancel,
       (state): SudokuSolverState =>
-        SudokuSolverReducer.resetWithPuzzleAndResponse(
+        this.resetWithPuzzleAndResponse(
           state,
-          SudokuSolverReducer.initialState.puzzle,
-          SudokuSolverReducer.initialState.response,
+          this.initialState.puzzle,
+          this.initialState.response,
         ),
     ),
     on(
       SudokuSolverActions.solverRestart,
       (state): SudokuSolverState =>
-        SudokuSolverReducer.resetWithPuzzleAndResponse(
+        this.resetWithPuzzleAndResponse(
           state,
           state.puzzle,
-          SudokuSolverReducer.createInitialSolverResponse(
-            state.puzzle ?? undefined,
-          ),
+          this.createInitialSolverResponse(state.puzzle ?? undefined),
         ),
     ),
     on(
       SudokuSolverActions.solverStart,
       (state): SudokuSolverState =>
-        SudokuSolverReducer.toNewExecutionInfo(state, {
+        this.toNewExecutionInfo(state, {
           status: "RUNNING",
         }),
     ),
     on(
       SudokuSolverActions.solverPause,
       (state): SudokuSolverState =>
-        SudokuSolverReducer.toNewExecutionInfo(state, {
+        this.toNewExecutionInfo(state, {
           status: "PAUSED",
         }),
     ),
     on(
       SudokuSolverActions.stepExecute,
       (state): SudokuSolverState =>
-        SudokuSolverReducer.toNewExecutionInfo(state, {
+        this.toNewExecutionInfo(state, {
           time: {
             ...state.executionInfo.time,
             started: state.executionInfo.time.started ?? Date.now(),
@@ -141,9 +144,7 @@ export class SudokuSolverReducer {
     ),
   );
 
-  private static createInitialSolverResponse(
-    puzzle?: SudokuGrid,
-  ): SolverResponse {
+  private createInitialSolverResponse(puzzle?: SudokuGrid): SolverResponse {
     return {
       branches: puzzle ? [SolverBranch.createInitialBranch(puzzle)] : [],
       status: "UNKNOWN",
@@ -151,14 +152,14 @@ export class SudokuSolverReducer {
     };
   }
 
-  private static resetWithPuzzleAndResponse(
+  private resetWithPuzzleAndResponse(
     state: SudokuSolverState,
     puzzle: Nullable<SudokuGrid>,
     response: SolverResponse,
   ): SudokuSolverState {
     return {
       executionInfo: {
-        ...SudokuSolverReducer.initialState.executionInfo,
+        ...this.initialState.executionInfo,
         id: randomUUID(),
       },
       puzzle: puzzle ? SudokuGridUtil.clone(puzzle) : undefined,
@@ -167,7 +168,7 @@ export class SudokuSolverReducer {
     };
   }
 
-  private static toNewExecutionInfo(
+  private toNewExecutionInfo(
     state: SudokuSolverState,
     fromAction: Partial<SudokuSolverStateExecutionInfo>,
   ): SudokuSolverState {
@@ -177,15 +178,10 @@ export class SudokuSolverReducer {
     };
   }
 
-  private static toNewSettings(
+  private toNewSettings(
     state: SudokuSolverState,
     fromAction: Partial<SudokuSolverStateSettings>,
   ): SudokuSolverState {
     return { ...state, settings: { ...state.settings, ...fromAction } };
   }
 }
-
-export const sudokuSolverFeature = createFeature({
-  name: SudokuSolverReducer.featureKey,
-  reducer: SudokuSolverReducer.reducer,
-});

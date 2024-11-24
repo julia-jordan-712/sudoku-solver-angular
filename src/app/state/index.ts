@@ -2,8 +2,20 @@ import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-
 import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { SudokuSolverReducer } from "@app/components/sudoku-solver/state/sudoku-solver.reducer";
 import { SudokuSolverState } from "@app/components/sudoku-solver/state/sudoku-solver.state";
-import { ActionReducerMap, MetaReducer } from "@ngrx/store";
+import {
+  ActionReducerMap,
+  createActionGroup,
+  MetaReducer,
+  props,
+} from "@ngrx/store";
 import { environment } from "src/environments/environment";
+
+export const AppActions = createActionGroup({
+  source: "Sudoku",
+  events: {
+    init: props<{ state: AppState }>(),
+  },
+});
 
 export interface AppState {
   [SudokuPuzzleReducer.featureKey]: SudokuPuzzleState;
@@ -11,8 +23,8 @@ export interface AppState {
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-  [SudokuPuzzleReducer.featureKey]: SudokuPuzzleReducer.reducer,
-  [SudokuSolverReducer.featureKey]: SudokuSolverReducer.reducer,
+  [SudokuPuzzleReducer.featureKey]: new SudokuPuzzleReducer().reducer,
+  [SudokuSolverReducer.featureKey]: new SudokuSolverReducer().reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = environment.production
