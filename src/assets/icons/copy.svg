@@ -1,4 +1,10 @@
-<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M6.5 22 v-16 q 0 -2 2 -2 h11 q 2 0 2 2 v16 q 0 2 -2 2 h-11 q -2 0 -2 -2 v-1 h2 q 0 1 1 1 h9 q 1 0 1 -1 v-14 q 0 -1 -1 -1 h-9 q -1 0 -1 1 v16"/>
-  <path d="M2.5 18 v-16 q 0 -2 2 -2 h11 v2 h-10 q -1 0 -1 1 v 15"/>
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <mask id="cut">
+      <rect x="0" y="0" width="16" height="16" fill="white" />
+      <rect width="10" height="14" x="3.5" y="2" rx="1" fill="black"/>
+    </mask>
+  </defs>
+  <rect width="9" height="12" x="5" y="3.5" rx="1" fill="transparent" stroke="currentColor"/>
+  <rect width="9" height="12" x="2" y="0.5" rx="1" fill="transparent" stroke="currentColor" mask="url(#cut)"/>
 </svg>
