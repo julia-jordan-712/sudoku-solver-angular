@@ -54,6 +54,7 @@ export class SudokuGridCellViewModel implements ClipboardElement {
       readonly verificationResult: Nullable<VerificationResult>;
       readonly widthAndHeight: number;
     },
+    readonly previous?: SudokuGridCell,
   ) {}
 
   isDuplicate(): boolean {

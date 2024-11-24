@@ -34,9 +34,12 @@ export interface SudokuSolverStateSettings {
   pauseAfterStep: Nullable<number>;
 }
 
+export const SudokuSolverStateKey = "sudokuSolver";
+
 export interface SudokuSolverState {
   executionInfo: SudokuSolverStateExecutionInfo;
   puzzle: Nullable<SudokuGrid>;
   response: SolverResponse;
   settings: SudokuSolverStateSettings;
+  previousCurrentGrid: Nullable<SudokuGrid>;
 }

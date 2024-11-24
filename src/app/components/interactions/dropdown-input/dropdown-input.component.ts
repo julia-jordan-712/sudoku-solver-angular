@@ -34,13 +34,19 @@ export class DropdownInputComponent<T extends DropdownInputOption>
   protected _selectedItem: Nullable<T>;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["selectedItem"]) {
-      this._selectedItem = this.selectedItem;
+    if (changes["selectedItem"] || changes["items"]) {
+      const selectedItem = this.selectedItem;
+      if (selectedItem) {
+        this._selectedItem = this.items?.filter(
+          (item) => item.id === selectedItem.id,
+        )?.[0];
+      } else {
+        this._selectedItem = null;
+      }
     }
   }
 
   onChange(option: T): void {
-    this._selectedItem = option;
     this.selected.emit(option);
   }
 }

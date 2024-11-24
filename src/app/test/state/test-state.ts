@@ -1,25 +1,36 @@
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
-import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
-import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
-import { SudokuSolverReducer } from "@app/components/sudoku-solver/state/sudoku-solver.reducer";
-import { SudokuSolverState } from "@app/components/sudoku-solver/state/sudoku-solver.state";
+import {
+  SudokuPuzzleState,
+  SudokuPuzzleStateKey,
+} from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
+import {
+  SudokuSolverState,
+  SudokuSolverStateKey,
+} from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { AppState } from "@app/state";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { AppState } from "@app/state/app-state";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 
 export class TestState {
   public static createEmptyAppState(): AppState {
     return {
-      [SudokuPuzzleReducer.featureKey]: this.createEmptySudokuPuzzleState(),
-      [SudokuSolverReducer.featureKey]: this.createEmptySudokuSolverState(),
+      [SudokuPuzzleStateKey]: this.createEmptySudokuPuzzleState(),
+      [SudokuSolverStateKey]: this.createEmptySudokuSolverState(),
     };
   }
 
-  public static createTestAppState(): AppState {
+  public static createTestAppState(
+    currentGrid?: SudokuGrid,
+    previousGrid?: SudokuGrid,
+  ): AppState {
     return {
-      [SudokuPuzzleReducer.featureKey]: this.createTestSudokuPuzzleState(),
-      [SudokuSolverReducer.featureKey]: this.createTestSudokuSolverState(),
+      [SudokuPuzzleStateKey]: this.createTestSudokuPuzzleState(),
+      [SudokuSolverStateKey]: this.createTestSudokuSolverState(
+        currentGrid,
+        previousGrid,
+      ),
     };
   }
 
@@ -54,6 +65,7 @@ export class TestState {
         status: "UNKNOWN",
         stepId: "",
       },
+      previousCurrentGrid: undefined,
     };
   }
 
@@ -73,7 +85,8 @@ export class TestState {
   }
 
   public static createTestSudokuSolverState(
-    grid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
+    currentGrid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
+    previousGrid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
   ): SudokuSolverState {
     return {
       executionInfo: {
@@ -86,12 +99,13 @@ export class TestState {
       settings: {
         ...this.createEmptySudokuSolverState().settings,
       },
-      puzzle: grid,
+      puzzle: currentGrid,
       response: {
-        branches: [SolverBranch.createInitialBranch(grid)],
+        branches: [SolverBranch.createInitialBranch(currentGrid)],
         status: "INCOMPLETE",
         stepId: "test-step-id",
       },
+      previousCurrentGrid: SudokuGridUtil.clone(previousGrid),
     };
   }
 }

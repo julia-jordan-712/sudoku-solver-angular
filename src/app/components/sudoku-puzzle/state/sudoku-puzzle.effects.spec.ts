@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
-import { AppState } from "@app/state";
+import { AppState } from "@app/state/app-state";
 import { TestState } from "@app/test/state/test-state";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { provideMockStore } from "@ngrx/store/testing";

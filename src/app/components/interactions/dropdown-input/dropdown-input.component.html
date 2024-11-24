@@ -1,5 +1,9 @@
 <label for="inputField">{{ label }}:</label>
-<select [ngModel]="selectedItem" (ngModelChange)="onChange($event)" #inputField>
+<select
+  [(ngModel)]="_selectedItem"
+  (ngModelChange)="onChange($event)"
+  #inputField
+>
   @for (item of items; track item.id) {
     <option [ngValue]="item">
       @if (item.name && item.name !== "") {

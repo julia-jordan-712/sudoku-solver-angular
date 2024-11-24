@@ -35,9 +35,21 @@ export class SudokuGridCellComponentService {
     return this.changed$.asObservable();
   }
 
-  setCell(cell: SudokuGridCell, highlightChangedCells: boolean): void {
+  setCell(
+    cell: SudokuGridCell,
+    highlightChangedCells: boolean,
+    previous?: SudokuGridCell,
+  ): void {
     this.previousValue = this.value;
     this.previousValues = this.values;
+
+    if (previous) {
+      if (isArray(previous)) {
+        this.previousValues = previous;
+      } else if (isNotArray(previous)) {
+        this.previousValue = previous;
+      }
+    }
 
     if (isArray(cell)) {
       this.values = cell;

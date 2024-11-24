@@ -1,8 +1,9 @@
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
+import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { AppState } from "@app/state";
+import { AppState } from "@app/state/app-state";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TestState } from "@app/test/state/test-state";
 
@@ -108,23 +109,34 @@ describe("SudokuPuzzle Selectors", () => {
   });
 
   describe("sudoku view model", () => {
-    it("should have correct max value in each cell", async () => {
+    it("should have correct max value in each cell", () => {
       const testState = createTestStateWithGrid(Puzzle4x4.EMPTY);
 
-      const viewModel: SudokuGridViewModel =
+      const viewModel: Nullable<SudokuGridViewModel> =
         SudokuPuzzleSelectors.selectViewModel(testState)!;
 
-      viewModel.rows
+      viewModel?.rows
         .flatMap((row) => row.cells.map((cell) => cell.data.maxValue))
         .forEach((maxValue) => expect(maxValue).toEqual(4));
     });
 
-    it("should NOT highlight changed cells", async () => {
+    it("should NOT highlight changed cells", () => {
       expect(
         SudokuPuzzleSelectors.selectViewModel(
           createTestStateWithGrid(Puzzle4x4.EMPTY),
         )?.data.highlightChangedCells,
       ).toBeFalse();
+    });
+
+    it("should NOT contain information about the previous grid", () => {
+      const testState = createTestStateWithGrid(Puzzle4x4.COMPLETE);
+
+      const viewModel: Nullable<SudokuGridViewModel> =
+        SudokuPuzzleSelectors.selectViewModel(testState)!;
+
+      viewModel?.rows
+        .flatMap((row) => row.cells.map((cell) => cell.previous))
+        .forEach((previous) => expect(previous).toBeUndefined());
     });
   });
 

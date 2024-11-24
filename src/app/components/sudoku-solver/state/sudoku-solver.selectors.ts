@@ -1,7 +1,7 @@
-import { SudokuSolverReducer } from "@app/components/sudoku-solver/state/sudoku-solver.reducer";
 import {
   SudokuSolverState,
   SudokuSolverStateExecutionInfo,
+  SudokuSolverStateKey,
   SudokuSolverStateSettings,
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
@@ -10,12 +10,12 @@ import { VerifySolution } from "@app/core/verification/services/verify-solution"
 import { I18nKey } from "@app/shared/types/i18n-key";
 import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
+import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
-const selectState = createFeatureSelector<SudokuSolverState>(
-  SudokuSolverReducer.featureKey,
-);
+const selectState =
+  createFeatureSelector<SudokuSolverState>(SudokuSolverStateKey);
 
 const selectExecutionInfo = createSelector(
   selectState,
@@ -25,6 +25,11 @@ const selectExecutionInfo = createSelector(
 const selectResponse = createSelector(
   selectState,
   (state: SudokuSolverState) => state.response,
+);
+
+const selectPreviousGrid = createSelector(
+  selectState,
+  (state: SudokuSolverState) => state.previousCurrentGrid,
 );
 
 const selectInitialPuzzle = createSelector(
@@ -163,16 +168,26 @@ const selectTimeElapsedSeconds = createSelector(
 const selectCurrentBranchViewModel = createSelector(
   selectCurrentResponseBranch,
   selectExecutionId,
-  (branch: Nullable<SolverBranch>, id: string) =>
+  selectPreviousGrid,
+  (
+    branch: Nullable<SolverBranch>,
+    id: string,
+    previousGrid: Nullable<SudokuGrid>,
+  ) =>
     branch != null
-      ? SudokuGridViewModelConverter.createViewModelFromGrid(branch.grid, id, {
-          branchInfo: { id: branch.getId(), isCurrent: true },
-          verificationResult: new VerifySolution().verify(branch.grid, {
-            allowEmptyCells: false,
-            size: branch.grid.length,
-          }),
-          highlightChangedCells: true,
-        })
+      ? SudokuGridViewModelConverter.createViewModelFromGrid(
+          branch.grid,
+          id,
+          {
+            branchInfo: { id: branch.getId(), isCurrent: true },
+            verificationResult: new VerifySolution().verify(branch.grid, {
+              allowEmptyCells: false,
+              size: branch.grid.length,
+            }),
+            highlightChangedCells: true,
+          },
+          previousGrid ?? undefined,
+        )
       : null,
 );
 
