@@ -15,7 +15,7 @@ export class CyIcon extends CySelectable<HTMLElement> {
 
   private static tagSelector(icon: string): string {
     return icon
-      ? `${CyIcon.hostSelector}:contains(${icon})`
+      ? `${CyIcon.hostSelector}[data-cy='${icon}']`
       : CyIcon.hostSelector;
   }
 }

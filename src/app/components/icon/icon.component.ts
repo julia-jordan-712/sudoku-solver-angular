@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, HostBinding, Input } from "@angular/core";
 
 @Component({
   selector: "app-icon",
@@ -6,6 +6,7 @@ import { Component, Input } from "@angular/core";
   styleUrls: ["./icon.component.scss"],
 })
 export class IconComponent {
+  @HostBinding("attr.data-cy")
   @Input({ required: true })
   icon: string;
 
