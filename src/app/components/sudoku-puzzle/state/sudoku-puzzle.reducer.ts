@@ -5,8 +5,6 @@ import { AppActions } from "@app/state/app-state";
 import { createReducer, on } from "@ngrx/store";
 
 export class SudokuPuzzleReducer {
-  public static readonly featureKey = "sudokuPuzzle";
-
   public readonly initialState: SudokuPuzzleState = {
     isConfirmed: false,
     sudoku: SudokuPuzzleSelectionTestData.ITEMS?.[0].grid,

@@ -6,6 +6,8 @@ export interface SudokuDropdownSelectionItem extends DropdownInputOption {
   grid: SudokuGrid | undefined;
 }
 
+export const SudokuPuzzleStateKey = "sudokuPuzzle";
+
 export interface SudokuPuzzleState {
   isConfirmed: boolean;
   height: Nullable<number>;

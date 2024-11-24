@@ -1,7 +1,7 @@
-import { SudokuSolverReducer } from "@app/components/sudoku-solver/state/sudoku-solver.reducer";
 import {
   SudokuSolverState,
   SudokuSolverStateExecutionInfo,
+  SudokuSolverStateKey,
   SudokuSolverStateSettings,
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
@@ -14,9 +14,8 @@ import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
-const selectState = createFeatureSelector<SudokuSolverState>(
-  SudokuSolverReducer.featureKey,
-);
+const selectState =
+  createFeatureSelector<SudokuSolverState>(SudokuSolverStateKey);
 
 const selectExecutionInfo = createSelector(
   selectState,

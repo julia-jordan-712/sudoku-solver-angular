@@ -17,8 +17,6 @@ import { createReducer, on } from "@ngrx/store";
 import { v4 as randomUUID } from "uuid";
 
 export class SudokuSolverReducer {
-  public static readonly featureKey = "sudokuSolver";
-
   public readonly initialState: SudokuSolverState = {
     executionInfo: {
       id: randomUUID(),
