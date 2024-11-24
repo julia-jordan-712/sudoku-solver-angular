@@ -21,7 +21,7 @@ describe(MainComponent.name, () => {
       {},
       {
         imports: appStoreImports,
-        providers: SOLVER_PROVIDERS,
+        providers: [...SOLVER_PROVIDERS],
       },
     );
   });

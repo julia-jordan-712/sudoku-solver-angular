@@ -1,0 +1,10 @@
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <mask id="exclamation-mark">
+      <rect x="0" y="0" width="16" height="16" fill="white" />
+      <circle cx="8" cy="13.5" r="1.2" fill="black" />
+      <rect x="7" y="4.5" width="2" height="7" rx="0.5" fill="black" />
+    </mask>
+  </defs>
+  <polygon points="0,16 8,0 16,16" fill="currentColor" mask="url(#exclamation-mark)"/>
+</svg>

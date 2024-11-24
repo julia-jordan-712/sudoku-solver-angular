@@ -37,7 +37,7 @@ export class CySudokuVerification extends CySelectable {
 
   shouldBeInvalid(...messages: string[]): void {
     this.invalid.get().should("be.visible");
-    CyIcon.find(this.invalid.get(), "report").should("be.visible");
+    CyIcon.find(this.invalid.get(), "error").should("be.visible");
     messages.forEach((message: string) => {
       this.invalid.get().should("contain.text", message);
     });

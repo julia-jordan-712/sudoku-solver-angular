@@ -1,0 +1,10 @@
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <mask id="cut">
+      <rect x="0" y="0" width="16" height="16" fill="white" />
+      <rect width="10" height="14" x="3.5" y="2" rx="1" fill="black"/>
+    </mask>
+  </defs>
+  <rect width="9" height="12" x="5" y="3.5" rx="1" fill="transparent" stroke="currentColor"/>
+  <rect width="9" height="12" x="2" y="0.5" rx="1" fill="transparent" stroke="currentColor" mask="url(#cut)"/>
+</svg>
