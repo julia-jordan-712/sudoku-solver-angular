@@ -9,6 +9,6 @@ export class IconComponent {
   @Input({ required: true })
   icon: string;
 
-  @Input({ required: true })
-  type: "mat" | "svg";
+  @Input()
+  type: "mat" | "svg" = "svg";
 }

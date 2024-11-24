@@ -2,14 +2,14 @@
   @if (verification.isValid()) {
     <div class="container valid">
       <span class="bold">
-        <app-icon icon="check_circle" type="svg"></app-icon>
+        <app-icon icon="check_circle"></app-icon>
         {{ "VERIFY.RESULT.VALID" | translate }}
       </span>
     </div>
   } @else {
     <div class="container invalid">
       <span class="bold">
-        <app-icon icon="error" type="svg"></app-icon>
+        <app-icon icon="error"></app-icon>
         {{ "VERIFY.RESULT.INVALID" | translate }}
       </span>
       @for (error of verification.getErrors(); track error.key) {
