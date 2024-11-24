@@ -39,6 +39,7 @@ export class StateInBrowserStorageService {
   }
 
   storeStateInBrowser(): void {
+    // eslint-disable-next-line @ngrx/no-store-subscription
     this.store.pipe(take(1)).subscribe((state) => {
       this.log.logInfo("Storing state in browser");
       this.setItem(this.STATE_STORAGE_KEY, state);

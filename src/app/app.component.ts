@@ -13,8 +13,8 @@ export class AppComponent {
     StateInBrowserStorageService,
   );
 
-  @HostListener("window:beforeunload", ["$event"])
-  beforeunloadHandler(_event: Event): void {
+  @HostListener("window:beforeunload")
+  beforeunloadHandler(): void {
     this.storage.storeStateInBrowser();
   }
 
@@ -22,7 +22,7 @@ export class AppComponent {
     this.initializeI18n();
   }
 
-  private initializeI18n() {
+  private initializeI18n(): void {
     this.translate.setDefaultLang("en");
     this.translate.use("en");
   }
