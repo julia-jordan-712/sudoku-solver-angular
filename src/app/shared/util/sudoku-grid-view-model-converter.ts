@@ -16,6 +16,7 @@ export class SudokuGridViewModelConverter {
     grid: SudokuGrid,
     id: string,
     data: SudokuGridViewModel["data"],
+    previous?: SudokuGrid,
   ): SudokuGridViewModel {
     const branchId: string | undefined = data.branchInfo?.isCurrent
       ? "CURRENT"
@@ -23,7 +24,12 @@ export class SudokuGridViewModelConverter {
     const viewModelId: string = [id, branchId].filter(isDefined).join("_");
     return new SudokuGridViewModel(
       viewModelId,
-      SudokuGridViewModelConverter.createViewModelsFromRows(grid, id, data),
+      SudokuGridViewModelConverter.createViewModelsFromRows(
+        grid,
+        id,
+        data,
+        previous,
+      ),
       data,
     );
   }
@@ -32,6 +38,7 @@ export class SudokuGridViewModelConverter {
     rows: SudokuGridRow[],
     id: string,
     data: SudokuGridViewModel["data"],
+    previous?: SudokuGridRow[],
   ): SudokuGridRowViewModel[] {
     return rows.map((row, index) =>
       SudokuGridViewModelConverter.createViewModelsFromRow(
@@ -39,6 +46,7 @@ export class SudokuGridViewModelConverter {
         id,
         index,
         data,
+        previous?.[index],
       ),
     );
   }
@@ -48,6 +56,7 @@ export class SudokuGridViewModelConverter {
     id: string,
     index: number,
     data: SudokuGridViewModel["data"],
+    previous?: SudokuGridRow,
   ): SudokuGridRowViewModel {
     return new SudokuGridRowViewModel(
       `${id}_row-${index}`,
@@ -56,6 +65,7 @@ export class SudokuGridViewModelConverter {
         id,
         index,
         data,
+        previous,
       ),
       data,
     );
@@ -66,6 +76,7 @@ export class SudokuGridViewModelConverter {
     id: string,
     rowIndex: number,
     data: SudokuGridViewModel["data"],
+    previous?: SudokuGridCell[],
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
@@ -80,6 +91,7 @@ export class SudokuGridViewModelConverter {
         size,
         rowIndex,
         index,
+        previous?.[index],
       ),
     );
   }
@@ -92,6 +104,7 @@ export class SudokuGridViewModelConverter {
     size: number,
     rowIndex: number,
     columnIndex: number,
+    previous?: SudokuGridCell,
   ): SudokuGridCellViewModel {
     return new SudokuGridCellViewModel(
       `${id}_cell-${rowIndex}-${columnIndex}`,
@@ -102,6 +115,7 @@ export class SudokuGridViewModelConverter {
         maxValue,
         widthAndHeight: size,
       },
+      previous,
     );
   }
 

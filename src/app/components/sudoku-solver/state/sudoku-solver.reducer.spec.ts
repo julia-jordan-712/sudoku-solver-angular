@@ -479,6 +479,32 @@ describe(SudokuSolverReducer.name, () => {
       expect(result.response).toEqual(newResponse);
     });
 
+    it("should copy the grid from the current branch of the response", () => {
+      const initialBranch = SolverBranch.createInitialBranch(
+        Puzzle4x4.INCOMPLETE_ALL_VALUES,
+      );
+      const currentBranch = initialBranch.openBranch({ row: 0, column: 0 }, 1);
+      const response: SolverResponse = {
+        status: "INCOMPLETE",
+        stepId: "my-test-step-id",
+        branches: [initialBranch, currentBranch],
+      };
+      testState.response = response;
+      testState.previousCurrentGrid = undefined;
+      expect(testState.previousCurrentGrid).toBeUndefined();
+
+      const result = new SudokuSolverReducer().reducer(
+        testState,
+        SudokuSolverActions.stepResult({
+          response: emptySolverResponse,
+          numberOfNewBranchesCreated: 0,
+          status: "RUNNING",
+        }),
+      );
+
+      expect(result.previousCurrentGrid).toEqual(currentBranch.grid);
+    });
+
     describe("timer", () => {
       ["RUNNING", "PAUSED", "DONE", "FAILED"].forEach((executionStatus) => {
         it(`should update the time of the last step (for ${executionStatus})`, () => {

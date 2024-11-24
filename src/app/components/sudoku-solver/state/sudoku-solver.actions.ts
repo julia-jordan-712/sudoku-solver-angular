@@ -9,6 +9,12 @@ export type SudokuSolverActionStepResultExecutionStatus = Extract<
   "RUNNING" | "PAUSED" | "DONE" | "FAILED"
 >;
 
+export interface SudokuSolverActionStepResult {
+  response: SolverResponse;
+  status: SudokuSolverActionStepResultExecutionStatus;
+  numberOfNewBranchesCreated: number;
+}
+
 export const SudokuSolverActions = createActionGroup({
   source: "SudokuSolver",
   events: {
@@ -25,10 +31,6 @@ export const SudokuSolverActions = createActionGroup({
     "solver start": emptyProps(),
     "step execute": emptyProps(),
     "step do nothing": emptyProps(),
-    "step result": props<{
-      response: SolverResponse;
-      status: SudokuSolverActionStepResultExecutionStatus;
-      numberOfNewBranchesCreated: number;
-    }>(),
+    "step result": props<SudokuSolverActionStepResult>(),
   },
 });

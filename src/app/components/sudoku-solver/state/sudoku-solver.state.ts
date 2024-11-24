@@ -39,4 +39,5 @@ export interface SudokuSolverState {
   puzzle: Nullable<SudokuGrid>;
   response: SolverResponse;
   settings: SudokuSolverStateSettings;
+  previousCurrentGrid: Nullable<SudokuGrid>;
 }

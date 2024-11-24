@@ -1,8 +1,8 @@
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SudokuSolverState } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
+import { Nullable } from "@app/shared/types/nullable";
 import { SolverExecution } from "@app/shared/types/solver-execution";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import {
   SudokuGridCellViewModel,
   SudokuGridViewModel,
@@ -25,7 +25,7 @@ describe("SudokuSolver Selectors", () => {
   describe("verification result", () => {
     it("should verify solution of the current branch", () => {
       // arrange
-      const testState = createTestStateWithCurrentBranchGrid(
+      const testState = TestState.createTestAppState(
         Puzzle4x4.INCOMPLETE_ALL_VALUES,
       );
 
@@ -41,7 +41,7 @@ describe("SudokuSolver Selectors", () => {
 
     it("should consider duplicates as invalid", () => {
       // arrange
-      const testState = createTestStateWithCurrentBranchGrid([
+      const testState = TestState.createTestAppState([
         [1, 2, 3, 4],
         [3, 1, 1, 2],
         [2, 3, 4, 1],
@@ -63,7 +63,7 @@ describe("SudokuSolver Selectors", () => {
 
     it("should trust size to be correct and not verify it all the time again and again", () => {
       // arrange
-      const testState = createTestStateWithCurrentBranchGrid([
+      const testState = TestState.createTestAppState([
         [1, 2, 3],
         [3, 4, 1],
         [2, 3, 4],
@@ -82,7 +82,7 @@ describe("SudokuSolver Selectors", () => {
 
     it("should consider cells with empty array as invalid", () => {
       // arrange
-      const testState = createTestStateWithCurrentBranchGrid([
+      const testState = TestState.createTestAppState([
         [1, 2, 3, 4],
         [3, [], 1, 2],
         [2, 3, 4, 1],
@@ -104,7 +104,7 @@ describe("SudokuSolver Selectors", () => {
 
     it("should consider undefined cells as invalid", () => {
       // arrange
-      const testState = createTestStateWithCurrentBranchGrid(Puzzle4x4.EMPTY);
+      const testState = TestState.createTestAppState(Puzzle4x4.EMPTY);
 
       // act
       const result: SudokuGridViewModel | null =
@@ -201,8 +201,8 @@ describe("SudokuSolver Selectors", () => {
   });
 
   describe("current branch view model", () => {
-    it("should create single view model with exactly the same cell values", async () => {
-      const testState = createTestStateWithCurrentBranchGrid([
+    it("should create single view model with exactly the same cell values", () => {
+      const testState = TestState.createTestAppState([
         [1, 2, 3, 4],
         [3, 4, [1, 2], [1, 2]],
         [2, [1, 3], [1, 4], [1, 3]],
@@ -237,23 +237,45 @@ describe("SudokuSolver Selectors", () => {
       expect(row3[3].cell).toEqual([1, 2, 3]);
     });
 
-    it("should have correct max value in each cell", async () => {
-      const testState = createTestStateWithCurrentBranchGrid(Puzzle4x4.EMPTY);
+    it("should have correct max value in each cell", () => {
+      const testState = TestState.createTestAppState(Puzzle4x4.EMPTY);
 
-      const viewModel: SudokuGridViewModel =
+      const viewModel: Nullable<SudokuGridViewModel> =
         SudokuSolverSelectors.selectCurrentBranchViewModel(testState)!;
 
-      viewModel.rows
+      viewModel?.rows
         .flatMap((row) => row.cells.map((cell) => cell.data.maxValue))
         .forEach((maxValue) => expect(maxValue).toEqual(4));
     });
 
-    it("should highlight changed cells", async () => {
+    it("should highlight changed cells", () => {
       expect(
         SudokuSolverSelectors.selectCurrentBranchViewModel(
-          createTestStateWithCurrentBranchGrid(Puzzle4x4.EMPTY),
+          TestState.createTestAppState(Puzzle4x4.EMPTY),
         )?.data.highlightChangedCells,
       ).toBeTrue();
+    });
+
+    it("should contain information about the previous grid", () => {
+      const testState = TestState.createTestAppState(
+        Puzzle4x4.EMPTY_COLUMN,
+        Puzzle4x4.COMPLETE,
+      );
+
+      const viewModel: Nullable<SudokuGridViewModel> =
+        SudokuSolverSelectors.selectCurrentBranchViewModel(testState)!;
+
+      for (let row = 0; row < viewModel.rows.length; row++) {
+        for (
+          let column = 0;
+          column < viewModel.rows[row].cells.length;
+          column++
+        ) {
+          const result = viewModel.rows[row].cells[column];
+          expect(result.previous).not.toBeUndefined();
+          expect(result.previous).toEqual(Puzzle4x4.COMPLETE[row][column]);
+        }
+      }
     });
   });
 
@@ -278,7 +300,7 @@ describe("SudokuSolver Selectors", () => {
       4,
     );
 
-    it("should not include current branch in additional branches", async () => {
+    it("should not include current branch in additional branches", () => {
       // arrange
       const testState = TestState.createTestAppState();
       testState.sudokuSolver.response.branches = [
@@ -337,7 +359,7 @@ describe("SudokuSolver Selectors", () => {
       );
     });
 
-    it("should order multiple view models by branches", async () => {
+    it("should order multiple view models by branches", () => {
       // arrange
       const testState = TestState.createTestAppState();
       testState.sudokuSolver.response.branches = [
@@ -392,7 +414,7 @@ describe("SudokuSolver Selectors", () => {
       );
     });
 
-    it("should NOT highlight changed cells", async () => {
+    it("should NOT highlight changed cells", () => {
       const testState = TestState.createTestAppState();
       testState.sudokuSolver.response.branches = [
         thirdBranch,
@@ -402,22 +424,36 @@ describe("SudokuSolver Selectors", () => {
         secondBranch,
       ];
 
-      const result =
+      const result: SudokuGridViewModel[] =
         SudokuSolverSelectors.selectAdditionalBranchViewModels(testState);
 
       result.forEach((viewModel) => {
         expect(viewModel.data.highlightChangedCells).toBeFalse();
       });
     });
-  });
 
-  function createTestStateWithCurrentBranchGrid(grid: SudokuGrid): AppState {
-    const testState = TestState.createTestAppState();
-    testState.sudokuSolver.response.branches = [
-      SolverBranch.createInitialBranch(grid),
-    ];
-    return testState;
-  }
+    it("should NOT contain information about the previous grid", () => {
+      const testState = TestState.createTestAppState();
+      testState.sudokuSolver.response.branches = [
+        thirdBranch,
+        fourthBranch,
+        initialBranch,
+        currentBranch,
+        secondBranch,
+      ];
+
+      const result: SudokuGridViewModel[] =
+        SudokuSolverSelectors.selectAdditionalBranchViewModels(testState);
+
+      result.forEach((viewModel) => {
+        viewModel.rows.forEach((row) => {
+          row.cells.forEach((cell) => {
+            expect(cell.previous).toBeUndefined();
+          });
+        });
+      });
+    });
+  });
 
   function removeExecutionIdFromViewModelId(
     viewModel: SudokuGridViewModel,

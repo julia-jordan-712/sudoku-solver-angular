@@ -1,4 +1,7 @@
-import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
+import {
+  SudokuSolverActions,
+  SudokuSolverActionStepResult,
+} from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import {
   SudokuSolverState,
   SudokuSolverStateExecutionInfo,
@@ -32,6 +35,7 @@ export class SudokuSolverReducer {
       maxSteps: 1_000,
       pauseAfterStep: null,
     },
+    previousCurrentGrid: undefined,
   };
 
   public readonly reducer = createReducer(
@@ -129,26 +133,7 @@ export class SudokuSolverReducer {
     ),
     on(
       SudokuSolverActions.stepResult,
-      (state, action): SudokuSolverState => ({
-        ...state,
-        executionInfo: {
-          id: state.executionInfo.id,
-          status: action.status,
-          stepsExecuted: state.executionInfo.stepsExecuted + 1,
-          amountOfBranches:
-            state.executionInfo.amountOfBranches +
-            action.numberOfNewBranchesCreated,
-          time: {
-            started: state.executionInfo.time.started,
-            stopped:
-              action.status === "DONE" || action.status === "FAILED"
-                ? Date.now()
-                : null,
-            lastStep: Date.now(),
-          },
-        },
-        response: action.response,
-      }),
+      (state, action): SudokuSolverState => this.toNewStepResult(state, action),
     ),
   );
 
@@ -173,6 +158,7 @@ export class SudokuSolverReducer {
       puzzle: puzzle ? SudokuGridUtil.clone(puzzle) : undefined,
       response: response,
       settings: { ...state.settings },
+      previousCurrentGrid: this.initialState.previousCurrentGrid,
     };
   }
 
@@ -191,5 +177,35 @@ export class SudokuSolverReducer {
     fromAction: Partial<SudokuSolverStateSettings>,
   ): SudokuSolverState {
     return { ...state, settings: { ...state.settings, ...fromAction } };
+  }
+
+  private toNewStepResult(
+    state: SudokuSolverState,
+    action: SudokuSolverActionStepResult,
+  ): SudokuSolverState {
+    const previous: Nullable<SudokuGrid> = state.response.branches.filter(
+      (branch) => branch.isCurrentBranch(),
+    )?.[0]?.grid;
+    return {
+      ...state,
+      executionInfo: {
+        id: state.executionInfo.id,
+        status: action.status,
+        stepsExecuted: state.executionInfo.stepsExecuted + 1,
+        amountOfBranches:
+          state.executionInfo.amountOfBranches +
+          action.numberOfNewBranchesCreated,
+        time: {
+          started: state.executionInfo.time.started,
+          stopped:
+            action.status === "DONE" || action.status === "FAILED"
+              ? Date.now()
+              : null,
+          lastStep: Date.now(),
+        },
+      },
+      response: action.response,
+      previousCurrentGrid: previous ? SudokuGridUtil.clone(previous) : null,
+    };
   }
 }
