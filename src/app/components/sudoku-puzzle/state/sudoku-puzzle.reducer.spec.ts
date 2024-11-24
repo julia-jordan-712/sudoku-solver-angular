@@ -1,3 +1,4 @@
+import { TestBed } from "@angular/core/testing";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
@@ -6,13 +7,18 @@ import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TestState } from "@app/test/state/test-state";
 
 describe(SudokuPuzzleReducer.name, () => {
+  let underTest: SudokuPuzzleReducer;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    underTest = TestBed.inject(SudokuPuzzleReducer);
+  });
+
   describe("an unknown action", () => {
     it("should return the previous state", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      expect(new SudokuPuzzleReducer().reducer(testState, {} as any)).toBe(
-        testState,
-      );
+      expect(underTest.getReducer()(testState, {} as any)).toBe(testState);
     });
   });
 
@@ -22,9 +28,7 @@ describe(SudokuPuzzleReducer.name, () => {
         it("should return the previous state", () => {
           const testState: SudokuPuzzleState =
             TestState.createTestSudokuPuzzleState();
-          expect(new SudokuPuzzleReducer().reducer(testState, action)).toBe(
-            testState,
-          );
+          expect(underTest.getReducer()(testState, action)).toBe(testState);
         });
       });
     },
@@ -37,7 +41,7 @@ describe(SudokuPuzzleReducer.name, () => {
       testState.isConfirmed = true;
       const action = SudokuPuzzleActions.changeSettings();
 
-      const result = new SudokuPuzzleReducer().reducer(testState, action);
+      const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -55,7 +59,7 @@ describe(SudokuPuzzleReducer.name, () => {
         SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM;
       const action = SudokuPuzzleActions.clearSelectedOption();
 
-      const result = new SudokuPuzzleReducer().reducer(testState, action);
+      const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -79,7 +83,7 @@ describe(SudokuPuzzleReducer.name, () => {
       testState.width = 2;
       const action = SudokuPuzzleActions.setSize({ height: 4, width: 4 });
 
-      const result = new SudokuPuzzleReducer().reducer(testState, action);
+      const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -97,7 +101,7 @@ describe(SudokuPuzzleReducer.name, () => {
       testState.width = 2;
       const action = SudokuPuzzleActions.setSize({});
 
-      const result = new SudokuPuzzleReducer().reducer(testState, action);
+      const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -117,7 +121,7 @@ describe(SudokuPuzzleReducer.name, () => {
         testState.sudoku = Puzzle4x4.INCOMPLETE_ALL_VALUES;
         const action = SudokuPuzzleActions.setSudoku({ sudoku: sudoku });
 
-        const result = new SudokuPuzzleReducer().reducer(testState, action);
+        const result = underTest.getReducer()(testState, action);
 
         expect(result).toEqual({
           ...testState,
@@ -135,7 +139,7 @@ describe(SudokuPuzzleReducer.name, () => {
       testState.isConfirmed = false;
       const action = SudokuPuzzleActions.submitSettings();
 
-      const result = new SudokuPuzzleReducer().reducer(testState, action);
+      const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
@@ -155,7 +159,7 @@ describe(SudokuPuzzleReducer.name, () => {
         option: SudokuPuzzleSelectionTestData.ITEMS[2],
       });
 
-      const result = new SudokuPuzzleReducer().reducer(testState, action);
+      const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,

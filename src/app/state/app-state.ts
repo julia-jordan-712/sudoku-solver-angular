@@ -1,3 +1,4 @@
+import { inject, InjectionToken } from "@angular/core";
 import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import {
   SudokuPuzzleState,
@@ -9,6 +10,7 @@ import {
   SudokuSolverStateKey,
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import {
+  Action,
   ActionReducerMap,
   createActionGroup,
   MetaReducer,
@@ -28,10 +30,14 @@ export interface AppState {
   [SudokuSolverStateKey]: SudokuSolverState;
 }
 
-export const reducers: ActionReducerMap<AppState> = {
-  [SudokuPuzzleStateKey]: new SudokuPuzzleReducer().reducer,
-  [SudokuSolverStateKey]: new SudokuSolverReducer().reducer,
-};
+export const reducer: InjectionToken<
+  ActionReducerMap<AppState, Action<string>>
+> = new InjectionToken<ActionReducerMap<AppState>>("App State Reducers", {
+  factory: () => ({
+    [SudokuPuzzleStateKey]: inject(SudokuPuzzleReducer).getReducer(),
+    [SudokuSolverStateKey]: inject(SudokuSolverReducer).getReducer(),
+  }),
+});
 
 export const metaReducers: MetaReducer<AppState>[] = environment.production
   ? []
