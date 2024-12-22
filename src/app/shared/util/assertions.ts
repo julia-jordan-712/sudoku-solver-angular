@@ -1,9 +1,9 @@
 import { isDefined } from "@app/shared/util/is-defined";
 
 export class Assert {
-  public static condition(condition: boolean, msg: string): asserts condition {
+  public static state(condition: boolean, msg?: string): asserts condition {
     if (!condition) {
-      throw new AssertError(msg);
+      throw new AssertError(msg ?? "is not true");
     }
   }
 
