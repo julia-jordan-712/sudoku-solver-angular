@@ -6,11 +6,18 @@
     "sudoku-solver-angular": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
         "@schematics/angular:application": {
           "strict": true
+        },
+        "@schematics/angular:component": {
+          "style": "scss",
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
         }
       },
       "root": "",
@@ -20,9 +27,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": {
-              "base": "dist/sudoku-solver-angular"
-            },
+            "outputPath": "dist/sudoku-solver-angular",
             "index": "src/index.html",
             "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
