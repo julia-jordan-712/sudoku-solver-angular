@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 export interface I18nKey {
   key: string;
   params?: { [parameterName: string]: string | number | boolean };

@@ -17,8 +17,6 @@ export class VerifySolution {
 
   private logger: Logger = new Logger(VerifySolution.name);
 
-  constructor() {}
-
   verify(
     candidate: SudokuGrid,
     options: VerificationOptions = {},

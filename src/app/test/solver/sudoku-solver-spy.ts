@@ -102,6 +102,4 @@ export class SudokuSolverSpy {
       });
     }
   }
-
-  public static expectToHaveBeenCalledWith(): void {}
 }
