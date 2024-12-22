@@ -27,7 +27,7 @@ export class SudokuPuzzleGridUpdateService {
         return this.updateGrid_(value, height, width);
       }
     } else {
-      if (value.length === height && value[0].length === width) {
+      if (value.length === height && value[0]?.length === width) {
         return value;
       } else {
         return this.updateGrid_(value, height, width);

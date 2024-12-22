@@ -52,7 +52,7 @@ export class SudokuGridUtil {
 
   static getRowValues(grid: SudokuGrid, rowIndex: number): number[] {
     const values: number[] = [];
-    grid[rowIndex].forEach((cellValue) => {
+    grid[rowIndex]?.forEach((cellValue) => {
       if (isNotArray(cellValue) && isDefined(cellValue)) {
         values.push(cellValue);
       }

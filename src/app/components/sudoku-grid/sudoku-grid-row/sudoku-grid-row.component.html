@@ -16,7 +16,7 @@
         [borderRight]="last || (sqrt ? (i + 1) % sqrt === 0 : false)"
         [borderBottom]="borderBottom"
         [borderLeft]="first"
-        [highlight]="highlightCells[i]"
+        [highlight]="highlightCells[i] ?? false"
         [readonly]="readonly"
         (valueChange)="onCellChanged($event, i)"
         (valueSubmit)="onCellSubmitted($event, i)"
