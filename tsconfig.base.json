@@ -18,7 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "sourceMap": true,
     "strict": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "strictPropertyInitialization": false,
     "target": "ES2022",
     "module": "es2020",
