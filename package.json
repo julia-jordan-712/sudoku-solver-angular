@@ -67,7 +67,7 @@
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-cypress": "^3.5.0",
     "jasmine-core": "~4.0.0",
-    "karma": "~6.3.0",
+    "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
