@@ -29,7 +29,7 @@ export class EliminateFromSquare implements SolverRunnable {
       grid.length,
     );
     for (let i = 0; i < grid.length; i++) {
-      const rowSlices: SudokuGridCell[][] = this.toSlices(grid[i], grid);
+      const rowSlices: SudokuGridCell[][] = this.toSlices(grid[i]!, grid);
       const columnSlices: SudokuGridCell[][] = this.toSlices(
         SudokuGridUtil.getColumnCells(grid, i),
         grid,

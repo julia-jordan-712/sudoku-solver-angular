@@ -81,7 +81,7 @@ export class EliminatePossiblePairFromOtherCells implements SolverRunnable {
       const rowPositions: CellPosition[] = [];
       const columnPositions: CellPosition[] = [];
 
-      const rowCells: SudokuGridCell[] = grid[i];
+      const rowCells: SudokuGridCell[] = grid[i]!;
       const columnCells: SudokuGridCell[] = SudokuGridUtil.getColumnCells(
         grid,
         i,

@@ -13,9 +13,10 @@ export class VerifyNothingEmpty {
     if (options?.allowEmptyCells) {
       return VerificationResult.createValid();
     } else {
-      for (let row = 0; row < candidate.length; row++) {
-        for (let column = 0; column < candidate[row].length; column++) {
-          const cell: SudokuGridCell = candidate[row][column];
+      for (let rowIndex = 0; rowIndex < candidate.length; rowIndex++) {
+        const row = candidate[rowIndex]!;
+        for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
+          const cell: SudokuGridCell = row[columnIndex];
           if (!isDefined(cell)) {
             return VerificationResult.createFromErrors([
               VerifyI18nKey.ERROR_EMPTY_CELL,

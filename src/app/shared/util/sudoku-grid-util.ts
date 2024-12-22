@@ -37,9 +37,10 @@ export class SudokuGridUtil {
       return false;
     }
 
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid.length; j++) {
-        const cell = grid[i][j];
+    for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
+      const row: SudokuGridRow = grid[rowIndex]!;
+      for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
+        const cell: SudokuGridCell = row[columnIndex];
         if (isArray(cell) || !isDefined(cell)) {
           return false;
         }
@@ -64,7 +65,8 @@ export class SudokuGridUtil {
   ): SudokuGridCell[] {
     const values: SudokuGridCell[] = [];
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
-      values.push(grid[rowIndex][columnIndex]);
+      const row: SudokuGridRow = grid[rowIndex]!;
+      values.push(row[columnIndex]);
     }
     return values;
   }
@@ -72,7 +74,8 @@ export class SudokuGridUtil {
   static getColumnValues(grid: SudokuGrid, columnIndex: number): number[] {
     const values: number[] = [];
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
-      const cellValue = grid[rowIndex][columnIndex];
+      const row: SudokuGridRow = grid[rowIndex]!;
+      const cellValue: SudokuGridCell = row[columnIndex];
       if (isNotArray(cellValue) && isDefined(cellValue)) {
         values.push(cellValue);
       }

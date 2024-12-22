@@ -1,5 +1,5 @@
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 import { isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
@@ -34,10 +34,11 @@ export class EmptyCellsToPossibleValues implements SolverRunnable {
 
   private convertNextEmptyCellToPossibleValues(grid: SudokuGrid): boolean {
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
+      const row: SudokuGridRow = grid[rowIndex]!;
       for (let columnIndex = 0; columnIndex < grid.length; columnIndex++) {
-        const cell = grid[rowIndex][columnIndex];
+        const cell = row[columnIndex];
         if (isNotArray(cell) && !isDefined(cell)) {
-          grid[rowIndex][columnIndex] = this.convertEmptyCellToPossibleValues(
+          row[columnIndex] = this.convertEmptyCellToPossibleValues(
             grid,
             rowIndex,
             columnIndex,
