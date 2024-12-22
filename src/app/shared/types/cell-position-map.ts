@@ -7,6 +7,27 @@ export class CellPositionMap {
   private cellPositionToSquareIndex: Index<number> = {};
   private squareNumberToCellPositions: Record<number, CellPosition[]> = {};
 
+  constructor(size: number) {
+    const sqrt: number = Math.sqrt(size);
+    let squareBaseX = 0;
+
+    for (let i = 0; i < size; i++) {
+      const currentSquare: CellPosition[] = [];
+
+      if (i > 0 && i % sqrt === 0) {
+        squareBaseX += sqrt;
+      }
+
+      for (let j = 0; j < size; j++) {
+        const squareX: number = squareBaseX + Math.ceil((1 + j - sqrt) / sqrt);
+        const squareY: number = (i % sqrt) * sqrt + (j % sqrt);
+        currentSquare.push(new CellPosition(squareX, squareY));
+      }
+
+      this.set(i, currentSquare);
+    }
+  }
+
   getForPosition(
     position: CellPosition | Pick<CellPosition, "x" | "y">,
   ): CellPosition[] {
@@ -19,7 +40,7 @@ export class CellPositionMap {
     return this.squareNumberToCellPositions[squareIndex];
   }
 
-  set(squareIndex: number, positions: CellPosition[]): void {
+  private set(squareIndex: number, positions: CellPosition[]): void {
     StopWatch.monitor(
       () => {
         this.squareNumberToCellPositions[squareIndex] = positions;

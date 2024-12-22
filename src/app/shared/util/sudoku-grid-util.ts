@@ -1,5 +1,4 @@
 import { Logger } from "@app/core/log/logger";
-import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
 import { Nullable } from "@app/shared/types/nullable";
 import { StopWatch } from "@app/shared/types/stopwatch";
@@ -12,6 +11,8 @@ import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 
 export class SudokuGridUtil {
+  private static cellPositionMaps: Record<number, CellPositionMap> = {};
+
   static clone(grid: SudokuGrid): SudokuGrid {
     return StopWatch.monitor(
       () => {
@@ -105,26 +106,12 @@ export class SudokuGridUtil {
   }
 
   static getCellPositionsOfSquares(size: number): CellPositionMap {
-    const sqrt: number = Math.sqrt(size);
-    const cellPositionsInSameSquare: CellPositionMap = new CellPositionMap();
-    let squareBaseX = 0;
-
-    for (let i = 0; i < size; i++) {
-      const currentSquare: CellPosition[] = [];
-
-      if (i > 0 && i % sqrt === 0) {
-        squareBaseX += sqrt;
-      }
-
-      for (let j = 0; j < size; j++) {
-        const squareX: number = squareBaseX + Math.ceil((1 + j - sqrt) / sqrt);
-        const squareY: number = (i % sqrt) * sqrt + (j % sqrt);
-        currentSquare.push(new CellPosition(squareX, squareY));
-      }
-
-      cellPositionsInSameSquare.set(i, currentSquare);
+    let cellPositionMap: CellPositionMap | undefined =
+      SudokuGridUtil.cellPositionMaps[size];
+    if (!cellPositionMap) {
+      cellPositionMap = new CellPositionMap(size);
+      SudokuGridUtil.cellPositionMaps[size] = cellPositionMap;
     }
-
-    return cellPositionsInSameSquare;
+    return cellPositionMap;
   }
 }
