@@ -74,7 +74,8 @@ export class Objects {
         return false;
       }
       for (let i = 0; i < a1.length; i++) {
-        if (!a2.includes(a1[i])) {
+        const a1I: T = a1[i]!;
+        if (!a2.includes(a1I)) {
           return false;
         }
       }

@@ -10,7 +10,12 @@ import {
   SolverStepResponse,
 } from "@app/core/solver/types/solver-response";
 import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import {
+  SudokuGrid,
+  SudokuGridCell,
+  SudokuGridRow,
+} from "@app/shared/types/sudoku-grid";
+import { Assert } from "@app/shared/util/assertions";
 import { isArray } from "@app/shared/util/is-array";
 
 @Injectable()
@@ -69,11 +74,17 @@ export class SolverOpenBranch extends Solver {
       amountOfPossibleValues <= grid.length;
       amountOfPossibleValues++
     ) {
-      for (let row = 0; row < grid.length; row++) {
-        for (let column = 0; column < grid[row].length; column++) {
-          const cell: SudokuGridCell = grid[row][column];
+      for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
+        const row: SudokuGridRow = grid[rowIndex]!;
+        for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
+          const cell: SudokuGridCell = row[columnIndex];
           if (isArray(cell) && cell.length === amountOfPossibleValues) {
-            return { cell: { row, column }, value: cell[0] };
+            const cellValue = cell[0];
+            Assert.defined(cellValue);
+            return {
+              cell: { row: rowIndex, column: columnIndex },
+              value: cellValue,
+            };
           }
         }
       }

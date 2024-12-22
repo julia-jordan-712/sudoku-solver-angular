@@ -1,5 +1,4 @@
 import { Logger } from "@app/core/log/logger";
-import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
 import { Nullable } from "@app/shared/types/nullable";
 import { StopWatch } from "@app/shared/types/stopwatch";
@@ -12,6 +11,8 @@ import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 
 export class SudokuGridUtil {
+  private static cellPositionMaps: Record<number, CellPositionMap> = {};
+
   static clone(grid: SudokuGrid): SudokuGrid {
     return StopWatch.monitor(
       () => {
@@ -37,9 +38,10 @@ export class SudokuGridUtil {
       return false;
     }
 
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid.length; j++) {
-        const cell = grid[i][j];
+    for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
+      const row: SudokuGridRow = grid[rowIndex]!;
+      for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
+        const cell: SudokuGridCell = row[columnIndex];
         if (isArray(cell) || !isDefined(cell)) {
           return false;
         }
@@ -50,7 +52,7 @@ export class SudokuGridUtil {
 
   static getRowValues(grid: SudokuGrid, rowIndex: number): number[] {
     const values: number[] = [];
-    grid[rowIndex].forEach((cellValue) => {
+    grid[rowIndex]?.forEach((cellValue) => {
       if (isNotArray(cellValue) && isDefined(cellValue)) {
         values.push(cellValue);
       }
@@ -64,7 +66,8 @@ export class SudokuGridUtil {
   ): SudokuGridCell[] {
     const values: SudokuGridCell[] = [];
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
-      values.push(grid[rowIndex][columnIndex]);
+      const row: SudokuGridRow = grid[rowIndex]!;
+      values.push(row[columnIndex]);
     }
     return values;
   }
@@ -72,7 +75,8 @@ export class SudokuGridUtil {
   static getColumnValues(grid: SudokuGrid, columnIndex: number): number[] {
     const values: number[] = [];
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
-      const cellValue = grid[rowIndex][columnIndex];
+      const row: SudokuGridRow = grid[rowIndex]!;
+      const cellValue: SudokuGridCell = row[columnIndex];
       if (isNotArray(cellValue) && isDefined(cellValue)) {
         values.push(cellValue);
       }
@@ -102,26 +106,12 @@ export class SudokuGridUtil {
   }
 
   static getCellPositionsOfSquares(size: number): CellPositionMap {
-    const sqrt: number = Math.sqrt(size);
-    const cellPositionsInSameSquare: CellPositionMap = new CellPositionMap();
-    let squareBaseX = 0;
-
-    for (let i = 0; i < size; i++) {
-      const currentSquare: CellPosition[] = [];
-
-      if (i > 0 && i % sqrt === 0) {
-        squareBaseX += sqrt;
-      }
-
-      for (let j = 0; j < size; j++) {
-        const squareX: number = squareBaseX + Math.ceil((1 + j - sqrt) / sqrt);
-        const squareY: number = (i % sqrt) * sqrt + (j % sqrt);
-        currentSquare.push(new CellPosition(squareX, squareY));
-      }
-
-      cellPositionsInSameSquare.set(i, currentSquare);
+    let cellPositionMap: CellPositionMap | undefined =
+      SudokuGridUtil.cellPositionMaps[size];
+    if (!cellPositionMap) {
+      cellPositionMap = new CellPositionMap(size);
+      SudokuGridUtil.cellPositionMaps[size] = cellPositionMap;
     }
-
-    return cellPositionsInSameSquare;
+    return cellPositionMap;
   }
 }

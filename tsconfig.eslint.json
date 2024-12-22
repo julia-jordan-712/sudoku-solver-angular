@@ -2,7 +2,7 @@
   "extends": "./tsconfig.base.json",
   "include": ["src/**/*.ts", "cypress/**/*.ts"],
   "compilerOptions": {
-    "types": ["jasmine"],
+    "types": ["node"],
     "noEmit": true
   }
 }

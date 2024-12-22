@@ -1,7 +1,7 @@
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import { Assert } from "@app/shared/util/assertions";
 import { isArray, isNotArray } from "@app/shared/util/is-array";
-import { isDefined } from "@app/shared/util/is-defined";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { v4 as randomUUID } from "uuid";
 
@@ -57,35 +57,34 @@ export class SolverBranch {
   }
 
   public openBranch(cell: BranchingPoint, value: number): SolverBranch {
-    if (this.isClosedBranch()) {
-      throw new Error("Can not open a branch from a closed branch");
-    }
-    if (this.getChildId()) {
-      throw new Error(
-        "Can not open a branch from a branch which already has a child branch",
-      );
-    }
-    if (this.grid.length > 0) {
-      const sudokuWidth: number = this.grid.length;
-      const sudokuHeight: number = this.grid[0].length;
-      if (cell.row > sudokuWidth - 1 || cell.column > sudokuHeight - 1) {
-        throw new Error(
-          `Can not open a branch because cell [${cell.row},${cell.column}] does not exist in Sudoku of size ${sudokuWidth}x${sudokuHeight}`,
-        );
-      }
-      const cellValue: SudokuGridCell = this.grid[cell.row][cell.column];
-      if (isNotArray(cellValue) && isDefined(cellValue)) {
-        throw new Error(
-          "There is no point in opening a branch from a cell which already has a definite value",
-        );
-      } else if (isArray(cellValue) && !cellValue.includes(value)) {
-        throw new Error(
-          "Can not open branch if the branching value is not contained in the list of possible values at the branching point",
-        );
-      }
-    } else {
-      throw new Error("Can not open branch from an empty Sudoku");
-    }
+    Assert.state(
+      !this.isClosedBranch(),
+      "Can not open a branch from a closed branch",
+    );
+    Assert.state(
+      !this.getChildId(),
+      "Can not open a branch from a branch which already has a child branch",
+    );
+    Assert.state(
+      this.grid.length > 0,
+      "Can not open branch from an empty Sudoku",
+    );
+
+    const sudokuWidth: number = this.grid.length;
+    const sudokuHeight: number = this.grid[0].length;
+    Assert.state(
+      cell.row < sudokuWidth && cell.column < sudokuHeight,
+      `Can not open a branch because cell [${cell.row},${cell.column}] does not exist in Sudoku of size ${sudokuWidth}x${sudokuHeight}`,
+    );
+    const cellValue: SudokuGridCell = this.grid[cell.row][cell.column];
+    Assert.state(
+      isArray(cellValue),
+      "There is no point in opening a branch from a cell which already has a definite value",
+    );
+    Assert.state(
+      cellValue.includes(value),
+      "Can not open branch if the branching value is not contained in the list of possible values at the branching point",
+    );
 
     const grid: SudokuGrid = SudokuGridUtil.clone(this.grid);
     grid[cell.row][cell.column] = value;
@@ -105,93 +104,86 @@ export class SolverBranch {
         newBranches.push(branch);
       }
     }
-    if (!closedSuccessfully) {
-      throw new Error(`Failed to properly close branch with id ${this.id}`);
-    }
+    Assert.state(
+      closedSuccessfully,
+      `Failed to properly close branch with id ${this.id}`,
+    );
 
     newBranches = newBranches.filter((branch) => branch.isOpenBranch());
     const removedChild: boolean = newBranches.length === allBranches.length - 1;
-    if (!removedChild) {
-      throw new Error(`Failed to properly close branch with id ${this.id}`);
-    }
+    Assert.state(
+      removedChild,
+      `Failed to properly close branch with id ${this.id}`,
+    );
     return newBranches;
   }
 
   private closeFromChildBranch(childBranchToBeClosed: SolverBranch): boolean {
-    if (childBranchToBeClosed.isClosedBranch()) {
-      throw new Error("The branch to be closed can not be closed already");
-    }
-    if (childBranchToBeClosed.isInitialBranch()) {
-      throw new Error("Can not close the initial branch");
-    }
-    if (!childBranchToBeClosed.isCurrentBranch()) {
-      throw new Error("The branch to be closed has to be the current branch");
-    }
+    Assert.state(
+      !childBranchToBeClosed.isClosedBranch(),
+      "The branch to be closed can not be closed already",
+    );
+    Assert.state(
+      !childBranchToBeClosed.isInitialBranch(),
+      "Can not close the initial branch",
+    );
+    Assert.state(
+      childBranchToBeClosed.isCurrentBranch(),
+      "The branch to be closed has to be the current branch",
+    );
 
-    if (this.isClosedBranch()) {
-      throw new Error(
-        "The parent branch of the branch to be closed can not be closed",
-      );
-    }
-    if (this.isCurrentBranch()) {
-      throw new Error(
-        "The parent branch of the branch to be closed can not be the current branch",
-      );
-    }
+    Assert.state(
+      !this.isClosedBranch(),
+      "The parent branch of the branch to be closed can not be closed",
+    );
+    Assert.state(
+      !this.isCurrentBranch(),
+      "The parent branch of the branch to be closed can not be the current branch",
+    );
 
-    if (
-      childBranchToBeClosed.getId() !== this.getChildId() ||
-      childBranchToBeClosed.getParentId() !== this.getId()
-    ) {
-      throw new Error(
-        "Can not close from a branch which is not the child of this branch",
-      );
-    }
+    Assert.state(
+      childBranchToBeClosed.getId() === this.getChildId() &&
+        childBranchToBeClosed.getParentId() === this.getId(),
+      "Can not close from a branch which is not the child of this branch",
+    );
 
-    if (!isDefined(childBranchToBeClosed.branchingPoint)) {
-      throw new Error(
-        "Can not close branch if there is no branching point in the branch to be closed",
-      );
-    }
-    if (childBranchToBeClosed.grid.length <= 0 || this.grid.length <= 0) {
-      throw new Error("Can not close branch if Sudoku grid is empty");
-    }
-    if (
-      childBranchToBeClosed.grid.length !== this.grid.length ||
-      childBranchToBeClosed.grid[0].length !== this.grid[0].length
-    ) {
-      throw new Error(
-        "Can not close from a branch with a different grid size than this branch",
-      );
-    }
+    Assert.defined(
+      childBranchToBeClosed.branchingPoint,
+      "Can not close branch if there is no branching point in the branch to be closed",
+    );
+
+    Assert.state(
+      childBranchToBeClosed.grid.length > 0 && this.grid.length > 0,
+      "Can not close branch if Sudoku grid is empty",
+    );
+    Assert.state(
+      childBranchToBeClosed.grid.length === this.grid.length &&
+        childBranchToBeClosed.grid[0].length === this.grid[0].length,
+      "Can not close from a branch with a different grid size than this branch",
+    );
 
     const row: number = childBranchToBeClosed.branchingPoint.row;
     const column: number = childBranchToBeClosed.branchingPoint.column;
     const childValue: SudokuGridCell = childBranchToBeClosed.grid[row][column];
-    if (isNotArray(childValue)) {
-      const possibleValues: SudokuGridCell = this.grid[row][column];
-      if (isArray(possibleValues)) {
-        if (!possibleValues.includes(childValue)) {
-          throw new Error(
-            "Can not close branch because branching value was not found in the possible values at the branching point - so it can not be removed there",
-          );
-        }
-        this.grid = SudokuGridUtil.clone(this.grid);
-        this.grid[row][column] = possibleValues.filter((v) => v !== childValue);
-        this.childId = undefined;
-        childBranchToBeClosed.parentId = undefined;
-        childBranchToBeClosed.isOpen = false;
-        return true;
-      } else {
-        throw new Error(
-          "Can not close branch if the branching point of the parent branch does not contain an array of numbers",
-        );
-      }
-    } else {
-      throw new Error(
-        "Can not close branch if the branching point of the child branch does not contain a number",
-      );
-    }
+    Assert.state(
+      isNotArray(childValue),
+      "Can not close branch if the branching point of the child branch does not contain a number",
+    );
+    const possibleValues: SudokuGridCell = this.grid[row][column];
+    Assert.state(
+      isArray(possibleValues),
+      "Can not close branch if the branching point of the parent branch does not contain an array of numbers",
+    );
+    Assert.state(
+      possibleValues.includes(childValue),
+      "Can not close branch because branching value was not found in the possible values at the branching point - so it can not be removed there",
+    );
+    this.grid = SudokuGridUtil.clone(this.grid);
+    this.grid[row][column] = possibleValues.filter((v) => v !== childValue);
+    this.childId = undefined;
+    childBranchToBeClosed.parentId = undefined;
+    childBranchToBeClosed.isOpen = false;
+    return true;
   }
 
   public getId(): string {

@@ -8,7 +8,7 @@ export class SolverEliminateUtil {
   ): number {
     let resultIndex = -1;
     for (let i = 0; i < slices.length; i++) {
-      if (this.cellsIncludeValue(slices[i], v)) {
+      if (this.cellsIncludeValue(slices[i]!, v)) {
         if (resultIndex >= 0) {
           // second match => value occurs in multiple slices => return -1
           return -1;

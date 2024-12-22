@@ -10,9 +10,9 @@ export class SudokuPuzzleReducer {
   private createInitialState(): SudokuPuzzleState {
     return {
       isConfirmed: false,
-      sudoku: SudokuPuzzleSelectionTestData.ITEMS?.[0].grid,
-      height: SudokuPuzzleSelectionTestData.ITEMS?.[0].grid?.length,
-      width: SudokuPuzzleSelectionTestData.ITEMS?.[0].grid?.length,
+      sudoku: SudokuPuzzleSelectionTestData.ITEMS?.[0]?.grid,
+      height: SudokuPuzzleSelectionTestData.ITEMS?.[0]?.grid?.length,
+      width: SudokuPuzzleSelectionTestData.ITEMS?.[0]?.grid?.length,
       selectionOptions: {
         options: SudokuPuzzleSelectionTestData.ITEMS,
         selected: SudokuPuzzleSelectionTestData.ITEMS?.[0],

@@ -3,6 +3,7 @@ import { CellPosition } from "@app/shared/types/cell-position";
 import { CellPositionMap } from "@app/shared/types/cell-position-map";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
+import { Assert } from "@app/shared/util/assertions";
 import { isArray } from "@app/shared/util/is-array";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 
@@ -66,7 +67,9 @@ export class ConvertValuesPossibleOnce implements SolverRunnable {
 
     for (const [key, value] of Object.entries(valueToPossiblePositions)) {
       if (value.length === 1) {
-        grid[value[0].x][value[0].y] = Number.parseInt(key);
+        const onlyValue: CellPosition | undefined = value[0];
+        Assert.defined(onlyValue);
+        grid[onlyValue.x][onlyValue.y] = Number.parseInt(key);
         return true;
       }
     }

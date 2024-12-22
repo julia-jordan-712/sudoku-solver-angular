@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": ["projects/**/*", "karma.conf.js", "karma.conf.ci.js"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -9,12 +9,22 @@
         "sourceType": "module"
       },
       "extends": [
+        "eslint:recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@ngrx/all"
+        "plugin:@ngrx/all",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/stylistic",
+        "prettier"
       ],
       "rules": {
+        "no-console": "warn",
+        "no-unused-vars": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/consistent-generic-constructors": "off",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-inferrable-types": "warn",
+        "@typescript-eslint/prefer-for-of": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -30,11 +40,7 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ],
-        "no-console": "warn",
-        "@typescript-eslint/ban-ts-comment": "off",
-        "@typescript-eslint/explicit-function-return-type": "warn",
-        "@typescript-eslint/no-inferrable-types": "warn"
+        ]
       }
     },
     {
@@ -44,11 +50,15 @@
         "sourceType": "module"
       },
       "extends": [
+        "eslint:recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/stylistic",
+        "prettier"
       ],
       "rules": {
+        "no-sparse-arrays": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off"
@@ -61,13 +71,18 @@
         "sourceType": "module"
       },
       "extends": [
+        "eslint:recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@typescript-eslint/recommended",
+        "plugin:@ngrx/all",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/stylistic",
         "plugin:eslint-plugin-cypress/recommended",
-        "plugin:@ngrx/all"
+        "prettier"
       ],
       "rules": {
-        "@ngrx/avoid-dispatching-multiple-actions-sequentially": "off"
+        "no-unused-vars": "off",
+        "@ngrx/avoid-dispatching-multiple-actions-sequentially": "off",
+        "@typescript-eslint/no-empty-function": "off"
       }
     },
     {

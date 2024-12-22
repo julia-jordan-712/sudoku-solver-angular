@@ -16,7 +16,7 @@ export class SudokuGridComponentService {
       grid &&
       index >= 0 &&
       index < grid.rows.length &&
-      row.length === grid.rows[0].cells.length
+      row.length === grid.rows[0]?.cells.length
     ) {
       const newGrid: SudokuGrid = SudokuGridUtil.clone(
         SudokuGridViewModelConverter.createGridFromViewModel(grid),
