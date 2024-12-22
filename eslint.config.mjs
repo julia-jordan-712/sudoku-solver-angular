@@ -37,7 +37,7 @@ export default [
       sourceType: "module",
 
       parserOptions: {
-        project: ["tsconfig.eslint.json"],
+        project: ["./tsconfig.eslint.json"],
       },
     },
 
@@ -90,7 +90,7 @@ export default [
       sourceType: "module",
 
       parserOptions: {
-        project: ["tsconfig.eslint.json"],
+        project: ["./tsconfig.eslint.json"],
       },
     },
 
@@ -123,7 +123,7 @@ export default [
       sourceType: "module",
 
       parserOptions: {
-        project: ["tsconfig.eslint.json"],
+        project: ["./tsconfig.eslint.json"],
       },
     },
 
