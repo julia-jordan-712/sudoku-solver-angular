@@ -15,6 +15,7 @@ import {
   SudokuGridCell,
   SudokuGridRow,
 } from "@app/shared/types/sudoku-grid";
+import { Assert } from "@app/shared/util/assertions";
 import { isArray } from "@app/shared/util/is-array";
 
 @Injectable()
@@ -78,7 +79,12 @@ export class SolverOpenBranch extends Solver {
         for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
           const cell: SudokuGridCell = row[columnIndex];
           if (isArray(cell) && cell.length === amountOfPossibleValues) {
-            return { cell: { row, column }, value: cell[0] };
+            const cellValue = cell[0];
+            Assert.defined(cellValue);
+            return {
+              cell: { row: rowIndex, column: columnIndex },
+              value: cellValue,
+            };
           }
         }
       }
