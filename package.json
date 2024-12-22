@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "clean": "git clean -dfX && npm install",
     "cy-headless": "npx cypress run --component --browser chrome",
     "cy-headed": "npx cypress run --component --browser chrome --headed --no-exit --spec",
     "cy-open": "npx cypress open --component --browser chrome",
     "build": "ng build",
-    "format": "npm run prettier && ng lint --fix",
+    "format": "npm run prettier && npm run lint",
     "generate-store": "ng generate @ngrx/schematics:store",
     "generate-feature-store": "ng generate @ngrx/schematics:feature --api false",
     "generate-action": "ng generate @ngrx/schematics:action",
