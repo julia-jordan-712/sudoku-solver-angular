@@ -14,12 +14,7 @@ export class SudokuPuzzleSelectionTestData {
     grid: undefined,
   };
 
-  public static readonly ITEMS: SudokuDropdownSelectionItem[] = [
-    SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
-    ...SudokuPuzzleSelectionTestData.createItems(),
-  ];
-
-  private static createItems(): SudokuDropdownSelectionItem[] {
+  public static createItems(): SudokuDropdownSelectionItem[] {
     const items: SudokuDropdownSelectionItem[] = [
       {
         id: "Puzzle4x4.EMPTY",

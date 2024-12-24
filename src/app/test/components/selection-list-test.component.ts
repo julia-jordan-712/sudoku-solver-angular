@@ -1,27 +1,8 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Nullable } from "@app/shared/types/nullable";
+import { Component } from "@angular/core";
+import { SelectionListComponent } from "@app/components/interactions/selection-list/selection-list.component";
 
 @Component({
   selector: "app-selection-list",
   template: `{{ value }}`,
 })
-export class SelectionListTestComponent {
-  @Input()
-  label: Nullable<string>;
-
-  @Input()
-  tooltip: Nullable<string>;
-
-  @Input()
-  value: Nullable<number>;
-
-  @Input()
-  values: number[] = [];
-
-  @Output()
-  valueChange: EventEmitter<number> = new EventEmitter();
-
-  change(value: number): void {
-    this.valueChange.emit(value);
-  }
-}
+export class SelectionListTestComponent extends SelectionListComponent {}

@@ -2,7 +2,10 @@ import { TestBed } from "@angular/core/testing";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
-import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
+import {
+  SudokuDropdownSelectionItem,
+  SudokuPuzzleState,
+} from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TestState } from "@app/test/state/test-state";
 
@@ -155,8 +158,13 @@ describe(SudokuPuzzleReducer.name, () => {
         TestState.createTestSudokuPuzzleState();
       testState.selectionOptions.selected =
         SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM;
+      const newSelectionItem: SudokuDropdownSelectionItem = {
+        id: "Puzzle4x4.COMPLETE",
+        i18nKey: { key: "PUZZLE.4x4.COMPLETE" },
+        grid: Puzzle4x4.COMPLETE,
+      };
       const action = SudokuPuzzleActions.userSetSelectedOption({
-        option: SudokuPuzzleSelectionTestData.ITEMS[2],
+        option: newSelectionItem,
       });
 
       const result = underTest.getReducer()(testState, action);
@@ -165,7 +173,7 @@ describe(SudokuPuzzleReducer.name, () => {
         ...testState,
         selectionOptions: {
           ...testState.selectionOptions,
-          selected: SudokuPuzzleSelectionTestData.ITEMS[2],
+          selected: newSelectionItem,
         },
       });
       expect(result.selectionOptions.selected).not.toEqual(

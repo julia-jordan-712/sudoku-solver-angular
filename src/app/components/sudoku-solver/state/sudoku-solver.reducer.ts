@@ -44,7 +44,11 @@ export class SudokuSolverReducer {
     return createReducer(
       this.createInitialState(),
       on(
-        AppActions.init,
+        AppActions.reinitialize,
+        (_state, _action): SudokuSolverState => this.createInitialState(),
+      ),
+      on(
+        AppActions.initFromState,
         (_state, action): SudokuSolverState => ({
           ...action.state.sudokuSolver,
           response: {

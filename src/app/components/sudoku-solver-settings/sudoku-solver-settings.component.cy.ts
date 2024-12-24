@@ -34,7 +34,6 @@ describe(SudokuSolverSettingsComponent.name, () => {
     underTest.maxSteps.get().should("not.exist");
     underTest.pauseAtStep.get().should("not.exist");
     underTest.highlightNumber.get().should("not.exist");
-    underTest.copySudoku.get().should("not.exist");
   });
 
   it("should display an input field for the delay", () => {

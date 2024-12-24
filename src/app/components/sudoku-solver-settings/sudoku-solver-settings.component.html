@@ -33,9 +33,5 @@
       [tooltip]="'SOLVER.HIGHLIGHT.NUMBER.TOOLTIP' | translate"
       (valueChange)="setHighlightNumber($event)"
     ></app-number-input>
-    <button data-cy="copySudoku" (click)="copyCurrentSudoku()">
-      <app-icon icon="copy"></app-icon>
-      {{ "PUZZLE.COPY_TO_CLIPBOARD" | translate }}
-    </button>
   </div>
 }
