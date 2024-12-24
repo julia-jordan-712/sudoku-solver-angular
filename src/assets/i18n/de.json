@@ -40,8 +40,7 @@
       "PUZZLE": "9x9 | Einfach | Rätsel {{number}}",
       "SOLVED": "9x9 | Einfach | Rätsel {{number}} - gelöst"
     },
-    "NONE": "-",
-    "COPY_TO_CLIPBOARD": "Aktuelles Sudoku in die Zwischenablage kopieren"
+    "NONE": "-"
   },
   "VERIFY": {
     "ERROR": {
@@ -125,5 +124,8 @@
     "ADDITIONAL": {
       "TITLE": "Kopie des Zustands vor der Erstellung des neuen Zweigs"
     }
+  },
+  "DEVELOPMENT": {
+    "COPY_TO_CLIPBOARD": "Sudoku in die Zwischenablage kopieren"
   }
 }

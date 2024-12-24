@@ -39,7 +39,6 @@ describe(MainComponent.name, () => {
     solverSettings.maxSteps.input.get().should("be.visible");
     solverSettings.pauseAtStep.input.get().should("be.visible");
     solverSettings.highlightNumber.input.get().should("be.visible");
-    solverSettings.copySudoku.get().should("be.visible");
 
     const languageSelector = new CyLanguageSelector();
     languageSelector.buttonEnglish.get().should("be.enabled");
