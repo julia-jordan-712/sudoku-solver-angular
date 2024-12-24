@@ -2,10 +2,8 @@ import { Component, inject } from "@angular/core";
 import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { isDefined } from "@app/shared/util/is-defined";
 import { Store } from "@ngrx/store";
-import { filter, map, Observable, take } from "rxjs";
+import { take, withLatestFrom } from "rxjs";
 
 @Component({
   selector: "app-copy-sudoku",
@@ -16,15 +14,22 @@ export class CopySudokuComponent {
   private store = inject(Store);
   private clipboard = inject(ClipboardService);
 
-  protected disabled$: Observable<boolean> = this.store
-    .select(SudokuPuzzleSelectors.selectIsConfirmed)
-    // eslint-disable-next-line @ngrx/avoid-mapping-selectors
-    .pipe(map((enabled) => !enabled));
-
   copyCurrentSudoku(): void {
     this.store
-      .select(SudokuSolverSelectors.selectCurrentBranchViewModel)
-      .pipe(take(1), filter(isDefined))
-      .subscribe((grid: SudokuGridViewModel) => this.clipboard.copy(grid));
+      .select(SudokuPuzzleSelectors.selectIsConfirmed)
+      .pipe(
+        withLatestFrom(
+          this.store.select(SudokuPuzzleSelectors.selectViewModel),
+          this.store.select(SudokuSolverSelectors.selectCurrentBranchViewModel),
+        ),
+        take(1),
+      )
+      .subscribe(([isSolving, puzzleViewModel, solverViewModel]) => {
+        if (isSolving) {
+          this.clipboard.copy(solverViewModel);
+        } else {
+          this.clipboard.copy(puzzleViewModel);
+        }
+      });
   }
 }

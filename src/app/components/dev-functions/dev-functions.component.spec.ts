@@ -6,7 +6,6 @@ import { DevFunctionsComponent } from "@app/components/dev-functions/dev-functio
 import { PasteSudokuComponent } from "@app/components/dev-functions/paste-sudoku/paste-sudoku.component";
 import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
 import { DevFunctionsSelectors } from "@app/components/dev-functions/state/dev-functions.selectors";
-import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { AppState } from "@app/state/app-state";
 import { IconTestComponent } from "@app/test/components/icon-test.component";
 import { TestState } from "@app/test/state/test-state";
@@ -72,7 +71,6 @@ describe(DevFunctionsComponent.name, () => {
 
   describe("copy sudoku button", () => {
     it("should call the clipboard service on every click", () => {
-      store.overrideSelector(SudokuPuzzleSelectors.selectIsConfirmed, true);
       setUp(true);
       expect(clipboardService.copy).not.toHaveBeenCalled();
 
