@@ -18,6 +18,7 @@ import {
   Action,
   ActionReducerMap,
   createActionGroup,
+  emptyProps,
   MetaReducer,
   props,
 } from "@ngrx/store";
@@ -26,7 +27,8 @@ import { environment } from "src/environments/environment";
 export const AppActions = createActionGroup({
   source: "Sudoku",
   events: {
-    init: props<{ state: AppState }>(),
+    initFromState: props<{ state: AppState }>(),
+    reinitialize: emptyProps(),
   },
 });
 

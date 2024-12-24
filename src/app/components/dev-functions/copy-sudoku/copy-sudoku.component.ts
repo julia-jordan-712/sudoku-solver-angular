@@ -14,7 +14,7 @@ export class CopySudokuComponent {
   private store = inject(Store);
   private clipboard = inject(ClipboardService);
 
-  copyCurrentSudoku(): void {
+  protected copyCurrentSudoku(): void {
     this.store
       .select(SudokuPuzzleSelectors.selectIsConfirmed)
       .pipe(

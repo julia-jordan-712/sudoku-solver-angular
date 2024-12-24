@@ -126,6 +126,7 @@
     }
   },
   "DEVELOPMENT": {
-    "COPY_TO_CLIPBOARD": "Sudoku in die Zwischenablage kopieren"
+    "COPY_TO_CLIPBOARD": "Sudoku in die Zwischenablage kopieren",
+    "CLEAR_STATE": "Auf Ausgangszustand zurücksetzen"
   }
 }

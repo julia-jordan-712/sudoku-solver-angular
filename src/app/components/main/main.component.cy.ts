@@ -2,8 +2,11 @@ import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
+import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { CySelectionList } from "@cypress/selectors/cy-selection-list";
+import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
@@ -173,5 +176,30 @@ describe(MainComponent.name, () => {
       .should("have.class", CySelectionList.CLASS_SELECTED);
     puzzleInput.sudoku.verification.shouldBeValid();
     puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
+  });
+
+  it("should reset to initial state when clicking button", () => {
+    // pre-act setup some state
+    puzzleInput.dropdown.dropdown.get().select("4x4 | Empty");
+    puzzleInput.buttonConfirm.get().click();
+
+    // pre-assert
+    puzzleInput.dropdown.get().should("not.exist");
+    puzzleInput.sizeSelector.get().should("not.exist");
+    solver.actions.get().should("be.visible");
+    solver.sudoku.shouldEqual(Puzzle4x4.EMPTY);
+
+    // act
+    new CyDevFunctions().clearState.get().click();
+
+    // assert
+    solver.actions.get().should("not.exist");
+    puzzleInput.dropdown.dropdown.get().should("contain.text", "");
+    puzzleInput.sizeSelector
+      .text("9")
+      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sudoku.shouldEqual(Puzzle9x9.EMPTY);
+    puzzleInput.sudoku.verification.shouldBeValid();
+    puzzleInput.buttonConfirm.get().should("be.enabled");
   });
 });

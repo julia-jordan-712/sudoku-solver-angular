@@ -21,7 +21,7 @@ export class StateInBrowserStorageService {
   setStateFromBrowser(): Promise<void> {
     const state = this.getAndRemoveItem<AppState>(this.STATE_STORAGE_KEY);
     if (state) {
-      this.store.dispatch(AppActions.init({ state: state }));
+      this.store.dispatch(AppActions.initFromState({ state: state }));
       this.log.logInfo("State set from browser storage");
     } else {
       this.log.logInfo("Could not read state from browser storage");

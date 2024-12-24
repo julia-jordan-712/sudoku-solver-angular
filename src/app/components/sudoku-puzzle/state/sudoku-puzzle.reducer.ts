@@ -32,7 +32,11 @@ export class SudokuPuzzleReducer {
     return createReducer(
       this.createInitialState(),
       on(
-        AppActions.init,
+        AppActions.reinitialize,
+        (_state, _action): SudokuPuzzleState => this.createInitialState(),
+      ),
+      on(
+        AppActions.initFromState,
         (_state, action): SudokuPuzzleState => ({
           ...action.state.sudokuPuzzle,
         }),

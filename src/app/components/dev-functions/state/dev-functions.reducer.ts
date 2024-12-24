@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DevFunctionsState } from "@app/components/dev-functions/state/dev-functions.state";
-import { ActionReducer, createReducer } from "@ngrx/store";
+import { AppActions } from "@app/state/app-state";
+import { ActionReducer, createReducer, on } from "@ngrx/store";
 import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: "root" })
@@ -12,6 +13,16 @@ export class DevFunctionsReducer {
   }
 
   getReducer(): ActionReducer<DevFunctionsState> {
-    return createReducer(this.createInitialState());
+    return createReducer(
+      this.createInitialState(),
+      on(
+        AppActions.reinitialize,
+        (_state, _action): DevFunctionsState => this.createInitialState(),
+      ),
+      on(
+        AppActions.initFromState,
+        (_state, _action): DevFunctionsState => this.createInitialState(),
+      ),
+    );
   }
 }
