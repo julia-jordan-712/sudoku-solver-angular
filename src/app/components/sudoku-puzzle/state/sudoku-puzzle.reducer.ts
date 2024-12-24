@@ -1,21 +1,29 @@
 import { Injectable } from "@angular/core";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
-import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
+import {
+  SudokuDropdownSelectionItem,
+  SudokuPuzzleState,
+} from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { AppActions } from "@app/state/app-state";
+import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
 import { ActionReducer, createReducer, on } from "@ngrx/store";
 
 @Injectable({ providedIn: "root" })
 export class SudokuPuzzleReducer {
   private createInitialState(): SudokuPuzzleState {
+    const items: SudokuDropdownSelectionItem[] = [
+      SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
+      ...SudokuPuzzleSelectionTestData.createItems(),
+    ];
     return {
       isConfirmed: false,
-      sudoku: SudokuPuzzleSelectionTestData.ITEMS?.[0]?.grid,
-      height: SudokuPuzzleSelectionTestData.ITEMS?.[0]?.grid?.length,
-      width: SudokuPuzzleSelectionTestData.ITEMS?.[0]?.grid?.length,
+      sudoku: Puzzle9x9.EMPTY,
+      height: 9,
+      width: 9,
       selectionOptions: {
-        options: SudokuPuzzleSelectionTestData.ITEMS,
-        selected: SudokuPuzzleSelectionTestData.ITEMS?.[0],
+        options: items,
+        selected: null,
       },
     };
   }

@@ -48,13 +48,12 @@ describe("SudokuPuzzleState", () => {
       );
       sudoku = store.selectSignal(SudokuPuzzleSelectors.selectSudoku);
 
-      store.dispatch(SudokuPuzzleActions.clearSelectedOption());
-      store.dispatch(SudokuPuzzleActions.setSudoku({ sudoku: undefined }));
+      store.dispatch(SudokuPuzzleActions.setSize({ height: 4, width: 4 }));
 
-      expect(height()).toBeUndefined();
-      expect(width()).toBeUndefined();
-      expect(selectedOption()).toBeUndefined();
-      expect(sudoku()).toBeUndefined();
+      expect(height()).toEqual(4);
+      expect(width()).toEqual(4);
+      expect(selectedOption()).toBeNull();
+      expect(sudoku()).toEqual(Puzzle4x4.EMPTY);
     });
 
     it("should set sudoku and size to the grid from the selected option", () => {

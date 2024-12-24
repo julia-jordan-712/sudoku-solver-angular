@@ -1,5 +1,6 @@
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import {
+  SudokuDropdownSelectionItem,
   SudokuPuzzleState,
   SudokuPuzzleStateKey,
 } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
@@ -72,14 +73,18 @@ export class TestState {
   public static createTestSudokuPuzzleState(
     grid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
   ): SudokuPuzzleState {
+    const items: SudokuDropdownSelectionItem[] = [
+      SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
+      ...SudokuPuzzleSelectionTestData.createItems(),
+    ];
     return {
       isConfirmed: true,
       sudoku: grid,
       height: grid.length,
       width: grid.length,
       selectionOptions: {
-        options: SudokuPuzzleSelectionTestData.ITEMS,
-        selected: SudokuPuzzleSelectionTestData.ITEMS?.[6],
+        options: items,
+        selected: items[6],
       },
     };
   }

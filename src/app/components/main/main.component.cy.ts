@@ -31,9 +31,6 @@ describe(MainComponent.name, () => {
     puzzleInput.buttonConfirm.get().should("be.visible");
     puzzleInput.dropdown.get().should("be.visible");
     puzzleInput.sizeSelector.get().should("be.visible");
-    puzzleInput.sudoku.get().should("exist").should("not.be.visible");
-
-    puzzleInput.dropdown.dropdown.get().select(3);
     puzzleInput.sudoku.get().should("be.visible");
     puzzleInput.sudoku.verification.valid.get().should("be.visible");
     puzzleInput.buttonConfirm.get().click();
