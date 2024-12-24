@@ -126,7 +126,8 @@
     }
   },
   "DEVELOPMENT": {
-    "COPY_TO_CLIPBOARD": "Copy Sudoku to clipboard",
-    "CLEAR_STATE": "Reset to initial state"
+    "COPY_TO_CLIPBOARD": "copy Sudoku to clipboard",
+    "CLEAR_STATE": "reset to initial state",
+    "PASTE_FROM_CLIPBOARD": "paste Sudoku from clipboard"
   }
 }

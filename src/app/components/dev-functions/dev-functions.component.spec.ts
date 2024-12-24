@@ -34,7 +34,7 @@ describe(DevFunctionsComponent.name, () => {
     clipboardService = TestBed.inject(ClipboardService);
     store = TestBed.inject(MockStore);
 
-    spyOn(clipboardService, "copy").and.callFake(() => {});
+    spyOn(clipboardService, "copy").and.callFake(() => Promise.resolve());
   });
 
   function setUp(isDevelopment: boolean): void {
