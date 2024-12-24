@@ -1,6 +1,8 @@
-@if (show$ | async) {
-  <button data-cy="copySudoku" (click)="copyCurrentSudoku()">
-    <app-icon icon="copy"></app-icon>
-    {{ "DEVELOPMENT.COPY_TO_CLIPBOARD" | translate }}
-  </button>
-}
+<button
+  data-cy="copySudoku"
+  (click)="copyCurrentSudoku()"
+  [disabled]="disabled$ | async"
+>
+  <app-icon icon="copy"></app-icon>
+  {{ "DEVELOPMENT.COPY_TO_CLIPBOARD" | translate }}
+</button>

@@ -8,7 +8,7 @@ export class ClipboardService {
 
   constructor(@Inject(DOCUMENT) private documentRef: Document) {}
 
-  copyToClipboard<T extends ClipboardElement>(value: T): void {
+  copy<T extends ClipboardElement>(value: T): void {
     const clipboardString = value.toClipboardString();
     this.documentRef.defaultView?.navigator?.clipboard
       ?.writeText(clipboardString)

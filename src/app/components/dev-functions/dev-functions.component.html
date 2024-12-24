@@ -1,3 +1,5 @@
-<app-copy-sudoku></app-copy-sudoku>
-<app-paste-sudoku></app-paste-sudoku>
-<app-clear-state></app-clear-state>
+@if (show$ | async) {
+  <app-copy-sudoku></app-copy-sudoku>
+  <app-paste-sudoku></app-paste-sudoku>
+  <app-clear-state></app-clear-state>
+}

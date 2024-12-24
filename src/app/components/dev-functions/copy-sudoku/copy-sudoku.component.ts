@@ -5,7 +5,7 @@ import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudok
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
 import { Store } from "@ngrx/store";
-import { filter, first, Observable } from "rxjs";
+import { filter, map, Observable, take } from "rxjs";
 
 @Component({
   selector: "app-copy-sudoku",
@@ -16,14 +16,15 @@ export class CopySudokuComponent {
   private store = inject(Store);
   private clipboard = inject(ClipboardService);
 
-  protected show$: Observable<boolean> = this.store.select(
-    SudokuPuzzleSelectors.selectIsConfirmed,
-  );
+  protected disabled$: Observable<boolean> = this.store
+    .select(SudokuPuzzleSelectors.selectIsConfirmed)
+    // eslint-disable-next-line @ngrx/avoid-mapping-selectors
+    .pipe(map((enabled) => !enabled));
 
   copyCurrentSudoku(): void {
     this.store
       .select(SudokuSolverSelectors.selectCurrentBranchViewModel)
-      .pipe(first(), filter(isDefined))
+      .pipe(take(1), filter(isDefined))
       .subscribe((grid: SudokuGridViewModel) => this.clipboard.copy(grid));
   }
 }

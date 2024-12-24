@@ -1,3 +1,7 @@
+import {
+  DevFunctionsState,
+  DevFunctionsStateKey,
+} from "@app/components/dev-functions/state/dev-functions.state";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import {
   SudokuDropdownSelectionItem,
@@ -17,6 +21,7 @@ import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 export class TestState {
   public static createEmptyAppState(): AppState {
     return {
+      [DevFunctionsStateKey]: this.createDevFunctionsState(),
       [SudokuPuzzleStateKey]: this.createEmptySudokuPuzzleState(),
       [SudokuSolverStateKey]: this.createEmptySudokuSolverState(),
     };
@@ -27,12 +32,17 @@ export class TestState {
     previousGrid?: SudokuGrid,
   ): AppState {
     return {
+      [DevFunctionsStateKey]: this.createDevFunctionsState(),
       [SudokuPuzzleStateKey]: this.createTestSudokuPuzzleState(),
       [SudokuSolverStateKey]: this.createTestSudokuSolverState(
         currentGrid,
         previousGrid,
       ),
     };
+  }
+
+  private static createDevFunctionsState(): DevFunctionsState {
+    return { isDev: true };
   }
 
   public static createEmptySudokuPuzzleState(): SudokuPuzzleState {
