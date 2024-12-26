@@ -76,7 +76,6 @@ export class SudokuPuzzleEffects {
       concatLatestFrom(() =>
         this.store.select(SudokuPuzzleSelectors.selectState),
       ),
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       map(([_, state]) => {
         return SudokuPuzzleActions.setSudoku({
           sudoku: this.gridUpdate.updateGrid(
