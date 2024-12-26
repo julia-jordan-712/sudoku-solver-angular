@@ -1,7 +1,19 @@
+@use "_mixins" as *;
+
 :host {
+  display: flex;
+  gap: 1em;
+}
+
+.section {
+  @include section;
+}
+
+.solver {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  overflow: auto;
 }
 
 .top {

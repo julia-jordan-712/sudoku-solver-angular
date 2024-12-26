@@ -1,12 +1,9 @@
-<div class="main">
-  <div class="content">
-    <h1>{{ "GENERAL.TITLE" | translate }}</h1>
-    <app-sudoku-puzzle></app-sudoku-puzzle>
-    <app-sudoku-solver></app-sudoku-solver>
-  </div>
-</div>
-<div class="sidebar">
-  <app-sudoku-solver-settings></app-sudoku-solver-settings>
-  <app-dev-functions></app-dev-functions>
+<div class="header">
+  <h1>{{ "GENERAL.TITLE" | translate }}</h1>
   <app-language-selection></app-language-selection>
+</div>
+<div class="content">
+  <app-sudoku-puzzle></app-sudoku-puzzle>
+  <app-sudoku-solver></app-sudoku-solver>
+  <app-dev-functions></app-dev-functions>
 </div>

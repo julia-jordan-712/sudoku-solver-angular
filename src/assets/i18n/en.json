@@ -1,6 +1,6 @@
 {
   "GENERAL": {
-    "TITLE": "Solve Sudoku"
+    "TITLE": "Sudoku solver"
   },
   "SETTINGS": {
     "TITLE": "Settings",
@@ -58,7 +58,6 @@
     }
   },
   "SOLVER": {
-    "TITLE": "Solver",
     "ACTIONS": {
       "START": "Start solving the Sudoku",
       "PAUSE": "Pause solving the Sudoku",
