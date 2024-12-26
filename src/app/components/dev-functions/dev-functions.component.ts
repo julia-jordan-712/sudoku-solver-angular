@@ -1,4 +1,5 @@
 import { Component, inject } from "@angular/core";
+import { DevFunctionActions } from "@app/components/dev-functions/state/dev-functions.actions";
 import { DevFunctionsSelectors } from "@app/components/dev-functions/state/dev-functions.selectors";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
@@ -14,4 +15,8 @@ export class DevFunctionsComponent {
   protected show$: Observable<boolean> = this.store.select(
     DevFunctionsSelectors.selectIsDevelopment,
   );
+
+  protected hideDevFunctions(): void {
+    this.store.dispatch(DevFunctionActions.hide());
+  }
 }

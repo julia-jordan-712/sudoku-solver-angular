@@ -1,5 +1,16 @@
+@use "_constants" as *;
+
 :host {
+  display: flex;
+}
+
+div {
   display: flex;
   flex-direction: column;
   gap: 0.25em;
+}
+
+.close {
+  color: $primary-color;
+  cursor: pointer;
 }
