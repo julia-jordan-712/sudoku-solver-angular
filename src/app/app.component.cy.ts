@@ -36,7 +36,7 @@ describe(AppComponent.name, () => {
     const solverSettings: CySolverSettings = new CySolverSettings();
 
     // change and pre-assert puzzle state
-    puzzleInput.dropdown.dropdown.get().select("4x4 | Empty");
+    puzzleInput.dropdown.dropdown.select("4x4 | Empty");
     puzzleInput.dropdown.get().should("contain.text", "4x4 | Empty");
     puzzleInput.sudoku.cell(0, 0).value.setValue(1);
     puzzleInput.sizeSelector

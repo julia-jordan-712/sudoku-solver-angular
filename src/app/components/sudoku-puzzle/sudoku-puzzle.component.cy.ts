@@ -29,7 +29,7 @@ describe(SudokuPuzzleComponent.name, () => {
       .get()
       .should("have.text", "Select existing Sudoku:");
     underTest.dropdown.icon.get().should("not.exist");
-    underTest.dropdown.dropdown.get().should("contain.text", "-");
+    underTest.dropdown.dropdown.expectSelected("-");
 
     underTest.sizeSelector.get().should("be.visible");
     underTest.sizeSelector.label.get().should("have.text", "Size:");
@@ -65,7 +65,7 @@ describe(SudokuPuzzleComponent.name, () => {
   });
 
   it("should update the grid and other fields when dropdown changes", () => {
-    underTest.dropdown.dropdown.get().select("4x4 | Solved");
+    underTest.dropdown.dropdown.select("4x4 | Solved");
 
     underTest.sudoku.get().should("be.visible");
     underTest.sudoku.shouldEqual(Puzzle4x4.COMPLETE);
@@ -79,7 +79,7 @@ describe(SudokuPuzzleComponent.name, () => {
       .should("not.have.class", CySelectionList.CLASS_SELECTED);
 
     // change dropdown to different value
-    underTest.dropdown.dropdown.get().select(0); // "no selection" item
+    underTest.dropdown.dropdown.unselect();
 
     underTest.sudoku.get().should("exist").should("not.be.visible");
     underTest.sudoku.verification.get().should("not.exist");
@@ -90,7 +90,7 @@ describe(SudokuPuzzleComponent.name, () => {
   });
 
   it("should update the grid when cell change is submitted", () => {
-    underTest.dropdown.dropdown.get().select("4x4 | Solved");
+    underTest.dropdown.dropdown.select("4x4 | Solved");
 
     /**
      * Enter 4 in last cell => value 4 is duplicated in
@@ -116,8 +116,8 @@ describe(SudokuPuzzleComponent.name, () => {
 
   it("should initialize an empty grid when only the size is set", () => {
     // pre-assert
-    underTest.dropdown.dropdown.get().select(1); // anything
-    underTest.dropdown.dropdown.get().select(0); // "no selection" item
+    underTest.dropdown.dropdown.select(1); // anything
+    underTest.dropdown.dropdown.unselect();
     underTest.sudoku.get().should("not.be.visible");
     underTest.buttonConfirm.get().should("be.disabled");
 
@@ -134,7 +134,7 @@ describe(SudokuPuzzleComponent.name, () => {
   });
 
   it("should update the grid when size changes", () => {
-    underTest.dropdown.dropdown.get().select("9x9 | Simple | Puzzle 1");
+    underTest.dropdown.dropdown.select("9x9 | Simple | Puzzle 1");
 
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_1.puzzle);
 
@@ -249,7 +249,7 @@ describe(SudokuPuzzleComponent.name, () => {
   });
 
   it("should re-initialize with the previous state after confirm and change-settings again", () => {
-    underTest.dropdown.dropdown.get().select("9x9 | Simple | Puzzle 3");
+    underTest.dropdown.dropdown.select("9x9 | Simple | Puzzle 3");
     underTest.buttonConfirm.get().should("be.enabled");
     underTest.dropdown.get().should("contain.text", "9x9 | Simple | Puzzle 3");
     underTest.sizeSelector
@@ -279,7 +279,7 @@ describe(SudokuPuzzleComponent.name, () => {
   });
 
   it("should not mark cells as changed when switching between dropdowns", () => {
-    underTest.dropdown.dropdown.get().select("4x4 | Solved");
+    underTest.dropdown.dropdown.select("4x4 | Solved");
 
     for (let row = 0; row <= 3; row++) {
       for (let column = 0; column <= 3; column++) {
@@ -287,7 +287,7 @@ describe(SudokuPuzzleComponent.name, () => {
       }
     }
 
-    underTest.dropdown.dropdown.get().select("4x4 | Empty");
+    underTest.dropdown.dropdown.select("4x4 | Empty");
 
     for (let row = 0; row <= 3; row++) {
       for (let column = 0; column <= 3; column++) {

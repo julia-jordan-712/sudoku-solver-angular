@@ -12,4 +12,9 @@ export class CyDevFunctions {
     { dataCy: "copySudoku", icon: "copy" },
     { tag: this.hostSelector },
   );
+
+  public readonly pasteSudoku: CyButtonWithIcon = new CyButtonWithIcon(
+    { dataCy: "pasteSudoku", icon: "paste" },
+    { tag: this.hostSelector },
+  );
 }

@@ -13,6 +13,7 @@ import { CySolver } from "@cypress/views/cy-solver";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 
 describe(MainComponent.name, () => {
+  const devFunctions: CyDevFunctions = new CyDevFunctions();
   const puzzleInput: CyPuzzleInput = new CyPuzzleInput();
   const solverSettings: CySolverSettings = new CySolverSettings();
   const solver: CySolver = new CySolver();
@@ -57,13 +58,13 @@ describe(MainComponent.name, () => {
 
   describe("maximum steps limit", () => {
     function selectEmptySudoku(): void {
-      puzzleInput.dropdown.dropdown.get().select("4x4 | Empty");
+      puzzleInput.dropdown.dropdown.select("4x4 | Empty");
       puzzleInput.buttonConfirm.get().click();
       solverSettings.maxSteps.input.setValue(4);
     }
 
     function selectNearlyDoneSudoku(): void {
-      puzzleInput.dropdown.dropdown.get().select("4x4 | Solved");
+      puzzleInput.dropdown.dropdown.select("4x4 | Solved");
       puzzleInput.sudoku
         .cell(0, 0)
         .value.get()
@@ -111,7 +112,7 @@ describe(MainComponent.name, () => {
 
   describe("pause after step", () => {
     beforeEach(() => {
-      puzzleInput.dropdown.dropdown.get().select(4);
+      puzzleInput.dropdown.dropdown.select(4);
       puzzleInput.buttonConfirm.get().click();
 
       solverSettings.maxSteps.input.setValue(4);
@@ -146,7 +147,7 @@ describe(MainComponent.name, () => {
 
   it("should re-initialize puzzle input with the previous state after confirm, solve and change-settings again", () => {
     // pre-assert puzzle input
-    puzzleInput.dropdown.dropdown.get().select("9x9 | Simple | Puzzle 3");
+    puzzleInput.dropdown.dropdown.select("9x9 | Simple | Puzzle 3");
     puzzleInput.dropdown
       .get()
       .should("contain.text", "9x9 | Simple | Puzzle 3");
@@ -180,7 +181,7 @@ describe(MainComponent.name, () => {
 
   it("should reset to initial state when clicking button", () => {
     // pre-act setup some state
-    puzzleInput.dropdown.dropdown.get().select("4x4 | Empty");
+    puzzleInput.dropdown.dropdown.select("4x4 | Empty");
     puzzleInput.buttonConfirm.get().click();
 
     // pre-assert
@@ -190,16 +191,61 @@ describe(MainComponent.name, () => {
     solver.sudoku.shouldEqual(Puzzle4x4.EMPTY);
 
     // act
-    new CyDevFunctions().clearState.get().click();
+    devFunctions.clearState.get().click();
 
     // assert
     solver.actions.get().should("not.exist");
-    puzzleInput.dropdown.dropdown.get().should("contain.text", "");
+    puzzleInput.dropdown.dropdown.expectSelected("-");
     puzzleInput.sizeSelector
       .text("9")
       .should("have.class", CySelectionList.CLASS_SELECTED);
     puzzleInput.sudoku.shouldEqual(Puzzle9x9.EMPTY);
     puzzleInput.sudoku.verification.shouldBeValid();
     puzzleInput.buttonConfirm.get().should("be.enabled");
+  });
+
+  describe("paste sudoku", () => {
+    it("should work only in puzzle mode", () => {
+      puzzleInput.buttonConfirm.get().should("be.enabled");
+      devFunctions.pasteSudoku.get().should("be.enabled");
+
+      puzzleInput.buttonConfirm.get().click();
+      puzzleInput.buttonConfirm.get().should("not.exist");
+      devFunctions.pasteSudoku.get().should("be.disabled");
+
+      puzzleInput.buttonReopen.get().click();
+      puzzleInput.buttonConfirm.get().should("exist");
+      devFunctions.pasteSudoku.get().should("be.enabled");
+    });
+
+    // this test does not work like this due to https://github.com/cypress-io/cypress/issues/18198
+    it.skip("should allow to paste a sudoku grid from the clipboard and update the rest of the state accordingly", () => {
+      // arrange
+      puzzleInput.dropdown.dropdown.select("9x9 | Simple | Puzzle 2");
+      devFunctions.copySudoku.get().click();
+
+      // pre-assert
+      puzzleInput.dropdown.dropdown.select("4x4 | Empty");
+      puzzleInput.sudoku.shouldEqual(Puzzle4x4.EMPTY);
+      puzzleInput.sizeSelector
+        .text("4")
+        .should("have.class", CySelectionList.CLASS_SELECTED);
+      puzzleInput.sizeSelector
+        .text("9")
+        .should("not.have.class", CySelectionList.CLASS_SELECTED);
+
+      // act
+      devFunctions.pasteSudoku.get().click();
+
+      // assert
+      puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_2.puzzle);
+      puzzleInput.sizeSelector
+        .text("4")
+        .should("not.have.class", CySelectionList.CLASS_SELECTED);
+      puzzleInput.sizeSelector
+        .text("9")
+        .should("have.class", CySelectionList.CLASS_SELECTED);
+      puzzleInput.dropdown.dropdown.expectSelected("-");
+    });
   });
 });
