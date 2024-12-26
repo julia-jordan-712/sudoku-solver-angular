@@ -1,5 +1,4 @@
 import { TestBed } from "@angular/core/testing";
-import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import {
@@ -59,7 +58,7 @@ describe(SudokuPuzzleReducer.name, () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
       testState.selectionOptions.selected =
-        SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM;
+        SudokuPuzzleReducer.NO_SELECTION_ITEM;
       const action = SudokuPuzzleActions.clearSelectedOption();
 
       const result = underTest.getReducer()(testState, action);
@@ -157,7 +156,7 @@ describe(SudokuPuzzleReducer.name, () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
       testState.selectionOptions.selected =
-        SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM;
+        SudokuPuzzleReducer.NO_SELECTION_ITEM;
       const newSelectionItem: SudokuDropdownSelectionItem = {
         id: "Puzzle4x4.COMPLETE",
         i18nKey: { key: "PUZZLE.4x4.COMPLETE" },

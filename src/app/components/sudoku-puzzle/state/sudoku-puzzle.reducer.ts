@@ -11,9 +11,15 @@ import { ActionReducer, createReducer, on } from "@ngrx/store";
 
 @Injectable({ providedIn: "root" })
 export class SudokuPuzzleReducer {
+  public static readonly NO_SELECTION_ITEM: SudokuDropdownSelectionItem = {
+    id: "None",
+    i18nKey: { key: "PUZZLE.NONE" },
+    grid: undefined,
+  };
+
   private createInitialState(): SudokuPuzzleState {
     const items: SudokuDropdownSelectionItem[] = [
-      SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
+      SudokuPuzzleReducer.NO_SELECTION_ITEM,
       ...SudokuPuzzleSelectionTestData.createItems(),
     ];
     return {

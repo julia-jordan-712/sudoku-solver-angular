@@ -69,9 +69,9 @@ export class SudokuGridCellViewModel implements ClipboardElement {
 
   toClipboardString(): string {
     return isArray(this.cell)
-      ? `[${this.cell.map((v) => (v != undefined ? v : "undefined")).join(", ")}]`
-      : this.cell != undefined
+      ? `[${this.cell.map((v) => (v != null ? v : "null")).join(", ")}]`
+      : this.cell != null
         ? this.cell.toString()
-        : "undefined";
+        : "null";
   }
 }

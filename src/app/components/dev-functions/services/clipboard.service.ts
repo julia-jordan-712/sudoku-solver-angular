@@ -20,7 +20,7 @@ export class ClipboardService {
       ?.write([
         new ClipboardItem({ [type]: new Blob([clipboardString], { type }) }),
       ])
-      .then(() => this.log.logDebug("Copied to clipboard", clipboardString));
+      .then(() => this.log.logDebug("Copied to clipboard:", clipboardString));
   }
 
   getValue(): Observable<string> {
@@ -36,7 +36,7 @@ export class ClipboardService {
       take(1),
       map((value) => this.sanitize(value)),
       tap((clipboardString) =>
-        this.log.logDebug("Read from clipboard", clipboardString),
+        this.log.logDebug("Read from clipboard:", clipboardString),
       ),
     );
   }

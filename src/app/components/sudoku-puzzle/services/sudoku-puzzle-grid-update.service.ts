@@ -57,9 +57,7 @@ export class SudokuPuzzleGridUpdateService {
   }
 
   private updateWidth(value: SudokuGrid, width: number): void {
-    value.forEach((row: SudokuGridRow) =>
-      this.update(row, width, () => undefined),
-    );
+    value.forEach((row: SudokuGridRow) => this.update(row, width, () => null));
   }
 
   private update(

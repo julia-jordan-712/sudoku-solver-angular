@@ -2,9 +2,9 @@ import { Signal } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { appStoreImports } from "@app/app.module";
 import { SudokuPuzzleGridUpdateService } from "@app/components/sudoku-puzzle/services/sudoku-puzzle-grid-update.service";
-import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
+import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
@@ -78,15 +78,13 @@ describe("SudokuPuzzleState", () => {
       );
       store.dispatch(
         SudokuPuzzleActions.userSetSelectedOption({
-          option: SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
+          option: SudokuPuzzleReducer.NO_SELECTION_ITEM,
         }),
       );
 
       expect(height()).toEqual(0);
       expect(width()).toEqual(0);
-      expect(selectedOption()).toEqual(
-        SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
-      );
+      expect(selectedOption()).toEqual(SudokuPuzzleReducer.NO_SELECTION_ITEM);
       expect(sudoku()).toEqual([]);
     });
 

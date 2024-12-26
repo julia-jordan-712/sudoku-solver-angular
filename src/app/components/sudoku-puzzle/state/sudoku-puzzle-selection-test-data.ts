@@ -8,12 +8,6 @@ import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { TestPuzzle } from "@app/test/puzzles/test-puzzle";
 
 export class SudokuPuzzleSelectionTestData {
-  public static readonly NO_SELECTION_ITEM: SudokuDropdownSelectionItem = {
-    id: "None",
-    i18nKey: { key: "PUZZLE.NONE" },
-    grid: undefined,
-  };
-
   public static createItems(): SudokuDropdownSelectionItem[] {
     const items: SudokuDropdownSelectionItem[] = [
       {
