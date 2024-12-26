@@ -5,7 +5,6 @@ import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { CySelectionList } from "@cypress/selectors/cy-selection-list";
 import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
@@ -151,9 +150,7 @@ describe(MainComponent.name, () => {
     puzzleInput.dropdown
       .get()
       .should("contain.text", "9x9 | Simple | Puzzle 3");
-    puzzleInput.sizeSelector
-      .text("9")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sizeSelector.text("9").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
     puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
 
@@ -172,9 +169,7 @@ describe(MainComponent.name, () => {
     puzzleInput.dropdown
       .get()
       .should("contain.text", "9x9 | Simple | Puzzle 3");
-    puzzleInput.sizeSelector
-      .text("9")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sizeSelector.text("9").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
     puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
   });
@@ -196,9 +191,7 @@ describe(MainComponent.name, () => {
     // assert
     solver.actions.get().should("not.exist");
     puzzleInput.dropdown.dropdown.expectSelected("-");
-    puzzleInput.sizeSelector
-      .text("9")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sizeSelector.text("9").expect("selected");
     puzzleInput.sudoku.shouldEqual(Puzzle9x9.EMPTY);
     puzzleInput.sudoku.verification.shouldBeValid();
     puzzleInput.buttonConfirm.get().should("be.enabled");
@@ -227,24 +220,16 @@ describe(MainComponent.name, () => {
       // pre-assert
       puzzleInput.dropdown.dropdown.select("4x4 | Empty");
       puzzleInput.sudoku.shouldEqual(Puzzle4x4.EMPTY);
-      puzzleInput.sizeSelector
-        .text("4")
-        .should("have.class", CySelectionList.CLASS_SELECTED);
-      puzzleInput.sizeSelector
-        .text("9")
-        .should("not.have.class", CySelectionList.CLASS_SELECTED);
+      puzzleInput.sizeSelector.text("4").expect("selected");
+      puzzleInput.sizeSelector.text("9").expect("not.selected");
 
       // act
       devFunctions.pasteSudoku.get().click();
 
       // assert
       puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_2.puzzle);
-      puzzleInput.sizeSelector
-        .text("4")
-        .should("not.have.class", CySelectionList.CLASS_SELECTED);
-      puzzleInput.sizeSelector
-        .text("9")
-        .should("have.class", CySelectionList.CLASS_SELECTED);
+      puzzleInput.sizeSelector.text("4").expect("not.selected");
+      puzzleInput.sizeSelector.text("9").expect("selected");
       puzzleInput.dropdown.dropdown.expectSelected("-");
     });
   });

@@ -1,6 +1,5 @@
 import { AppComponent } from "@app/app.component";
 import { AppModule } from "@app/app.module";
-import { CySelectionList } from "@cypress/selectors/cy-selection-list";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
@@ -39,9 +38,7 @@ describe(AppComponent.name, () => {
     puzzleInput.dropdown.dropdown.select("4x4 | Empty");
     puzzleInput.dropdown.get().should("contain.text", "4x4 | Empty");
     puzzleInput.sudoku.cell(0, 0).value.setValue(1);
-    puzzleInput.sizeSelector
-      .text("4")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sizeSelector.text("4").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
     puzzleInput.buttonConfirm.get().click();
 
@@ -98,9 +95,7 @@ describe(AppComponent.name, () => {
     puzzleInput.buttonReopen.get().click();
     puzzleInput.dropdown.get().should("contain.text", "4x4 | Empty");
     puzzleInput.sudoku.cell(0, 0).value.get().should("have.value", 1);
-    puzzleInput.sizeSelector
-      .text("4")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
+    puzzleInput.sizeSelector.text("4").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
   });
 });

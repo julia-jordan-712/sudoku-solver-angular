@@ -5,7 +5,6 @@ import { SudokuPuzzleModule } from "@app/components/sudoku-puzzle/sudoku-puzzle.
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { CySelectionList } from "@cypress/selectors/cy-selection-list";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 
 describe(SudokuPuzzleComponent.name, () => {
@@ -36,29 +35,33 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.sizeSelector.icon.get().should("not.exist");
     underTest.sizeSelector
       .index(0)
+      .get()
       .should("be.visible")
       .should("be.enabled")
-      .should("not.have.class", CySelectionList.CLASS_SELECTED)
       .should("contain.text", "4");
+    underTest.sizeSelector.index(0).expect("not.selected");
     underTest.sizeSelector
       .index(1)
+      .get()
       .should("be.visible")
       .should("be.enabled")
-      .should("have.class", CySelectionList.CLASS_SELECTED)
       .should("contain.text", "9");
+    underTest.sizeSelector.index(1).expect("selected");
     underTest.sizeSelector
       .index(2)
+      .get()
       .should("be.visible")
       .should("be.enabled")
-      .should("not.have.class", CySelectionList.CLASS_SELECTED)
       .should("contain.text", "16");
+    underTest.sizeSelector.index(2).expect("not.selected");
     underTest.sizeSelector
       .index(3)
+      .get()
       .should("be.visible")
       .should("be.enabled")
-      .should("not.have.class", CySelectionList.CLASS_SELECTED)
       .should("contain.text", "25");
-    underTest.sizeSelector.index(4).should("not.exist");
+    underTest.sizeSelector.index(3).expect("not.selected");
+    underTest.sizeSelector.index(4).get().should("not.exist");
 
     underTest.sudoku.get().should("be.visible");
     underTest.sudoku.shouldEqual(Puzzle9x9.EMPTY);
@@ -71,12 +74,8 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.sudoku.shouldEqual(Puzzle4x4.COMPLETE);
     underTest.sudoku.verification.shouldBeValid();
     underTest.buttonConfirm.get().should("be.enabled");
-    underTest.sizeSelector
-      .text("4")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
-    underTest.sizeSelector
-      .text("9")
-      .should("not.have.class", CySelectionList.CLASS_SELECTED);
+    underTest.sizeSelector.text("4").expect("selected");
+    underTest.sizeSelector.text("9").expect("not.selected");
 
     // change dropdown to different value
     underTest.dropdown.dropdown.unselect();
@@ -84,9 +83,7 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.sudoku.get().should("exist").should("not.be.visible");
     underTest.sudoku.verification.get().should("not.exist");
     underTest.buttonConfirm.get().should("be.disabled");
-    underTest.sizeSelector
-      .text("4")
-      .should("not.have.class", CySelectionList.CLASS_SELECTED);
+    underTest.sizeSelector.text("4").expect("not.selected");
   });
 
   it("should update the grid when cell change is submitted", () => {
@@ -122,15 +119,13 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.buttonConfirm.get().should("be.disabled");
 
     // act
-    underTest.sizeSelector.text("4").click();
+    underTest.sizeSelector.text("4").get().click();
 
     // assert
     underTest.sudoku.shouldEqual(Puzzle4x4.EMPTY);
     underTest.sudoku.verification.shouldBeValid();
     underTest.buttonConfirm.get().should("be.enabled");
-    underTest.sizeSelector
-      .text("4")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
+    underTest.sizeSelector.text("4").expect("selected");
   });
 
   it("should update the grid when size changes", () => {
@@ -138,7 +133,7 @@ describe(SudokuPuzzleComponent.name, () => {
 
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_1.puzzle);
 
-    underTest.sizeSelector.text("4").click();
+    underTest.sizeSelector.text("4").get().click();
 
     underTest.sudoku.shouldEqual([
       [undefined, 8, undefined, 4],
@@ -152,7 +147,7 @@ describe(SudokuPuzzleComponent.name, () => {
     );
     underTest.buttonConfirm.get().should("be.disabled");
 
-    underTest.sizeSelector.text("9").click();
+    underTest.sizeSelector.text("9").get().click();
 
     underTest.sudoku.shouldEqual([
       [
@@ -252,9 +247,7 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.dropdown.dropdown.select("9x9 | Simple | Puzzle 3");
     underTest.buttonConfirm.get().should("be.enabled");
     underTest.dropdown.get().should("contain.text", "9x9 | Simple | Puzzle 3");
-    underTest.sizeSelector
-      .text("9")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
+    underTest.sizeSelector.text("9").expect("selected");
     underTest.sudoku.verification.shouldBeValid();
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
 
@@ -271,9 +264,7 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.buttonReopen.get().should("not.exist");
     underTest.buttonConfirm.get().should("be.enabled");
     underTest.dropdown.get().should("contain.text", "9x9 | Simple | Puzzle 3");
-    underTest.sizeSelector
-      .text("9")
-      .should("have.class", CySelectionList.CLASS_SELECTED);
+    underTest.sizeSelector.text("9").expect("selected");
     underTest.sudoku.verification.shouldBeValid();
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
   });
