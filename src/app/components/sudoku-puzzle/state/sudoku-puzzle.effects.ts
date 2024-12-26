@@ -41,7 +41,7 @@ export class SudokuPuzzleEffects {
     return this.actions$.pipe(
       ofType(SudokuPuzzleActions.userSetSelectedOption),
       map((action) =>
-        SudokuPuzzleActions.setSudoku({ sudoku: action.option.grid }),
+        SudokuPuzzleActions.setSudoku({ sudoku: action.option?.data }),
       ),
     );
   });
@@ -51,8 +51,8 @@ export class SudokuPuzzleEffects {
       ofType(SudokuPuzzleActions.userSetSelectedOption),
       map((action) =>
         SudokuPuzzleActions.setSize({
-          height: action.option.grid?.length ?? 0,
-          width: action.option.grid?.[0]?.length ?? 0,
+          height: action.option?.data?.length ?? 0,
+          width: action.option?.data?.[0]?.length ?? 0,
         }),
       ),
     );

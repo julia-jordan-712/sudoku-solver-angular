@@ -1,7 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
-import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { Logger } from "@app/core/log/logger";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
@@ -38,8 +37,8 @@ export class PasteSudokuComponent {
         this.store.dispatch(
           SudokuPuzzleActions.userSetSelectedOption({
             option: {
-              ...SudokuPuzzleReducer.NO_SELECTION_ITEM,
-              grid: sudokuGrid,
+              id: undefined,
+              data: sudokuGrid,
             },
           }),
         );

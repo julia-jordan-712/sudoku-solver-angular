@@ -115,11 +115,16 @@ describe(SudokuPuzzleComponent.name, () => {
   });
 
   it("should initialize an empty grid when only the size is set", () => {
+    // pre-assert
+    underTest.dropdown.dropdown.get().select(1); // anything
     underTest.dropdown.dropdown.get().select(0); // "no selection" item
     underTest.sudoku.get().should("not.be.visible");
     underTest.buttonConfirm.get().should("be.disabled");
 
+    // act
     underTest.sizeSelector.text("4").click();
+
+    // assert
     underTest.sudoku.shouldEqual(Puzzle4x4.EMPTY);
     underTest.sudoku.verification.shouldBeValid();
     underTest.buttonConfirm.get().should("be.enabled");

@@ -39,8 +39,7 @@
     "SIMPLE": {
       "PUZZLE": "9x9 | Simple | Puzzle {{number}}",
       "SOLVED": "9x9 | Simple | Puzzle {{number}} - Solved"
-    },
-    "NONE": "-"
+    }
   },
   "VERIFY": {
     "ERROR": {

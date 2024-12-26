@@ -2,7 +2,7 @@ import { DOCUMENT } from "@angular/common";
 import { Inject, Injectable, SecurityContext } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Logger } from "@app/core/log/logger";
-import { from, map, Observable, switchMap, take, tap } from "rxjs";
+import { EMPTY, from, map, Observable, switchMap, take, tap } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class ClipboardService {
@@ -26,11 +26,14 @@ export class ClipboardService {
   getValue(): Observable<string> {
     const type = "text/plain";
     return from(
-      this.documentRef.defaultView?.navigator?.clipboard?.read(),
+      this.documentRef.defaultView?.navigator?.clipboard?.read() ?? [],
     ).pipe(
-      switchMap((items) =>
-        items.filter((item) => item.types.includes(type))[0]?.getType(type),
-      ),
+      switchMap((items: ClipboardItems) => {
+        const blobs = items
+          .filter((item) => item.types.includes(type))[0]
+          ?.getType(type);
+        return blobs ?? EMPTY;
+      }),
       take(1),
       switchMap((blob: Blob) => blob.text()),
       take(1),
@@ -43,7 +46,7 @@ export class ClipboardService {
 
   private sanitize(value: string): string {
     const div = this.documentRef.createElement("div");
-    div.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, value);
+    div.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, value) ?? "";
     const sanitized: string = div.innerText;
     div.remove();
     return sanitized;

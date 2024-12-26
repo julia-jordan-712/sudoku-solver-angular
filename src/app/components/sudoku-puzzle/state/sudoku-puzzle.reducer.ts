@@ -11,15 +11,8 @@ import { ActionReducer, createReducer, on } from "@ngrx/store";
 
 @Injectable({ providedIn: "root" })
 export class SudokuPuzzleReducer {
-  public static readonly NO_SELECTION_ITEM: SudokuDropdownSelectionItem = {
-    id: "None",
-    i18nKey: { key: "PUZZLE.NONE" },
-    grid: undefined,
-  };
-
   private createInitialState(): SudokuPuzzleState {
     const items: SudokuDropdownSelectionItem[] = [
-      SudokuPuzzleReducer.NO_SELECTION_ITEM,
       ...SudokuPuzzleSelectionTestData.createItems(),
     ];
     return {
@@ -29,7 +22,7 @@ export class SudokuPuzzleReducer {
       width: 9,
       selectionOptions: {
         options: items,
-        selected: null,
+        selectedId: undefined,
       },
     };
   }
@@ -58,7 +51,7 @@ export class SudokuPuzzleReducer {
         SudokuPuzzleActions.clearSelectedOption,
         (state): SudokuPuzzleState => ({
           ...state,
-          selectionOptions: { ...state.selectionOptions, selected: undefined },
+          selectionOptions: { ...state.selectionOptions, selectedId: null },
         }),
       ),
       on(
@@ -67,7 +60,7 @@ export class SudokuPuzzleReducer {
           ...state,
           selectionOptions: {
             ...state.selectionOptions,
-            selected: action.option,
+            selectedId: action.option?.id,
           },
         }),
       ),

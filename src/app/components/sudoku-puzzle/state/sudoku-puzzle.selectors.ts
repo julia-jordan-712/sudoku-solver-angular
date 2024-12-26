@@ -34,7 +34,14 @@ const selectSelectionOptions = createSelector(
 
 const selectSelectedOption = createSelector(
   selectState,
-  (state: SudokuPuzzleState) => state.selectionOptions.selected,
+  (state: SudokuPuzzleState) => {
+    const selectedId = state.selectionOptions.selectedId;
+    return selectedId
+      ? state.selectionOptions.options.find(
+          (option) => option.id === selectedId,
+        )
+      : null;
+  },
 );
 
 const selectSudoku = createSelector(

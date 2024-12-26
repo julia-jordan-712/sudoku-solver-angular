@@ -57,8 +57,7 @@ describe(SudokuPuzzleReducer.name, () => {
     it("should set the selected option to undefined", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      testState.selectionOptions.selected =
-        SudokuPuzzleReducer.NO_SELECTION_ITEM;
+      testState.selectionOptions.selectedId = undefined;
       const action = SudokuPuzzleActions.clearSelectedOption();
 
       const result = underTest.getReducer()(testState, action);
@@ -67,11 +66,11 @@ describe(SudokuPuzzleReducer.name, () => {
         ...testState,
         selectionOptions: {
           ...testState.selectionOptions,
-          selected: undefined,
+          selectedId: null,
         },
       });
-      expect(result.selectionOptions.selected).not.toEqual(
-        testState.selectionOptions.selected,
+      expect(result.selectionOptions.selectedId).not.toEqual(
+        testState.selectionOptions.selectedId,
       );
       expect(result.selectionOptions.options.length).toBeGreaterThan(0);
     });
@@ -155,12 +154,11 @@ describe(SudokuPuzzleReducer.name, () => {
     it("should set the selected option to the value from the action", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      testState.selectionOptions.selected =
-        SudokuPuzzleReducer.NO_SELECTION_ITEM;
+      testState.selectionOptions.selectedId = undefined;
       const newSelectionItem: SudokuDropdownSelectionItem = {
         id: "Puzzle4x4.COMPLETE",
         i18nKey: { key: "PUZZLE.4x4.COMPLETE" },
-        grid: Puzzle4x4.COMPLETE,
+        data: Puzzle4x4.COMPLETE,
       };
       const action = SudokuPuzzleActions.userSetSelectedOption({
         option: newSelectionItem,
@@ -172,11 +170,11 @@ describe(SudokuPuzzleReducer.name, () => {
         ...testState,
         selectionOptions: {
           ...testState.selectionOptions,
-          selected: newSelectionItem,
+          selectedId: newSelectionItem.id,
         },
       });
-      expect(result.selectionOptions.selected).not.toEqual(
-        testState.selectionOptions.selected,
+      expect(result.selectionOptions.selectedId).not.toEqual(
+        testState.selectionOptions.selectedId,
       );
       expect(result.selectionOptions.options.length).toBeGreaterThan(0);
     });

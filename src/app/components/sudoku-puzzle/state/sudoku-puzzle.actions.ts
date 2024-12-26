@@ -13,7 +13,7 @@ export const SudokuPuzzleActions = createActionGroup({
     "submit settings": emptyProps(),
     "user change size": props<{ height: number; width: number }>(),
     "user set selected option": props<{
-      option: SudokuDropdownSelectionItem;
+      option: Nullable<SudokuDropdownSelectionItem>;
     }>(),
   },
 });

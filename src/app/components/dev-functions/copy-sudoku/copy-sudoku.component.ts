@@ -25,9 +25,9 @@ export class CopySudokuComponent {
         take(1),
       )
       .subscribe(([isSolving, puzzleViewModel, solverViewModel]) => {
-        if (isSolving) {
+        if (isSolving && solverViewModel) {
           this.clipboard.copy(solverViewModel);
-        } else {
+        } else if (puzzleViewModel) {
           this.clipboard.copy(puzzleViewModel);
         }
       });

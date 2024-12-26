@@ -3,7 +3,6 @@ import {
   DevFunctionsStateKey,
 } from "@app/components/dev-functions/state/dev-functions.state";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
-import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import {
   SudokuDropdownSelectionItem,
   SudokuPuzzleState,
@@ -52,7 +51,7 @@ export class TestState {
       sudoku: undefined,
       height: undefined,
       width: undefined,
-      selectionOptions: { options: [], selected: undefined },
+      selectionOptions: { options: [], selectedId: undefined },
     };
   }
 
@@ -85,7 +84,6 @@ export class TestState {
     grid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
   ): SudokuPuzzleState {
     const items: SudokuDropdownSelectionItem[] = [
-      SudokuPuzzleReducer.NO_SELECTION_ITEM,
       ...SudokuPuzzleSelectionTestData.createItems(),
     ];
     return {
@@ -95,7 +93,7 @@ export class TestState {
       width: grid.length,
       selectionOptions: {
         options: items,
-        selected: items[6],
+        selectedId: items[6].id,
       },
     };
   }

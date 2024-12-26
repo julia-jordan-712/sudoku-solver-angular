@@ -42,7 +42,7 @@ export class SudokuPuzzleComponent {
     this.store.dispatch(SudokuPuzzleActions.submitSettings());
   }
 
-  onSelect(option: SudokuDropdownSelectionItem): void {
+  onSelect(option: Nullable<SudokuDropdownSelectionItem>): void {
     this.store.dispatch(SudokuPuzzleActions.userSetSelectedOption({ option }));
   }
 
