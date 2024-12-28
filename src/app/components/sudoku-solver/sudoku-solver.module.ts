@@ -5,7 +5,7 @@ import { NumberInputModule } from "@app/components/interactions/number-input/num
 import { SectionModule } from "@app/components/section/section.module";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
-import { SudokuSolverActionsComponent } from "@app/components/sudoku-solver/sudoku-solver-actions/sudoku-solver-actions.component";
+import { SudokuSolverActionsModule } from "@app/components/sudoku-solver/sudoku-solver-actions/sudoku-solver-actions.module";
 import { SudokuSolverBranchesModule } from "@app/components/sudoku-solver/sudoku-solver-branches/sudoku-solver-branches.module";
 import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver/sudoku-solver-settings/sudoku-solver-settings.module";
 import { SudokuSolverStatusModule } from "@app/components/sudoku-solver/sudoku-solver-status/sudoku-solver-status.module";
@@ -15,7 +15,7 @@ import { EffectsModule } from "@ngrx/effects";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [SudokuSolverComponent, SudokuSolverActionsComponent],
+  declarations: [SudokuSolverComponent],
   imports: [
     CommonModule,
     EffectsModule.forFeature([SudokuSolverEffects]),
@@ -23,6 +23,7 @@ import { TranslateModule } from "@ngx-translate/core";
     NumberInputModule,
     SectionModule,
     SudokuGridModule,
+    SudokuSolverActionsModule,
     SudokuSolverBranchesModule,
     SudokuSolverSettingsModule,
     SudokuSolverStatusModule,
