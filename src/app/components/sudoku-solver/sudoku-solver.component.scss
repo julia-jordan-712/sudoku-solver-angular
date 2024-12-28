@@ -1,17 +1,20 @@
 :host {
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-template-rows: min-content min-content min-content minmax(
+      min-content,
+      1fr
+    );
+  gap: 1em;
+}
+
+.flex {
   display: flex;
+  flex-direction: column;
   gap: 1em;
 }
 
 .solver {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
   overflow: auto;
-}
-
-.top {
-  display: flex;
-  gap: 1em;
-  align-items: center;
+  grid-row: 1 / span 4;
 }

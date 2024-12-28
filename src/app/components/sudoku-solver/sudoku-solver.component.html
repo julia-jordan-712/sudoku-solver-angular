@@ -1,24 +1,16 @@
 @if (show$ | async) {
-  <app-section class="solver">
+  <app-section class="solver flex">
     @if (additionalBranches$ | async; as branches) {
-      @if (currentBranch$ | async; as currentBranch) {
-        <div class="top">
-          <app-sudoku-solver-actions></app-sudoku-solver-actions>
-          <app-sudoku-solver-status></app-sudoku-solver-status>
-          <app-sudoku-solver-branches></app-sudoku-solver-branches>
-          <app-sudoku-solver-steps></app-sudoku-solver-steps>
-        </div>
-        @if (branches.length > 0) {
-          <h2>{{ "BRANCH.CURRENT.TITLE" | translate }}</h2>
-        }
-        <app-sudoku-grid
-          data-cy="current-branch"
-          [grid]="currentBranch"
-          [highlightNumber]="highlightNumber$ | async"
-          [readonly]="true"
-          [showVerification]="(hideVerification$ | async) !== false"
-        ></app-sudoku-grid>
+      @if (branches.length > 0) {
+        <h2>{{ "BRANCH.CURRENT.TITLE" | translate }}</h2>
       }
+      <app-sudoku-grid
+        data-cy="current-branch"
+        [grid]="currentBranch$ | async"
+        [highlightNumber]="highlightNumber$ | async"
+        [readonly]="true"
+        [showVerification]="(hideVerification$ | async) !== false"
+      ></app-sudoku-grid>
       @if (branches.length > 0) {
         <h2>{{ "BRANCH.ADDITIONAL.TITLE" | translate }}</h2>
         @for (branch of branches; track branch.id; let i = $index) {
@@ -33,6 +25,14 @@
     }
   </app-section>
   <app-sudoku-puzzle-solver-switch></app-sudoku-puzzle-solver-switch>
+  <app-section>
+    <app-sudoku-solver-actions></app-sudoku-solver-actions>
+  </app-section>
+  <app-section class="flex">
+    <app-sudoku-solver-status></app-sudoku-solver-status>
+    <app-sudoku-solver-branches></app-sudoku-solver-branches>
+    <app-sudoku-solver-steps></app-sudoku-solver-steps>
+  </app-section>
   <app-section>
     <app-sudoku-solver-settings></app-sudoku-solver-settings>
   </app-section>

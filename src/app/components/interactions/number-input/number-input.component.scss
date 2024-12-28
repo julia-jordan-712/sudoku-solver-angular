@@ -10,7 +10,7 @@ input {
   border: none;
   outline: none;
   border-bottom: 2px solid $primary-color;
-  width: 3em;
+  min-width: 3em;
   text-align: right;
 
   &::before,
