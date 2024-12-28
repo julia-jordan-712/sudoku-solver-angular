@@ -1,8 +1,8 @@
-@use "_mixins" as *;
-
 :host {
-  @include section;
-  display: flex;
+  display: contents;
+}
+
+app-section {
   flex-direction: column;
   gap: 1em;
   overflow: auto;

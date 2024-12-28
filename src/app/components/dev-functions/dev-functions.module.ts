@@ -5,6 +5,7 @@ import { CopySudokuComponent } from "@app/components/dev-functions/copy-sudoku/c
 import { DevFunctionsComponent } from "@app/components/dev-functions/dev-functions.component";
 import { PasteSudokuComponent } from "@app/components/dev-functions/paste-sudoku/paste-sudoku.component";
 import { IconModule } from "@app/components/icon/icon.module";
+import { SectionModule } from "@app/components/section/section.module";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
@@ -14,7 +15,7 @@ import { TranslateModule } from "@ngx-translate/core";
     DevFunctionsComponent,
     PasteSudokuComponent,
   ],
-  imports: [CommonModule, IconModule, TranslateModule],
+  imports: [CommonModule, IconModule, SectionModule, TranslateModule],
   exports: [DevFunctionsComponent],
 })
 export class DevFunctionsModule {}

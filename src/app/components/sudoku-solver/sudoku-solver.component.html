@@ -1,36 +1,40 @@
 @if (show$ | async) {
-  <div class="solver section">
-    @if (additionalBranches$ | async; as branches) {
-      @if (currentBranch$ | async; as currentBranch) {
-        <div class="top">
-          <app-sudoku-solver-actions></app-sudoku-solver-actions>
-          <app-sudoku-solver-status></app-sudoku-solver-status>
-          <app-sudoku-solver-branches></app-sudoku-solver-branches>
-          <app-sudoku-solver-steps></app-sudoku-solver-steps>
-        </div>
-        @if (branches.length > 0) {
-          <h2>{{ "BRANCH.CURRENT.TITLE" | translate }}</h2>
-        }
-        <app-sudoku-grid
-          data-cy="current-branch"
-          [grid]="currentBranch"
-          [highlightNumber]="highlightNumber$ | async"
-          [readonly]="true"
-          [showVerification]="(hideVerification$ | async) !== false"
-        ></app-sudoku-grid>
-      }
-      @if (branches.length > 0) {
-        <h2>{{ "BRANCH.ADDITIONAL.TITLE" | translate }}</h2>
-        @for (branch of branches; track branch.id; let i = $index) {
+  <div class="container">
+    <app-section class="solver">
+      @if (additionalBranches$ | async; as branches) {
+        @if (currentBranch$ | async; as currentBranch) {
+          <div class="top">
+            <app-sudoku-solver-actions></app-sudoku-solver-actions>
+            <app-sudoku-solver-status></app-sudoku-solver-status>
+            <app-sudoku-solver-branches></app-sudoku-solver-branches>
+            <app-sudoku-solver-steps></app-sudoku-solver-steps>
+          </div>
+          @if (branches.length > 0) {
+            <h2>{{ "BRANCH.CURRENT.TITLE" | translate }}</h2>
+          }
           <app-sudoku-grid
-            [attr.data-cy]="'additional-branch-' + i"
-            [grid]="branch"
+            data-cy="current-branch"
+            [grid]="currentBranch"
             [highlightNumber]="highlightNumber$ | async"
             [readonly]="true"
+            [showVerification]="(hideVerification$ | async) !== false"
           ></app-sudoku-grid>
         }
+        @if (branches.length > 0) {
+          <h2>{{ "BRANCH.ADDITIONAL.TITLE" | translate }}</h2>
+          @for (branch of branches; track branch.id; let i = $index) {
+            <app-sudoku-grid
+              [attr.data-cy]="'additional-branch-' + i"
+              [grid]="branch"
+              [highlightNumber]="highlightNumber$ | async"
+              [readonly]="true"
+            ></app-sudoku-grid>
+          }
+        }
       }
-    }
+    </app-section>
+    <app-section>
+      <app-sudoku-solver-settings></app-sudoku-solver-settings>
+    </app-section>
   </div>
-  <app-sudoku-solver-settings class="section"></app-sudoku-solver-settings>
 }

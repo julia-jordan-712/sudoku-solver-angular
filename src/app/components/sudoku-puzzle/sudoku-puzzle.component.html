@@ -1,45 +1,49 @@
 @if (confirmed$ | async) {
-  <button id="changeSettings" (click)="changeSettings()">
-    <app-icon icon="edit"></app-icon>
-    {{ "SETTINGS.CHANGE" | translate }}
-  </button>
+  <app-section
+    ><button id="changeSettings" (click)="changeSettings()">
+      <app-icon icon="edit"></app-icon>
+      {{ "SETTINGS.CHANGE" | translate }}
+    </button></app-section
+  >
 } @else {
-  <div>{{ "SETTINGS.HINTS.SELECT_OR_SIZE" | translate }}</div>
-  <div class="settings">
-    <app-dropdown-input
-      data-cy="existing-sudoku-selection"
-      [label]="'SETTINGS.SELECT' | translate"
-      [items]="(selectionItems$ | async) ?? []"
-      [selectedItem]="selectedItem$ | async"
-      (selected)="onSelect($event)"
-    ></app-dropdown-input>
-    <app-selection-list
-      data-cy="sudoku-size-selection"
-      id="sizeInput"
-      [label]="'SETTINGS.SIZE' | translate"
-      [value]="size$ | async"
-      [values]="[4, 9, 16, 25]"
-      (valueChange)="setSize($event)"
-    ></app-selection-list>
-  </div>
-  @if (((grid$ | async)?.rows?.length ?? 0) > 0) {
-    <div>
-      {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
+  <app-section>
+    <div>{{ "SETTINGS.HINTS.SELECT_OR_SIZE" | translate }}</div>
+    <div class="settings">
+      <app-dropdown-input
+        data-cy="existing-sudoku-selection"
+        [label]="'SETTINGS.SELECT' | translate"
+        [items]="(selectionItems$ | async) ?? []"
+        [selectedItem]="selectedItem$ | async"
+        (selected)="onSelect($event)"
+      ></app-dropdown-input>
+      <app-selection-list
+        data-cy="sudoku-size-selection"
+        id="sizeInput"
+        [label]="'SETTINGS.SIZE' | translate"
+        [value]="size$ | async"
+        [values]="[4, 9, 16, 25]"
+        (valueChange)="setSize($event)"
+      ></app-selection-list>
     </div>
-  }
-  <app-sudoku-grid
-    [grid]="grid$ | async"
-    (valueChange)="onCellChange($event)"
-    (valueSubmit)="onCellSubmit($event)"
-  >
-  </app-sudoku-grid>
-  <button
-    id="confirmSettings"
-    class="primary"
-    [disabled]="(confirmEnabled$ | async) === false"
-    (click)="submit()"
-  >
-    <app-icon icon="check"></app-icon>
-    {{ "SETTINGS.DONE" | translate }}
-  </button>
+    @if (((grid$ | async)?.rows?.length ?? 0) > 0) {
+      <div>
+        {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
+      </div>
+    }
+    <app-sudoku-grid
+      [grid]="grid$ | async"
+      (valueChange)="onCellChange($event)"
+      (valueSubmit)="onCellSubmit($event)"
+    >
+    </app-sudoku-grid>
+    <button
+      id="confirmSettings"
+      class="primary"
+      [disabled]="(confirmEnabled$ | async) === false"
+      (click)="submit()"
+    >
+      <app-icon icon="check"></app-icon>
+      {{ "SETTINGS.DONE" | translate }}
+    </button>
+  </app-section>
 }

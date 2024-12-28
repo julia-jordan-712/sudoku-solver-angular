@@ -1,13 +1,15 @@
 @if (show$ | async) {
-  <div>
-    <app-copy-sudoku></app-copy-sudoku>
-    <app-paste-sudoku></app-paste-sudoku>
-    <app-clear-state></app-clear-state>
-  </div>
-  <app-icon
-    class="close"
-    icon="close"
-    type="mat"
-    (click)="hideDevFunctions()"
-  ></app-icon>
+  <app-section>
+    <div>
+      <app-copy-sudoku></app-copy-sudoku>
+      <app-paste-sudoku></app-paste-sudoku>
+      <app-clear-state></app-clear-state>
+    </div>
+    <app-icon
+      class="close"
+      icon="close"
+      type="mat"
+      (click)="hideDevFunctions()"
+    ></app-icon>
+  </app-section>
 }

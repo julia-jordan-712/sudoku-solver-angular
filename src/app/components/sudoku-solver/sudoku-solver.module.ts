@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { IconModule } from "@app/components/icon/icon.module";
 import { NumberInputModule } from "@app/components/interactions/number-input/number-input.module";
+import { SectionModule } from "@app/components/section/section.module";
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
 import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.module";
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
@@ -26,6 +27,7 @@ import { TranslateModule } from "@ngx-translate/core";
     EffectsModule.forFeature([SudokuSolverEffects]),
     IconModule,
     NumberInputModule,
+    SectionModule,
     SudokuGridModule,
     SudokuSolverSettingsModule,
     TranslateModule,

@@ -1,15 +1,13 @@
 @use "_constants" as *;
-@use "_mixins" as *;
 
 :host {
-  @include section;
-  display: flex;
+  display: contents;
 }
 
 div {
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
+  gap: 0.5em;
 }
 
 .close {
