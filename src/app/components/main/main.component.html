@@ -3,7 +3,10 @@
   <app-language-selection></app-language-selection>
 </div>
 <div class="content">
-  <app-sudoku-puzzle></app-sudoku-puzzle>
-  <app-sudoku-solver></app-sudoku-solver>
+  @if (showPuzzle$ | async) {
+    <app-sudoku-puzzle></app-sudoku-puzzle>
+  } @else {
+    <app-sudoku-solver></app-sudoku-solver>
+  }
   <app-dev-functions></app-dev-functions>
 </div>
