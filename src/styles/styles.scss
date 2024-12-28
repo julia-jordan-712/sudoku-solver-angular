@@ -8,75 +8,81 @@ body {
   display: block;
   margin: 0;
   padding: 0;
-  font-size: 16px;
 
   * {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-weight: $font-weight-normal;
-  }
-
-  h1,
-  h2,
-  h3 {
-    display: block;
-    margin: 0px;
-    white-space: nowrap;
-  }
-
-  h1 {
-    font-size: 24px;
-    font-weight: $font-weight-bolder;
-  }
-  h2 {
-    font-size: 21px;
-    font-weight: $font-weight-normal;
-  }
-  h3 {
-    font-size: 18px;
-    font-weight: $font-weight-bolder;
-  }
-
-  button {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    border-radius: 0.25em;
-    box-sizing: border-box;
-    cursor: pointer;
-    line-height: 2em;
-    width: max-content;
-    padding: 0 1em;
-    outline: none;
-    transition: background-color 100ms;
-
-    background-color: white;
-    color: $primary-color;
-    border: 1px solid $primary-color;
-
-    &:hover,
-    &:focus {
-      color: $primary-hover-color;
-      border-color: $primary-hover-color;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-    }
-
-    &.primary {
-      background-color: $primary-color;
-      color: $on-primary-color;
-      border-style: none;
-
-      &:hover,
-      &:focus {
-        background-color: $primary-hover-color;
-      }
-    }
   }
 }
 
 html,
 body {
   height: 100%;
+}
+
+// --- fonts ---
+
+h1,
+h2,
+h3 {
+  display: block;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+body {
+  font-size: 16px;
+}
+h3 {
+  font-size: 18px;
+  font-weight: $font-weight-bolder;
+}
+h2 {
+  font-size: 21px;
+  font-weight: $font-weight-normal;
+}
+h1 {
+  font-size: 24px;
+  font-weight: $font-weight-bolder;
+}
+
+// --- interactive elements ---
+
+button {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: 2em;
+  width: max-content;
+  padding: 0 1em;
+  outline: none;
+  transition: background-color 100ms;
+
+  background-color: white;
+  color: $primary-color;
+  border: 1px solid $primary-color;
+
+  &:hover,
+  &:focus {
+    color: $primary-hover-color;
+    border-color: $primary-hover-color;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &.primary {
+    background-color: $primary-color;
+    color: $on-primary-color;
+    border-style: none;
+
+    &:hover,
+    &:focus {
+      background-color: $primary-hover-color;
+    }
+  }
 }
