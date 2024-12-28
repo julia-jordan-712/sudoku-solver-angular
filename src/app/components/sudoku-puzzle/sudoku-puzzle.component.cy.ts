@@ -5,6 +5,7 @@ import { SudokuPuzzleModule } from "@app/components/sudoku-puzzle/sudoku-puzzle.
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 
 describe(SudokuPuzzleComponent.name, () => {
@@ -15,7 +16,7 @@ describe(SudokuPuzzleComponent.name, () => {
       SudokuPuzzleWrapperComponent,
       SudokuPuzzleModule,
       {},
-      { imports: appStoreImports },
+      { imports: appStoreImports, providers: SOLVER_TEST_PROVIDERS },
     );
   });
 
