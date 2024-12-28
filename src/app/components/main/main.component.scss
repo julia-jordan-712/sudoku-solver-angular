@@ -2,29 +2,24 @@
 
 :host {
   display: flex;
-}
-
-.main {
-  display: flex;
-  height: 100vh;
-  flex-grow: 1;
-  overflow: auto;
-
-  .content {
-    display: flex;
-    padding: 1em;
-    flex-direction: column;
-    gap: 1em;
-  }
-}
-
-.sidebar {
-  display: flex;
   flex-direction: column;
-  height: 100vh;
-  justify-content: space-between;
+  background-color: $background-color;
+}
 
-  min-width: fit-content;
-  flex-shrink: 1;
-  border-left: $border;
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: $surface-color;
+  padding: 1em;
+}
+
+.content {
+  display: flex;
+  height: calc(100vh - 32px - 2em);
+  box-sizing: border-box;
+  padding: 1em;
+
+  app-dev-functions {
+    margin-left: 1em;
+  }
 }

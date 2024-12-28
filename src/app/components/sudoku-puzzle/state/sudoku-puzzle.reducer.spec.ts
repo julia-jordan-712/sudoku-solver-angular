@@ -1,8 +1,11 @@
 import { TestBed } from "@angular/core/testing";
-import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
-import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
+import {
+  SudokuDropdownSelectionItem,
+  SudokuPuzzleState,
+} from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
 import { TestState } from "@app/test/state/test-state";
 
@@ -34,20 +37,20 @@ describe(SudokuPuzzleReducer.name, () => {
     },
   );
 
-  describe(SudokuPuzzleActions.changeSettings.type, () => {
-    it("should set to unconfirmed", () => {
+  describe(SudokuPuzzleSolverSwitchActions.changePuzzle.type, () => {
+    it("should set to shown", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      testState.isConfirmed = true;
-      const action = SudokuPuzzleActions.changeSettings();
+      testState.show = false;
+      const action = SudokuPuzzleSolverSwitchActions.changePuzzle();
 
       const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
-        isConfirmed: false,
+        show: true,
       });
-      expect(result.isConfirmed).not.toEqual(testState.isConfirmed);
+      expect(result.show).not.toEqual(testState.show);
     });
   });
 
@@ -55,8 +58,7 @@ describe(SudokuPuzzleReducer.name, () => {
     it("should set the selected option to undefined", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      testState.selectionOptions.selected =
-        SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM;
+      testState.selectionOptions.selectedId = undefined;
       const action = SudokuPuzzleActions.clearSelectedOption();
 
       const result = underTest.getReducer()(testState, action);
@@ -65,11 +67,11 @@ describe(SudokuPuzzleReducer.name, () => {
         ...testState,
         selectionOptions: {
           ...testState.selectionOptions,
-          selected: undefined,
+          selectedId: null,
         },
       });
-      expect(result.selectionOptions.selected).not.toEqual(
-        testState.selectionOptions.selected,
+      expect(result.selectionOptions.selectedId).not.toEqual(
+        testState.selectionOptions.selectedId,
       );
       expect(result.selectionOptions.options.length).toBeGreaterThan(0);
     });
@@ -132,20 +134,20 @@ describe(SudokuPuzzleReducer.name, () => {
     });
   });
 
-  describe(SudokuPuzzleActions.submitSettings.type, () => {
-    it("should set to confirmed", () => {
+  describe(SudokuPuzzleSolverSwitchActions.submitPuzzle.type, () => {
+    it("should set to hidden", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      testState.isConfirmed = false;
-      const action = SudokuPuzzleActions.submitSettings();
+      testState.show = true;
+      const action = SudokuPuzzleSolverSwitchActions.submitPuzzle();
 
       const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
-        isConfirmed: true,
+        show: false,
       });
-      expect(result.isConfirmed).not.toEqual(testState.isConfirmed);
+      expect(result.show).not.toEqual(testState.show);
     });
   });
 
@@ -153,10 +155,14 @@ describe(SudokuPuzzleReducer.name, () => {
     it("should set the selected option to the value from the action", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      testState.selectionOptions.selected =
-        SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM;
+      testState.selectionOptions.selectedId = undefined;
+      const newSelectionItem: SudokuDropdownSelectionItem = {
+        id: "Puzzle4x4.COMPLETE",
+        i18nKey: { key: "PUZZLE.4x4.COMPLETE" },
+        data: Puzzle4x4.COMPLETE,
+      };
       const action = SudokuPuzzleActions.userSetSelectedOption({
-        option: SudokuPuzzleSelectionTestData.ITEMS[2],
+        option: newSelectionItem,
       });
 
       const result = underTest.getReducer()(testState, action);
@@ -165,11 +171,11 @@ describe(SudokuPuzzleReducer.name, () => {
         ...testState,
         selectionOptions: {
           ...testState.selectionOptions,
-          selected: SudokuPuzzleSelectionTestData.ITEMS[2],
+          selectedId: newSelectionItem.id,
         },
       });
-      expect(result.selectionOptions.selected).not.toEqual(
-        testState.selectionOptions.selected,
+      expect(result.selectionOptions.selectedId).not.toEqual(
+        testState.selectionOptions.selectedId,
       );
       expect(result.selectionOptions.options.length).toBeGreaterThan(0);
     });

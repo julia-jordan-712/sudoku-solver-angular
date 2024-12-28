@@ -1,20 +1,20 @@
-import { DropdownInputOption } from "@app/components/interactions/dropdown-input/dropdown-input.component";
 import { Nullable } from "@app/shared/types/nullable";
+import { SingleSelectionInputOption } from "@app/shared/types/single-selection-input-option";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
-export interface SudokuDropdownSelectionItem extends DropdownInputOption {
-  grid: SudokuGrid | undefined;
-}
+export type SudokuDropdownSelectionItem = SingleSelectionInputOption<
+  Nullable<SudokuGrid>
+>;
 
 export const SudokuPuzzleStateKey = "sudokuPuzzle";
 
 export interface SudokuPuzzleState {
-  isConfirmed: boolean;
+  show: boolean;
   height: Nullable<number>;
   width: Nullable<number>;
   selectionOptions: {
     options: SudokuDropdownSelectionItem[];
-    selected: Nullable<SudokuDropdownSelectionItem>;
+    selectedId: Nullable<string>;
   };
   sudoku: Nullable<SudokuGrid>;
 }

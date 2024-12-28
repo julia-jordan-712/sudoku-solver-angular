@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import {
   SudokuSolverActions,
   SudokuSolverActionStepResult,
@@ -21,6 +22,7 @@ import { v4 as randomUUID } from "uuid";
 export class SudokuSolverReducer {
   private createInitialState(): SudokuSolverState {
     return {
+      show: false,
       executionInfo: {
         id: randomUUID(),
         amountOfBranches: 1,
@@ -44,7 +46,11 @@ export class SudokuSolverReducer {
     return createReducer(
       this.createInitialState(),
       on(
-        AppActions.init,
+        AppActions.reinitialize,
+        (_state, _action): SudokuSolverState => this.createInitialState(),
+      ),
+      on(
+        AppActions.initFromState,
         (_state, action): SudokuSolverState => ({
           ...action.state.sudokuSolver,
           response: {
@@ -53,6 +59,20 @@ export class SudokuSolverReducer {
               (branch) => SolverBranch.cloneBranch(branch),
             ),
           },
+        }),
+      ),
+      on(
+        SudokuPuzzleSolverSwitchActions.changePuzzle,
+        (state): SudokuSolverState => ({
+          ...state,
+          show: false,
+        }),
+      ),
+      on(
+        SudokuPuzzleSolverSwitchActions.submitPuzzle,
+        (state): SudokuSolverState => ({
+          ...state,
+          show: true,
         }),
       ),
       on(
@@ -156,6 +176,7 @@ export class SudokuSolverReducer {
     response: SolverResponse,
   ): SudokuSolverState {
     return {
+      show: state.show,
       executionInfo: {
         ...this.createInitialState().executionInfo,
         id: randomUUID(),

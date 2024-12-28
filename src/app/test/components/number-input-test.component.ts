@@ -1,21 +1,8 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Nullable } from "@app/shared/types/nullable";
+import { Component } from "@angular/core";
+import { NumberInputComponent } from "@app/components/interactions/number-input/number-input.component";
 
 @Component({
   selector: "app-number-input",
   template: `{{ value }}`,
 })
-export class NumberInputTestComponent {
-  @Input()
-  label: Nullable<string>;
-
-  @Input()
-  value: Nullable<number>;
-
-  @Output()
-  valueChange: EventEmitter<number> = new EventEmitter();
-
-  change(value: number): void {
-    this.valueChange.emit(value);
-  }
-}
+export class NumberInputTestComponent extends NumberInputComponent {}

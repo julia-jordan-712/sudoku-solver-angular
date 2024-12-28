@@ -8,17 +8,49 @@ import {
 } from "@cypress/types/cy-selector";
 
 export class CySelectionList extends CySelectableWithLabel {
-  public static readonly CLASS_SELECTED = "selected";
-
   constructor(element?: CySelectorWithoutTag, ...parents: CySelector[]) {
     super(new CySelectorTag("app-selection-list", element), ...parents);
   }
 
-  index(index = 0): CyHtmlChain<HTMLButtonElement> {
-    return new CyButton({}, this.elementSelector).get().eq(index);
+  index(index = 0): CySelectionListElement {
+    return new CySelectionListElementIndex(this.elementSelector, index);
   }
 
-  text(text: string): CyHtmlChain<HTMLButtonElement> {
-    return new CyButton({}, this.elementSelector).get().contains(text);
+  text(text: string): CySelectionListElement {
+    return new CySelectionListElementText(this.elementSelector, text);
+  }
+}
+
+abstract class CySelectionListElement extends CyButton {
+  expect(selected: "selected" | "not.selected"): void {
+    this.get().should(
+      selected === "selected" ? "have.class" : "not.have.class",
+      "selected",
+    );
+  }
+}
+
+class CySelectionListElementText extends CySelectionListElement {
+  constructor(
+    parent: CySelector,
+    private text: string,
+  ) {
+    super({}, parent);
+  }
+
+  override get(): CyHtmlChain<HTMLButtonElement> {
+    return super.get().contains(this.text);
+  }
+}
+class CySelectionListElementIndex extends CySelectionListElement {
+  constructor(
+    parent: CySelector,
+    private index: number,
+  ) {
+    super({}, parent);
+  }
+
+  override get(): CyHtmlChain<HTMLButtonElement> {
+    return super.get().eq(this.index);
   }
 }

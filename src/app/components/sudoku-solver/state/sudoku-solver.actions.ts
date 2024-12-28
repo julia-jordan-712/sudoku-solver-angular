@@ -18,7 +18,6 @@ export interface SudokuSolverActionStepResult {
 export const SudokuSolverActions = createActionGroup({
   source: "SudokuSolver",
   events: {
-    "initialize from puzzle state": emptyProps(),
     "set delay": props<{ delay: number }>(),
     "set initial puzzle": props<{ puzzle: SudokuGrid }>(),
     "set maximum steps": props<{ maxSteps: number }>(),

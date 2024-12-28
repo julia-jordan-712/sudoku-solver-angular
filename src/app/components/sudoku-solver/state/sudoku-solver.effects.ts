@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from "@angular/core";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
@@ -21,15 +22,22 @@ export class SudokuSolverEffects {
     private solver: SudokuSolverService,
   ) {}
 
-  initialize$ = createEffect(() => {
+  initializeSolverOnSubmitSettings$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(SudokuSolverActions.initializeFromPuzzleState),
+      ofType(SudokuPuzzleSolverSwitchActions.submitPuzzle),
       concatLatestFrom(() =>
         this.store.select(SudokuPuzzleSelectors.selectSudoku),
       ),
       map(([_action, puzzle]) => puzzle),
       filter(isDefined),
       map((puzzle) => SudokuSolverActions.setInitialPuzzle({ puzzle: puzzle })),
+    );
+  });
+
+  resetSolverOnChangeSettings$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SudokuPuzzleSolverSwitchActions.changePuzzle),
+      map(() => SudokuSolverActions.solverReset()),
     );
   });
 

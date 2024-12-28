@@ -10,6 +10,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "@app/app-routing.module";
 import { AppComponent } from "@app/app.component";
 import { MainModule } from "@app/components/main/main.module";
+import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
+import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { TranslateHttpLoaderFactory } from "@app/core/translate/translate-loader-factory";
 import { appInitializer } from "@app/state/app-initialization.service";
@@ -25,6 +27,8 @@ registerLocaleData(localeDe);
 export const appStoreImports: ModuleWithProviders<StoreRootModule>[] = [
   StoreModule.forRoot(reducer, { metaReducers }),
   EffectsModule.forRoot([]),
+  EffectsModule.forFeature([SudokuPuzzleEffects]),
+  EffectsModule.forFeature([SudokuSolverEffects]),
 ];
 
 @NgModule({

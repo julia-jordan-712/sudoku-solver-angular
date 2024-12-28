@@ -4,7 +4,7 @@
   (ngModelChange)="onChange($event)"
   #inputField
 >
-  @for (item of items; track item.id) {
+  @for (item of _items; track item.id) {
     <option [ngValue]="item">
       @if (item.name && item.name !== "") {
         {{ item.name }}

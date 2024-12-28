@@ -2,11 +2,8 @@ import { Component, inject } from "@angular/core";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { ClipboardService } from "@app/shared/util/clipboard-service";
-import { isDefined } from "@app/shared/util/is-defined";
 import { Store } from "@ngrx/store";
-import { Observable, filter, first } from "rxjs";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-sudoku-solver-settings",
@@ -15,11 +12,7 @@ import { Observable, filter, first } from "rxjs";
 })
 export class SudokuSolverSettingsComponent {
   private store = inject(Store);
-  private clipboard = inject(ClipboardService);
 
-  show$: Observable<boolean> = this.store.select(
-    SudokuSolverSelectors.selectHasCurrentBranch,
-  );
   delay$: Observable<number> = this.store.select(
     SudokuSolverSelectors.selectDelay,
   );
@@ -53,14 +46,5 @@ export class SudokuSolverSettingsComponent {
     this.store.dispatch(
       SudokuSolverActions.setNumberToBeHighlighted({ highlight: highlight }),
     );
-  }
-
-  copyCurrentSudoku(): void {
-    this.store
-      .select(SudokuSolverSelectors.selectCurrentBranchViewModel)
-      .pipe(first(), filter(isDefined))
-      .subscribe((grid: SudokuGridViewModel) =>
-        this.clipboard.copyToClipboard(grid),
-      );
   }
 }

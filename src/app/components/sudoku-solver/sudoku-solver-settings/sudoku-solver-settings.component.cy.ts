@@ -1,8 +1,8 @@
 import { Component, inject, Input, OnChanges } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
-import { SudokuSolverSettingsComponent } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.component";
-import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.module";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
+import { SudokuSolverSettingsComponent } from "@app/components/sudoku-solver/sudoku-solver-settings/sudoku-solver-settings.component";
+import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver/sudoku-solver-settings/sudoku-solver-settings.module";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
@@ -27,15 +27,6 @@ describe(SudokuSolverSettingsComponent.name, () => {
       },
     );
   }
-
-  it("should not display anything if there is no sudoku", () => {
-    setup({ grid: null });
-    underTest.delay.get().should("not.exist");
-    underTest.maxSteps.get().should("not.exist");
-    underTest.pauseAtStep.get().should("not.exist");
-    underTest.highlightNumber.get().should("not.exist");
-    underTest.copySudoku.get().should("not.exist");
-  });
 
   it("should display an input field for the delay", () => {
     setup({ grid: Puzzle4x4.COMPLETE, delay: 100 });

@@ -1,5 +1,10 @@
+import {
+  DevFunctionsState,
+  DevFunctionsStateKey,
+} from "@app/components/dev-functions/state/dev-functions.state";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import {
+  SudokuDropdownSelectionItem,
   SudokuPuzzleState,
   SudokuPuzzleStateKey,
 } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
@@ -16,6 +21,7 @@ import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 export class TestState {
   public static createEmptyAppState(): AppState {
     return {
+      [DevFunctionsStateKey]: this.createDevFunctionsState(),
       [SudokuPuzzleStateKey]: this.createEmptySudokuPuzzleState(),
       [SudokuSolverStateKey]: this.createEmptySudokuSolverState(),
     };
@@ -26,6 +32,7 @@ export class TestState {
     previousGrid?: SudokuGrid,
   ): AppState {
     return {
+      [DevFunctionsStateKey]: this.createDevFunctionsState(),
       [SudokuPuzzleStateKey]: this.createTestSudokuPuzzleState(),
       [SudokuSolverStateKey]: this.createTestSudokuSolverState(
         currentGrid,
@@ -34,18 +41,23 @@ export class TestState {
     };
   }
 
+  private static createDevFunctionsState(): DevFunctionsState {
+    return { isDev: true };
+  }
+
   public static createEmptySudokuPuzzleState(): SudokuPuzzleState {
     return {
-      isConfirmed: false,
+      show: true,
       sudoku: undefined,
       height: undefined,
       width: undefined,
-      selectionOptions: { options: [], selected: undefined },
+      selectionOptions: { options: [], selectedId: undefined },
     };
   }
 
   public static createEmptySudokuSolverState(): SudokuSolverState {
     return {
+      show: false,
       executionInfo: {
         amountOfBranches: 1,
         id: "",
@@ -72,14 +84,17 @@ export class TestState {
   public static createTestSudokuPuzzleState(
     grid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
   ): SudokuPuzzleState {
+    const items: SudokuDropdownSelectionItem[] = [
+      ...SudokuPuzzleSelectionTestData.createItems(),
+    ];
     return {
-      isConfirmed: true,
+      show: false,
       sudoku: grid,
       height: grid.length,
       width: grid.length,
       selectionOptions: {
-        options: SudokuPuzzleSelectionTestData.ITEMS,
-        selected: SudokuPuzzleSelectionTestData.ITEMS?.[6],
+        options: items,
+        selectedId: items[6].id,
       },
     };
   }
@@ -89,6 +104,7 @@ export class TestState {
     previousGrid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
   ): SudokuSolverState {
     return {
+      show: true,
       executionInfo: {
         amountOfBranches: 1,
         id: "test-execution-id",

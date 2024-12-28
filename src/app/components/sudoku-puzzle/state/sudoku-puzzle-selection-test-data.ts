@@ -8,28 +8,17 @@ import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { TestPuzzle } from "@app/test/puzzles/test-puzzle";
 
 export class SudokuPuzzleSelectionTestData {
-  public static readonly NO_SELECTION_ITEM: SudokuDropdownSelectionItem = {
-    id: "None",
-    i18nKey: { key: "PUZZLE.NONE" },
-    grid: undefined,
-  };
-
-  public static readonly ITEMS: SudokuDropdownSelectionItem[] = [
-    SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
-    ...SudokuPuzzleSelectionTestData.createItems(),
-  ];
-
-  private static createItems(): SudokuDropdownSelectionItem[] {
+  public static createItems(): SudokuDropdownSelectionItem[] {
     const items: SudokuDropdownSelectionItem[] = [
       {
         id: "Puzzle4x4.EMPTY",
         i18nKey: { key: "PUZZLE.4x4.EMPTY" },
-        grid: Puzzle4x4.EMPTY,
+        data: Puzzle4x4.EMPTY,
       },
       {
         id: "Puzzle4x4.COMPLETE",
         i18nKey: { key: "PUZZLE.4x4.COMPLETE" },
-        grid: Puzzle4x4.COMPLETE,
+        data: Puzzle4x4.COMPLETE,
       },
     ];
 
@@ -68,7 +57,7 @@ export class SudokuPuzzleSelectionTestData {
             number: index,
           },
         },
-        grid: testPuzzle.puzzle,
+        data: testPuzzle.puzzle,
       },
       solution: {
         id: `Puzzle.${category}_${index}.solution`,
@@ -78,7 +67,7 @@ export class SudokuPuzzleSelectionTestData {
             number: index,
           },
         },
-        grid: testPuzzle.solution,
+        data: testPuzzle.solution,
       },
     };
   }

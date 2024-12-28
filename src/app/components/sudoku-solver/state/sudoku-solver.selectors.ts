@@ -17,6 +17,11 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 const selectState =
   createFeatureSelector<SudokuSolverState>(SudokuSolverStateKey);
 
+const selectIsShown = createSelector(
+  selectState,
+  (state: SudokuSolverState) => state.show,
+);
+
 const selectExecutionInfo = createSelector(
   selectState,
   (state: SudokuSolverState) => state.executionInfo,
@@ -103,11 +108,6 @@ const selectCanStart = createSelector(
 const selectCanPause = createSelector(
   selectExecutionStatus,
   (status: SolverExecution) => status === "RUNNING",
-);
-
-const selectHasCurrentBranch = createSelector(
-  selectCurrentResponseBranch,
-  (branch: Nullable<SolverBranch>) => !!branch,
 );
 
 const selectHideVerification = createSelector(
@@ -216,10 +216,10 @@ export const SudokuSolverSelectors = {
   selectCanStart,
   selectExecutedSteps,
   selectExecutionStatus,
-  selectHasCurrentBranch,
   selectHideVerification,
   selectHighlightNumber,
   selectInitialPuzzle,
+  selectIsShown,
   selectLastStepI18nKey,
   selectMaxSteps,
   selectResponse,

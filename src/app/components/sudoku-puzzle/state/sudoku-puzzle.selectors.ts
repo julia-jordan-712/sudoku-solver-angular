@@ -12,9 +12,9 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 const selectState =
   createFeatureSelector<SudokuPuzzleState>(SudokuPuzzleStateKey);
 
-const selectIsConfirmed = createSelector(
+const selectIsShown = createSelector(
   selectState,
-  (state: SudokuPuzzleState) => state.isConfirmed,
+  (state: SudokuPuzzleState) => state.show,
 );
 
 const selectHeight = createSelector(
@@ -34,7 +34,14 @@ const selectSelectionOptions = createSelector(
 
 const selectSelectedOption = createSelector(
   selectState,
-  (state: SudokuPuzzleState) => state.selectionOptions.selected,
+  (state: SudokuPuzzleState) => {
+    const selectedId = state.selectionOptions.selectedId;
+    return selectedId
+      ? state.selectionOptions.options.find(
+          (option) => option.id === selectedId,
+        )
+      : null;
+  },
 );
 
 const selectSudoku = createSelector(
@@ -73,7 +80,7 @@ const selectIsConfirmEnabled = createSelector(
 export const SudokuPuzzleSelectors = {
   selectState,
   selectHeight,
-  selectIsConfirmed,
+  selectIsShown,
   selectIsConfirmEnabled,
   selectSelectedOption,
   selectSelectionOptions,

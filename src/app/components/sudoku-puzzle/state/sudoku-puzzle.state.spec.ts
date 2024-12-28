@@ -1,8 +1,8 @@
 import { Signal } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { appStoreImports } from "@app/app.module";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuPuzzleGridUpdateService } from "@app/components/sudoku-puzzle/services/sudoku-puzzle-grid-update.service";
-import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
@@ -48,17 +48,19 @@ describe("SudokuPuzzleState", () => {
       );
       sudoku = store.selectSignal(SudokuPuzzleSelectors.selectSudoku);
 
-      store.dispatch(SudokuPuzzleActions.clearSelectedOption());
-      store.dispatch(SudokuPuzzleActions.setSudoku({ sudoku: undefined }));
+      store.dispatch(SudokuPuzzleActions.setSize({ height: 4, width: 4 }));
 
-      expect(height()).toBeUndefined();
-      expect(width()).toBeUndefined();
-      expect(selectedOption()).toBeUndefined();
-      expect(sudoku()).toBeUndefined();
+      expect(height()).toEqual(4);
+      expect(width()).toEqual(4);
+      expect(selectedOption()).toBeNull();
+      expect(sudoku()).toEqual(Puzzle4x4.EMPTY);
     });
 
     it("should set sudoku and size to the grid from the selected option", () => {
-      const newSelectedOption = { id: "", grid: PuzzleSimple.PUZZLE_5.puzzle };
+      const newSelectedOption: SudokuDropdownSelectionItem = {
+        id: "Puzzle.SIMPLE_5.puzzle",
+        data: PuzzleSimple.PUZZLE_5.puzzle,
+      };
       store.dispatch(
         SudokuPuzzleActions.userSetSelectedOption({
           option: newSelectedOption,
@@ -67,27 +69,25 @@ describe("SudokuPuzzleState", () => {
 
       expect(height()).toEqual(9);
       expect(width()).toEqual(9);
-      expect(selectedOption()).toEqual(newSelectedOption);
-      expect(sudoku()).toEqual(newSelectedOption.grid);
+      expect(selectedOption()).toEqual(
+        jasmine.objectContaining(newSelectedOption),
+      );
+      expect(sudoku()).toEqual(newSelectedOption.data);
     });
 
     it("should set sudoku and size to the grid from the selected option - also if it is the 'no selection' option", () => {
       store.dispatch(
         SudokuPuzzleActions.userSetSelectedOption({
-          option: { id: "", grid: PuzzleSimple.PUZZLE_5.puzzle },
+          option: { id: "", data: PuzzleSimple.PUZZLE_5.puzzle },
         }),
       );
       store.dispatch(
-        SudokuPuzzleActions.userSetSelectedOption({
-          option: SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
-        }),
+        SudokuPuzzleActions.userSetSelectedOption({ option: null }),
       );
 
       expect(height()).toEqual(0);
       expect(width()).toEqual(0);
-      expect(selectedOption()).toEqual(
-        SudokuPuzzleSelectionTestData.NO_SELECTION_ITEM,
-      );
+      expect(selectedOption()).toBeNull();
       expect(sudoku()).toEqual([]);
     });
 
@@ -98,7 +98,7 @@ describe("SudokuPuzzleState", () => {
 
       expect(height()).toEqual(4);
       expect(width()).toEqual(4);
-      expect(selectedOption()).toBeUndefined();
+      expect(selectedOption()).toBeNull();
       expect(sudoku()).toEqual(Puzzle4x4.EMPTY);
     });
 
@@ -145,7 +145,7 @@ describe("SudokuPuzzleState", () => {
         // act
         store.dispatch(
           SudokuPuzzleActions.userSetSelectedOption({
-            option: { id: "TEST-ID", grid: PuzzleSimple.PUZZLE_1.puzzle },
+            option: { id: "TEST-ID", data: PuzzleSimple.PUZZLE_1.puzzle },
           }),
         );
 
@@ -205,7 +205,7 @@ describe("SudokuPuzzleState", () => {
         gridUpdateSpy.calls.reset();
 
         // act
-        store.dispatch(SudokuPuzzleActions.changeSettings());
+        store.dispatch(SudokuPuzzleSolverSwitchActions.changePuzzle());
 
         // assert
         expect(gridUpdateSpy).not.toHaveBeenCalled();
@@ -216,7 +216,7 @@ describe("SudokuPuzzleState", () => {
         gridUpdateSpy.calls.reset();
 
         // act
-        store.dispatch(SudokuPuzzleActions.submitSettings());
+        store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
 
         // assert
         expect(gridUpdateSpy).not.toHaveBeenCalled();
@@ -242,7 +242,7 @@ describe("SudokuPuzzleState", () => {
       expect(currentBranch()).toBeNull();
 
       // act
-      store.dispatch(SudokuPuzzleActions.submitSettings());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
 
       // assert
       expect(initialPuzzle()).toEqual(PuzzleSimple.PUZZLE_2.puzzle);
@@ -259,7 +259,7 @@ describe("SudokuPuzzleState", () => {
           sudoku: PuzzleSimple.PUZZLE_4.puzzle,
         }),
       );
-      store.dispatch(SudokuPuzzleActions.submitSettings());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
       const initialPuzzle = store.selectSignal(
         SudokuSolverSelectors.selectInitialPuzzle,
       );
@@ -273,7 +273,7 @@ describe("SudokuPuzzleState", () => {
       ).toEqual(PuzzleSimple.PUZZLE_4.puzzle);
 
       // act
-      store.dispatch(SudokuPuzzleActions.changeSettings());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.changePuzzle());
 
       // assert
       expect(initialPuzzle()).toBeUndefined();

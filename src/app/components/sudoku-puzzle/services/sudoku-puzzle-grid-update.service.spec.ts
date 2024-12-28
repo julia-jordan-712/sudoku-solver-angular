@@ -153,11 +153,11 @@ describe(SudokuPuzzleGridUpdateService.name, () => {
   it("should add new rows and columns to the end and not change existing cell values", () => {
     const result: SudokuGrid = service.updateGrid(Puzzle4x4.COMPLETE, 5, 5);
     const expected: SudokuGrid = [
-      [1, 2, 3, 4, undefined],
-      [3, 4, 1, 2, undefined],
-      [2, 3, 4, 1, undefined],
-      [4, 1, 2, 3, undefined],
-      [undefined, undefined, undefined, undefined, undefined],
+      [1, 2, 3, 4, null],
+      [3, 4, 1, 2, null],
+      [2, 3, 4, 1, null],
+      [4, 1, 2, 3, null],
+      [null, null, null, null, null],
     ];
 
     // expect existing cell values to be unchanged

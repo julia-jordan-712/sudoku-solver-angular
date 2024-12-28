@@ -15,7 +15,7 @@ export class SudokuSolverComponent {
   private store = inject(Store);
 
   show$: Observable<boolean> = this.store.select(
-    SudokuSolverSelectors.selectHasCurrentBranch,
+    SudokuSolverSelectors.selectIsShown,
   );
   currentBranch$: Observable<SudokuGridViewModel> = this.store
     .select(SudokuSolverSelectors.selectCurrentBranchViewModel)

@@ -6,53 +6,57 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
-import { I18nKey } from "@app/shared/types/i18n-key";
 import { Nullable } from "@app/shared/types/nullable";
-import { ObjectWithId } from "@app/shared/types/object-with-id";
-import { Observable } from "rxjs";
+import { SingleSelectionInputOption } from "@app/shared/types/single-selection-input-option";
 
 @Component({
   selector: "app-dropdown-input",
   templateUrl: "./dropdown-input.component.html",
   styleUrls: ["./dropdown-input.component.scss"],
 })
-export class DropdownInputComponent<T extends DropdownInputOption>
-  implements OnChanges
-{
+export class DropdownInputComponent<T> implements OnChanges {
+  private readonly NO_SELECTION_ITEM: SingleSelectionInputOption<any> = {
+    id: "DROPDOWN_NO_SELECTION",
+    name: "-",
+  };
+
   @Input()
   label: Nullable<string>;
 
   @Input({ required: true })
-  selectedItem: Nullable<T>;
+  value: Nullable<SingleSelectionInputOption<T>>;
 
   @Input({ required: true })
-  items: Nullable<T[]>;
+  values: SingleSelectionInputOption<T>[];
 
   @Output()
-  selected: EventEmitter<T> = new EventEmitter();
+  valueChange: EventEmitter<Nullable<SingleSelectionInputOption<T>>> =
+    new EventEmitter();
 
-  protected _selectedItem: Nullable<T>;
+  protected _items: SingleSelectionInputOption<T>[];
+  protected _selectedItem: Nullable<SingleSelectionInputOption<T>>;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["selectedItem"] || changes["items"]) {
-      const selectedItem = this.selectedItem;
-      if (selectedItem) {
-        this._selectedItem = this.items?.filter(
-          (item) => item.id === selectedItem.id,
-        )?.[0];
-      } else {
-        this._selectedItem = null;
-      }
+    if (changes["values"]) {
+      this._items = [this.NO_SELECTION_ITEM, ...this.values];
+    }
+    if (changes["value"] || changes["values"]) {
+      this._selectedItem =
+        this.findItemById(this.value?.id) ?? this.NO_SELECTION_ITEM;
     }
   }
 
-  onChange(option: T): void {
-    this.selected.emit(option);
+  private findItemById(
+    id: Nullable<string>,
+  ): Nullable<SingleSelectionInputOption<T>> {
+    return this._items.find((item) => item.id === id);
   }
-}
 
-export interface DropdownInputOption extends ObjectWithId {
-  name?: string;
-  name$?: Observable<string>;
-  i18nKey?: I18nKey;
+  onChange(option: SingleSelectionInputOption<T>): void {
+    if (option.id === this.NO_SELECTION_ITEM.id) {
+      this.valueChange.emit(null);
+    } else {
+      this.valueChange.emit(option);
+    }
+  }
 }

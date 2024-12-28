@@ -15,7 +15,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
           if (x === 0 && y === 0) {
             expect(grid[x][y]).toEqual([1, 2, 3, 4]);
           } else {
-            expect(grid[x][y]).toBeUndefined();
+            expect(grid[x][y]).toBeNull();
           }
         }
       }
@@ -27,7 +27,7 @@ describe(EmptyCellsToPossibleValues.name, () => {
           if (x === 0 && (y === 0 || y === 1)) {
             expect(grid[x][y]).toEqual([1, 2, 3, 4]);
           } else {
-            expect(grid[x][y]).toBeUndefined();
+            expect(grid[x][y]).toBeNull();
           }
         }
       }

@@ -1,6 +1,6 @@
 {
   "GENERAL": {
-    "TITLE": "Solve Sudoku"
+    "TITLE": "Sudoku solver"
   },
   "SETTINGS": {
     "TITLE": "Settings",
@@ -39,9 +39,7 @@
     "SIMPLE": {
       "PUZZLE": "9x9 | Simple | Puzzle {{number}}",
       "SOLVED": "9x9 | Simple | Puzzle {{number}} - Solved"
-    },
-    "NONE": "-",
-    "COPY_TO_CLIPBOARD": "Copy current Sudoku to clipboard"
+    }
   },
   "VERIFY": {
     "ERROR": {
@@ -60,7 +58,6 @@
     }
   },
   "SOLVER": {
-    "TITLE": "Solver",
     "ACTIONS": {
       "START": "Start solving the Sudoku",
       "PAUSE": "Pause solving the Sudoku",
@@ -125,5 +122,11 @@
     "ADDITIONAL": {
       "TITLE": "Copy of the state before the new branch was created"
     }
+  },
+  "DEVELOPMENT": {
+    "COPY_TO_CLIPBOARD": "copy Sudoku to clipboard",
+    "CLEAR_STATE": "reset to initial state",
+    "PASTE_FROM_CLIPBOARD": "paste Sudoku from clipboard",
+    "TITLE": "Development functions"
   }
 }

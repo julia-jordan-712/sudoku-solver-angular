@@ -1,0 +1,8 @@
+<button
+  data-cy="pasteSudoku"
+  (click)="pasteSudoku()"
+  [disabled]="disabled$ | async"
+>
+  <app-icon icon="paste"></app-icon>
+  {{ "DEVELOPMENT.PASTE_FROM_CLIPBOARD" | translate }}
+</button>

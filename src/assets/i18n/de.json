@@ -39,9 +39,7 @@
     "SIMPLE": {
       "PUZZLE": "9x9 | Einfach | Rätsel {{number}}",
       "SOLVED": "9x9 | Einfach | Rätsel {{number}} - gelöst"
-    },
-    "NONE": "-",
-    "COPY_TO_CLIPBOARD": "Aktuelles Sudoku in die Zwischenablage kopieren"
+    }
   },
   "VERIFY": {
     "ERROR": {
@@ -60,7 +58,6 @@
     }
   },
   "SOLVER": {
-    "TITLE": "Lösen",
     "ACTIONS": {
       "PAUSE": "Lösen des Sudokus pausieren",
       "START": "Lösen des Sudokus starten",
@@ -125,5 +122,11 @@
     "ADDITIONAL": {
       "TITLE": "Kopie des Zustands vor der Erstellung des neuen Zweigs"
     }
+  },
+  "DEVELOPMENT": {
+    "COPY_TO_CLIPBOARD": "Sudoku in die Zwischenablage kopieren",
+    "CLEAR_STATE": "auf Ausgangszustand zurücksetzen",
+    "PASTE_FROM_CLIPBOARD": "Sudoku aus der Zwischenablage einfügen",
+    "TITLE": "Entwicklungsfunktionen"
   }
 }

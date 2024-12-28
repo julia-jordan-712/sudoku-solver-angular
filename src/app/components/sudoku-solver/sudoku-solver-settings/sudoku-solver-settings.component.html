@@ -1,0 +1,31 @@
+<h2>{{ "SETTINGS.TITLE" | translate }}</h2>
+<div class="inputs">
+  <app-number-input
+    data-cy="delay"
+    [label]="'SOLVER.DELAY.DELAY' | translate"
+    [value]="delay$ | async"
+    [tooltip]="'SOLVER.DELAY.TOOLTIP' | translate"
+    (valueChange)="setDelay($event)"
+  ></app-number-input>
+  <app-number-input
+    data-cy="maxSteps"
+    [label]="'SOLVER.STEPS.MAX.MAX' | translate"
+    [value]="maxSteps$ | async"
+    [tooltip]="'SOLVER.STEPS.MAX.TOOLTIP' | translate"
+    (valueChange)="setMaxSteps($event)"
+  ></app-number-input>
+  <app-number-input
+    data-cy="pauseAtStep"
+    [label]="'SOLVER.STEPS.PAUSE_AT_STEP.LABEL' | translate"
+    [value]="pauseAfterStep$ | async"
+    [tooltip]="'SOLVER.STEPS.PAUSE_AT_STEP.TOOLTIP' | translate"
+    (valueChange)="setPauseAfterStep($event)"
+  ></app-number-input>
+  <app-number-input
+    data-cy="highlightValue"
+    [label]="'SOLVER.HIGHLIGHT.NUMBER.LABEL' | translate"
+    [value]="highlightNumber$ | async"
+    [tooltip]="'SOLVER.HIGHLIGHT.NUMBER.TOOLTIP' | translate"
+    (valueChange)="setHighlightNumber($event)"
+  ></app-number-input>
+</div>

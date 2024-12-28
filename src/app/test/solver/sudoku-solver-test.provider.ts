@@ -31,7 +31,6 @@ export class TestSolver2 extends Solver {
   override reset(): void {
     // nothing to do
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected override isDone(_: Nullable<SudokuGrid>): boolean {
     return true;
   }
