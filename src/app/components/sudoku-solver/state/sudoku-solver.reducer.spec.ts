@@ -1,4 +1,5 @@
 import { TestBed } from "@angular/core/testing";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import {
   SudokuSolverActions,
   SudokuSolverActionStepResultExecutionStatus,
@@ -30,16 +31,47 @@ describe(SudokuSolverReducer.name, () => {
     });
   });
 
-  [
-    SudokuSolverActions.initializeFromPuzzleState(),
-    SudokuSolverActions.stepDoNothing(),
-  ].forEach((action) => {
+  [SudokuSolverActions.stepDoNothing()].forEach((action) => {
     describe(action.type, () => {
       it("should return the previous state", () => {
         const testState: SudokuSolverState =
           TestState.createTestSudokuSolverState();
         expect(underTest.getReducer()(testState, action)).toBe(testState);
       });
+    });
+  });
+
+  describe(SudokuPuzzleSolverSwitchActions.changePuzzle.type, () => {
+    it("should set to hidden", () => {
+      const testState: SudokuSolverState =
+        TestState.createTestSudokuSolverState();
+      testState.show = true;
+      const action = SudokuPuzzleSolverSwitchActions.changePuzzle();
+
+      const result = underTest.getReducer()(testState, action);
+
+      expect(result).toEqual({
+        ...testState,
+        show: false,
+      });
+      expect(result.show).not.toEqual(testState.show);
+    });
+  });
+
+  describe(SudokuPuzzleSolverSwitchActions.submitPuzzle.type, () => {
+    it("should set to shown", () => {
+      const testState: SudokuSolverState =
+        TestState.createTestSudokuSolverState();
+      testState.show = false;
+      const action = SudokuPuzzleSolverSwitchActions.submitPuzzle();
+
+      const result = underTest.getReducer()(testState, action);
+
+      expect(result).toEqual({
+        ...testState,
+        show: true,
+      });
+      expect(result.show).not.toEqual(testState.show);
     });
   });
 

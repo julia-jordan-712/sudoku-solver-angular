@@ -28,14 +28,6 @@ describe(SudokuSolverSettingsComponent.name, () => {
     );
   }
 
-  it("should not display anything if there is no sudoku", () => {
-    setup({ grid: null });
-    underTest.delay.get().should("not.exist");
-    underTest.maxSteps.get().should("not.exist");
-    underTest.pauseAtStep.get().should("not.exist");
-    underTest.highlightNumber.get().should("not.exist");
-  });
-
   it("should display an input field for the delay", () => {
     setup({ grid: Puzzle4x4.COMPLETE, delay: 100 });
     underTest.delay.label.get().should("have.text", "Delay:");

@@ -47,7 +47,7 @@ export class TestState {
 
   public static createEmptySudokuPuzzleState(): SudokuPuzzleState {
     return {
-      isConfirmed: false,
+      show: true,
       sudoku: undefined,
       height: undefined,
       width: undefined,
@@ -57,6 +57,7 @@ export class TestState {
 
   public static createEmptySudokuSolverState(): SudokuSolverState {
     return {
+      show: false,
       executionInfo: {
         amountOfBranches: 1,
         id: "",
@@ -87,7 +88,7 @@ export class TestState {
       ...SudokuPuzzleSelectionTestData.createItems(),
     ];
     return {
-      isConfirmed: true,
+      show: false,
       sudoku: grid,
       height: grid.length,
       width: grid.length,
@@ -103,6 +104,7 @@ export class TestState {
     previousGrid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
   ): SudokuSolverState {
     return {
+      show: true,
       executionInfo: {
         amountOfBranches: 1,
         id: "test-execution-id",

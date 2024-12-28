@@ -1,6 +1,7 @@
 import { Signal } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { appStoreImports } from "@app/app.module";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuPuzzleGridUpdateService } from "@app/components/sudoku-puzzle/services/sudoku-puzzle-grid-update.service";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
@@ -204,7 +205,7 @@ describe("SudokuPuzzleState", () => {
         gridUpdateSpy.calls.reset();
 
         // act
-        store.dispatch(SudokuPuzzleActions.changeSettings());
+        store.dispatch(SudokuPuzzleSolverSwitchActions.changePuzzle());
 
         // assert
         expect(gridUpdateSpy).not.toHaveBeenCalled();
@@ -215,7 +216,7 @@ describe("SudokuPuzzleState", () => {
         gridUpdateSpy.calls.reset();
 
         // act
-        store.dispatch(SudokuPuzzleActions.submitSettings());
+        store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
 
         // assert
         expect(gridUpdateSpy).not.toHaveBeenCalled();
@@ -241,7 +242,7 @@ describe("SudokuPuzzleState", () => {
       expect(currentBranch()).toBeNull();
 
       // act
-      store.dispatch(SudokuPuzzleActions.submitSettings());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
 
       // assert
       expect(initialPuzzle()).toEqual(PuzzleSimple.PUZZLE_2.puzzle);
@@ -258,7 +259,7 @@ describe("SudokuPuzzleState", () => {
           sudoku: PuzzleSimple.PUZZLE_4.puzzle,
         }),
       );
-      store.dispatch(SudokuPuzzleActions.submitSettings());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
       const initialPuzzle = store.selectSignal(
         SudokuSolverSelectors.selectInitialPuzzle,
       );
@@ -272,7 +273,7 @@ describe("SudokuPuzzleState", () => {
       ).toEqual(PuzzleSimple.PUZZLE_4.puzzle);
 
       // act
-      store.dispatch(SudokuPuzzleActions.changeSettings());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.changePuzzle());
 
       // assert
       expect(initialPuzzle()).toBeUndefined();

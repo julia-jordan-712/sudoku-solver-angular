@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { SudokuPuzzleGridUpdateService } from "@app/components/sudoku-puzzle/services/sudoku-puzzle-grid-update.service";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
-import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { concatLatestFrom } from "@ngrx/operators";
 import { Store } from "@ngrx/store";
@@ -20,20 +19,6 @@ export class SudokuPuzzleEffects {
     return this.actions$.pipe(
       ofType(SudokuPuzzleActions.userChangeSize),
       map(() => SudokuPuzzleActions.clearSelectedOption()),
-    );
-  });
-
-  initializeSolverOnSubmitSettings$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(SudokuPuzzleActions.submitSettings),
-      map(() => SudokuSolverActions.initializeFromPuzzleState()),
-    );
-  });
-
-  resetSolverOnChangeSettings$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(SudokuPuzzleActions.changeSettings),
-      map(() => SudokuSolverActions.solverReset()),
     );
   });
 

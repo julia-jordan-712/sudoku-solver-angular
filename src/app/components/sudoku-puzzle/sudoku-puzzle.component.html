@@ -1,11 +1,4 @@
-@if (confirmed$ | async) {
-  <app-section
-    ><button id="changeSettings" (click)="changeSettings()">
-      <app-icon icon="edit"></app-icon>
-      {{ "SETTINGS.CHANGE" | translate }}
-    </button></app-section
-  >
-} @else {
+@if (show$ | async) {
   <app-section>
     <div>{{ "SETTINGS.HINTS.SELECT_OR_SIZE" | translate }}</div>
     <div class="settings">
@@ -36,14 +29,6 @@
       (valueSubmit)="onCellSubmit($event)"
     >
     </app-sudoku-grid>
-    <button
-      id="confirmSettings"
-      class="primary"
-      [disabled]="(confirmEnabled$ | async) === false"
-      (click)="submit()"
-    >
-      <app-icon icon="check"></app-icon>
-      {{ "SETTINGS.DONE" | translate }}
-    </button>
   </app-section>
+  <app-sudoku-puzzle-solver-switch></app-sudoku-puzzle-solver-switch>
 }

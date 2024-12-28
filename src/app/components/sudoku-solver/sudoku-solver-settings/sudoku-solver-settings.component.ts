@@ -13,9 +13,6 @@ import { Observable } from "rxjs";
 export class SudokuSolverSettingsComponent {
   private store = inject(Store);
 
-  show$: Observable<boolean> = this.store.select(
-    SudokuSolverSelectors.selectHasCurrentBranch,
-  );
   delay$: Observable<number> = this.store.select(
     SudokuSolverSelectors.selectDelay,
   );

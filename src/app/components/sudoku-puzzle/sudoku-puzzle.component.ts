@@ -17,11 +17,8 @@ import { Observable, filter } from "rxjs";
 export class SudokuPuzzleComponent {
   private store: Store = inject(Store);
 
-  confirmEnabled$: Observable<boolean> = this.store.select(
-    SudokuPuzzleSelectors.selectIsConfirmEnabled,
-  );
-  confirmed$: Observable<boolean> = this.store.select(
-    SudokuPuzzleSelectors.selectIsConfirmed,
+  show$: Observable<boolean> = this.store.select(
+    SudokuPuzzleSelectors.selectIsShown,
   );
   size$: Observable<Nullable<number>> = this.store.select(
     SudokuPuzzleSelectors.selectHeight,
@@ -33,14 +30,6 @@ export class SudokuPuzzleComponent {
     this.store.select(SudokuPuzzleSelectors.selectSelectionOptions);
   selectedItem$: Observable<Nullable<SudokuDropdownSelectionItem>> =
     this.store.select(SudokuPuzzleSelectors.selectSelectedOption);
-
-  changeSettings(): void {
-    this.store.dispatch(SudokuPuzzleActions.changeSettings());
-  }
-
-  submit(): void {
-    this.store.dispatch(SudokuPuzzleActions.submitSettings());
-  }
 
   onSelect(option: Nullable<SudokuDropdownSelectionItem>): void {
     this.store.dispatch(SudokuPuzzleActions.userSetSelectedOption({ option }));

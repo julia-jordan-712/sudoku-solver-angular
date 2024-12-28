@@ -7,9 +7,11 @@ import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
+import { CyStateSwitch } from "@cypress/views/cy-state-switch";
 
 describe(SudokuPuzzleComponent.name, () => {
   const underTest: CyPuzzleInput = new CyPuzzleInput();
+  const stateSwitch: CyStateSwitch = new CyStateSwitch();
 
   beforeEach(() => {
     cy.mount(
@@ -21,8 +23,8 @@ describe(SudokuPuzzleComponent.name, () => {
   });
 
   it("should have dropdown, size selection, empty 9x9 grid and confirm button initially", () => {
-    underTest.buttonReopen.get().should("not.exist");
-    underTest.buttonConfirm.get().should("be.visible").should("be.enabled");
+    stateSwitch.buttonReopen.get().should("not.exist");
+    stateSwitch.buttonConfirm.get().should("be.visible").should("be.enabled");
 
     underTest.dropdown.get().should("be.visible");
     underTest.dropdown.label
@@ -74,7 +76,7 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.sudoku.get().should("be.visible");
     underTest.sudoku.shouldEqual(Puzzle4x4.COMPLETE);
     underTest.sudoku.verification.shouldBeValid();
-    underTest.buttonConfirm.get().should("be.enabled");
+    stateSwitch.buttonConfirm.get().should("be.enabled");
     underTest.sizeSelector.text("4").expect("selected");
     underTest.sizeSelector.text("9").expect("not.selected");
 
@@ -83,7 +85,7 @@ describe(SudokuPuzzleComponent.name, () => {
 
     underTest.sudoku.get().should("exist").should("not.be.visible");
     underTest.sudoku.verification.get().should("not.exist");
-    underTest.buttonConfirm.get().should("be.disabled");
+    stateSwitch.buttonConfirm.get().should("be.disabled");
     underTest.sizeSelector.text("4").expect("not.selected");
   });
 
@@ -103,13 +105,13 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.sudoku.cell(2, 2).shouldBeDuplicate();
     underTest.sudoku.cell(3, 0).shouldBeDuplicate();
     underTest.sudoku.cell(3, 3).shouldBeDuplicate();
-    underTest.buttonConfirm.get().should("be.disabled");
+    stateSwitch.buttonConfirm.get().should("be.disabled");
 
     underTest.sudoku.cell(3, 3).value.clear();
 
     underTest.sudoku.verification.shouldBeValid();
     underTest.sudoku.cell(3, 3).shouldBeDuplicate(false);
-    underTest.buttonConfirm.get().should("be.enabled");
+    stateSwitch.buttonConfirm.get().should("be.enabled");
   });
 
   it("should initialize an empty grid when only the size is set", () => {
@@ -117,7 +119,7 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.dropdown.dropdown.select(1); // anything
     underTest.dropdown.dropdown.unselect();
     underTest.sudoku.get().should("not.be.visible");
-    underTest.buttonConfirm.get().should("be.disabled");
+    stateSwitch.buttonConfirm.get().should("be.disabled");
 
     // act
     underTest.sizeSelector.text("4").get().click();
@@ -125,7 +127,7 @@ describe(SudokuPuzzleComponent.name, () => {
     // assert
     underTest.sudoku.shouldEqual(Puzzle4x4.EMPTY);
     underTest.sudoku.verification.shouldBeValid();
-    underTest.buttonConfirm.get().should("be.enabled");
+    stateSwitch.buttonConfirm.get().should("be.enabled");
     underTest.sizeSelector.text("4").expect("selected");
   });
 
@@ -146,7 +148,7 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.sudoku.verification.shouldBeInvalid(
       "All numbers have to be ≥ 1 and ≤ 4.",
     );
-    underTest.buttonConfirm.get().should("be.disabled");
+    stateSwitch.buttonConfirm.get().should("be.disabled");
 
     underTest.sizeSelector.text("9").get().click();
 
@@ -241,33 +243,7 @@ describe(SudokuPuzzleComponent.name, () => {
         undefined,
       ],
     ]);
-    underTest.buttonConfirm.get().should("be.enabled");
-  });
-
-  it("should re-initialize with the previous state after confirm and change-settings again", () => {
-    underTest.dropdown.dropdown.select("9x9 | Simple | Puzzle 3");
-    underTest.buttonConfirm.get().should("be.enabled");
-    underTest.dropdown.get().should("contain.text", "9x9 | Simple | Puzzle 3");
-    underTest.sizeSelector.text("9").expect("selected");
-    underTest.sudoku.verification.shouldBeValid();
-    underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
-
-    underTest.buttonConfirm.get().click();
-
-    underTest.buttonReopen.get().should("be.visible").should("be.enabled");
-    underTest.buttonConfirm.get().should("not.exist");
-    underTest.dropdown.get().should("not.exist");
-    underTest.sizeSelector.get().should("not.exist");
-    underTest.sudoku.get().should("not.exist");
-
-    underTest.buttonReopen.get().click();
-
-    underTest.buttonReopen.get().should("not.exist");
-    underTest.buttonConfirm.get().should("be.enabled");
-    underTest.dropdown.get().should("contain.text", "9x9 | Simple | Puzzle 3");
-    underTest.sizeSelector.text("9").expect("selected");
-    underTest.sudoku.verification.shouldBeValid();
-    underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
+    stateSwitch.buttonConfirm.get().should("be.enabled");
   });
 
   it("should not mark cells as changed when switching between dropdowns", () => {

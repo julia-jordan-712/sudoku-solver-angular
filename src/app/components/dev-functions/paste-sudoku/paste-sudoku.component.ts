@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
-import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
+import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Logger } from "@app/core/log/logger";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isSudoku } from "@app/shared/util/is-sudoku-grid";
@@ -19,7 +19,7 @@ export class PasteSudokuComponent {
   private clipboard = inject(ClipboardService);
 
   protected disabled$: Observable<boolean> = this.store.select(
-    SudokuPuzzleSelectors.selectIsConfirmed,
+    SudokuSolverSelectors.selectIsShown,
   );
 
   protected pasteSudoku(): void {

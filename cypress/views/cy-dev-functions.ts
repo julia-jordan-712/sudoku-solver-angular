@@ -1,4 +1,5 @@
 import { CyButtonWithIcon } from "@cypress/selectors/cy-button-with-icon";
+import { CyIcon } from "@cypress/selectors/cy-icon";
 
 export class CyDevFunctions {
   private readonly hostSelector = "app-dev-functions";
@@ -7,6 +8,10 @@ export class CyDevFunctions {
     { dataCy: "clearState", icon: "restart_alt" },
     { tag: this.hostSelector },
   );
+
+  public readonly close: CyIcon = new CyIcon("close", {
+    tag: this.hostSelector,
+  });
 
   public readonly copySudoku: CyButtonWithIcon = new CyButtonWithIcon(
     { dataCy: "copySudoku", icon: "copy" },

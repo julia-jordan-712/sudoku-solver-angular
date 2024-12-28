@@ -1,9 +1,11 @@
 import { AppComponent } from "@app/app.component";
 import { AppModule } from "@app/app.module";
+import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
+import { CyStateSwitch } from "@cypress/views/cy-state-switch";
 
 describe(AppComponent.name, () => {
   beforeEach(() => {
@@ -18,6 +20,7 @@ describe(AppComponent.name, () => {
         },
       },
     );
+    new CyDevFunctions().close.get().click();
   });
 
   it("should create component", () => {
@@ -41,6 +44,7 @@ describe(AppComponent.name, () => {
   // Blocked by https://github.com/cypress-io/cypress/issues/28537
   it.skip("should reload all state correctly on page reload", () => {
     const puzzleInput: CyPuzzleInput = new CyPuzzleInput();
+    const stateSwitch: CyStateSwitch = new CyStateSwitch();
     const solver: CySolver = new CySolver();
     const solverSettings: CySolverSettings = new CySolverSettings();
 
@@ -50,7 +54,7 @@ describe(AppComponent.name, () => {
     puzzleInput.sudoku.cell(0, 0).value.setValue(1);
     puzzleInput.sizeSelector.text("4").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
-    puzzleInput.buttonConfirm.get().click();
+    stateSwitch.buttonConfirm.get().click();
 
     // change and pre-assert settings
     solverSettings.maxSteps.input.setValue(777);
@@ -102,7 +106,7 @@ describe(AppComponent.name, () => {
     solverSettings.highlightNumber.input.get().should("have.value", 1);
 
     // assert puzzle state
-    puzzleInput.buttonReopen.get().click();
+    stateSwitch.buttonReopen.get().click();
     puzzleInput.dropdown.get().should("contain.text", "4x4 | Empty");
     puzzleInput.sudoku.cell(0, 0).value.get().should("have.value", 1);
     puzzleInput.sizeSelector.text("4").expect("selected");

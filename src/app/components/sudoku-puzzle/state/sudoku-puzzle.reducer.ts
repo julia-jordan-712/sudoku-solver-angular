@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import {
@@ -16,7 +17,7 @@ export class SudokuPuzzleReducer {
       ...SudokuPuzzleSelectionTestData.createItems(),
     ];
     return {
-      isConfirmed: false,
+      show: true,
       sudoku: Puzzle9x9.EMPTY,
       height: 9,
       width: 9,
@@ -41,10 +42,17 @@ export class SudokuPuzzleReducer {
         }),
       ),
       on(
-        SudokuPuzzleActions.changeSettings,
+        SudokuPuzzleSolverSwitchActions.changePuzzle,
         (state): SudokuPuzzleState => ({
           ...state,
-          isConfirmed: false,
+          show: true,
+        }),
+      ),
+      on(
+        SudokuPuzzleSolverSwitchActions.submitPuzzle,
+        (state): SudokuPuzzleState => ({
+          ...state,
+          show: false,
         }),
       ),
       on(
@@ -77,13 +85,6 @@ export class SudokuPuzzleReducer {
         (state, action): SudokuPuzzleState => ({
           ...state,
           sudoku: action.sudoku,
-        }),
-      ),
-      on(
-        SudokuPuzzleActions.submitSettings,
-        (state): SudokuPuzzleState => ({
-          ...state,
-          isConfirmed: true,
         }),
       ),
     );

@@ -6,6 +6,7 @@ import {
   tick,
 } from "@angular/core/testing";
 import { appStoreImports } from "@app/app.module";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
@@ -47,7 +48,7 @@ describe("SudokuSolverState", () => {
           sudoku: SudokuGridUtil.clone(PuzzleAdvanced.PUZZLE_4.puzzle),
         }),
       );
-      store.dispatch(SudokuSolverActions.initializeFromPuzzleState());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
       store.dispatch(SudokuSolverActions.setMaximumSteps({ maxSteps: 1 }));
 
       // act
@@ -74,7 +75,7 @@ describe("SudokuSolverState", () => {
           sudoku: SudokuGridUtil.clone(PuzzleAdvanced.PUZZLE_2.puzzle),
         }),
       );
-      store.dispatch(SudokuSolverActions.initializeFromPuzzleState());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
       store.dispatch(SudokuSolverActions.setMaximumSteps({ maxSteps: 3 }));
 
       // act
@@ -112,7 +113,7 @@ describe("SudokuSolverState", () => {
           sudoku: SudokuGridUtil.clone(PuzzleSimple.PUZZLE_1.puzzle),
         }),
       );
-      store.dispatch(SudokuSolverActions.initializeFromPuzzleState());
+      store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
       store.dispatch(SudokuSolverActions.setMaximumSteps({ maxSteps: 10 }));
       store.dispatch(SudokuSolverActions.setDelay({ delay: 1 }));
     });

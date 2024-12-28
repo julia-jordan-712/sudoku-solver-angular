@@ -9,7 +9,7 @@ export type SudokuDropdownSelectionItem = DropdownInputOption<
 export const SudokuPuzzleStateKey = "sudokuPuzzle";
 
 export interface SudokuPuzzleState {
-  isConfirmed: boolean;
+  show: boolean;
   height: Nullable<number>;
   width: Nullable<number>;
   selectionOptions: {

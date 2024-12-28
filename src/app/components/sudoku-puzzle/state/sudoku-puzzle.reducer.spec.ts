@@ -1,4 +1,5 @@
 import { TestBed } from "@angular/core/testing";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import {
@@ -36,20 +37,20 @@ describe(SudokuPuzzleReducer.name, () => {
     },
   );
 
-  describe(SudokuPuzzleActions.changeSettings.type, () => {
-    it("should set to unconfirmed", () => {
+  describe(SudokuPuzzleSolverSwitchActions.changePuzzle.type, () => {
+    it("should set to shown", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      testState.isConfirmed = true;
-      const action = SudokuPuzzleActions.changeSettings();
+      testState.show = false;
+      const action = SudokuPuzzleSolverSwitchActions.changePuzzle();
 
       const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
-        isConfirmed: false,
+        show: true,
       });
-      expect(result.isConfirmed).not.toEqual(testState.isConfirmed);
+      expect(result.show).not.toEqual(testState.show);
     });
   });
 
@@ -133,20 +134,20 @@ describe(SudokuPuzzleReducer.name, () => {
     });
   });
 
-  describe(SudokuPuzzleActions.submitSettings.type, () => {
-    it("should set to confirmed", () => {
+  describe(SudokuPuzzleSolverSwitchActions.submitPuzzle.type, () => {
+    it("should set to hidden", () => {
       const testState: SudokuPuzzleState =
         TestState.createTestSudokuPuzzleState();
-      testState.isConfirmed = false;
-      const action = SudokuPuzzleActions.submitSettings();
+      testState.show = true;
+      const action = SudokuPuzzleSolverSwitchActions.submitPuzzle();
 
       const result = underTest.getReducer()(testState, action);
 
       expect(result).toEqual({
         ...testState,
-        isConfirmed: true,
+        show: false,
       });
-      expect(result.isConfirmed).not.toEqual(testState.isConfirmed);
+      expect(result.show).not.toEqual(testState.show);
     });
   });
 

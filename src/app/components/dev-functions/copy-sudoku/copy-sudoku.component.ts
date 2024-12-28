@@ -16,7 +16,7 @@ export class CopySudokuComponent {
 
   protected copyCurrentSudoku(): void {
     this.store
-      .select(SudokuPuzzleSelectors.selectIsConfirmed)
+      .select(SudokuSolverSelectors.selectIsShown)
       .pipe(
         withLatestFrom(
           this.store.select(SudokuPuzzleSelectors.selectViewModel),

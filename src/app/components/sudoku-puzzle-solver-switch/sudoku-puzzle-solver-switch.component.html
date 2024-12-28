@@ -1,0 +1,18 @@
+<app-section>
+  @if (showSubmitButton$ | async) {
+    <button
+      data-cy="submit-puzzle"
+      class="primary"
+      [disabled]="(submitPuzzleEnabled$ | async) === false"
+      (click)="submit()"
+    >
+      <app-icon icon="check"></app-icon>
+      {{ "SETTINGS.DONE" | translate }}
+    </button>
+  } @else {
+    <button data-cy="change-puzzle" (click)="changeSettings()">
+      <app-icon icon="edit"></app-icon>
+      {{ "SETTINGS.CHANGE" | translate }}
+    </button>
+  }
+</app-section>

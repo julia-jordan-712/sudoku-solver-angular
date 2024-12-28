@@ -37,6 +37,7 @@ export interface SudokuSolverStateSettings {
 export const SudokuSolverStateKey = "sudokuSolver";
 
 export interface SudokuSolverState {
+  show: boolean;
   executionInfo: SudokuSolverStateExecutionInfo;
   puzzle: Nullable<SudokuGrid>;
   response: SolverResponse;

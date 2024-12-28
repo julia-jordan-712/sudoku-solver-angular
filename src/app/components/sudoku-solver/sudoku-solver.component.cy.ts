@@ -1,5 +1,6 @@
 import { Component, inject, Input, OnChanges } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
+import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
 import { SudokuSolverModule } from "@app/components/sudoku-solver/sudoku-solver.module";
@@ -161,6 +162,7 @@ class SudokuSolverWrapperComponent implements OnChanges {
   pause: number | undefined;
 
   ngOnChanges(): void {
+    this.store.dispatch(SudokuPuzzleSolverSwitchActions.submitPuzzle());
     this.store.dispatch(SudokuSolverActions.setDelay({ delay: this.delay }));
     this.store.dispatch(
       SudokuSolverActions.setMaximumSteps({ maxSteps: this.maxSteps }),
