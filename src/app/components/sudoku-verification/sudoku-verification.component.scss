@@ -15,7 +15,7 @@
 }
 
 .bold {
-  font-weight: bolder;
+  font-weight: $font-weight-bolder;
   display: flex;
   align-items: center;
   gap: 0.5em;
