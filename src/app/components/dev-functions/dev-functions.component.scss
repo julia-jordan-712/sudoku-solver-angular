@@ -1,9 +1,5 @@
 @use "_constants" as *;
 
-:host {
-  display: contents;
-}
-
 div {
   display: flex;
   flex-direction: column;
@@ -13,4 +9,5 @@ div {
 .close {
   color: $primary-color;
   cursor: pointer;
+  margin-left: 0.5em;
 }
