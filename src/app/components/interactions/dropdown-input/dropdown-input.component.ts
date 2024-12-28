@@ -6,8 +6,8 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
-import { DropdownInputOption } from "@app/components/interactions/dropdown-input/dropdown-input-option";
 import { Nullable } from "@app/shared/types/nullable";
+import { SingleSelectionInputOption } from "@app/shared/types/single-selection-input-option";
 
 @Component({
   selector: "app-dropdown-input",
@@ -15,7 +15,7 @@ import { Nullable } from "@app/shared/types/nullable";
   styleUrls: ["./dropdown-input.component.scss"],
 })
 export class DropdownInputComponent<T> implements OnChanges {
-  private readonly NO_SELECTION_ITEM: DropdownInputOption<any> = {
+  private readonly NO_SELECTION_ITEM: SingleSelectionInputOption<any> = {
     id: "DROPDOWN_NO_SELECTION",
     name: "-",
   };
@@ -24,36 +24,39 @@ export class DropdownInputComponent<T> implements OnChanges {
   label: Nullable<string>;
 
   @Input({ required: true })
-  selectedItem: Nullable<DropdownInputOption<T>>;
+  value: Nullable<SingleSelectionInputOption<T>>;
 
   @Input({ required: true })
-  items: DropdownInputOption<T>[];
+  values: SingleSelectionInputOption<T>[];
 
   @Output()
-  selected: EventEmitter<Nullable<DropdownInputOption<T>>> = new EventEmitter();
+  valueChange: EventEmitter<Nullable<SingleSelectionInputOption<T>>> =
+    new EventEmitter();
 
-  protected _items: DropdownInputOption<T>[];
-  protected _selectedItem: Nullable<DropdownInputOption<T>>;
+  protected _items: SingleSelectionInputOption<T>[];
+  protected _selectedItem: Nullable<SingleSelectionInputOption<T>>;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["items"]) {
-      this._items = [this.NO_SELECTION_ITEM, ...this.items];
+    if (changes["values"]) {
+      this._items = [this.NO_SELECTION_ITEM, ...this.values];
     }
-    if (changes["selectedItem"] || changes["items"]) {
+    if (changes["value"] || changes["values"]) {
       this._selectedItem =
-        this.findItemById(this.selectedItem?.id) ?? this.NO_SELECTION_ITEM;
+        this.findItemById(this.value?.id) ?? this.NO_SELECTION_ITEM;
     }
   }
 
-  private findItemById(id: Nullable<string>): Nullable<DropdownInputOption<T>> {
+  private findItemById(
+    id: Nullable<string>,
+  ): Nullable<SingleSelectionInputOption<T>> {
     return this._items.find((item) => item.id === id);
   }
 
-  onChange(option: DropdownInputOption<T>): void {
+  onChange(option: SingleSelectionInputOption<T>): void {
     if (option.id === this.NO_SELECTION_ITEM.id) {
-      this.selected.emit(null);
+      this.valueChange.emit(null);
     } else {
-      this.selected.emit(option);
+      this.valueChange.emit(option);
     }
   }
 }

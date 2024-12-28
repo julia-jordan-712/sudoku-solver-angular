@@ -5,16 +5,16 @@
       <app-dropdown-input
         data-cy="existing-sudoku-selection"
         [label]="'SETTINGS.SELECT' | translate"
-        [items]="(selectionItems$ | async) ?? []"
-        [selectedItem]="selectedItem$ | async"
-        (selected)="onSelect($event)"
+        [values]="(selectionItems$ | async) ?? []"
+        [value]="selectedItem$ | async"
+        (valueChange)="onSelect($event)"
       ></app-dropdown-input>
       <app-selection-list
         data-cy="sudoku-size-selection"
         id="sizeInput"
         [label]="'SETTINGS.SIZE' | translate"
         [value]="size$ | async"
-        [values]="[4, 9, 16, 25]"
+        [values]="selectionSizes"
         (valueChange)="setSize($event)"
       ></app-selection-list>
     </div>

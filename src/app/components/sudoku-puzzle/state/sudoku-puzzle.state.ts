@@ -1,8 +1,8 @@
-import { DropdownInputOption } from "@app/components/interactions/dropdown-input/dropdown-input-option";
 import { Nullable } from "@app/shared/types/nullable";
+import { SingleSelectionInputOption } from "@app/shared/types/single-selection-input-option";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 
-export type SudokuDropdownSelectionItem = DropdownInputOption<
+export type SudokuDropdownSelectionItem = SingleSelectionInputOption<
   Nullable<SudokuGrid>
 >;
 
