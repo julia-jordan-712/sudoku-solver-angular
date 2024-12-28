@@ -8,13 +8,21 @@
   gap: 1em;
 }
 
-.flex {
+.solver {
+  overflow: auto;
+  grid-row: 1 / span 4;
+
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
 
-.solver {
-  overflow: auto;
-  grid-row: 1 / span 4;
+.status {
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: 0.5em;
+
+  * {
+    display: contents;
+  }
 }

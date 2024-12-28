@@ -52,9 +52,9 @@ describe(MainComponent.name, () => {
     languageSelector.buttonEnglish.get().should("be.enabled");
 
     solver.actions.get().should("be.visible");
-    solver.status.get().should("be.visible");
-    solver.steps.get().should("be.visible");
-    solver.branches.get().should("be.visible");
+    solver.status.get().should("exist");
+    solver.steps.get().should("exist");
+    solver.branches.get().should("exist");
     solver.sudoku.get().should("be.visible");
     solver.additionalBranch(0).get().should("not.exist");
   });

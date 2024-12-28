@@ -1,5 +1,5 @@
 @if (show$ | async) {
-  <app-section class="solver flex">
+  <app-section class="solver">
     @if (additionalBranches$ | async; as branches) {
       @if (branches.length > 0) {
         <h2>{{ "BRANCH.CURRENT.TITLE" | translate }}</h2>
@@ -28,7 +28,7 @@
   <app-section>
     <app-sudoku-solver-actions></app-sudoku-solver-actions>
   </app-section>
-  <app-section class="flex">
+  <app-section class="status">
     <app-sudoku-solver-status></app-sudoku-solver-status>
     <app-sudoku-solver-branches></app-sudoku-solver-branches>
     <app-sudoku-solver-steps></app-sudoku-solver-steps>
