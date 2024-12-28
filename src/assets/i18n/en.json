@@ -126,6 +126,7 @@
   "DEVELOPMENT": {
     "COPY_TO_CLIPBOARD": "copy Sudoku to clipboard",
     "CLEAR_STATE": "reset to initial state",
-    "PASTE_FROM_CLIPBOARD": "paste Sudoku from clipboard"
+    "PASTE_FROM_CLIPBOARD": "paste Sudoku from clipboard",
+    "TITLE": "Development functions"
   }
 }

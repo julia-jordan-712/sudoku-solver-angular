@@ -1,13 +1,21 @@
 @use "_constants" as *;
 
-div {
-  display: flex;
-  flex-direction: column;
+app-section {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
   gap: 0.5em;
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
 }
 
 .close {
   color: $primary-color;
   cursor: pointer;
-  margin-left: 0.5em;
+  padding: 0.25em;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
 }

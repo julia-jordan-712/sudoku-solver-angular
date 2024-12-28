@@ -1,15 +1,14 @@
 @if (show$ | async) {
   <app-section>
-    <div>
-      <app-copy-sudoku></app-copy-sudoku>
-      <app-paste-sudoku></app-paste-sudoku>
-      <app-clear-state></app-clear-state>
-    </div>
+    <h2>{{ "DEVELOPMENT.TITLE" | translate }}</h2>
     <app-icon
       class="close"
       icon="close"
       type="mat"
       (click)="hideDevFunctions()"
     ></app-icon>
+    <app-copy-sudoku class="full-width"></app-copy-sudoku>
+    <app-paste-sudoku class="full-width"></app-paste-sudoku>
+    <app-clear-state class="full-width"></app-clear-state>
   </app-section>
 }
