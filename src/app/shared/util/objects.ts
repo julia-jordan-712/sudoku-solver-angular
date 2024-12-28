@@ -3,6 +3,10 @@ import { Nullable } from "@app/shared/types/nullable";
 import { isDefined } from "@app/shared/util/is-defined";
 
 export class Objects {
+  public static isObject(obj: any): obj is object {
+    return obj && typeof obj === "object" && !Array.isArray(obj);
+  }
+
   public static arrayToArrayIndex<T, R>(
     array: T[],
     keyMapper: (e: T) => Nullable<string>,
@@ -38,6 +42,32 @@ export class Objects {
     Object.entries(index2).forEach(([key, value]) => {
       result[key] = [...(result[key] ?? []), ...value];
     });
+    return result;
+  }
+
+  public static mergeDeep<T>(...sources: readonly T[]): T {
+    const result: T = {} as T;
+
+    for (const source of sources) {
+      for (const key in source) {
+        if (result[key]) {
+          // already handled, first match wins
+          continue;
+        }
+
+        const sourceValue = source[key];
+        if (Objects.isObject(sourceValue)) {
+          Object.assign(result, {
+            [key]: Objects.mergeDeep(
+              ...sources.map((s) => s[key]).filter(isDefined),
+            ),
+          });
+        } else {
+          Object.assign(result, { [key]: sourceValue });
+        }
+      }
+    }
+
     return result;
   }
 

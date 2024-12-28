@@ -7,7 +7,17 @@ import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 
 describe(AppComponent.name, () => {
   beforeEach(() => {
-    cy.mount(AppComponent, AppModule);
+    cy.mount(
+      AppComponent,
+      AppModule,
+      {},
+      {
+        translations: {
+          en: { GENERAL: { TITLE: "Solve Sudoku" } },
+          de: { GENERAL: { TITLE: "Sudoku lösen" } },
+        },
+      },
+    );
   });
 
   it("should create component", () => {
