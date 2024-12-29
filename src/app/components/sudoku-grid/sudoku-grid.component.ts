@@ -16,7 +16,6 @@ import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 export class SudokuGridComponent {
   _grid: Nullable<SudokuGridViewModel>;
   sqrt: Nullable<number>;
-  gridColumns = "";
 
   private componentService: SudokuGridComponentService = inject(
     SudokuGridComponentService,
@@ -26,7 +25,6 @@ export class SudokuGridComponent {
   set grid(grid: Nullable<SudokuGridViewModel>) {
     this._grid = grid;
     this.sqrt = grid ? Math.round(Math.sqrt(grid.rows.length)) : null;
-    this.gridColumns = `repeat(${grid?.rows?.length ?? 1}, max-content)`;
   }
 
   @Input()

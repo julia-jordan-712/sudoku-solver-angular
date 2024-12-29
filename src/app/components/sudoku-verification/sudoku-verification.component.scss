@@ -1,9 +1,5 @@
 @use "_constants" as *;
 
-:host {
-  display: contents;
-}
-
 .container {
   display: flex;
   flex-direction: column;

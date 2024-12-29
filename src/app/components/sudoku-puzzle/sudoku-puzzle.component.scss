@@ -1,6 +1,6 @@
 :host {
   display: grid;
-  grid-template-columns: min-content auto;
+  grid-template-columns: auto auto;
   grid-template-rows: min-content minmax(min-content, 1fr);
   gap: 1em;
 }
@@ -11,6 +11,5 @@ app-section {
 }
 
 .sudoku-grid {
-  overflow: auto;
   grid-row: 1 / span 2;
 }

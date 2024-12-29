@@ -1,6 +1,6 @@
 :host {
   display: grid;
-  grid-template-columns: min-content auto;
+  grid-template-columns: auto auto;
   grid-template-rows: min-content min-content min-content minmax(
       min-content,
       1fr
@@ -9,7 +9,6 @@
 }
 
 .solver {
-  overflow: auto;
   grid-row: 1 / span 4;
 
   display: flex;
