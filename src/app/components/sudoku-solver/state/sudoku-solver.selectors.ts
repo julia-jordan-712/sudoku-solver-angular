@@ -110,11 +110,6 @@ const selectCanPause = createSelector(
   (status: SolverExecution) => status === "RUNNING",
 );
 
-const selectHideVerification = createSelector(
-  selectExecutionStatus,
-  (status: SolverExecution) => status !== "NOT_STARTED",
-);
-
 const selectHighlightNumber = createSelector(
   selectSettings,
   (settings: SudokuSolverStateSettings) => settings.highlightNumber,
@@ -168,10 +163,12 @@ const selectTimeElapsedSeconds = createSelector(
 const selectCurrentBranchViewModel = createSelector(
   selectCurrentResponseBranch,
   selectExecutionId,
+  selectExecutionStatus,
   selectPreviousGrid,
   (
     branch: Nullable<SolverBranch>,
     id: string,
+    status: SolverExecution,
     previousGrid: Nullable<SudokuGrid>,
   ) =>
     branch != null
@@ -181,7 +178,7 @@ const selectCurrentBranchViewModel = createSelector(
           {
             branchInfo: { id: branch.getId(), isCurrent: true },
             verificationResult: new VerifySolution().verify(branch.grid, {
-              allowEmptyCells: false,
+              allowEmptyCells: status === "NOT_STARTED",
               size: branch.grid.length,
             }),
             highlightChangedCells: true,
@@ -216,7 +213,6 @@ export const SudokuSolverSelectors = {
   selectCanStart,
   selectExecutedSteps,
   selectExecutionStatus,
-  selectHideVerification,
   selectHighlightNumber,
   selectInitialPuzzle,
   selectIsShown,

@@ -8,6 +8,14 @@ import { Nullable } from "@app/shared/types/nullable";
   styleUrls: ["./sudoku-verification.component.scss"],
 })
 export class SudokuVerificationComponent {
+  protected show: boolean;
+  protected valid: boolean;
+  protected errors: VerificationResult["errors"];
+
   @Input({ required: true })
-  verification: Nullable<VerificationResult>;
+  set verification(verification: Nullable<VerificationResult>) {
+    this.show = verification != null;
+    this.valid = verification?.isValid() ?? true;
+    this.errors = [...(verification?.getErrors() ?? [])];
+  }
 }

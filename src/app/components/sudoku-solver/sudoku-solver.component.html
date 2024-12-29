@@ -9,7 +9,6 @@
         [grid]="currentBranch$ | async"
         [highlightNumber]="highlightNumber$ | async"
         [readonly]="true"
-        [showVerification]="(hideVerification$ | async) !== false"
       ></app-sudoku-grid>
       @if (branches.length > 0) {
         <h2>{{ "BRANCH.ADDITIONAL.TITLE" | translate }}</h2>

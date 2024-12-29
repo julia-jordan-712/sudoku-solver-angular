@@ -26,7 +26,4 @@ export class SudokuSolverComponent {
   highlightNumber$: Observable<Nullable<number>> = this.store.select(
     SudokuSolverSelectors.selectHighlightNumber,
   );
-  hideVerification$: Observable<boolean> = this.store.select(
-    SudokuSolverSelectors.selectHideVerification,
-  );
 }
