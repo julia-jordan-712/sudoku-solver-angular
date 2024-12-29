@@ -9,7 +9,7 @@
   flex-direction: column;
   padding: 0.5em;
   gap: 0.5em;
-  border-radius: 0.25em;
+  border-radius: $border-radius;
   width: max-content;
   min-width: 10em;
 }

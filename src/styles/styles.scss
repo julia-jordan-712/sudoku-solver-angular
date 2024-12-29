@@ -52,7 +52,7 @@ button {
   display: flex;
   align-items: center;
   gap: 0.5em;
-  border-radius: 0.25em;
+  border-radius: $border-radius;
   box-sizing: border-box;
   cursor: pointer;
   line-height: 2em;
