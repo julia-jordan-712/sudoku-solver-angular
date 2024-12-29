@@ -6,6 +6,8 @@ import { DevFunctionsComponent } from "@app/components/dev-functions/dev-functio
 import { PasteSudokuComponent } from "@app/components/dev-functions/paste-sudoku/paste-sudoku.component";
 import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
 import { DevFunctionsSelectors } from "@app/components/dev-functions/state/dev-functions.selectors";
+import { TestSudokusComponent } from "@app/components/dev-functions/test-sudokus/test-sudokus.component";
+import { DropdownInputModule } from "@app/components/interactions/dropdown-input/dropdown-input.module";
 import { SectionModule } from "@app/components/section/section.module";
 import { AppState } from "@app/state/app-state";
 import { IconTestComponent } from "@app/test/components/icon-test.component";
@@ -26,8 +28,13 @@ describe(DevFunctionsComponent.name, () => {
         DevFunctionsComponent,
         IconTestComponent,
         PasteSudokuComponent,
+        TestSudokusComponent,
       ],
-      imports: [SectionModule, TranslateTestingModule.withTranslations({})],
+      imports: [
+        DropdownInputModule,
+        SectionModule,
+        TranslateTestingModule.withTranslations({}),
+      ],
       providers: [
         provideMockStore({ initialState: TestState.createTestAppState() }),
       ],

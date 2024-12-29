@@ -11,8 +11,7 @@
     "WIDTH": "Breite",
     "SIZE": "Größe",
     "HINTS": {
-      "ENTER_VALUES": "Werte können eingegeben werden, indem man auf eine Zelle klickt und sie auf der Tastatur eingibt.",
-      "SELECT_OR_SIZE": "Wählen Sie ein bestehendes Sudoku aus, das gelöst werden soll, oder wählen Sie eine Größe. Anschließend können die Werte der Zellen eingegeben werden."
+      "ENTER_VALUES": "Werte können eingegeben werden, indem man auf eine Zelle klickt und sie auf der Tastatur eingibt."
     }
   },
   "PUZZLE": {
@@ -127,6 +126,7 @@
     "COPY_TO_CLIPBOARD": "Sudoku in die Zwischenablage kopieren",
     "CLEAR_STATE": "auf Ausgangszustand zurücksetzen",
     "PASTE_FROM_CLIPBOARD": "Sudoku aus der Zwischenablage einfügen",
-    "TITLE": "Entwicklungsfunktionen"
+    "TITLE": "Entwicklungsfunktionen",
+    "EXISTING_SUDOKU": "Testdaten"
   }
 }

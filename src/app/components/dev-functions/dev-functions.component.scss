@@ -1,13 +1,14 @@
 @use "_constants" as *;
 
 app-section {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
+  display: flex;
+  flex-direction: column;
   gap: 0.5em;
+}
 
-  .full-width {
-    grid-column: 1 / -1;
-  }
+.title {
+  display: flex;
+  gap: 0.5em;
 }
 
 .close {

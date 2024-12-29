@@ -11,8 +11,7 @@
     "SELECT": "Select existing Sudoku",
     "SIZE": "Size",
     "HINTS": {
-      "ENTER_VALUES": "Values can be set by clicking on a cell and typing on the keyboard.",
-      "SELECT_OR_SIZE": "Select an existing Sudoku to be solved or select a size. Afterwards the values of the cells can be set."
+      "ENTER_VALUES": "Values can be set by clicking on a cell and typing on the keyboard."
     }
   },
   "PUZZLE": {
@@ -127,6 +126,7 @@
     "COPY_TO_CLIPBOARD": "copy Sudoku to clipboard",
     "CLEAR_STATE": "reset to initial state",
     "PASTE_FROM_CLIPBOARD": "paste Sudoku from clipboard",
-    "TITLE": "Development functions"
+    "TITLE": "Development functions",
+    "EXISTING_SUDOKU": "test data"
   }
 }

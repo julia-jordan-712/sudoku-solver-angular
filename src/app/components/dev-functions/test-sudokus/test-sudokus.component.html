@@ -1,0 +1,7 @@
+<app-dropdown-input
+  data-cy="test-sudoku-selection"
+  [label]="'DEVELOPMENT.EXISTING_SUDOKU' | translate"
+  [values]="(selectionItems$ | async) ?? []"
+  [value]="selectedItem$ | async"
+  (valueChange)="onSelect($event)"
+></app-dropdown-input>

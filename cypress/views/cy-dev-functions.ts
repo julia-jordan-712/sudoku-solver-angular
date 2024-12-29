@@ -1,4 +1,5 @@
 import { CyButtonWithIcon } from "@cypress/selectors/cy-button-with-icon";
+import { CyDropdown } from "@cypress/selectors/cy-dropdown";
 import { CyIcon } from "@cypress/selectors/cy-icon";
 
 export class CyDevFunctions {
@@ -15,6 +16,11 @@ export class CyDevFunctions {
 
   public readonly copySudoku: CyButtonWithIcon = new CyButtonWithIcon(
     { dataCy: "copySudoku", icon: "copy" },
+    { tag: this.hostSelector },
+  );
+
+  public readonly dropdown = new CyDropdown(
+    { dataCy: "test-sudoku-selection" },
     { tag: this.hostSelector },
   );
 

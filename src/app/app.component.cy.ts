@@ -43,14 +43,15 @@ describe(AppComponent.name, () => {
 
   // Blocked by https://github.com/cypress-io/cypress/issues/28537
   it.skip("should reload all state correctly on page reload", () => {
+    const devFunctions: CyDevFunctions = new CyDevFunctions();
     const puzzleInput: CyPuzzleInput = new CyPuzzleInput();
     const stateSwitch: CyStateSwitch = new CyStateSwitch();
     const solver: CySolver = new CySolver();
     const solverSettings: CySolverSettings = new CySolverSettings();
 
     // change and pre-assert puzzle state
-    puzzleInput.dropdown.dropdown.select("4x4 | Empty");
-    puzzleInput.dropdown.get().should("contain.text", "4x4 | Empty");
+    devFunctions.dropdown.dropdown.select("4x4 | Empty");
+    devFunctions.dropdown.get().should("contain.text", "4x4 | Empty");
     puzzleInput.sudoku.cell(0, 0).value.setValue(1);
     puzzleInput.sizeSelector.text("4").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
@@ -107,7 +108,7 @@ describe(AppComponent.name, () => {
 
     // assert puzzle state
     stateSwitch.buttonReopen.get().click();
-    puzzleInput.dropdown.get().should("contain.text", "4x4 | Empty");
+    devFunctions.dropdown.get().should("contain.text", "4x4 | Empty");
     puzzleInput.sudoku.cell(0, 0).value.get().should("have.value", 1);
     puzzleInput.sizeSelector.text("4").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
