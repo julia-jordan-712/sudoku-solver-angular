@@ -21,6 +21,33 @@ body {
   height: 100%;
 }
 
+// --- scroll bar ---
+
+$scrollbar-color: #bcbcbc;
+$scrollbar-background: transparent;
+body {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: $scrollbar-color $scrollbar-background;
+
+    @supports (-moz-appearance: none) {
+      scrollbar-color: $scrollbar-color $background-color;
+    }
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-corner {
+      background-color: $scrollbar-background;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: $scrollbar-color;
+    }
+  }
+}
+
 // --- fonts ---
 
 h1,
