@@ -1,4 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
+import { smoothHeightAnimation } from "@app/animations/smooth-height.directive";
+import { smoothWidthAnimation } from "@app/animations/smooth-width.directive";
 import {
   SudokuGridComponentService,
   SudokuGridRowChangeEvent,
@@ -12,10 +14,12 @@ import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
   templateUrl: "./sudoku-grid.component.html",
   styleUrls: ["./sudoku-grid.component.scss"],
   providers: [SudokuGridComponentService],
+  animations: [smoothHeightAnimation, smoothWidthAnimation],
 })
 export class SudokuGridComponent {
-  _grid: Nullable<SudokuGridViewModel>;
-  sqrt: Nullable<number>;
+  protected _grid: Nullable<SudokuGridViewModel>;
+  protected sizeChangeTrigger: Nullable<string>;
+  protected sqrt: Nullable<number>;
 
   private componentService: SudokuGridComponentService = inject(
     SudokuGridComponentService,
@@ -25,6 +29,7 @@ export class SudokuGridComponent {
   set grid(grid: Nullable<SudokuGridViewModel>) {
     this._grid = grid;
     this.sqrt = grid ? Math.round(Math.sqrt(grid.rows.length)) : null;
+    this.sizeChangeTrigger = `${grid?.rows?.length ?? 0}x${grid?.rows?.[0]?.cells?.length ?? 0}`;
   }
 
   @Input()
@@ -41,7 +46,7 @@ export class SudokuGridComponent {
   @Output()
   valueSubmit: EventEmitter<SudokuGrid> = new EventEmitter();
 
-  onRowChanged(row: SudokuGridRow, index: number): void {
+  protected onRowChanged(row: SudokuGridRow, index: number): void {
     const rowChange: SudokuGridRowChangeEvent =
       this.componentService.rowChanged(this._grid, row, index);
     if (rowChange.gridChanged) {
@@ -49,7 +54,7 @@ export class SudokuGridComponent {
     }
   }
 
-  onRowSubmitted(row: SudokuGridRow, index: number): void {
+  protected onRowSubmitted(row: SudokuGridRow, index: number): void {
     const rowChange: SudokuGridRowChangeEvent =
       this.componentService.rowChanged(this._grid, row, index);
     if (rowChange.gridChanged) {

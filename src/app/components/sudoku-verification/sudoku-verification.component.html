@@ -1,5 +1,6 @@
 @if (show) {
   <div class="container" [ngClass]="valid ? 'valid' : 'invalid'">
+    <!-- [appSmoothHeight]="heightChangeTrigger" -->
     <span class="bold">
       <app-icon [icon]="valid ? 'check_circle' : 'error'"></app-icon>
       {{

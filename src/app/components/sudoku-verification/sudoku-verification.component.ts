@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { smoothHeight } from "@app/animations/smooth-height";
+import { smoothHeightAnimation } from "@app/animations/smooth-height.directive";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 
@@ -7,17 +7,22 @@ import { Nullable } from "@app/shared/types/nullable";
   selector: "app-sudoku-verification",
   templateUrl: "./sudoku-verification.component.html",
   styleUrls: ["./sudoku-verification.component.scss"],
-  animations: [smoothHeight],
+  animations: [smoothHeightAnimation],
 })
 export class SudokuVerificationComponent {
   protected show: boolean;
   protected valid: boolean;
   protected errors: VerificationResult["errors"];
+  protected heightChangeTrigger: string;
 
   @Input({ required: true })
   set verification(verification: Nullable<VerificationResult>) {
     this.show = verification != null;
     this.valid = verification?.isValid() ?? true;
-    this.errors = [...(verification?.getErrors() ?? [])];
+    const verificationErrors = verification?.getErrors() ?? [];
+    this.errors = [...verificationErrors];
+    this.heightChangeTrigger = verificationErrors
+      .map((error) => `${error.key}${JSON.stringify(error.params ?? {})}`)
+      .join();
   }
 }

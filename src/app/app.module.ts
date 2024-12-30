@@ -7,6 +7,7 @@ import {
 import localeDe from "@angular/common/locales/de";
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "@app/app-routing.module";
 import { AppComponent } from "@app/app.component";
 import { MainModule } from "@app/components/main/main.module";
@@ -37,6 +38,7 @@ export const appStoreImports: ModuleWithProviders<StoreRootModule>[] = [
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     TranslateModule.forRoot({
       defaultLanguage: "en",
       loader: {
