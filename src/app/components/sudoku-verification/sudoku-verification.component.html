@@ -8,7 +8,7 @@
     </span>
     @if (!valid) {
       @for (error of errors; track error.key) {
-        <span>
+        <span @smoothHeight>
           {{ error.key | translate: error.params }}
         </span>
       }

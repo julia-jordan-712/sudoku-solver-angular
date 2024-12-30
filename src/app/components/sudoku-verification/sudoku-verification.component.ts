@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { smoothHeight } from "@app/animations/smooth-height";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/shared/types/nullable";
 
@@ -6,6 +7,7 @@ import { Nullable } from "@app/shared/types/nullable";
   selector: "app-sudoku-verification",
   templateUrl: "./sudoku-verification.component.html",
   styleUrls: ["./sudoku-verification.component.scss"],
+  animations: [smoothHeight],
 })
 export class SudokuVerificationComponent {
   protected show: boolean;
