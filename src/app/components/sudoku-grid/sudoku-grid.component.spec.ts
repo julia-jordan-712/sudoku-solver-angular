@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { AnimationsModule } from "@app/animations/animations.module";
 import { SudokuGridComponentService } from "@app/components/sudoku-grid/sudoku-grid-component.service";
 import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row.component";
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
@@ -26,8 +24,6 @@ describe(SudokuGridComponent.name, () => {
         SudokuGridCellTestComponent,
       ],
       imports: [
-        AnimationsModule,
-        NoopAnimationsModule,
         SudokuVerificationModule,
         TranslateTestingModule.withTranslations({}),
       ],

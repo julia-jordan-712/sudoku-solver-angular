@@ -1,10 +1,6 @@
 @if (_grid && sqrt) {
   <div class="overflow">
-    <div
-      class="grid"
-      [appSmoothHeight]="sizeChangeTrigger"
-      [appSmoothWidth]="sizeChangeTrigger"
-    >
+    <div class="grid">
       @for (
         row of _grid.rows;
         track row.id;
