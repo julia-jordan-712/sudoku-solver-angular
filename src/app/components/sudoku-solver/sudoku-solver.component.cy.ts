@@ -5,8 +5,8 @@ import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
 import { SudokuSolverModule } from "@app/components/sudoku-solver/sudoku-solver.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { CyComponentInput } from "@cypress/types/cy-component";
 import { CySolver } from "@cypress/views/cy-solver";
 import { Store } from "@ngrx/store";

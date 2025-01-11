@@ -2,8 +2,8 @@ import { Logger } from "@app/core/log/logger";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
 import { VerifySquareResult } from "@app/core/verification/types/verify-square-result";
-import { StopWatch } from "@app/shared/types/stopwatch";
-import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
+import { StopWatch } from "@app/types/stopwatch";
+import { SudokuGrid, SudokuGridRow } from "@app/types/sudoku-grid";
 
 export class VerifySquare {
   verifyAndGetSize(candidate: SudokuGrid): VerifySquareResult {

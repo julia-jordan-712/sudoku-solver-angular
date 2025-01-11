@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
-import { SolverExecution } from "@app/shared/types/solver-execution";
+import { SolverExecution } from "@app/types/solver-execution";
 import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable } from "rxjs";

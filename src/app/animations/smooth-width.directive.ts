@@ -7,7 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from "@angular/core";
-import { KeyOf } from "@app/shared/types/key-of";
+import { KeyOf } from "@app/types/key-of";
 
 const triggerName: KeyOf<SmoothWidthDirective> = "smoothWidth";
 const paramName = "startWidth";

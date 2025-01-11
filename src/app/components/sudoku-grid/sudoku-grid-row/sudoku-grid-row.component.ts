@@ -11,9 +11,9 @@ import {
   SudokuGridCellChangeEvent,
   SudokuGridRowComponentService,
 } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row-component.service";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGridCell, SudokuGridRow } from "@app/shared/types/sudoku-grid";
-import { SudokuGridRowViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGridCell, SudokuGridRow } from "@app/types/sudoku-grid";
+import { SudokuGridRowViewModel } from "@app/types/sudoku-grid-view-model";
 import { Observable } from "rxjs";
 
 @Component({

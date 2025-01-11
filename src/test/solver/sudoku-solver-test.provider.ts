@@ -5,8 +5,8 @@ import {
   SolverResponse,
   SolverStepResponse,
 } from "@app/core/solver/types/solver-response";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 
 @Injectable()
 export class TestSolver1 extends Solver {

@@ -1,5 +1,5 @@
 import { CleanupPossibleValues } from "@app/core/solver/solver-clean-up/cleanup-possible-values";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 
 describe(CleanupPossibleValues.name, () => {
   describe("only one at a time", () => {

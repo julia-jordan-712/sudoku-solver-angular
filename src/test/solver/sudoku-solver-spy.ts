@@ -4,7 +4,7 @@ import {
   SolverResponse,
   SolverResponseStatus,
 } from "@app/core/solver/types/solver-response";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
 
 export class SudokuSolverSpy {

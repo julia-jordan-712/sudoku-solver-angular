@@ -3,8 +3,8 @@ import { ClipboardService } from "@app/components/dev-functions/services/clipboa
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Logger } from "@app/core/log/logger";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isSudoku } from "@app/shared/util/is-sudoku-grid";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { Store } from "@ngrx/store";
 import { catchError, EMPTY, filter, map, Observable } from "rxjs";
 

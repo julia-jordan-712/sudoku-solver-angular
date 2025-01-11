@@ -1,6 +1,6 @@
 import { EmptyCellsToPossibleValues } from "@app/core/solver/solver-prepare/empty-cells-to-possible-values";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
 
 describe(EmptyCellsToPossibleValues.name, () => {

@@ -1,5 +1,5 @@
 import { SudokuGridCellValidator } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.validator";
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 
 describe(SudokuGridCellValidator.name, () => {
   describe("max value 10", () => {

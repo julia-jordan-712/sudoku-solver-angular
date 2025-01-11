@@ -1,8 +1,8 @@
 import { Component, inject } from "@angular/core";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { isDefined } from "@app/shared/util/is-defined";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 import { Store } from "@ngrx/store";
 import { filter, Observable } from "rxjs";
 

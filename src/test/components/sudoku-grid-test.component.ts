@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 
 @Component({
   selector: "app-sudoku-grid",

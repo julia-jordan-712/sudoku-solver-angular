@@ -1,4 +1,4 @@
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 
 export type SudokuGrid = SudokuGridRow[];
 

@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 

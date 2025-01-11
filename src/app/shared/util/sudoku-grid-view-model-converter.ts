@@ -1,15 +1,15 @@
-import { CellPosition } from "@app/shared/types/cell-position";
+import { isDefined } from "@app/shared/util/is-defined";
+import { CellPosition } from "@app/types/cell-position";
 import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
-} from "@app/shared/types/sudoku-grid";
+} from "@app/types/sudoku-grid";
 import {
   SudokuGridCellViewModel,
   SudokuGridRowViewModel,
   SudokuGridViewModel,
-} from "@app/shared/types/sudoku-grid-view-model";
-import { isDefined } from "@app/shared/util/is-defined";
+} from "@app/types/sudoku-grid-view-model";
 
 export class SudokuGridViewModelConverter {
   public static createViewModelFromGrid(

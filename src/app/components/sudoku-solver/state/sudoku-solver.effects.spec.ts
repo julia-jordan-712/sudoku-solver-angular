@@ -11,8 +11,8 @@ import {
   SolverResponse,
   SolverResponseStatus,
 } from "@app/core/solver/types/solver-response";
-import { SolverExecution } from "@app/shared/types/solver-execution";
 import { AppState } from "@app/state/app-state";
+import { SolverExecution } from "@app/types/solver-execution";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { provideMockStore } from "@ngrx/store/testing";
 import { getTestScheduler, hot } from "jasmine-marbles";

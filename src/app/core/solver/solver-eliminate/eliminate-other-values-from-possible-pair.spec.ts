@@ -1,6 +1,6 @@
 import { EliminateOtherValuesFromPossiblePair } from "@app/core/solver/solver-eliminate/eliminate-other-values-from-possible-pair";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 
 describe(EliminateOtherValuesFromPossiblePair.name, () => {
   [

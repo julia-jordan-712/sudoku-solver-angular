@@ -2,8 +2,8 @@ import { Component, inject } from "@angular/core";
 import { smoothHeightAnimation } from "@app/animations/smooth-height.directive";
 import { smoothWidthAnimation } from "@app/animations/smooth-width.directive";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
-import { I18nKey } from "@app/shared/types/i18n-key";
-import { Nullable } from "@app/shared/types/nullable";
+import { I18nKey } from "@app/types/i18n-key";
+import { Nullable } from "@app/types/nullable";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 

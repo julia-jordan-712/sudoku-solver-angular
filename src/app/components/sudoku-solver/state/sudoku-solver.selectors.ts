@@ -7,11 +7,11 @@ import {
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolution } from "@app/core/verification/services/verify-solution";
-import { I18nKey } from "@app/shared/types/i18n-key";
-import { Nullable } from "@app/shared/types/nullable";
-import { SolverExecution } from "@app/shared/types/solver-execution";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
+import { I18nKey } from "@app/types/i18n-key";
+import { Nullable } from "@app/types/nullable";
+import { SolverExecution } from "@app/types/solver-execution";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 const selectState =

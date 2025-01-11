@@ -6,7 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 
 @Component({
   selector: "app-number-input",

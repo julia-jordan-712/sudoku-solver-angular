@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
-import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { SudokuGridCell } from "@app/types/sudoku-grid";
+import { SudokuGridCellViewModel } from "@app/types/sudoku-grid-view-model";
 
 @Component({
   selector: "app-sudoku-grid-cell",

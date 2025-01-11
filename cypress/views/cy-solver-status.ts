@@ -1,7 +1,4 @@
-import {
-  SOLVER_EXECUTION,
-  SolverExecution,
-} from "@app/shared/types/solver-execution";
+import { SOLVER_EXECUTION, SolverExecution } from "@app/types/solver-execution";
 import { CySelectable } from "@cypress/types/cy-selectable";
 import {
   CySelector,

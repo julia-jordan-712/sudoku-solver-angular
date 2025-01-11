@@ -1,5 +1,5 @@
-import { Nullable } from "@app/shared/types/nullable";
 import { isDefined } from "@app/shared/util/is-defined";
+import { Nullable } from "@app/types/nullable";
 
 export function isArray<T>(value: Nullable<T | T[]>): value is T[] {
   return isDefined(value) && (value as T[]).length != undefined;

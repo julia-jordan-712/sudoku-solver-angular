@@ -6,8 +6,8 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
-import { Nullable } from "@app/shared/types/nullable";
-import { SingleSelectionInputOption } from "@app/shared/types/single-selection-input-option";
+import { Nullable } from "@app/types/nullable";
+import { SingleSelectionInputOption } from "@app/types/single-selection-input-option";
 
 @Component({
   selector: "app-dropdown-input",

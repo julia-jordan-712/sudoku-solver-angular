@@ -8,8 +8,8 @@ import {
   Output,
 } from "@angular/core";
 import { SudokuGridCellComponentService } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-component.service";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGridCellViewModel } from "@app/types/sudoku-grid-view-model";
 import { Observable } from "rxjs";
 
 @Component({

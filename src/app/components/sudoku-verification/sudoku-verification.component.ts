@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { smoothHeightAnimation } from "@app/animations/smooth-height.directive";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 
 @Component({
   selector: "app-sudoku-verification",

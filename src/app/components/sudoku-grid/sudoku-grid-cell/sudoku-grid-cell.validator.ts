@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 
 export class SudokuGridCellValidator {
   private maxValue: number | null = null;

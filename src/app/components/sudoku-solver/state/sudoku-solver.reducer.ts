@@ -11,10 +11,10 @@ import {
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { AppActions } from "@app/state/app-state";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { ActionReducer, createReducer, on } from "@ngrx/store";
 import { v4 as randomUUID } from "uuid";
 

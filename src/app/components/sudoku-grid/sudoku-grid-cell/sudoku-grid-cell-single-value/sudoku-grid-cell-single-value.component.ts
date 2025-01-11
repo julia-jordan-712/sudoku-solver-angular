@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { SudokuGridCellValidator } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.validator";
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 import { Subscription } from "rxjs";
 
 @Component({

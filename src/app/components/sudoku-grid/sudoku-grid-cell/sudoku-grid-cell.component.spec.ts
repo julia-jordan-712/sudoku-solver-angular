@@ -4,8 +4,8 @@ import { SudokuGridCellComponentService } from "@app/components/sudoku-grid/sudo
 import { SudokuGridCellMultipleValuesComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-multiple-values/sudoku-grid-cell-multiple-values.component";
 import { SudokuGridCellSingleValueComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-single-value/sudoku-grid-cell-single-value.component";
 import { SudokuGridCellComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.component";
-import { CellPosition } from "@app/shared/types/cell-position";
-import { SudokuGridCellViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { CellPosition } from "@app/types/cell-position";
+import { SudokuGridCellViewModel } from "@app/types/sudoku-grid-view-model";
 import { SudokuGridViewModelMock } from "src/test/sudoku/sudoku-grid-view-model.mock";
 
 describe(SudokuGridCellComponent.name, () => {

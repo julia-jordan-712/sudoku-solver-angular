@@ -1,6 +1,6 @@
-import { Index } from "@app/shared/types";
-import { Nullable } from "@app/shared/types/nullable";
 import { isDefined } from "@app/shared/util/is-defined";
+import { Index } from "@app/types";
+import { Nullable } from "@app/types/nullable";
 
 export class Objects {
   public static isObject(obj: any): obj is object {

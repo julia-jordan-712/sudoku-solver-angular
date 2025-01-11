@@ -1,8 +1,8 @@
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
 import { Assert } from "@app/shared/util/assertions";
 import { isArray, isNotArray } from "@app/shared/util/is-array";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid, SudokuGridCell } from "@app/types/sudoku-grid";
 import { v4 as randomUUID } from "uuid";
 
 export interface BranchingPoint {

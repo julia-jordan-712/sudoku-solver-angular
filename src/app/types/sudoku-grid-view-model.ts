@@ -1,9 +1,9 @@
 import { ClipboardElement } from "@app/components/dev-functions/services/clipboard.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
-import { CellPosition } from "@app/shared/types/cell-position";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
 import { isArray } from "@app/shared/util/is-array";
+import { CellPosition } from "@app/types/cell-position";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGridCell } from "@app/types/sudoku-grid";
 
 export interface SudokuGridViewModelBranchInfo {
   id: string;

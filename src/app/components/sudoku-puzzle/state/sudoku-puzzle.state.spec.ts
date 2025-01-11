@@ -9,9 +9,9 @@ import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudok
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { EffectsModule } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";

@@ -4,14 +4,14 @@ import {
   SudokuGridCellChangeEvent,
   SudokuGridRowComponentService,
 } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row-component.service";
+import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
-} from "@app/shared/types/sudoku-grid";
-import { SudokuGridRowViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
+} from "@app/types/sudoku-grid";
+import { SudokuGridRowViewModel } from "@app/types/sudoku-grid-view-model";
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
 import { SudokuGridViewModelMock } from "src/test/sudoku/sudoku-grid-view-model.mock";
 import { TestSubscription } from "src/test/test-subscription";

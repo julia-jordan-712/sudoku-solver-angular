@@ -1,4 +1,4 @@
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 
 export class SudokuGridViewModelMock {
   public static DATA: SudokuGridViewModel["data"] = {

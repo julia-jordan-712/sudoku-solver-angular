@@ -13,9 +13,9 @@ import {
   SudokuSolverStateKey,
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { AppState } from "@app/state/app-state";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
 
 export class TestState {

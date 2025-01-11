@@ -1,7 +1,7 @@
 import { EliminateFromRowOrColumn } from "@app/core/solver/solver-eliminate/eliminate-from-row-column";
 import { SolverEliminateUtil } from "@app/core/solver/solver-eliminate/solver-eliminate-util";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 
 describe(EliminateFromRowOrColumn.name, () => {
   const all = [1, 2, 3, 4];

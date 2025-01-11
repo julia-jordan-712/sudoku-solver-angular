@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid, SudokuGridRow } from "@app/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 
 @Injectable()
 export class SudokuGridComponentService {

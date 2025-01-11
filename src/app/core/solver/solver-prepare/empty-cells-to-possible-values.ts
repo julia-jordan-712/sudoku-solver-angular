@@ -1,8 +1,8 @@
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
-import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 import { isNotArray } from "@app/shared/util/is-array";
 import { isDefined } from "@app/shared/util/is-defined";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { SudokuGrid, SudokuGridRow } from "@app/types/sudoku-grid";
 
 /**
  * Converts empty cells into an array of possible values. The already existing values

@@ -1,6 +1,6 @@
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { isArray } from "@app/shared/util/is-array";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 
 /**
  * Converts a cell where only one value remains in the array of possible values into a *found* value.

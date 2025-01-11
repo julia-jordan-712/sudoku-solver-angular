@@ -1,5 +1,5 @@
-import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
 import { isDefined } from "@app/shared/util/is-defined";
+import { SudokuGrid, SudokuGridCell } from "@app/types/sudoku-grid";
 import { CySudokuCell } from "@cypress/selectors/cy-sudoku-cell";
 import { CySelectable } from "@cypress/types/cy-selectable";
 import {

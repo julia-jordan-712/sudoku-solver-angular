@@ -8,8 +8,8 @@ import { SudokuSolverReducer } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverState } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
-import { SOLVER_EXECUTION } from "@app/shared/types/solver-execution";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SOLVER_EXECUTION } from "@app/types/solver-execution";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
 import { PuzzleExtreme } from "src/test/puzzles/puzzle-extreme";
 import { PuzzleHard } from "src/test/puzzles/puzzle-hard";
