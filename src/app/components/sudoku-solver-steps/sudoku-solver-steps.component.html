@@ -6,8 +6,12 @@
     lastStepI18nKey.key | translate: lastStepI18nKey.params;
     as lastStepText
   ) {
-    <span [appSmoothHeight]="lastStepText" [appSmoothWidth]="lastStepText">{{
+    <span class="last-step" [appSmoothHeight]="lastStepText">{{
       lastStepText
     }}</span>
+  } @else {
+    <span class="last-step">-</span>
   }
+} @else {
+  <span class="last-step">-</span>
 }
