@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { SelectionListComponent } from "@app/components/interactions/selection-list/selection-list.component";
+import { SelectionListComponent } from "@app/components/shared/selection-list/selection-list.component";
 
 @Component({
   selector: "app-selection-list",
