@@ -1,13 +1,13 @@
 import { Injectable, SimpleChanges } from "@angular/core";
-import { isArray, isNotArray } from "@app/shared/util/is-array";
-import { isDefined } from "@app/shared/util/is-defined";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGridCell, SudokuGridRow } from "@app/types/sudoku-grid";
 import {
   SudokuGridCellViewModel,
   SudokuGridRowViewModel,
 } from "@app/types/sudoku-grid-view-model";
+import { isArray, isNotArray } from "@app/util/is-array";
+import { isDefined } from "@app/util/is-defined";
+import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { BehaviorSubject, filter, Observable } from "rxjs";
 
 @Injectable()

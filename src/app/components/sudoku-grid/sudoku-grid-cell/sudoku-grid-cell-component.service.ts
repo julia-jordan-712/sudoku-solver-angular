@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { isArray, isNotArray } from "@app/shared/util/is-array";
-import { Objects } from "@app/shared/util/objects";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGridCell } from "@app/types/sudoku-grid";
+import { isArray, isNotArray } from "@app/util/is-array";
+import { Objects } from "@app/util/objects";
 import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable()

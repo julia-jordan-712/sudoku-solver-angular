@@ -3,9 +3,9 @@ import {
   SudokuGridComponentService,
   SudokuGridRowChangeEvent,
 } from "@app/components/sudoku-grid/sudoku-grid-component.service";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { SudokuGrid, SudokuGridRow } from "@app/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
+import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { SudokuGridViewModelMock } from "src/test/sudoku/sudoku-grid-view-model.mock";
 import { v4 as randomUUID } from "uuid";
 

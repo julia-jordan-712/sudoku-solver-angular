@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, inject, Input, OnDestroy } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { isDefined } from "@app/shared/util/is-defined";
+import { isDefined } from "@app/util/is-defined";
 import { BehaviorSubject, filter, map, Observable, switchMap } from "rxjs";
 
 @Component({

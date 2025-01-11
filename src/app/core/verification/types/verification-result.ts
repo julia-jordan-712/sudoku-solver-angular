@@ -1,7 +1,7 @@
 import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
-import { Objects } from "@app/shared/util/objects";
 import { I18nKey, i18nKeyEqual } from "@app/types/i18n-key";
 import { Nullable } from "@app/types/nullable";
+import { Objects } from "@app/util/objects";
 
 export class VerificationResult {
   public static createValid(): VerificationResult {

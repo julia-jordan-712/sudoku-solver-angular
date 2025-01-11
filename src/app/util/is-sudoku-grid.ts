@@ -1,5 +1,5 @@
-import { isArray } from "@app/shared/util/is-array";
 import { SudokuGrid } from "@app/types/sudoku-grid";
+import { isArray } from "@app/util/is-array";
 
 export function isSudoku(value: any): value is SudokuGrid {
   const grid: SudokuGrid = value as SudokuGrid;

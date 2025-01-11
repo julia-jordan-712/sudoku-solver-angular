@@ -9,14 +9,14 @@ import {
   SolverResponse,
   SolverStepResponse,
 } from "@app/core/solver/types/solver-response";
-import { Assert } from "@app/shared/util/assertions";
-import { isArray } from "@app/shared/util/is-array";
 import { Nullable } from "@app/types/nullable";
 import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
 } from "@app/types/sudoku-grid";
+import { Assert } from "@app/util/assertions";
+import { isArray } from "@app/util/is-array";
 
 @Injectable()
 export class SolverOpenBranch extends Solver {

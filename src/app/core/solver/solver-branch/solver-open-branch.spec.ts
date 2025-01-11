@@ -1,8 +1,8 @@
 import { SolverOpenBranch } from "@app/core/solver/solver-branch/solver-open-branch";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
 
 describe(SolverOpenBranch.name, () => {

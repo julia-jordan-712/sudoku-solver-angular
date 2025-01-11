@@ -1,9 +1,9 @@
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
-import { isArray } from "@app/shared/util/is-array";
-import { isDefined } from "@app/shared/util/is-defined";
 import { SudokuGrid, SudokuGridCell } from "@app/types/sudoku-grid";
+import { isArray } from "@app/util/is-array";
+import { isDefined } from "@app/util/is-defined";
 
 export class VerifyNothingEmpty {
   verify(

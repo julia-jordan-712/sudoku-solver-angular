@@ -1,4 +1,4 @@
-import { isDefined } from "@app/shared/util/is-defined";
+import { isDefined } from "@app/util/is-defined";
 
 export class Assert {
   public static state(condition: boolean, msg?: string): asserts condition {

@@ -3,8 +3,8 @@ import { VerifySolution } from "@app/core/verification/services/verify-solution"
 import { VerifySquare } from "@app/core/verification/services/verify-square";
 import { VerifyUniqueness } from "@app/core/verification/services/verify-uniqueness";
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
 import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
 

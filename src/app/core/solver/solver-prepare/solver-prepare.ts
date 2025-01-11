@@ -5,9 +5,9 @@ import {
   SolverResponse,
   SolverStepResponse,
 } from "@app/core/solver/types/solver-response";
-import { isDefined } from "@app/shared/util/is-defined";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid } from "@app/types/sudoku-grid";
+import { isDefined } from "@app/util/is-defined";
 
 @Injectable()
 export class SolverPrepare extends Solver {

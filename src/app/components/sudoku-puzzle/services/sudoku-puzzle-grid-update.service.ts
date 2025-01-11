@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Logger } from "@app/core/log/logger";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { Nullable } from "@app/types/nullable";
 import { StopWatch } from "@app/types/stopwatch";
 import {
@@ -8,6 +7,7 @@ import {
   SudokuGridCell,
   SudokuGridRow,
 } from "@app/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
 @Injectable({
   providedIn: "root",

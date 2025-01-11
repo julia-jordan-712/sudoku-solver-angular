@@ -1,6 +1,4 @@
 import { Logger } from "@app/core/log/logger";
-import { isArray, isNotArray } from "@app/shared/util/is-array";
-import { isDefined } from "@app/shared/util/is-defined";
 import { CellPositionMap } from "@app/types/cell-position-map";
 import { Nullable } from "@app/types/nullable";
 import { StopWatch } from "@app/types/stopwatch";
@@ -9,6 +7,8 @@ import {
   SudokuGridCell,
   SudokuGridRow,
 } from "@app/types/sudoku-grid";
+import { isArray, isNotArray } from "@app/util/is-array";
+import { isDefined } from "@app/util/is-defined";
 
 export class SudokuGridUtil {
   private static cellPositionMaps: Record<number, CellPositionMap> = {};

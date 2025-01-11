@@ -1,7 +1,7 @@
 import { EliminateFromSquare } from "@app/core/solver/solver-eliminate/eliminate-from-square";
 import { SolverEliminateUtil } from "@app/core/solver/solver-eliminate/solver-eliminate-util";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
 describe(EliminateFromSquare.name, () => {
   const all = [1, 2, 3, 4];

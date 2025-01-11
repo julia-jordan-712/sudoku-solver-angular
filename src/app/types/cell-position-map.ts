@@ -1,8 +1,8 @@
 import { Logger } from "@app/core/log/logger";
-import { Assert } from "@app/shared/util/assertions";
 import { Index } from "@app/types";
 import { CellPosition } from "@app/types/cell-position";
 import { StopWatch } from "@app/types/stopwatch";
+import { Assert } from "@app/util/assertions";
 
 export class CellPositionMap {
   private cellPositionToSquareIndex: Index<number> = {};

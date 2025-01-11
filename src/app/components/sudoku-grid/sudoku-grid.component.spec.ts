@@ -4,8 +4,8 @@ import { SudokuGridComponentService } from "@app/components/sudoku-grid/sudoku-g
 import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row.component";
 import { SudokuGridComponent } from "@app/components/sudoku-grid/sudoku-grid.component";
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { SudokuGridCellTestComponent } from "src/test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";

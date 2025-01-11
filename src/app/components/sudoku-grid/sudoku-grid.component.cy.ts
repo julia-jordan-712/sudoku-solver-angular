@@ -4,11 +4,11 @@ import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module
 import { VerifySolution } from "@app/core/verification/services/verify-solution";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
+import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { CySudoku } from "@cypress/selectors/cy-sudoku";
 import { CySudokuCell } from "@cypress/selectors/cy-sudoku-cell";
 import { CyComponent, CyComponentInput } from "@cypress/types/cy-component";

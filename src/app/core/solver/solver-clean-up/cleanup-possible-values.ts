@@ -1,7 +1,7 @@
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
-import { isArray } from "@app/shared/util/is-array";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { SudokuGrid } from "@app/types/sudoku-grid";
+import { isArray } from "@app/util/is-array";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
 /**
  * Cleans up the possible values by removing found values from the possible-values-array.

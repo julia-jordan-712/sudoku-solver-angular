@@ -13,7 +13,7 @@ import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 import { EffectsModule } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { PuzzleAdvanced } from "src/test/puzzles/puzzle-advanced";

@@ -1,9 +1,9 @@
 import { SolverEliminateUtil } from "@app/core/solver/solver-eliminate/solver-eliminate-util";
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
-import { isArray } from "@app/shared/util/is-array";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { CellPosition } from "@app/types/cell-position";
 import { SudokuGrid, SudokuGridCell } from "@app/types/sudoku-grid";
+import { isArray } from "@app/util/is-array";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
 /**
  * Identifies rows/columns where a certain value is possible only at certain positions
