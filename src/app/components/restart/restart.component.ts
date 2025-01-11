@@ -3,11 +3,11 @@ import { AppActions } from "@app/state/app-state";
 import { Store } from "@ngrx/store";
 
 @Component({
-  selector: "app-clear-state",
-  templateUrl: "./clear-state.component.html",
-  styleUrl: "./clear-state.component.scss",
+  selector: "app-restart",
+  templateUrl: "./restart.component.html",
+  styleUrl: "./restart.component.scss",
 })
-export class ClearStateComponent {
+export class RestartComponent {
   private store: Store = inject(Store);
 
   protected clearState(): void {
