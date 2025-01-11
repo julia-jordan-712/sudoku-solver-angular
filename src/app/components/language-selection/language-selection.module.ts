@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { IconModule } from "@app/components/icon/icon.module";
+import { IconModule } from "@app/components/shared/icon/icon.module";
 import { LanguageSelectionComponent } from "@app/components/language-selection/language-selection.component";
 
 @NgModule({

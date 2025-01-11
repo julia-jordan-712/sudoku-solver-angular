@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { IconModule } from "@app/components/icon/icon.module";
+import { IconModule } from "@app/components/shared/icon/icon.module";
 import { SudokuSolverActionsComponent } from "@app/components/sudoku-solver/sudoku-solver-actions/sudoku-solver-actions.component";
 import { TranslateModule } from "@ngx-translate/core";
 
