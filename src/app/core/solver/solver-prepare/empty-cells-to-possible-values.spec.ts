@@ -1,7 +1,7 @@
+import { EmptyCellsToPossibleValues } from "@app/core/solver/solver-prepare/empty-cells-to-possible-values";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { EmptyCellsToPossibleValues } from "./empty-cells-to-possible-values";
 
 describe(EmptyCellsToPossibleValues.name, () => {
   describe("only one at a time", () => {

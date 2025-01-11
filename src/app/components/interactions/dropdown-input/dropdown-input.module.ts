@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { DropdownInputComponent } from "@app/components/interactions/dropdown-input/dropdown-input.component";
 import { TranslateModule } from "@ngx-translate/core";
-import { DropdownInputComponent } from "./dropdown-input.component";
 
 @NgModule({
   declarations: [DropdownInputComponent],

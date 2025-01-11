@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { SudokuGridComponentService } from "@app/components/sudoku-grid/sudoku-grid-component.service";
 import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row.component";
+import { SudokuGridComponent } from "@app/components/sudoku-grid/sudoku-grid.component";
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
@@ -10,7 +11,6 @@ import { SudokuGridCellTestComponent } from "src/test/components/sudoku-grid-cel
 import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
 import { SudokuGridViewModelMock } from "src/test/sudoku/sudoku-grid-view-model.mock";
 import { v4 as randomUUID } from "uuid";
-import { SudokuGridComponent } from "./sudoku-grid.component";
 
 describe(SudokuGridComponent.name, () => {
   let component: SudokuGridComponent;

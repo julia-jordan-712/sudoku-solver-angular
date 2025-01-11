@@ -1,5 +1,5 @@
+import { ConvertValuesPossibleOnce } from "@app/core/solver/solver-search/convert-values-possible-once";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { ConvertValuesPossibleOnce } from "./convert-values-possible-once";
 
 describe(ConvertValuesPossibleOnce.name, () => {
   it("should find values which are only possible once in a row", () => {

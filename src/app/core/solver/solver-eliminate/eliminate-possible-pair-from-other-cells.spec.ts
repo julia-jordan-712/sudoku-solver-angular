@@ -1,5 +1,5 @@
+import { EliminatePossiblePairFromOtherCells } from "@app/core/solver/solver-eliminate/eliminate-possible-pair-from-other-cells";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { EliminatePossiblePairFromOtherCells } from "./eliminate-possible-pair-from-other-cells";
 
 describe(EliminatePossiblePairFromOtherCells.name, () => {
   [

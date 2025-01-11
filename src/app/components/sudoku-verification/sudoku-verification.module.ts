@@ -2,8 +2,8 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { AnimationsModule } from "@app/animations/animations.module";
 import { IconModule } from "@app/components/icon/icon.module";
+import { SudokuVerificationComponent } from "@app/components/sudoku-verification/sudoku-verification.component";
 import { TranslateModule } from "@ngx-translate/core";
-import { SudokuVerificationComponent } from "./sudoku-verification.component";
 
 @NgModule({
   declarations: [SudokuVerificationComponent],

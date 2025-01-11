@@ -1,5 +1,5 @@
+import { ConvertSinglePossibleValue } from "@app/core/solver/solver-search/convert-single-possible-value";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { ConvertSinglePossibleValue } from "./convert-single-possible-value";
 
 describe(ConvertSinglePossibleValue.name, () => {
   describe("only one at a time", () => {
