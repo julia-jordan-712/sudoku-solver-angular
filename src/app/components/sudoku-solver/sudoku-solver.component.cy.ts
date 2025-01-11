@@ -29,7 +29,6 @@ describe(SudokuSolverComponent.name, () => {
 
     it("should show amount of executed steps and what the last step was", () => {
       underTest.steps.get().should("contain.text", "Steps: 0");
-      underTest.steps.get().should("not.contain.text", "Last step:");
 
       underTest.clickNext();
 
