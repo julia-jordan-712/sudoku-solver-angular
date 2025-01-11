@@ -7,7 +7,7 @@ import { PasteSudokuComponent } from "@app/components/dev-functions/paste-sudoku
 import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
 import { DevFunctionsSelectors } from "@app/components/dev-functions/state/dev-functions.selectors";
 import { TestSudokusComponent } from "@app/components/dev-functions/test-sudokus/test-sudokus.component";
-import { DropdownInputModule } from "@app/components/shared/dropdown-input/dropdown-input.module";
+import { DropdownModule } from "@app/components/shared/dropdown/dropdown.module";
 import { SectionModule } from "@app/components/shared/section/section.module";
 import { AppState } from "@app/state/app-state";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
@@ -31,7 +31,7 @@ describe(DevFunctionsComponent.name, () => {
         TestSudokusComponent,
       ],
       imports: [
-        DropdownInputModule,
+        DropdownModule,
         SectionModule,
         TranslateTestingModule.withTranslations({}),
       ],

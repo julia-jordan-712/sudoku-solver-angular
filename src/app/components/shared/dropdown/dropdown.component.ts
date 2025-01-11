@@ -10,11 +10,11 @@ import { Nullable } from "@app/types/nullable";
 import { SingleSelectionInputOption } from "@app/types/single-selection-input-option";
 
 @Component({
-  selector: "app-dropdown-input",
-  templateUrl: "./dropdown-input.component.html",
-  styleUrls: ["./dropdown-input.component.scss"],
+  selector: "app-dropdown",
+  templateUrl: "./dropdown.component.html",
+  styleUrls: ["./dropdown.component.scss"],
 })
-export class DropdownInputComponent<T> implements OnChanges {
+export class DropdownComponent<T> implements OnChanges {
   private readonly NO_SELECTION_ITEM: SingleSelectionInputOption<any> = {
     id: "DROPDOWN_NO_SELECTION",
     name: "-",
