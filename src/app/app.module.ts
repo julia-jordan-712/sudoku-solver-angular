@@ -10,7 +10,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "@app/app-routing.module";
 import { AppComponent } from "@app/app.component";
-import { DevelopmentEffects } from "@app/components/development-functions/state/development.effects";
+import { DevelopmentEffects } from "./components/development/state/development.effects";
 import { MainModule } from "@app/components/main/main.module";
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";

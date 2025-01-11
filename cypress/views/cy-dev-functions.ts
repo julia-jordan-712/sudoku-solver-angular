@@ -3,7 +3,7 @@ import { CyDropdown } from "@cypress/selectors/cy-dropdown";
 import { CyIcon } from "@cypress/selectors/cy-icon";
 
 export class CyDevFunctions {
-  private readonly hostSelector = "app-development-functions";
+  private readonly hostSelector = "app-development";
 
   public readonly clearState: CyButtonWithIcon = new CyButtonWithIcon(
     { dataCy: "clearState", icon: "restart_alt" },

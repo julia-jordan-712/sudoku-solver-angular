@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
-import { DevelopmentActions } from "@app/components/development-functions/state/development.actions";
-import { DevelopmentSelectors } from "@app/components/development-functions/state/development.selectors";
+import { DevelopmentActions } from "@app/components/development/state/development.actions";
+import { DevelopmentSelectors } from "@app/components/development/state/development.selectors";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { Nullable } from "@app/types/nullable";
 import { Store } from "@ngrx/store";

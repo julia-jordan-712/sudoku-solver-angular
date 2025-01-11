@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { DevelopmentActions } from "@app/components/development-functions/state/development.actions";
+import { DevelopmentActions } from "./development.actions";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map } from "rxjs/operators";

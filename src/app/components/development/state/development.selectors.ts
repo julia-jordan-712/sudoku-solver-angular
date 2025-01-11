@@ -1,7 +1,4 @@
-import {
-  DevelopmentState,
-  DevelopmentStateKey,
-} from "@app/components/development-functions/state/development.state";
+import { DevelopmentState, DevelopmentStateKey } from "./development.state";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 const selectState =

@@ -1,11 +1,12 @@
 import { provideHttpClient } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { DevelopmentFunctionsComponent } from "@app/components/development-functions/development-functions.component";
-import { DevelopmentSelectors } from "@app/components/development-functions/state/development.selectors";
-import { TestSudokusComponent } from "@app/components/development-functions/test-sudokus/test-sudokus.component";
+import { DevelopmentComponent } from "./development.component";
+import { DevelopmentSelectors } from "./state/development.selectors";
+import { TestSudokusComponent } from "./test-sudokus/test-sudokus.component";
 import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
 import { SectionModule } from "@app/components/general/section/section.module";
+import { RestartComponent } from "@app/components/restart/restart.component";
 import { RestartModule } from "@app/components/restart/restart.module";
 import { SudokuCopyModule } from "@app/components/sudoku-copy/sudoku-copy.module";
 import { SudokuPasteModule } from "@app/components/sudoku-paste/sudoku-paste.module";
@@ -15,10 +16,9 @@ import { MockStore, provideMockStore } from "@ngrx/store/testing";
 import { IconTestComponent } from "@test/components/icon-test.component";
 import { TestState } from "@test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { RestartComponent } from "../restart/restart.component";
 
-describe(DevelopmentFunctionsComponent.name, () => {
-  let fixture: ComponentFixture<DevelopmentFunctionsComponent>;
+describe(DevelopmentComponent.name, () => {
+  let fixture: ComponentFixture<DevelopmentComponent>;
   let clipboardService: ClipboardService;
   let store: MockStore<AppState>;
 
@@ -26,7 +26,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
     await TestBed.configureTestingModule({
       declarations: [
         RestartComponent,
-        DevelopmentFunctionsComponent,
+        DevelopmentComponent,
         IconTestComponent,
         TestSudokusComponent,
       ],
@@ -55,7 +55,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
       isDevelopment,
     );
 
-    fixture = TestBed.createComponent(DevelopmentFunctionsComponent);
+    fixture = TestBed.createComponent(DevelopmentComponent);
     fixture.detectChanges();
   }
 

@@ -1,9 +1,9 @@
 import { inject, InjectionToken } from "@angular/core";
-import { DevelopmentReducer } from "@app/components/development-functions/state/development.reducer";
+import { DevelopmentReducer } from "@app/components/development/state/development.reducer";
 import {
   DevelopmentState,
   DevelopmentStateKey,
-} from "@app/components/development-functions/state/development.state";
+} from "@app/components/development/state/development.state";
 import { SudokuPuzzleReducer } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.reducer";
 import {
   SudokuPuzzleState,
