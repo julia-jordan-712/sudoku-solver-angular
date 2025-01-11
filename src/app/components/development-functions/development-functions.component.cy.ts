@@ -2,12 +2,14 @@ import { appStoreImports } from "@app/app.module";
 import { DevelopmentFunctionsComponent } from "@app/components/development-functions/development-functions.component";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
+import { ClipboardService } from "@app/core/clipboard/clipboard.service";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 import { CyStateSwitch } from "@cypress/views/cy-state-switch";
+import { ClipboardServiceMock } from "@test/clipboard/clipboard-service.mock";
 import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
@@ -26,7 +28,10 @@ describe(DevelopmentFunctionsComponent.name, () => {
       {},
       {
         imports: appStoreImports,
-        providers: [...SOLVER_PROVIDERS],
+        providers: [
+          ...SOLVER_PROVIDERS,
+          { provide: ClipboardService, useClass: ClipboardServiceMock },
+        ],
       },
     );
   });
@@ -156,8 +161,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
       devFunctions.pasteSudoku.get().should("be.enabled");
     });
 
-    // this test does not work like this due to https://github.com/cypress-io/cypress/issues/18198
-    it.skip("should allow to paste a sudoku grid from the clipboard and update the rest of the state accordingly", () => {
+    it("should allow to paste a sudoku grid from the clipboard and update the rest of the state accordingly", () => {
       // arrange
       devFunctions.dropdown.dropdown.select("9x9 | Simple | Puzzle 2");
       devFunctions.copySudoku.get().click();

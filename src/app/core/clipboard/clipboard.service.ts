@@ -13,8 +13,15 @@ export class ClipboardService {
     private sanitizer: DomSanitizer,
   ) {}
 
-  async copy<T extends ClipboardElement>(value: T): Promise<void> {
-    const clipboardString = value.toClipboardString();
+  copy<T extends ClipboardElement>(value: T): void {
+    this.copyString(value.toClipboardString());
+  }
+
+  protected copyString(value: string): void {
+    this.writeToClipboard(value);
+  }
+
+  private async writeToClipboard(clipboardString: string): Promise<void> {
     const type = "text/plain";
     await this.documentRef.defaultView?.navigator?.clipboard
       ?.write([
