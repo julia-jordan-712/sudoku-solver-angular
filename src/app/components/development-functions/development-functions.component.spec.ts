@@ -1,19 +1,20 @@
+import { provideHttpClient } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { ClearStateComponent } from "./clear-state/clear-state.component";
-import { CopySudokuComponent } from "./copy-sudoku/copy-sudoku.component";
-import { DevelopmentFunctionsComponent } from "./development-functions.component";
-import { PasteSudokuComponent } from "./paste-sudoku/paste-sudoku.component";
-import { ClipboardService } from "./services/clipboard.service";
-import { DevFunctionsSelectors } from "./state/dev-functions.selectors";
-import { TestSudokusComponent } from "./test-sudokus/test-sudokus.component";
 import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
 import { SectionModule } from "@app/components/general/section/section.module";
+import { SudokuCopyModule } from "@app/components/sudoku-copy/sudoku-copy.module";
 import { AppState } from "@app/state/app-state";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { IconTestComponent } from "../../../test/components/icon-test.component";
 import { TestState } from "../../../test/state/test-state";
+import { ClearStateComponent } from "./clear-state/clear-state.component";
+import { DevelopmentFunctionsComponent } from "./development-functions.component";
+import { PasteSudokuComponent } from "./paste-sudoku/paste-sudoku.component";
+import { ClipboardService } from "./services/clipboard.service";
+import { DevFunctionsSelectors } from "./state/dev-functions.selectors";
+import { TestSudokusComponent } from "./test-sudokus/test-sudokus.component";
 
 describe(DevelopmentFunctionsComponent.name, () => {
   let fixture: ComponentFixture<DevelopmentFunctionsComponent>;
@@ -23,7 +24,6 @@ describe(DevelopmentFunctionsComponent.name, () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        CopySudokuComponent,
         ClearStateComponent,
         DevelopmentFunctionsComponent,
         IconTestComponent,
@@ -33,9 +33,11 @@ describe(DevelopmentFunctionsComponent.name, () => {
       imports: [
         DropdownModule,
         SectionModule,
+        SudokuCopyModule,
         TranslateTestingModule.withTranslations({}),
       ],
       providers: [
+        provideHttpClient(),
         provideMockStore({ initialState: TestState.createTestAppState() }),
       ],
     }).compileComponents();
@@ -59,7 +61,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
     it("should be visible in development mode", () => {
       setUp(true);
 
-      expect(getElement("app-copy-sudoku")).toBeTruthy();
+      expect(getElement("app-sudoku-copy")).toBeTruthy();
       expect(getCopyButton()).toBeTruthy();
 
       expect(getElement("app-paste-sudoku")).toBeTruthy();
@@ -69,7 +71,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
     it("should NOT be visible in production mode", () => {
       setUp(false);
 
-      expect(getElement("app-copy-sudoku")).toBeUndefined();
+      expect(getElement("app-sudoku-copy")).toBeUndefined();
       expect(getCopyButton()).toBeUndefined();
 
       expect(getElement("app-paste-sudoku")).toBeUndefined();
