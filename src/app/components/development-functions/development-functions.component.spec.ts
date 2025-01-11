@@ -1,6 +1,12 @@
 import { provideHttpClient } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { ClearStateComponent } from "@app/components/development-functions/clear-state/clear-state.component";
+import { DevelopmentFunctionsComponent } from "@app/components/development-functions/development-functions.component";
+import { PasteSudokuComponent } from "@app/components/development-functions/paste-sudoku/paste-sudoku.component";
+import { ClipboardService } from "@app/components/development-functions/services/clipboard.service";
+import { DevFunctionsSelectors } from "@app/components/development-functions/state/dev-functions.selectors";
+import { TestSudokusComponent } from "@app/components/development-functions/test-sudokus/test-sudokus.component";
 import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
 import { SectionModule } from "@app/components/general/section/section.module";
 import { SudokuCopyModule } from "@app/components/sudoku-copy/sudoku-copy.module";
@@ -9,12 +15,6 @@ import { MockStore, provideMockStore } from "@ngrx/store/testing";
 import { IconTestComponent } from "@test/components/icon-test.component";
 import { TestState } from "@test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { ClearStateComponent } from "./clear-state/clear-state.component";
-import { DevelopmentFunctionsComponent } from "./development-functions.component";
-import { PasteSudokuComponent } from "./paste-sudoku/paste-sudoku.component";
-import { ClipboardService } from "./services/clipboard.service";
-import { DevFunctionsSelectors } from "./state/dev-functions.selectors";
-import { TestSudokusComponent } from "./test-sudokus/test-sudokus.component";
 
 describe(DevelopmentFunctionsComponent.name, () => {
   let fixture: ComponentFixture<DevelopmentFunctionsComponent>;

@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { DevFunctionActions } from "./dev-functions.actions";
-import { DevFunctionsState } from "./dev-functions.state";
+import { DevFunctionActions } from "@app/components/development-functions/state/dev-functions.actions";
+import { DevFunctionsState } from "@app/components/development-functions/state/dev-functions.state";
 import { AppActions } from "@app/state/app-state";
 import { ActionReducer, createReducer, on } from "@ngrx/store";
-import { environment } from "../../../../environments/environment";
+import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class DevFunctionsReducer {

@@ -1,4 +1,5 @@
 import { appStoreImports } from "@app/app.module";
+import { DevelopmentFunctionsComponent } from "@app/components/development-functions/development-functions.component";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
@@ -10,7 +11,6 @@ import { CyStateSwitch } from "@cypress/views/cy-state-switch";
 import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
-import { DevelopmentFunctionsComponent } from "./development-functions.component";
 
 describe(DevelopmentFunctionsComponent.name, () => {
   const devFunctions: CyDevFunctions = new CyDevFunctions();
