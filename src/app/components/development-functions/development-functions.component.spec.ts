@@ -3,12 +3,12 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { ClearStateComponent } from "@app/components/development-functions/clear-state/clear-state.component";
 import { DevelopmentFunctionsComponent } from "@app/components/development-functions/development-functions.component";
-import { PasteSudokuComponent } from "@app/components/development-functions/paste-sudoku/paste-sudoku.component";
 import { DevFunctionsSelectors } from "@app/components/development-functions/state/dev-functions.selectors";
 import { TestSudokusComponent } from "@app/components/development-functions/test-sudokus/test-sudokus.component";
 import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
 import { SectionModule } from "@app/components/general/section/section.module";
 import { SudokuCopyModule } from "@app/components/sudoku-copy/sudoku-copy.module";
+import { SudokuPasteModule } from "@app/components/sudoku-paste/sudoku-paste.module";
 import { ClipboardService } from "@app/core/clipboard/clipboard.service";
 import { AppState } from "@app/state/app-state";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
@@ -27,13 +27,13 @@ describe(DevelopmentFunctionsComponent.name, () => {
         ClearStateComponent,
         DevelopmentFunctionsComponent,
         IconTestComponent,
-        PasteSudokuComponent,
         TestSudokusComponent,
       ],
       imports: [
         DropdownModule,
         SectionModule,
         SudokuCopyModule,
+        SudokuPasteModule,
         TranslateTestingModule.withTranslations({}),
       ],
       providers: [
@@ -64,7 +64,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
       expect(getElement("app-sudoku-copy")).toBeTruthy();
       expect(getCopyButton()).toBeTruthy();
 
-      expect(getElement("app-paste-sudoku")).toBeTruthy();
+      expect(getElement("app-sudoku-paste")).toBeTruthy();
       expect(getElement("app-clear-state")).toBeTruthy();
     });
 
@@ -74,7 +74,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
       expect(getElement("app-sudoku-copy")).toBeUndefined();
       expect(getCopyButton()).toBeUndefined();
 
-      expect(getElement("app-paste-sudoku")).toBeUndefined();
+      expect(getElement("app-sudoku-paste")).toBeUndefined();
       expect(getElement("app-clear-state")).toBeUndefined();
     });
   });

@@ -9,12 +9,12 @@ import { Store } from "@ngrx/store";
 import { catchError, EMPTY, filter, map, Observable } from "rxjs";
 
 @Component({
-  selector: "app-paste-sudoku",
-  templateUrl: "./paste-sudoku.component.html",
-  styleUrl: "./paste-sudoku.component.scss",
+  selector: "app-sudoku-paste",
+  templateUrl: "./sudoku-paste.component.html",
+  styleUrl: "./sudoku-paste.component.scss",
 })
-export class PasteSudokuComponent {
-  private logger = new Logger(PasteSudokuComponent.name);
+export class SudokuPasteComponent {
+  private logger = new Logger(SudokuPasteComponent.name);
   private store = inject(Store);
   private clipboard = inject(ClipboardService);
 
