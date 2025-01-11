@@ -1,6 +1,0 @@
-@use "_mixins" as *;
-
-:host {
-  @include section;
-  display: flex;
-}

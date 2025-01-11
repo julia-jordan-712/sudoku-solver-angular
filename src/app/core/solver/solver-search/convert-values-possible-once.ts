@@ -1,11 +1,11 @@
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
-import { CellPosition } from "@app/shared/types/cell-position";
-import { CellPositionMap } from "@app/shared/types/cell-position-map";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
-import { Assert } from "@app/shared/util/assertions";
-import { isArray } from "@app/shared/util/is-array";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { CellPosition } from "@app/types/cell-position";
+import { CellPositionMap } from "@app/types/cell-position-map";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid, SudokuGridCell } from "@app/types/sudoku-grid";
+import { Assert } from "@app/util/assertions";
+import { isArray } from "@app/util/is-array";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
 /**
  * Searches the array of possible values in a row/column/square and checks whether

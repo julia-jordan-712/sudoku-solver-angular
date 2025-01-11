@@ -6,8 +6,8 @@ import { VerifyUniqueness } from "@app/core/verification/services/verify-uniquen
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifySquareResult } from "@app/core/verification/types/verify-square-result";
-import { StopWatch } from "@app/shared/types/stopwatch";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { StopWatch } from "@app/types/stopwatch";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 
 @Injectable()
 export class VerifySolution {

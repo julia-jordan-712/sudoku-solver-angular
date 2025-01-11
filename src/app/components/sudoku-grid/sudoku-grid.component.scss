@@ -1,9 +1,15 @@
 :host {
+  overflow: hidden;
   display: flex;
   gap: 1em;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
+.overflow {
+  overflow: auto;
+  height: 100%;
+}
 .grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
 }

@@ -1,22 +1,18 @@
-@if (verification) {
-  @if (verification.isValid()) {
-    <div class="container valid">
-      <span class="bold">
-        <app-icon icon="check_circle"></app-icon>
-        {{ "VERIFY.RESULT.VALID" | translate }}
-      </span>
-    </div>
-  } @else {
-    <div class="container invalid">
-      <span class="bold">
-        <app-icon icon="error"></app-icon>
-        {{ "VERIFY.RESULT.INVALID" | translate }}
-      </span>
-      @for (error of verification.getErrors(); track error.key) {
-        <span>
+@if (show) {
+  <div class="container" [ngClass]="valid ? 'valid' : 'invalid'">
+    <!-- [appSmoothHeight]="heightChangeTrigger" -->
+    <span class="bold">
+      <app-icon [icon]="valid ? 'check_circle' : 'error'"></app-icon>
+      {{
+        (valid ? "VERIFY.RESULT.VALID" : "VERIFY.RESULT.INVALID") | translate
+      }}
+    </span>
+    @if (!valid) {
+      @for (error of errors; track error.key) {
+        <span @smoothHeight>
           {{ error.key | translate: error.params }}
         </span>
       }
-    </div>
-  }
+    }
+  </div>
 }

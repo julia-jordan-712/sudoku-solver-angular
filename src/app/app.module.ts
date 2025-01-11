@@ -7,8 +7,10 @@ import {
 import localeDe from "@angular/common/locales/de";
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "@app/app-routing.module";
 import { AppComponent } from "@app/app.component";
+import { DevelopmentEffects } from "./components/development/state/development.effects";
 import { MainModule } from "@app/components/main/main.module";
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
@@ -27,6 +29,7 @@ registerLocaleData(localeDe);
 export const appStoreImports: ModuleWithProviders<StoreRootModule>[] = [
   StoreModule.forRoot(reducer, { metaReducers }),
   EffectsModule.forRoot([]),
+  EffectsModule.forFeature([DevelopmentEffects]),
   EffectsModule.forFeature([SudokuPuzzleEffects]),
   EffectsModule.forFeature([SudokuSolverEffects]),
 ];
@@ -37,6 +40,7 @@ export const appStoreImports: ModuleWithProviders<StoreRootModule>[] = [
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     TranslateModule.forRoot({
       defaultLanguage: "en",
       loader: {

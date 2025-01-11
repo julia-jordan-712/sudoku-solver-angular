@@ -1,11 +1,11 @@
 import { TestBed } from "@angular/core/testing";
+import { SolverCloseBranch } from "@app/core/solver/solver-branch/solver-close-branch";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { SolverCloseBranch } from "./solver-close-branch";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 
 describe(SolverCloseBranch.name, () => {
   let underTest: SolverCloseBranch;

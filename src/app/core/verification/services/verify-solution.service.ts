@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { VerifySolution } from "@app/core/verification/services/verify-solution";
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 
 @Injectable({
   providedIn: "root",

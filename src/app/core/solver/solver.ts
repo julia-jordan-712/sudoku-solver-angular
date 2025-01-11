@@ -4,10 +4,10 @@ import {
   SolverResponse,
   SolverStepResponse,
 } from "@app/core/solver/types/solver-response";
-import { Nullable } from "@app/shared/types/nullable";
-import { StopWatch } from "@app/shared/types/stopwatch";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { Nullable } from "@app/types/nullable";
+import { StopWatch } from "@app/types/stopwatch";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
 export abstract class Solver {
   private logger: Logger = new Logger(Solver.name);

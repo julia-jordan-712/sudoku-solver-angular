@@ -1,0 +1,14 @@
+@use "_constants" as *;
+
+:host {
+  display: flex;
+  gap: 0.25em;
+}
+
+select {
+  border: none;
+  border-bottom: 2px solid $primary-color;
+  outline: none;
+  cursor: pointer;
+  flex-grow: 1;
+}

@@ -6,8 +6,8 @@ import {
   SudokuDropdownSelectionItem,
   SudokuPuzzleState,
 } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { TestState } from "@app/test/state/test-state";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { TestState } from "@test/state/test-state";
 
 describe(SudokuPuzzleReducer.name, () => {
   let underTest: SudokuPuzzleReducer;

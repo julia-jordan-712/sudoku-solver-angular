@@ -1,37 +1,34 @@
-import { Component } from "@angular/core";
+import { Component, inject, Input } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
+import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzzle.component";
 import { SudokuPuzzleModule } from "@app/components/sudoku-puzzle/sudoku-puzzle.module";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { CyComponentInput } from "@cypress/types/cy-component";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CyStateSwitch } from "@cypress/views/cy-state-switch";
+import { Store } from "@ngrx/store";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { SOLVER_TEST_PROVIDERS } from "@test/solver/sudoku-solver-test.provider";
 
 describe(SudokuPuzzleComponent.name, () => {
   const underTest: CyPuzzleInput = new CyPuzzleInput();
   const stateSwitch: CyStateSwitch = new CyStateSwitch();
 
-  beforeEach(() => {
-    cy.mount(
-      SudokuPuzzleWrapperComponent,
-      SudokuPuzzleModule,
-      {},
-      { imports: appStoreImports, providers: SOLVER_TEST_PROVIDERS },
-    );
-  });
+  function setup(input: CyComponentInput<SudokuPuzzleWrapperComponent>): void {
+    cy.mount(SudokuPuzzleWrapperComponent, SudokuPuzzleModule, input, {
+      imports: appStoreImports,
+      providers: SOLVER_TEST_PROVIDERS,
+    });
+  }
 
-  it("should have dropdown, size selection, empty 9x9 grid and confirm button initially", () => {
+  it("should have size selection, empty 9x9 grid and confirm button initially", () => {
+    setup({});
     stateSwitch.buttonReopen.get().should("not.exist");
     stateSwitch.buttonConfirm.get().should("be.visible").should("be.enabled");
-
-    underTest.dropdown.get().should("be.visible");
-    underTest.dropdown.label
-      .get()
-      .should("have.text", "Select existing Sudoku:");
-    underTest.dropdown.icon.get().should("not.exist");
-    underTest.dropdown.dropdown.expectSelected("-");
 
     underTest.sizeSelector.get().should("be.visible");
     underTest.sizeSelector.label.get().should("have.text", "Size:");
@@ -70,27 +67,8 @@ describe(SudokuPuzzleComponent.name, () => {
     underTest.sudoku.shouldEqual(Puzzle9x9.EMPTY);
   });
 
-  it("should update the grid and other fields when dropdown changes", () => {
-    underTest.dropdown.dropdown.select("4x4 | Solved");
-
-    underTest.sudoku.get().should("be.visible");
-    underTest.sudoku.shouldEqual(Puzzle4x4.COMPLETE);
-    underTest.sudoku.verification.shouldBeValid();
-    stateSwitch.buttonConfirm.get().should("be.enabled");
-    underTest.sizeSelector.text("4").expect("selected");
-    underTest.sizeSelector.text("9").expect("not.selected");
-
-    // change dropdown to different value
-    underTest.dropdown.dropdown.unselect();
-
-    underTest.sudoku.get().should("exist").should("not.be.visible");
-    underTest.sudoku.verification.get().should("not.exist");
-    stateSwitch.buttonConfirm.get().should("be.disabled");
-    underTest.sizeSelector.text("4").expect("not.selected");
-  });
-
   it("should update the grid when cell change is submitted", () => {
-    underTest.dropdown.dropdown.select("4x4 | Solved");
+    setup({ grid: Puzzle4x4.COMPLETE });
 
     /**
      * Enter 4 in last cell => value 4 is duplicated in
@@ -116,8 +94,7 @@ describe(SudokuPuzzleComponent.name, () => {
 
   it("should initialize an empty grid when only the size is set", () => {
     // pre-assert
-    underTest.dropdown.dropdown.select(1); // anything
-    underTest.dropdown.dropdown.unselect();
+    setup({ grid: null });
     underTest.sudoku.get().should("not.be.visible");
     stateSwitch.buttonConfirm.get().should("be.disabled");
 
@@ -132,7 +109,7 @@ describe(SudokuPuzzleComponent.name, () => {
   });
 
   it("should update the grid when size changes", () => {
-    underTest.dropdown.dropdown.select("9x9 | Simple | Puzzle 1");
+    setup({ grid: PuzzleSimple.PUZZLE_1.puzzle });
 
     underTest.sudoku.shouldEqual(PuzzleSimple.PUZZLE_1.puzzle);
 
@@ -246,8 +223,9 @@ describe(SudokuPuzzleComponent.name, () => {
     stateSwitch.buttonConfirm.get().should("be.enabled");
   });
 
-  it("should not mark cells as changed when switching between dropdowns", () => {
-    underTest.dropdown.dropdown.select("4x4 | Solved");
+  // Reactivate for SuSo-F-009 https://github.com/julia-jordan-712/sudoku-solver-angular/issues/42
+  it.skip("should not mark cells as changed when switching between dropdowns", () => {
+    // underTest.dropdown.dropdown.select("4x4 | Solved");
 
     for (let row = 0; row <= 3; row++) {
       for (let column = 0; column <= 3; column++) {
@@ -255,7 +233,7 @@ describe(SudokuPuzzleComponent.name, () => {
       }
     }
 
-    underTest.dropdown.dropdown.select("4x4 | Empty");
+    // underTest.dropdown.dropdown.select("4x4 | Empty");
 
     for (let row = 0; row <= 3; row++) {
       for (let column = 0; column <= 3; column++) {
@@ -269,4 +247,14 @@ describe(SudokuPuzzleComponent.name, () => {
   selector: "app-test-wrapper",
   template: `<app-sudoku-puzzle></app-sudoku-puzzle>`,
 })
-class SudokuPuzzleWrapperComponent {}
+class SudokuPuzzleWrapperComponent {
+  private store: Store = inject(Store);
+  @Input()
+  set grid(grid: Nullable<SudokuGrid>) {
+    this.store.dispatch(
+      SudokuPuzzleActions.userSetSelectedOption({
+        option: { id: null, data: grid },
+      }),
+    );
+  }
+}

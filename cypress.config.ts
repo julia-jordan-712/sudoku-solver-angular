@@ -24,6 +24,6 @@ export default defineConfig({
     },
     specPattern: "**/*.cy.ts",
     viewportHeight: 700,
-    viewportWidth: 1000,
+    viewportWidth: 1500,
   },
 });

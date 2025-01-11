@@ -22,13 +22,5 @@
       [values]="selectionSizes"
       (valueChange)="setSize($event)"
     ></app-selection-list>
-    <app-dropdown-input
-      data-cy="existing-sudoku-selection"
-      [label]="'SETTINGS.SELECT' | translate"
-      [values]="(selectionItems$ | async) ?? []"
-      [value]="selectedItem$ | async"
-      (valueChange)="onSelect($event)"
-    ></app-dropdown-input>
-    <div>{{ "SETTINGS.HINTS.SELECT_OR_SIZE" | translate }}</div>
   </app-section>
 }

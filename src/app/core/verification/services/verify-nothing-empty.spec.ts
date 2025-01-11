@@ -1,6 +1,6 @@
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { VerifyNothingEmpty } from "./verify-nothing-empty";
+import { VerifyNothingEmpty } from "@app/core/verification/services/verify-nothing-empty";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 
 describe(VerifyNothingEmpty.name, () => {
   describe("invalid", () => {

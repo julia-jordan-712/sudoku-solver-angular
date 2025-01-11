@@ -1,0 +1,23 @@
+@use "_constants" as *;
+
+app-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.title {
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-between;
+}
+
+.close {
+  color: $primary-color;
+  cursor: pointer;
+  padding: 0.25em;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}

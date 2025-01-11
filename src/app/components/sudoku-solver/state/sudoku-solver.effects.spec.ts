@@ -11,15 +11,15 @@ import {
   SolverResponse,
   SolverResponseStatus,
 } from "@app/core/solver/types/solver-response";
-import { SolverExecution } from "@app/shared/types/solver-execution";
 import { AppState } from "@app/state/app-state";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";
-import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
-import { TestState } from "@app/test/state/test-state";
+import { SolverExecution } from "@app/types/solver-execution";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { provideMockStore } from "@ngrx/store/testing";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { SudokuSolverSpy } from "@test/solver/sudoku-solver-spy";
+import { SOLVER_TEST_PROVIDERS } from "@test/solver/sudoku-solver-test.provider";
+import { TestState } from "@test/state/test-state";
 import { getTestScheduler, hot } from "jasmine-marbles";
 import { Observable } from "rxjs";
 

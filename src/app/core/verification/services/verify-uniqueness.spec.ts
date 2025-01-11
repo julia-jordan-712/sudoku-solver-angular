@@ -2,12 +2,12 @@ import { VerifyUniqueness } from "@app/core/verification/services/verify-uniquen
 import { VerificationDuplicates } from "@app/core/verification/types/verification-duplicates";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
-import { CellPosition } from "@app/shared/types/cell-position";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { Objects } from "@app/shared/util/objects";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { CellPosition } from "@app/types/cell-position";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { Objects } from "@app/util/objects";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 describe(VerifyUniqueness.name, () => {
   describe("complete solution", () => {

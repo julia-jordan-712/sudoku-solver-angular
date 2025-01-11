@@ -7,7 +7,7 @@ import {
   SolverStepResponse,
 } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 
 @Injectable({
   providedIn: "root",

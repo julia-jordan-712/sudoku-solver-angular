@@ -1,4 +1,3 @@
-import { CyDropdown } from "@cypress/selectors/cy-dropdown";
 import { CySelectionList } from "@cypress/selectors/cy-selection-list";
 import { CySudoku } from "@cypress/selectors/cy-sudoku";
 import { CySelector } from "@cypress/types/cy-selector";
@@ -6,10 +5,6 @@ import { CySelector } from "@cypress/types/cy-selector";
 export class CyPuzzleInput {
   private readonly selector: CySelector = { tag: "app-sudoku-puzzle" };
 
-  public readonly dropdown = new CyDropdown(
-    { dataCy: "existing-sudoku-selection" },
-    this.selector,
-  );
   public readonly sizeSelector = new CySelectionList(
     { dataCy: "sudoku-size-selection" },
     this.selector,

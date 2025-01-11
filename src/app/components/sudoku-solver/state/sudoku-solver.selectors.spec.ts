@@ -1,16 +1,16 @@
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SudokuSolverState } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
-import { Nullable } from "@app/shared/types/nullable";
-import { SolverExecution } from "@app/shared/types/solver-execution";
+import { AppState } from "@app/state/app-state";
+import { Nullable } from "@app/types/nullable";
+import { SolverExecution } from "@app/types/solver-execution";
 import {
   SudokuGridCellViewModel,
   SudokuGridViewModel,
   SudokuGridViewModelBranchInfo,
-} from "@app/shared/types/sudoku-grid-view-model";
-import { AppState } from "@app/state/app-state";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { TestState } from "@app/test/state/test-state";
+} from "@app/types/sudoku-grid-view-model";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { TestState } from "@test/state/test-state";
 
 describe("SudokuSolver Selectors", () => {
   it("should select the feature state", () => {

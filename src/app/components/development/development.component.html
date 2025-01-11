@@ -1,0 +1,18 @@
+@if (show$ | async) {
+  <app-section>
+    <div class="title">
+      <h2>{{ "DEVELOPMENT.TITLE" | translate }}</h2>
+      <app-icon
+        class="close"
+        icon="close"
+        type="mat"
+        (click)="hideDevFunctions()"
+      ></app-icon>
+    </div>
+    <app-sudoku-copy></app-sudoku-copy>
+    <app-sudoku-paste></app-sudoku-paste>
+    <app-restart></app-restart>
+    <app-test-sudokus></app-test-sudokus>
+    <app-sudoku-solver-settings></app-sudoku-solver-settings>
+  </app-section>
+}

@@ -1,5 +1,5 @@
-import { Index } from "@app/shared/types";
-import { CellPosition } from "@app/shared/types/cell-position";
+import { Index } from "@app/types";
+import { CellPosition } from "@app/types/cell-position";
 
 /**
  * The cell positions which contain duplicates mapped

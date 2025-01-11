@@ -3,10 +3,10 @@ import {
   SudokuPuzzleStateKey,
 } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { VerifySolution } from "@app/core/verification/services/verify-solution";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
+import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 const selectState =

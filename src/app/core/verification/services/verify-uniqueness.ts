@@ -3,19 +3,19 @@ import { VerificationDuplicates } from "@app/core/verification/types/verificatio
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
-import { Index } from "@app/shared/types";
-import { CellPosition } from "@app/shared/types/cell-position";
-import { CellPositionMap } from "@app/shared/types/cell-position-map";
-import { StopWatch } from "@app/shared/types/stopwatch";
+import { Index } from "@app/types";
+import { CellPosition } from "@app/types/cell-position";
+import { CellPositionMap } from "@app/types/cell-position-map";
+import { StopWatch } from "@app/types/stopwatch";
 import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
-} from "@app/shared/types/sudoku-grid";
-import { isArray, isNotArray } from "@app/shared/util/is-array";
-import { isDefined } from "@app/shared/util/is-defined";
-import { Objects } from "@app/shared/util/objects";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+} from "@app/types/sudoku-grid";
+import { isArray, isNotArray } from "@app/util/is-array";
+import { isDefined } from "@app/util/is-defined";
+import { Objects } from "@app/util/objects";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
 export class VerifyUniqueness {
   verify(

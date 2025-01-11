@@ -1,6 +1,6 @@
 import { fakeAsync, flush, TestBed, tick } from "@angular/core/testing";
 import { SudokuGridCellComponentService } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-component.service";
-import { TestSubscription } from "@app/test/test-subscription";
+import { TestSubscription } from "@test/test-subscription";
 
 describe(SudokuGridCellComponentService.name, () => {
   let service: SudokuGridCellComponentService;

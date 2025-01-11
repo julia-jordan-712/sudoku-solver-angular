@@ -7,8 +7,8 @@ import {
   SudokuPuzzleState,
 } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { AppActions } from "@app/state/app-state";
-import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
 import { ActionReducer, createReducer, on } from "@ngrx/store";
+import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
 
 @Injectable({ providedIn: "root" })
 export class SudokuPuzzleReducer {

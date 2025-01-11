@@ -1,8 +1,8 @@
 import { Component, inject } from "@angular/core";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { isDefined } from "@app/shared/util/is-defined";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
+import { isDefined } from "@app/util/is-defined";
 import { Store } from "@ngrx/store";
 import { filter, Observable } from "rxjs";
 
@@ -25,8 +25,5 @@ export class SudokuSolverComponent {
   );
   highlightNumber$: Observable<Nullable<number>> = this.store.select(
     SudokuSolverSelectors.selectHighlightNumber,
-  );
-  hideVerification$: Observable<boolean> = this.store.select(
-    SudokuSolverSelectors.selectHideVerification,
   );
 }

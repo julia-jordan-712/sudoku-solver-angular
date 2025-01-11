@@ -1,7 +1,7 @@
 import { SolverResponse } from "@app/core/solver/types/solver-response";
-import { Nullable } from "@app/shared/types/nullable";
-import { SolverExecution } from "@app/shared/types/solver-execution";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
+import { Nullable } from "@app/types/nullable";
+import { SolverExecution } from "@app/types/solver-execution";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 
 export interface SudokuSolverStateExecutionInfo {
   /** Id for the current run of the solver */

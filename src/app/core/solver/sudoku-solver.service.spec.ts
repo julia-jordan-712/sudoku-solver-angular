@@ -1,15 +1,15 @@
 import { TestBed } from "@angular/core/testing";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
-import { PuzzleExtreme } from "@app/test/puzzles/puzzle-extreme";
-import { PuzzleHard } from "@app/test/puzzles/puzzle-hard";
-import { PuzzleMedium } from "@app/test/puzzles/puzzle-medium";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { SudokuSolverService } from "./sudoku-solver.service";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
+import { PuzzleAdvanced } from "@test/puzzles/puzzle-advanced";
+import { PuzzleExtreme } from "@test/puzzles/puzzle-extreme";
+import { PuzzleHard } from "@test/puzzles/puzzle-hard";
+import { PuzzleMedium } from "@test/puzzles/puzzle-medium";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 describe(SudokuSolverService.name, () => {
   let service: SudokuSolverService;

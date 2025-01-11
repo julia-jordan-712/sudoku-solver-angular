@@ -1,7 +1,7 @@
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleAdvanced } from "@test/puzzles/puzzle-advanced";
 
 describe(SolverBranch.name, () => {
   describe("initial branch", () => {

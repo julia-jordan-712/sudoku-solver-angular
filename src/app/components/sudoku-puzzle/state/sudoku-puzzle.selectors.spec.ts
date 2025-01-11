@@ -1,11 +1,11 @@
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { AppState } from "@app/state/app-state";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { TestState } from "@app/test/state/test-state";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { TestState } from "@test/state/test-state";
 
 describe("SudokuPuzzle Selectors", () => {
   it("should select the feature state", () => {

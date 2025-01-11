@@ -1,0 +1,9 @@
+@use "_mixins" as *;
+
+:host {
+  @include section;
+  display: flex;
+  max-height: inherit;
+  max-width: inherit;
+  overflow: hidden;
+}

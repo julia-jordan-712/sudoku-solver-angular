@@ -1,11 +1,11 @@
 import { Component, Input } from "@angular/core";
+import { SudokuVerificationComponent } from "@app/components/sudoku-verification/sudoku-verification.component";
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
-import { Nullable } from "@app/shared/types/nullable";
+import { Nullable } from "@app/types/nullable";
 import { CyComponentInput } from "@cypress/types/cy-component";
 import { CySudokuVerification } from "@cypress/views/cy-sudoku-verification";
-import { SudokuVerificationComponent } from "./sudoku-verification.component";
 
 describe(SudokuVerificationComponent.name, () => {
   const underTest: CySudokuVerification = new CySudokuVerification();

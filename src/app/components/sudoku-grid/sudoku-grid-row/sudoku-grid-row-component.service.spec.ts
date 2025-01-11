@@ -8,13 +8,13 @@ import {
   SudokuGrid,
   SudokuGridCell,
   SudokuGridRow,
-} from "@app/shared/types/sudoku-grid";
-import { SudokuGridRowViewModel } from "@app/shared/types/sudoku-grid-view-model";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { SudokuGridViewModelMock } from "@app/test/sudoku/sudoku-grid-view-model.mock";
-import { TestSubscription } from "@app/test/test-subscription";
+} from "@app/types/sudoku-grid";
+import { SudokuGridRowViewModel } from "@app/types/sudoku-grid-view-model";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
+import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { SudokuGridViewModelMock } from "@test/sudoku/sudoku-grid-view-model.mock";
+import { TestSubscription } from "@test/test-subscription";
 import { v4 as randomUUID } from "uuid";
 
 describe(SudokuGridRowComponentService.name, () => {

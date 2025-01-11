@@ -8,12 +8,12 @@ import { SudokuSolverReducer } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverState } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
-import { SOLVER_EXECUTION } from "@app/shared/types/solver-execution";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { PuzzleExtreme } from "@app/test/puzzles/puzzle-extreme";
-import { PuzzleHard } from "@app/test/puzzles/puzzle-hard";
-import { TestState } from "@app/test/state/test-state";
+import { SOLVER_EXECUTION } from "@app/types/solver-execution";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleExtreme } from "@test/puzzles/puzzle-extreme";
+import { PuzzleHard } from "@test/puzzles/puzzle-hard";
+import { TestState } from "@test/state/test-state";
 
 describe(SudokuSolverReducer.name, () => {
   let underTest: SudokuSolverReducer;

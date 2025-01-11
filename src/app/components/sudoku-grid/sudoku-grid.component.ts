@@ -3,9 +3,9 @@ import {
   SudokuGridComponentService,
   SudokuGridRowChangeEvent,
 } from "@app/components/sudoku-grid/sudoku-grid-component.service";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
-import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid, SudokuGridRow } from "@app/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 
 @Component({
   selector: "app-sudoku-grid",
@@ -14,9 +14,8 @@ import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
   providers: [SudokuGridComponentService],
 })
 export class SudokuGridComponent {
-  _grid: Nullable<SudokuGridViewModel>;
-  sqrt: Nullable<number>;
-  gridColumns = "";
+  protected _grid: Nullable<SudokuGridViewModel>;
+  protected sqrt: Nullable<number>;
 
   private componentService: SudokuGridComponentService = inject(
     SudokuGridComponentService,
@@ -26,7 +25,6 @@ export class SudokuGridComponent {
   set grid(grid: Nullable<SudokuGridViewModel>) {
     this._grid = grid;
     this.sqrt = grid ? Math.round(Math.sqrt(grid.rows.length)) : null;
-    this.gridColumns = `repeat(${grid?.rows?.length ?? 1}, max-content)`;
   }
 
   @Input()
@@ -43,7 +41,7 @@ export class SudokuGridComponent {
   @Output()
   valueSubmit: EventEmitter<SudokuGrid> = new EventEmitter();
 
-  onRowChanged(row: SudokuGridRow, index: number): void {
+  protected onRowChanged(row: SudokuGridRow, index: number): void {
     const rowChange: SudokuGridRowChangeEvent =
       this.componentService.rowChanged(this._grid, row, index);
     if (rowChange.gridChanged) {
@@ -51,7 +49,7 @@ export class SudokuGridComponent {
     }
   }
 
-  onRowSubmitted(row: SudokuGridRow, index: number): void {
+  protected onRowSubmitted(row: SudokuGridRow, index: number): void {
     const rowChange: SudokuGridRowChangeEvent =
       this.componentService.rowChanged(this._grid, row, index);
     if (rowChange.gridChanged) {

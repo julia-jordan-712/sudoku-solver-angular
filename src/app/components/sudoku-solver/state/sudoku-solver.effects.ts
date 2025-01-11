@@ -6,9 +6,9 @@ import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
-import { Nullable } from "@app/shared/types/nullable";
-import { SolverExecution } from "@app/shared/types/solver-execution";
-import { isDefined } from "@app/shared/util/is-defined";
+import { Nullable } from "@app/types/nullable";
+import { SolverExecution } from "@app/types/solver-execution";
+import { isDefined } from "@app/util/is-defined";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { concatLatestFrom } from "@ngrx/operators";
 import { Store } from "@ngrx/store";

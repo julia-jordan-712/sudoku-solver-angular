@@ -3,10 +3,10 @@ import { VerifySolution } from "@app/core/verification/services/verify-solution"
 import { VerifySquare } from "@app/core/verification/services/verify-square";
 import { VerifyUniqueness } from "@app/core/verification/services/verify-uniqueness";
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 describe(VerifySolution.name, () => {
   let square: jasmine.Spy<VerifySquare["verifyAndGetSize"]>;

@@ -3,7 +3,6 @@
 :host {
   display: flex;
   flex-direction: column;
-  background-color: $background-color;
 }
 
 .header {
@@ -13,13 +12,19 @@
   padding: 1em;
 }
 
+$content-height: calc(100vh - 32px - 4em);
+
 .content {
   display: flex;
-  height: calc(100vh - 32px - 2em);
-  box-sizing: border-box;
-  padding: 1em;
+  max-height: $content-height;
+  height: $content-height;
+  margin: 1em;
 
-  app-dev-functions {
+  * {
+    max-height: inherit;
+  }
+
+  app-development {
     margin-left: 1em;
   }
 }

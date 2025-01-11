@@ -1,4 +1,4 @@
-import { I18nKey } from "@app/shared/types/i18n-key";
+import { I18nKey } from "@app/types/i18n-key";
 
 export class VerifyI18nKey {
   private static readonly VERIFY_ERROR: string = "VERIFY.ERROR";

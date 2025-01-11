@@ -1,5 +1,5 @@
-import { SudokuGridCell } from "@app/shared/types/sudoku-grid";
-import { isArray } from "@app/shared/util/is-array";
+import { SudokuGridCell } from "@app/types/sudoku-grid";
+import { isArray } from "@app/util/is-array";
 
 export class SolverEliminateUtil {
   static findIndexOfSingleSliceContainingPossibleValue(

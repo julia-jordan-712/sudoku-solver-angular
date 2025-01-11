@@ -5,12 +5,12 @@ import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
 import { SudokuSolverModule } from "@app/components/sudoku-solver/sudoku-solver.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
-import { Nullable } from "@app/shared/types/nullable";
-import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
+import { Nullable } from "@app/types/nullable";
+import { SudokuGrid } from "@app/types/sudoku-grid";
 import { CyComponentInput } from "@cypress/types/cy-component";
 import { CySolver } from "@cypress/views/cy-solver";
 import { Store } from "@ngrx/store";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 
 describe(SudokuSolverComponent.name, () => {
   const underTest: CySolver = new CySolver();
@@ -29,7 +29,7 @@ describe(SudokuSolverComponent.name, () => {
 
     it("should show amount of executed steps and what the last step was", () => {
       underTest.steps.get().should("contain.text", "Steps: 0");
-      underTest.steps.get().should("not.contain.text", "Last step:");
+      underTest.steps.get().should("contain.text", "Last step: -");
 
       underTest.clickNext();
 

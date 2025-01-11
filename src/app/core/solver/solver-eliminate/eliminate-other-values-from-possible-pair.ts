@@ -1,9 +1,9 @@
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
-import { CellPosition } from "@app/shared/types/cell-position";
-import { CellPositionMap } from "@app/shared/types/cell-position-map";
-import { SudokuGrid, SudokuGridCell } from "@app/shared/types/sudoku-grid";
-import { isArray } from "@app/shared/util/is-array";
-import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
+import { CellPosition } from "@app/types/cell-position";
+import { CellPositionMap } from "@app/types/cell-position-map";
+import { SudokuGrid, SudokuGridCell } from "@app/types/sudoku-grid";
+import { isArray } from "@app/util/is-array";
+import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
 interface PossiblePairResult {
   v1: number;
