@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
-import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
-import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
+import { DevFunctionActions } from "@app/components/development-functions/state/dev-functions.actions";
+import { DevFunctionsSelectors } from "@app/components/development-functions/state/dev-functions.selectors";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { Nullable } from "@app/types/nullable";
 import { Store } from "@ngrx/store";
@@ -15,15 +15,15 @@ export class TestSudokusComponent {
   private store: Store = inject(Store);
 
   protected selectionItems$: Observable<SudokuDropdownSelectionItem[]> =
-    this.store.select(SudokuPuzzleSelectors.selectSelectionOptions);
+    this.store.select(DevFunctionsSelectors.selectTestSudokus);
   protected selectedItem$: Observable<Nullable<SudokuDropdownSelectionItem>> =
-    this.store.select(SudokuPuzzleSelectors.selectSelectedOption);
+    this.store.select(DevFunctionsSelectors.selectSelectedTestSudoku);
 
   protected onSelect(
     dropdownOption: Nullable<SudokuDropdownSelectionItem>,
   ): void {
     this.store.dispatch(
-      SudokuPuzzleActions.userSetSelectedOption({ option: dropdownOption }),
+      DevFunctionActions.setTestSudoku({ sudoku: dropdownOption }),
     );
   }
 }

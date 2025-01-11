@@ -42,7 +42,14 @@ export class TestState {
   }
 
   private static createDevFunctionsState(): DevFunctionsState {
-    return { isDev: true };
+    const selectionOptions = TestState.createTestSudokuDropdownSelectionItems();
+    return {
+      isDev: true,
+      testSudokus: {
+        options: selectionOptions.options,
+        selectedId: selectionOptions.selectedId,
+      },
+    };
   }
 
   public static createEmptySudokuPuzzleState(): SudokuPuzzleState {
@@ -84,19 +91,27 @@ export class TestState {
   public static createTestSudokuPuzzleState(
     grid: SudokuGrid = PuzzleSimple.PUZZLE_5.puzzle,
   ): SudokuPuzzleState {
-    const items: SudokuDropdownSelectionItem[] = [
-      ...SudokuPuzzleSelectionTestData.createItems(),
-    ];
+    const selectionOptions = TestState.createTestSudokuDropdownSelectionItems();
     return {
       show: false,
       sudoku: grid,
       height: grid.length,
       width: grid.length,
       selectionOptions: {
-        options: items,
-        selectedId: items[6].id,
+        options: selectionOptions.options,
+        selectedId: selectionOptions.selectedId,
       },
     };
+  }
+
+  private static createTestSudokuDropdownSelectionItems(): {
+    options: SudokuDropdownSelectionItem[];
+    selectedId: string;
+  } {
+    const items: SudokuDropdownSelectionItem[] = [
+      ...SudokuPuzzleSelectionTestData.createItems(),
+    ];
+    return { options: items, selectedId: items[6].id };
   }
 
   public static createTestSudokuSolverState(
