@@ -1,5 +1,5 @@
 import { appStoreImports } from "@app/app.module";
-import { DevFunctionsComponent } from "@app/components/dev-functions/dev-functions.component";
+import { DevelopmentFunctionsComponent } from "./development-functions.component";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
@@ -8,11 +8,11 @@ import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 import { CyStateSwitch } from "@cypress/views/cy-state-switch";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { Puzzle9x9 } from "src/test/puzzles/puzzle-9x9";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { Puzzle4x4 } from "../../../test/puzzles/puzzle-4x4";
+import { Puzzle9x9 } from "../../../test/puzzles/puzzle-9x9";
+import { PuzzleSimple } from "../../../test/puzzles/puzzle-simple";
 
-describe(DevFunctionsComponent.name, () => {
+describe(DevelopmentFunctionsComponent.name, () => {
   const devFunctions: CyDevFunctions = new CyDevFunctions();
   const puzzleInput: CyPuzzleInput = new CyPuzzleInput();
   const stateSwitch: CyStateSwitch = new CyStateSwitch();

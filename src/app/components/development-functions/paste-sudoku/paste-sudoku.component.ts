@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
+import { ClipboardService } from "@app/components/development-functions/services/clipboard.service";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Logger } from "@app/core/log/logger";

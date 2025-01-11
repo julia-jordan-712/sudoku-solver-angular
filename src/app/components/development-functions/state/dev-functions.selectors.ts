@@ -1,7 +1,7 @@
 import {
   DevFunctionsState,
   DevFunctionsStateKey,
-} from "@app/components/dev-functions/state/dev-functions.state";
+} from "./dev-functions.state";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 const selectState =

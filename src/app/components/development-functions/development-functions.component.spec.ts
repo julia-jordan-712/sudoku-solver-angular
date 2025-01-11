@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { ClearStateComponent } from "@app/components/dev-functions/clear-state/clear-state.component";
-import { CopySudokuComponent } from "@app/components/dev-functions/copy-sudoku/copy-sudoku.component";
-import { DevFunctionsComponent } from "@app/components/dev-functions/dev-functions.component";
-import { PasteSudokuComponent } from "@app/components/dev-functions/paste-sudoku/paste-sudoku.component";
-import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
-import { DevFunctionsSelectors } from "@app/components/dev-functions/state/dev-functions.selectors";
-import { TestSudokusComponent } from "@app/components/dev-functions/test-sudokus/test-sudokus.component";
+import { ClearStateComponent } from "./clear-state/clear-state.component";
+import { CopySudokuComponent } from "./copy-sudoku/copy-sudoku.component";
+import { DevelopmentFunctionsComponent } from "./development-functions.component";
+import { PasteSudokuComponent } from "./paste-sudoku/paste-sudoku.component";
+import { ClipboardService } from "./services/clipboard.service";
+import { DevFunctionsSelectors } from "./state/dev-functions.selectors";
+import { TestSudokusComponent } from "./test-sudokus/test-sudokus.component";
 import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
 import { SectionModule } from "@app/components/general/section/section.module";
 import { AppState } from "@app/state/app-state";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { IconTestComponent } from "src/test/components/icon-test.component";
-import { TestState } from "src/test/state/test-state";
+import { IconTestComponent } from "../../../test/components/icon-test.component";
+import { TestState } from "../../../test/state/test-state";
 
-describe(DevFunctionsComponent.name, () => {
-  let fixture: ComponentFixture<DevFunctionsComponent>;
+describe(DevelopmentFunctionsComponent.name, () => {
+  let fixture: ComponentFixture<DevelopmentFunctionsComponent>;
   let clipboardService: ClipboardService;
   let store: MockStore<AppState>;
 
@@ -25,7 +25,7 @@ describe(DevFunctionsComponent.name, () => {
       declarations: [
         CopySudokuComponent,
         ClearStateComponent,
-        DevFunctionsComponent,
+        DevelopmentFunctionsComponent,
         IconTestComponent,
         PasteSudokuComponent,
         TestSudokusComponent,
@@ -51,7 +51,7 @@ describe(DevFunctionsComponent.name, () => {
       isDevelopment,
     );
 
-    fixture = TestBed.createComponent(DevFunctionsComponent);
+    fixture = TestBed.createComponent(DevelopmentFunctionsComponent);
     fixture.detectChanges();
   }
 

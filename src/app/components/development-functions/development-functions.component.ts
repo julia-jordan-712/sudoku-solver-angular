@@ -1,15 +1,15 @@
 import { Component, inject } from "@angular/core";
-import { DevFunctionActions } from "@app/components/dev-functions/state/dev-functions.actions";
-import { DevFunctionsSelectors } from "@app/components/dev-functions/state/dev-functions.selectors";
+import { DevFunctionActions } from "./state/dev-functions.actions";
+import { DevFunctionsSelectors } from "./state/dev-functions.selectors";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 
 @Component({
-  selector: "app-dev-functions",
-  templateUrl: "./dev-functions.component.html",
-  styleUrl: "./dev-functions.component.scss",
+  selector: 'app-development-functions',
+  templateUrl: './development-functions.component.html',
+  styleUrl: './development-functions.component.scss',
 })
-export class DevFunctionsComponent {
+export class DevelopmentFunctionsComponent {
   private store = inject(Store);
 
   protected show$: Observable<boolean> = this.store.select(

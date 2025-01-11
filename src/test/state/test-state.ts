@@ -1,7 +1,7 @@
 import {
   DevFunctionsState,
   DevFunctionsStateKey,
-} from "@app/components/dev-functions/state/dev-functions.state";
+} from "@app/components/development-functions/state/dev-functions.state";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import {
   SudokuDropdownSelectionItem,
