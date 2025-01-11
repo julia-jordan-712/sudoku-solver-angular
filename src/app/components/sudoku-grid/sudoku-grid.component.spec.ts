@@ -5,10 +5,10 @@ import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
-import { SudokuGridCellTestComponent } from "@app/test/components/sudoku-grid-cell-test.component";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { SudokuGridViewModelMock } from "@app/test/sudoku/sudoku-grid-view-model.mock";
 import { TranslateTestingModule } from "ngx-translate-testing";
+import { SudokuGridCellTestComponent } from "src/test/components/sudoku-grid-cell-test.component";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { SudokuGridViewModelMock } from "src/test/sudoku/sudoku-grid-view-model.mock";
 import { v4 as randomUUID } from "uuid";
 import { SudokuGridComponent } from "./sudoku-grid.component";
 

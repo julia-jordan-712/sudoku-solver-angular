@@ -4,11 +4,11 @@ import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
-import { PuzzleExtreme } from "@app/test/puzzles/puzzle-extreme";
-import { PuzzleHard } from "@app/test/puzzles/puzzle-hard";
-import { PuzzleMedium } from "@app/test/puzzles/puzzle-medium";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { PuzzleAdvanced } from "src/test/puzzles/puzzle-advanced";
+import { PuzzleExtreme } from "src/test/puzzles/puzzle-extreme";
+import { PuzzleHard } from "src/test/puzzles/puzzle-hard";
+import { PuzzleMedium } from "src/test/puzzles/puzzle-medium";
+import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
 import { SudokuSolverService } from "./sudoku-solver.service";
 
 describe(SudokuSolverService.name, () => {

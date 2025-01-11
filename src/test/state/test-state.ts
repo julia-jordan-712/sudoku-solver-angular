@@ -16,7 +16,7 @@ import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
 import { AppState } from "@app/state/app-state";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
 
 export class TestState {
   public static createEmptyAppState(): AppState {

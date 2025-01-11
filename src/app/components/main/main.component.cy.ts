@@ -2,13 +2,13 @@ import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
 import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 import { CyStateSwitch } from "@cypress/views/cy-state-switch";
+import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
 
 describe(MainComponent.name, () => {
   const devFunctions: CyDevFunctions = new CyDevFunctions();

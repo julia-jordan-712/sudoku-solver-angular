@@ -14,12 +14,12 @@ import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { PuzzleAdvanced } from "@app/test/puzzles/puzzle-advanced";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { SudokuSolverSpy } from "@app/test/solver/sudoku-solver-spy";
-import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { EffectsModule } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
+import { PuzzleAdvanced } from "src/test/puzzles/puzzle-advanced";
+import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { SudokuSolverSpy } from "src/test/solver/sudoku-solver-spy";
+import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
 
 describe("SudokuSolverState", () => {
   let solver: SudokuSolverService;

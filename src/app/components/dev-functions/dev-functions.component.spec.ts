@@ -10,10 +10,10 @@ import { TestSudokusComponent } from "@app/components/dev-functions/test-sudokus
 import { DropdownInputModule } from "@app/components/interactions/dropdown-input/dropdown-input.module";
 import { SectionModule } from "@app/components/section/section.module";
 import { AppState } from "@app/state/app-state";
-import { IconTestComponent } from "@app/test/components/icon-test.component";
-import { TestState } from "@app/test/state/test-state";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
 import { TranslateTestingModule } from "ngx-translate-testing";
+import { IconTestComponent } from "src/test/components/icon-test.component";
+import { TestState } from "src/test/state/test-state";
 
 describe(DevFunctionsComponent.name, () => {
   let fixture: ComponentFixture<DevFunctionsComponent>;

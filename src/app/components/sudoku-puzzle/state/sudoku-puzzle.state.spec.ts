@@ -12,11 +12,11 @@ import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudok
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { EffectsModule } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
 
 describe("SudokuPuzzleState", () => {
   let store: Store;

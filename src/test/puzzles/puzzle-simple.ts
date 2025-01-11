@@ -1,4 +1,4 @@
-import { TestPuzzle } from "@app/test/puzzles/test-puzzle";
+import { TestPuzzle } from "src/test/puzzles/test-puzzle";
 
 export class PuzzleSimple {
   public static readonly PUZZLE_1: TestPuzzle = {

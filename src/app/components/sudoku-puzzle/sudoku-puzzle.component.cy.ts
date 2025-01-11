@@ -5,14 +5,14 @@ import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzz
 import { SudokuPuzzleModule } from "@app/components/sudoku-puzzle/sudoku-puzzle.module";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { Puzzle9x9 } from "@app/test/puzzles/puzzle-9x9";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
-import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { CyComponentInput } from "@cypress/types/cy-component";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CyStateSwitch } from "@cypress/views/cy-state-switch";
 import { Store } from "@ngrx/store";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { Puzzle9x9 } from "src/test/puzzles/puzzle-9x9";
+import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
 
 describe(SudokuPuzzleComponent.name, () => {
   const underTest: CyPuzzleInput = new CyPuzzleInput();

@@ -6,7 +6,7 @@ import {
 import { SudokuGrid, SudokuGridRow } from "@app/shared/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/shared/types/sudoku-grid-view-model";
 import { SudokuGridViewModelConverter } from "@app/shared/util/sudoku-grid-view-model-converter";
-import { SudokuGridViewModelMock } from "@app/test/sudoku/sudoku-grid-view-model.mock";
+import { SudokuGridViewModelMock } from "src/test/sudoku/sudoku-grid-view-model.mock";
 import { v4 as randomUUID } from "uuid";
 
 describe(SudokuGridComponentService.name, () => {

@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
 import { SudokuPuzzleGridUpdateService } from "./sudoku-puzzle-grid-update.service";
 
 describe(SudokuPuzzleGridUpdateService.name, () => {

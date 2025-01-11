@@ -5,8 +5,8 @@ import { VerifyUniqueness } from "@app/core/verification/services/verify-uniquen
 import { VerificationOptions } from "@app/core/verification/types/verification-options";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { PuzzleSimple } from "@app/test/puzzles/puzzle-simple";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
 
 describe(VerifySolution.name, () => {
   let square: jasmine.Spy<VerifySquare["verifyAndGetSize"]>;

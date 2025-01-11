@@ -5,11 +5,11 @@ import { SudokuSolverSettingsComponent } from "@app/components/sudoku-solver/sud
 import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver/sudoku-solver-settings/sudoku-solver-settings.module";
 import { Nullable } from "@app/shared/types/nullable";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { SOLVER_TEST_PROVIDERS } from "@app/test/solver/sudoku-solver-test.provider";
 import { CyComponentInput } from "@cypress/types/cy-component";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 import { Store } from "@ngrx/store";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
 
 describe(SudokuSolverSettingsComponent.name, () => {
   const underTest: CySolverSettings = new CySolverSettings();

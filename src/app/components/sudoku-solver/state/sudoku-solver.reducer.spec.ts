@@ -10,10 +10,10 @@ import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { SOLVER_EXECUTION } from "@app/shared/types/solver-execution";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { PuzzleExtreme } from "@app/test/puzzles/puzzle-extreme";
-import { PuzzleHard } from "@app/test/puzzles/puzzle-hard";
-import { TestState } from "@app/test/state/test-state";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { PuzzleExtreme } from "src/test/puzzles/puzzle-extreme";
+import { PuzzleHard } from "src/test/puzzles/puzzle-hard";
+import { TestState } from "src/test/state/test-state";
 
 describe(SudokuSolverReducer.name, () => {
   let underTest: SudokuSolverReducer;

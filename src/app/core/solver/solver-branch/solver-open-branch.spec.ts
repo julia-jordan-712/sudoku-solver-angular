@@ -2,7 +2,7 @@ import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { SudokuGrid } from "@app/shared/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/shared/util/sudoku-grid-util";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
 import { SolverOpenBranch } from "./solver-open-branch";
 
 describe(SolverOpenBranch.name, () => {

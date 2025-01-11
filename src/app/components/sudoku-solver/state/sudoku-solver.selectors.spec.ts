@@ -9,8 +9,8 @@ import {
   SudokuGridViewModelBranchInfo,
 } from "@app/shared/types/sudoku-grid-view-model";
 import { AppState } from "@app/state/app-state";
-import { Puzzle4x4 } from "@app/test/puzzles/puzzle-4x4";
-import { TestState } from "@app/test/state/test-state";
+import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { TestState } from "src/test/state/test-state";
 
 describe("SudokuSolver Selectors", () => {
   it("should select the feature state", () => {
