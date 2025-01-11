@@ -8,6 +8,7 @@ import { SectionModule } from "@app/components/general/section/section.module";
 import { RestartModule } from "@app/components/restart/restart.module";
 import { SudokuCopyModule } from "@app/components/sudoku-copy/sudoku-copy.module";
 import { SudokuPasteModule } from "@app/components/sudoku-paste/sudoku-paste.module";
+import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.module";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
@@ -20,6 +21,7 @@ import { TranslateModule } from "@ngx-translate/core";
     SectionModule,
     SudokuCopyModule,
     SudokuPasteModule,
+    SudokuSolverSettingsModule,
     TranslateModule,
   ],
   exports: [DevelopmentComponent],

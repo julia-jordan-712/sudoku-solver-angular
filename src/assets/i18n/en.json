@@ -3,12 +3,10 @@
     "TITLE": "Sudoku solver"
   },
   "SETTINGS": {
-    "TITLE": "Settings",
     "CHANGE": "Change puzzle",
     "DONE": "Done",
     "WIDTH": "Width",
     "HEIGHT": "Height",
-    "SELECT": "Select existing Sudoku",
     "SIZE": "Size",
     "HINTS": {
       "ENTER_VALUES": "Values can be set by clicking on a cell and typing on the keyboard."

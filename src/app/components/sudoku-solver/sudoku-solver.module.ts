@@ -6,7 +6,6 @@ import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module
 import { SudokuPuzzleSolverSwitchModule } from "@app/components/sudoku-puzzle-solver-switch/sudoku-puzzle-solver-switch.module";
 import { SudokuSolverActionsModule } from "@app/components/sudoku-solver-actions/sudoku-solver-actions.module";
 import { SudokuSolverBranchesModule } from "@app/components/sudoku-solver-branches/sudoku-solver-branches.module";
-import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.module";
 import { SudokuSolverStatusModule } from "@app/components/sudoku-solver-status/sudoku-solver-status.module";
 import { SudokuSolverStepsModule } from "@app/components/sudoku-solver-steps/sudoku-solver-steps.module";
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
@@ -22,7 +21,6 @@ import { TranslateModule } from "@ngx-translate/core";
     SudokuPuzzleSolverSwitchModule,
     SudokuSolverActionsModule,
     SudokuSolverBranchesModule,
-    SudokuSolverSettingsModule,
     SudokuSolverStatusModule,
     SudokuSolverStepsModule,
     TranslateModule,
