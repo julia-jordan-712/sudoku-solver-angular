@@ -7,8 +7,8 @@ import { SudokuPuzzleSolverSwitchModule } from "@app/components/sudoku-puzzle-so
 import { SudokuSolverActionsModule } from "@app/components/sudoku-solver-actions/sudoku-solver-actions.module";
 import { SudokuSolverBranchesModule } from "@app/components/sudoku-solver-branches/sudoku-solver-branches.module";
 import { SudokuSolverStatusModule } from "@app/components/sudoku-solver-status/sudoku-solver-status.module";
+import { SudokuSolverStepsModule } from "@app/components/sudoku-solver-steps/sudoku-solver-steps.module";
 import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver/sudoku-solver-settings/sudoku-solver-settings.module";
-import { SudokuSolverStepsModule } from "@app/components/sudoku-solver/sudoku-solver-steps/sudoku-solver-steps.module";
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
 import { TranslateModule } from "@ngx-translate/core";
 
