@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
-import { ClipboardService } from "@app/components/development-functions/services/clipboard.service";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
+import { ClipboardService } from "@app/core/clipboard/clipboard.service";
 import { Store } from "@ngrx/store";
 import { take, withLatestFrom } from "rxjs";
 

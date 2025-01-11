@@ -1,4 +1,4 @@
-import { ClipboardElement } from "@app/components/development-functions/services/clipboard.service";
+import { ClipboardElement } from "@app/core/clipboard/clipboard.service";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { CellPosition } from "@app/types/cell-position";
 import { Nullable } from "@app/types/nullable";
