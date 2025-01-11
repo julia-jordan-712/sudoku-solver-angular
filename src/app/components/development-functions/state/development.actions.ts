@@ -2,8 +2,8 @@ import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state
 import { Nullable } from "@app/types/nullable";
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-export const DevFunctionActions = createActionGroup({
-  source: "DevFunctions",
+export const DevelopmentActions = createActionGroup({
+  source: "Development",
   events: {
     hide: emptyProps(),
     "set test sudoku": props<{

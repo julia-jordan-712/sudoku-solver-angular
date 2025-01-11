@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { DevFunctionActions } from "@app/components/development-functions/state/dev-functions.actions";
-import { DevFunctionsState } from "@app/components/development-functions/state/dev-functions.state";
+import { DevelopmentActions } from "@app/components/development-functions/state/development.actions";
+import { DevelopmentState } from "@app/components/development-functions/state/development.state";
 import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { AppActions } from "@app/state/app-state";
@@ -8,8 +8,8 @@ import { ActionReducer, createReducer, on } from "@ngrx/store";
 import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: "root" })
-export class DevFunctionsReducer {
-  private createInitialState(): DevFunctionsState {
+export class DevelopmentReducer {
+  private createInitialState(): DevelopmentState {
     const items: SudokuDropdownSelectionItem[] = [
       ...SudokuPuzzleSelectionTestData.createItems(),
     ];
@@ -22,24 +22,24 @@ export class DevFunctionsReducer {
     };
   }
 
-  getReducer(): ActionReducer<DevFunctionsState> {
+  getReducer(): ActionReducer<DevelopmentState> {
     return createReducer(
       this.createInitialState(),
       on(
         AppActions.reinitialize,
-        (_state, _action): DevFunctionsState => this.createInitialState(),
+        (_state, _action): DevelopmentState => this.createInitialState(),
       ),
       on(
         AppActions.initFromState,
-        (_state, _action): DevFunctionsState => this.createInitialState(),
+        (_state, _action): DevelopmentState => this.createInitialState(),
       ),
       on(
-        DevFunctionActions.hide,
-        (state, _action): DevFunctionsState => ({ ...state, isDev: false }),
+        DevelopmentActions.hide,
+        (state, _action): DevelopmentState => ({ ...state, isDev: false }),
       ),
       on(
-        DevFunctionActions.setTestSudoku,
-        (state, action): DevFunctionsState => ({
+        DevelopmentActions.setTestSudoku,
+        (state, action): DevelopmentState => ({
           ...state,
           testSudokus: {
             ...state.testSudokus,

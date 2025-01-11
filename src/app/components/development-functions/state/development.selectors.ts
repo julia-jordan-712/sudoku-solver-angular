@@ -1,25 +1,25 @@
 import {
-  DevFunctionsState,
-  DevFunctionsStateKey,
-} from "@app/components/development-functions/state/dev-functions.state";
+  DevelopmentState,
+  DevelopmentStateKey,
+} from "@app/components/development-functions/state/development.state";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 const selectState =
-  createFeatureSelector<DevFunctionsState>(DevFunctionsStateKey);
+  createFeatureSelector<DevelopmentState>(DevelopmentStateKey);
 
 const selectIsDevelopment = createSelector(
   selectState,
-  (state: DevFunctionsState) => state.isDev,
+  (state: DevelopmentState) => state.isDev,
 );
 
 const selectTestSudokus = createSelector(
   selectState,
-  (state: DevFunctionsState) => state.testSudokus.options,
+  (state: DevelopmentState) => state.testSudokus.options,
 );
 
 const selectSelectedTestSudoku = createSelector(
   selectState,
-  (state: DevFunctionsState) => {
+  (state: DevelopmentState) => {
     const selectedId = state.testSudokus.selectedId;
     return selectedId
       ? state.testSudokus.options.find((option) => option.id === selectedId)
@@ -27,7 +27,7 @@ const selectSelectedTestSudoku = createSelector(
   },
 );
 
-export const DevFunctionsSelectors = {
+export const DevelopmentSelectors = {
   selectIsDevelopment,
   selectTestSudokus,
   selectSelectedTestSudoku,

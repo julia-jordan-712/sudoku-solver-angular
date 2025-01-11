@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
-import { DevFunctionActions } from "@app/components/development-functions/state/dev-functions.actions";
-import { DevFunctionsSelectors } from "@app/components/development-functions/state/dev-functions.selectors";
+import { DevelopmentActions } from "@app/components/development-functions/state/development.actions";
+import { DevelopmentSelectors } from "@app/components/development-functions/state/development.selectors";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 
@@ -13,10 +13,10 @@ export class DevelopmentFunctionsComponent {
   private store = inject(Store);
 
   protected show$: Observable<boolean> = this.store.select(
-    DevFunctionsSelectors.selectIsDevelopment,
+    DevelopmentSelectors.selectIsDevelopment,
   );
 
   protected hideDevFunctions(): void {
-    this.store.dispatch(DevFunctionActions.hide());
+    this.store.dispatch(DevelopmentActions.hide());
   }
 }

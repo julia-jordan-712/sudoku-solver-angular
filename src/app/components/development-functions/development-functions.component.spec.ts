@@ -2,7 +2,7 @@ import { provideHttpClient } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { DevelopmentFunctionsComponent } from "@app/components/development-functions/development-functions.component";
-import { DevFunctionsSelectors } from "@app/components/development-functions/state/dev-functions.selectors";
+import { DevelopmentSelectors } from "@app/components/development-functions/state/development.selectors";
 import { TestSudokusComponent } from "@app/components/development-functions/test-sudokus/test-sudokus.component";
 import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
 import { SectionModule } from "@app/components/general/section/section.module";
@@ -51,7 +51,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
 
   function setUp(isDevelopment: boolean): void {
     store.overrideSelector(
-      DevFunctionsSelectors.selectIsDevelopment,
+      DevelopmentSelectors.selectIsDevelopment,
       isDevelopment,
     );
 
