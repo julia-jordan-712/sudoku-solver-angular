@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DropdownComponent } from "@app/components/shared/dropdown/dropdown.component";
+import { DropdownComponent } from "@app/components/general/dropdown/dropdown.component";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 
 @Component({

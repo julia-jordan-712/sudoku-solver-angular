@@ -5,9 +5,9 @@ import { CopySudokuComponent } from "@app/components/dev-functions/copy-sudoku/c
 import { DevFunctionsComponent } from "@app/components/dev-functions/dev-functions.component";
 import { PasteSudokuComponent } from "@app/components/dev-functions/paste-sudoku/paste-sudoku.component";
 import { TestSudokusComponent } from "@app/components/dev-functions/test-sudokus/test-sudokus.component";
-import { DropdownModule } from "@app/components/shared/dropdown/dropdown.module";
-import { IconModule } from "@app/components/shared/icon/icon.module";
-import { SectionModule } from "@app/components/shared/section/section.module";
+import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
+import { IconModule } from "@app/components/general/icon/icon.module";
+import { SectionModule } from "@app/components/general/section/section.module";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({

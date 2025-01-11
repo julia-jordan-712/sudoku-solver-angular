@@ -7,8 +7,8 @@ import { PasteSudokuComponent } from "@app/components/dev-functions/paste-sudoku
 import { ClipboardService } from "@app/components/dev-functions/services/clipboard.service";
 import { DevFunctionsSelectors } from "@app/components/dev-functions/state/dev-functions.selectors";
 import { TestSudokusComponent } from "@app/components/dev-functions/test-sudokus/test-sudokus.component";
-import { DropdownModule } from "@app/components/shared/dropdown/dropdown.module";
-import { SectionModule } from "@app/components/shared/section/section.module";
+import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
+import { SectionModule } from "@app/components/general/section/section.module";
 import { AppState } from "@app/state/app-state";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
 import { TranslateTestingModule } from "ngx-translate-testing";
