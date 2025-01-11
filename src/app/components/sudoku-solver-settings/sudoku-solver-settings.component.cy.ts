@@ -1,8 +1,8 @@
 import { Component, inject, Input, OnChanges } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
+import { SudokuSolverSettingsComponent } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.component";
+import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.module";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
-import { SudokuSolverSettingsComponent } from "@app/components/sudoku-solver/sudoku-solver-settings/sudoku-solver-settings.component";
-import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver/sudoku-solver-settings/sudoku-solver-settings.module";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { CyComponentInput } from "@cypress/types/cy-component";
