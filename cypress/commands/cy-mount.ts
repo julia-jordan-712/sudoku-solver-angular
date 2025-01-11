@@ -1,5 +1,6 @@
 import { provideHttpClient } from "@angular/common/http";
 import { Type } from "@angular/core";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Objects } from "@app/shared/util/objects";
 import { CyChainable } from "@cypress/types/cy-chainable";
 import { CyComponentInput } from "@cypress/types/cy-component";
@@ -37,6 +38,7 @@ function mount<T>(
         de: require("src/assets/i18n/de.json"),
       }),
     ).withDefaultLanguage("en"),
+    NoopAnimationsModule,
   ];
   mountConfig.imports.push(module);
 
