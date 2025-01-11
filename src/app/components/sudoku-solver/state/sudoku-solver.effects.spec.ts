@@ -15,13 +15,13 @@ import { AppState } from "@app/state/app-state";
 import { SolverExecution } from "@app/types/solver-execution";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { provideMockStore } from "@ngrx/store/testing";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { SudokuSolverSpy } from "@test/solver/sudoku-solver-spy";
+import { SOLVER_TEST_PROVIDERS } from "@test/solver/sudoku-solver-test.provider";
+import { TestState } from "@test/state/test-state";
 import { getTestScheduler, hot } from "jasmine-marbles";
 import { Observable } from "rxjs";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
-import { SudokuSolverSpy } from "src/test/solver/sudoku-solver-spy";
-import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
-import { TestState } from "src/test/state/test-state";
 
 describe(SudokuSolverEffects.name, () => {
   let actions$: Observable<any>;

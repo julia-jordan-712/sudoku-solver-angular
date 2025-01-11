@@ -6,7 +6,7 @@ import { SudokuGridCellSingleValueComponent } from "@app/components/sudoku-grid/
 import { SudokuGridCellComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.component";
 import { CellPosition } from "@app/types/cell-position";
 import { SudokuGridCellViewModel } from "@app/types/sudoku-grid-view-model";
-import { SudokuGridViewModelMock } from "src/test/sudoku/sudoku-grid-view-model.mock";
+import { SudokuGridViewModelMock } from "@test/sudoku/sudoku-grid-view-model.mock";
 
 describe(SudokuGridCellComponent.name, () => {
   let component: SudokuGridCellComponent;

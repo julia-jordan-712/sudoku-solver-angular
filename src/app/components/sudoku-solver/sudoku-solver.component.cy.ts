@@ -10,7 +10,7 @@ import { SudokuGrid } from "@app/types/sudoku-grid";
 import { CyComponentInput } from "@cypress/types/cy-component";
 import { CySolver } from "@cypress/views/cy-solver";
 import { Store } from "@ngrx/store";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 
 describe(SudokuSolverComponent.name, () => {
   const underTest: CySolver = new CySolver();

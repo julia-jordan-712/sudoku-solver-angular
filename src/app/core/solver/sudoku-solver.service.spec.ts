@@ -5,11 +5,11 @@ import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
-import { PuzzleAdvanced } from "src/test/puzzles/puzzle-advanced";
-import { PuzzleExtreme } from "src/test/puzzles/puzzle-extreme";
-import { PuzzleHard } from "src/test/puzzles/puzzle-hard";
-import { PuzzleMedium } from "src/test/puzzles/puzzle-medium";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { PuzzleAdvanced } from "@test/puzzles/puzzle-advanced";
+import { PuzzleExtreme } from "@test/puzzles/puzzle-extreme";
+import { PuzzleHard } from "@test/puzzles/puzzle-hard";
+import { PuzzleMedium } from "@test/puzzles/puzzle-medium";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 describe(SudokuSolverService.name, () => {
   let service: SudokuSolverService;

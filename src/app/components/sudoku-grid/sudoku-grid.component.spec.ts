@@ -6,10 +6,10 @@ import { SudokuGridComponent } from "@app/components/sudoku-grid/sudoku-grid.com
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
+import { SudokuGridCellTestComponent } from "@test/components/sudoku-grid-cell-test.component";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { SudokuGridViewModelMock } from "@test/sudoku/sudoku-grid-view-model.mock";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { SudokuGridCellTestComponent } from "src/test/components/sudoku-grid-cell-test.component";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { SudokuGridViewModelMock } from "src/test/sudoku/sudoku-grid-view-model.mock";
 import { v4 as randomUUID } from "uuid";
 
 describe(SudokuGridComponent.name, () => {

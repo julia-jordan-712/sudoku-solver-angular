@@ -16,10 +16,10 @@ import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 import { EffectsModule } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { PuzzleAdvanced } from "src/test/puzzles/puzzle-advanced";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
-import { SudokuSolverSpy } from "src/test/solver/sudoku-solver-spy";
-import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
+import { PuzzleAdvanced } from "@test/puzzles/puzzle-advanced";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { SudokuSolverSpy } from "@test/solver/sudoku-solver-spy";
+import { SOLVER_TEST_PROVIDERS } from "@test/solver/sudoku-solver-test.provider";
 
 describe("SudokuSolverState", () => {
   let solver: SudokuSolverService;

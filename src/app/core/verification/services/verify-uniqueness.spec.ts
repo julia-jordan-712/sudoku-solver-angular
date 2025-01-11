@@ -6,8 +6,8 @@ import { CellPosition } from "@app/types/cell-position";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { Objects } from "@app/util/objects";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 describe(VerifyUniqueness.name, () => {
   describe("complete solution", () => {

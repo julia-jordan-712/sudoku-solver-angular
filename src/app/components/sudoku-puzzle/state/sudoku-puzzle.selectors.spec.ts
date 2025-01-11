@@ -4,8 +4,8 @@ import { AppState } from "@app/state/app-state";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { TestState } from "src/test/state/test-state";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { TestState } from "@test/state/test-state";
 
 describe("SudokuPuzzle Selectors", () => {
   it("should select the feature state", () => {

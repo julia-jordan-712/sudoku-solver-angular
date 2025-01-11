@@ -14,9 +14,9 @@ import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { EffectsModule } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
-import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { SOLVER_TEST_PROVIDERS } from "@test/solver/sudoku-solver-test.provider";
 
 describe("SudokuPuzzleState", () => {
   let store: Store;

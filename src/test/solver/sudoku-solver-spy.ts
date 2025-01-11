@@ -5,7 +5,7 @@ import {
   SolverResponseStatus,
 } from "@app/core/solver/types/solver-response";
 import { SudokuGrid } from "@app/types/sudoku-grid";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 export class SudokuSolverSpy {
   public static readonly STEP_ID = "TEST";

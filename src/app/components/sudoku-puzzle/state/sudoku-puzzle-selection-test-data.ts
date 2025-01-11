@@ -1,11 +1,11 @@
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { PuzzleAdvanced } from "src/test/puzzles/puzzle-advanced";
-import { PuzzleExtreme } from "src/test/puzzles/puzzle-extreme";
-import { PuzzleHard } from "src/test/puzzles/puzzle-hard";
-import { PuzzleMedium } from "src/test/puzzles/puzzle-medium";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
-import { TestPuzzle } from "src/test/puzzles/test-puzzle";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleAdvanced } from "@test/puzzles/puzzle-advanced";
+import { PuzzleExtreme } from "@test/puzzles/puzzle-extreme";
+import { PuzzleHard } from "@test/puzzles/puzzle-hard";
+import { PuzzleMedium } from "@test/puzzles/puzzle-medium";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { TestPuzzle } from "@test/puzzles/test-puzzle";
 
 export class SudokuPuzzleSelectionTestData {
   public static createItems(): SudokuDropdownSelectionItem[] {

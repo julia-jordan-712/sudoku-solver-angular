@@ -8,8 +8,8 @@ import { SudokuGrid } from "@app/types/sudoku-grid";
 import { CyComponentInput } from "@cypress/types/cy-component";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 import { Store } from "@ngrx/store";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { SOLVER_TEST_PROVIDERS } from "@test/solver/sudoku-solver-test.provider";
 
 describe(SudokuSolverSettingsComponent.name, () => {
   const underTest: CySolverSettings = new CySolverSettings();

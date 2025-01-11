@@ -8,7 +8,7 @@ import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 import { CyStateSwitch } from "@cypress/views/cy-state-switch";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 describe(MainComponent.name, () => {
   const devFunctions: CyDevFunctions = new CyDevFunctions();

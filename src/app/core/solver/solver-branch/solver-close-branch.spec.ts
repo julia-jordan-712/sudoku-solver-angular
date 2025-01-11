@@ -5,7 +5,7 @@ import { SolverResponse } from "@app/core/solver/types/solver-response";
 import { VerifySolutionService } from "@app/core/verification/services/verify-solution.service";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 
 describe(SolverCloseBranch.name, () => {
   let underTest: SolverCloseBranch;

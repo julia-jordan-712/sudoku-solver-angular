@@ -1,7 +1,7 @@
 import { VerifySquare } from "@app/core/verification/services/verify-square";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 describe(VerifySquare.name, () => {
   it("should recognize a valid solution and return its size", () => {

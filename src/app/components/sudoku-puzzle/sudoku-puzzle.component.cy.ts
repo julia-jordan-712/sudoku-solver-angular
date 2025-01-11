@@ -9,10 +9,10 @@ import { CyComponentInput } from "@cypress/types/cy-component";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CyStateSwitch } from "@cypress/views/cy-state-switch";
 import { Store } from "@ngrx/store";
-import { Puzzle4x4 } from "src/test/puzzles/puzzle-4x4";
-import { Puzzle9x9 } from "src/test/puzzles/puzzle-9x9";
-import { PuzzleSimple } from "src/test/puzzles/puzzle-simple";
-import { SOLVER_TEST_PROVIDERS } from "src/test/solver/sudoku-solver-test.provider";
+import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
+import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { SOLVER_TEST_PROVIDERS } from "@test/solver/sudoku-solver-test.provider";
 
 describe(SudokuPuzzleComponent.name, () => {
   const underTest: CyPuzzleInput = new CyPuzzleInput();
