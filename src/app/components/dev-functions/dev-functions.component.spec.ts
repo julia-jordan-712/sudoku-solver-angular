@@ -8,7 +8,7 @@ import { ClipboardService } from "@app/components/dev-functions/services/clipboa
 import { DevFunctionsSelectors } from "@app/components/dev-functions/state/dev-functions.selectors";
 import { TestSudokusComponent } from "@app/components/dev-functions/test-sudokus/test-sudokus.component";
 import { DropdownInputModule } from "@app/components/interactions/dropdown-input/dropdown-input.module";
-import { SectionModule } from "@app/components/section/section.module";
+import { SectionModule } from "@app/components/shared/section/section.module";
 import { AppState } from "@app/state/app-state";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
 import { TranslateTestingModule } from "ngx-translate-testing";

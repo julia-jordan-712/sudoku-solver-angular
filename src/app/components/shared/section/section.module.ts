@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { SectionComponent } from "@app/components/section/section.component";
+import { SectionComponent } from "@app/components/shared/section/section.component";
 
 @NgModule({
   declarations: [SectionComponent],
