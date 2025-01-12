@@ -1,42 +1,42 @@
 {
   "GENERAL": {
-    "TITLE": "Sudoku solver"
-  },
-  "SETTINGS": {
-    "CHANGE": "Change puzzle",
-    "DONE": "Done",
-    "WIDTH": "Width",
+    "TITLE": "Sudoku solver",
     "HEIGHT": "Height",
     "SIZE": "Size",
-    "HINTS": {
-      "ENTER_VALUES": "Values can be set by clicking on a cell and typing on the keyboard."
-    }
+    "WIDTH": "Width"
+  },
+  "SETTINGS": {
+    "CHANGE": "change puzzle",
+    "DONE": "continue to solver"
   },
   "PUZZLE": {
-    "4x4": {
-      "EMPTY": "4x4 | Empty",
-      "COMPLETE": "4x4 | Solved"
+    "TEST_DATA": {
+      "4x4": {
+        "EMPTY": "4x4 | Empty",
+        "COMPLETE": "4x4 | Solved"
+      },
+      "ADVANCED": {
+        "PUZZLE": "9x9 | Advanced | Puzzle {{number}}",
+        "SOLVED": "9x9 | Advanced | Puzzle {{number}} - Solved"
+      },
+      "EXTREME": {
+        "PUZZLE": "9x9 | Extreme | Puzzle {{number}}",
+        "SOLVED": "9x9 | Extreme | Puzzle {{number}} - Solved"
+      },
+      "HARD": {
+        "PUZZLE": "9x9 | Hard | Puzzle {{number}}",
+        "SOLVED": "9x9 | Hard | Puzzle {{number}} - Solved"
+      },
+      "MEDIUM": {
+        "PUZZLE": "9x9 | Medium | Puzzle {{number}}",
+        "SOLVED": "9x9 | Medium | Puzzle {{number}} - Solved"
+      },
+      "SIMPLE": {
+        "PUZZLE": "9x9 | Simple | Puzzle {{number}}",
+        "SOLVED": "9x9 | Simple | Puzzle {{number}} - Solved"
+      }
     },
-    "ADVANCED": {
-      "PUZZLE": "9x9 | Advanced | Puzzle {{number}}",
-      "SOLVED": "9x9 | Advanced | Puzzle {{number}} - Solved"
-    },
-    "EXTREME": {
-      "PUZZLE": "9x9 | Extreme | Puzzle {{number}}",
-      "SOLVED": "9x9 | Extreme | Puzzle {{number}} - Solved"
-    },
-    "HARD": {
-      "PUZZLE": "9x9 | Hard | Puzzle {{number}}",
-      "SOLVED": "9x9 | Hard | Puzzle {{number}} - Solved"
-    },
-    "MEDIUM": {
-      "PUZZLE": "9x9 | Medium | Puzzle {{number}}",
-      "SOLVED": "9x9 | Medium | Puzzle {{number}} - Solved"
-    },
-    "SIMPLE": {
-      "PUZZLE": "9x9 | Simple | Puzzle {{number}}",
-      "SOLVED": "9x9 | Simple | Puzzle {{number}} - Solved"
-    }
+    "TITLE": "Sudoku input"
   },
   "VERIFY": {
     "ERROR": {
@@ -117,7 +117,7 @@
       "TITLE": "Current solution"
     },
     "ADDITIONAL": {
-      "TITLE": "Copy of the state before the new branch was created"
+      "TITLE": "State before the new branch was created"
     }
   },
   "DEVELOPMENT": {
@@ -126,5 +126,12 @@
     "PASTE_FROM_CLIPBOARD": "paste Sudoku from clipboard",
     "TITLE": "Development functions",
     "EXISTING_SUDOKU": "test data"
+  },
+  "HINTS": {
+    "TITLE": "Usage hints",
+    "USE_KEYBOARD": "You can enter values by clicking on a cell and typing on the keyboard.",
+    "ENTER_VALUES": "Enter the known values of the sudoku.",
+    "SET_SIZE": "Select the size of the sudoku you want to solve.",
+    "CONTINUE_TO_SOLVER": "Press the button \"{{buttonName}}\" when you are done."
   }
 }

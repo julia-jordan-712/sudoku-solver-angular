@@ -12,12 +12,12 @@ export class SudokuPuzzleSelectionTestData {
     const items: SudokuDropdownSelectionItem[] = [
       {
         id: "Puzzle4x4.EMPTY",
-        i18nKey: { key: "PUZZLE.4x4.EMPTY" },
+        i18nKey: { key: "PUZZLE.TEST_DATA.4x4.EMPTY" },
         data: Puzzle4x4.EMPTY,
       },
       {
         id: "Puzzle4x4.COMPLETE",
-        i18nKey: { key: "PUZZLE.4x4.COMPLETE" },
+        i18nKey: { key: "PUZZLE.TEST_DATA.4x4.COMPLETE" },
         data: Puzzle4x4.COMPLETE,
       },
     ];
@@ -52,7 +52,7 @@ export class SudokuPuzzleSelectionTestData {
       puzzle: {
         id: `Puzzle.${category}_${index}.puzzle`,
         i18nKey: {
-          key: `PUZZLE.${category}.PUZZLE`,
+          key: `PUZZLE.TEST_DATA.${category}.PUZZLE`,
           params: {
             number: index,
           },
@@ -62,7 +62,7 @@ export class SudokuPuzzleSelectionTestData {
       solution: {
         id: `Puzzle.${category}_${index}.solution`,
         i18nKey: {
-          key: `PUZZLE.${category}.SOLVED`,
+          key: `PUZZLE.TEST_DATA.${category}.SOLVED`,
           params: {
             number: index,
           },

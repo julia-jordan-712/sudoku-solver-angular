@@ -1,4 +1,5 @@
 import { Component, inject } from "@angular/core";
+import { Hint } from "@app/components/general/hint-list/hint-list.component";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuGrid } from "@app/types/sudoku-grid";
@@ -25,6 +26,19 @@ export class SudokuPuzzleComponent {
   protected grid$: Observable<SudokuGridViewModel> = this.store
     .select(SudokuPuzzleSelectors.selectViewModel)
     .pipe(filter(isDefined));
+
+  protected hints: Hint[] = [
+    { id: "SET_SIZE", hint: { key: "HINTS.SET_SIZE" } },
+    { id: "ENTER_VALUES", hint: { key: "HINTS.ENTER_VALUES" } },
+    { id: "USE_KEYBOARD", hint: { key: "HINTS.USE_KEYBOARD" } },
+    {
+      id: "CONTINUE",
+      hint: {
+        key: "HINTS.CONTINUE_TO_SOLVER",
+        params: { buttonName: { key: "SETTINGS.DONE" } },
+      },
+    },
+  ];
 
   protected onCellChange(grid: SudokuGrid): void {
     this.store.dispatch(SudokuPuzzleActions.setSudoku({ sudoku: grid }));
