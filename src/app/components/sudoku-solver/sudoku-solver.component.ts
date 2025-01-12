@@ -1,4 +1,5 @@
 import { Component, inject } from "@angular/core";
+import { Hint } from "@app/components/general/hint-list/hint-list.component";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
@@ -26,4 +27,22 @@ export class SudokuSolverComponent {
   highlightNumber$: Observable<Nullable<number>> = this.store.select(
     SudokuSolverSelectors.selectHighlightNumber,
   );
+
+  protected hints: Hint[] = [
+    {
+      id: "ACTION_BUTTONS",
+      hint: {
+        key: "HINTS.ACTION_BUTTONS",
+        params: { name: { key: "SOLVER.ACTIONS.TITLE" } },
+      },
+    },
+    { id: "SEE_CHANGES", hint: { key: "HINTS.SEE_CHANGES" } },
+    {
+      id: "CHANGE",
+      hint: {
+        key: "HINTS.CHANGE_PUZZLE",
+        params: { buttonName: { key: "SETTINGS.CHANGE" } },
+      },
+    },
+  ];
 }

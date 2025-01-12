@@ -80,7 +80,7 @@ export class SudokuGridViewModelConverter {
   ): SudokuGridCellViewModel[] {
     const maxValue = cells.length;
     const sqrt = Math.ceil(Math.sqrt(maxValue));
-    const size = Math.max(32, 16 + 10 * sqrt);
+    const size = Math.max(32, 8 + 10 * sqrt);
 
     return cells.map((cell, index) =>
       SudokuGridViewModelConverter.createViewModelsFromCell(

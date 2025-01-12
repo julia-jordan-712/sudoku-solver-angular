@@ -23,9 +23,8 @@ describe(SudokuVerificationComponent.name, () => {
       it(`should not display anything if verification is ${empty}`, () => {
         setup({ verification: empty });
 
-        underTest.valid.get().should("not.exist");
-        underTest.invalid.get().should("not.exist");
         underTest.get().should("exist");
+        underTest.get().should("not.be.visible");
         underTest.get().should("have.text", "");
       });
     });

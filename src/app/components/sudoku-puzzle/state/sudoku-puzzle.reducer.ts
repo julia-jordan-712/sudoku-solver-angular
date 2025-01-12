@@ -1,11 +1,7 @@
 import { Injectable } from "@angular/core";
 import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
-import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
-import {
-  SudokuDropdownSelectionItem,
-  SudokuPuzzleState,
-} from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
+import { SudokuPuzzleState } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { AppActions } from "@app/state/app-state";
 import { ActionReducer, createReducer, on } from "@ngrx/store";
 import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
@@ -13,16 +9,13 @@ import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
 @Injectable({ providedIn: "root" })
 export class SudokuPuzzleReducer {
   private createInitialState(): SudokuPuzzleState {
-    const items: SudokuDropdownSelectionItem[] = [
-      ...SudokuPuzzleSelectionTestData.createItems(),
-    ];
     return {
       show: true,
       sudoku: Puzzle9x9.EMPTY,
       height: 9,
       width: 9,
       selectionOptions: {
-        options: items,
+        options: [],
         selectedId: undefined,
       },
     };

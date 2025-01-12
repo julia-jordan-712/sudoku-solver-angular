@@ -14,9 +14,9 @@ $on-secondary-color: $text-color-default;
 $secondary-hover-color: #d1e4fd;
 
 // --- sudoku grid cells ---
-$highlight-color: #1966d236;
+$highlight-color: #cedef5;
 $on-highlight-color: #030c1a;
-$highlight-hover-color: #1966d249;
+$highlight-hover-color: #bcd2f1;
 
 $changed-color: #1967d2;
 $on-changed-color: white;
@@ -29,11 +29,11 @@ $border-radius: 2px;
 
 // --- verification ---
 $valid-color: #0fa523;
-$valid-background-color: #0fa5232d;
+$valid-background-color: #d3eed7;
 $invalid-color: #b31010;
-$invalid-background-color: #b310102d;
+$invalid-background-color: #f1d3d3;
 $label-color: #353535;
-$label-background-color: #35353536;
+$label-background-color: #d4d4d4;
 
 // --- text ---
 $font-weight-normal: 400;

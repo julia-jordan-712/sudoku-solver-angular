@@ -26,6 +26,8 @@ input {
   caret-color: transparent;
   cursor: inherit;
 
+  font-family: monospace;
+
   appearance: textfield;
   -moz-appearance: textfield;
   &::-webkit-outer-spin-button,

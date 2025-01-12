@@ -6,6 +6,7 @@ import { VerifySolution } from "@app/core/verification/services/verify-solution"
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
+import { SudokuSize } from "@app/types/sudoku-size";
 import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
@@ -25,6 +26,12 @@ const selectHeight = createSelector(
 const selectWidth = createSelector(
   selectState,
   (state: SudokuPuzzleState) => state.width,
+);
+
+const selectSize = createSelector(
+  selectState,
+  (state: SudokuPuzzleState) =>
+    ({ width: state.width, height: state.height }) satisfies SudokuSize,
 );
 
 const selectSelectionOptions = createSelector(
@@ -84,6 +91,7 @@ export const SudokuPuzzleSelectors = {
   selectIsConfirmEnabled,
   selectSelectedOption,
   selectSelectionOptions,
+  selectSize,
   selectSudoku,
   selectViewModel,
   selectWidth,

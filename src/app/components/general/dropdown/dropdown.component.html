@@ -1,22 +1,23 @@
-<label for="inputField">{{ label }}:</label>
-<select
-  [(ngModel)]="_selectedItem"
-  (ngModelChange)="onChange($event)"
-  #inputField
->
-  @for (item of _items; track item.id) {
-    <option [ngValue]="item">
-      @if (item.name && item.name !== "") {
-        {{ item.name }}
-      } @else {
-        @if (item.name$ | async; as name) {
-          {{ name }}
+<app-label-input [label]="label" [info]="tooltip">
+  <select
+    [(ngModel)]="_selectedItem"
+    (ngModelChange)="onChange($event)"
+    #inputField
+  >
+    @for (item of _items; track item.id) {
+      <option [ngValue]="item">
+        @if (item.name && item.name !== "") {
+          {{ item.name }}
         } @else {
-          @if (item.i18nKey) {
-            {{ item.i18nKey.key | translate: item.i18nKey.params }}
+          @if (item.name$ | async; as name) {
+            {{ name }}
+          } @else {
+            @if (item.i18nKey) {
+              {{ item.i18nKey.key | translate: item.i18nKey.params }}
+            }
           }
         }
-      }
-    </option>
-  }
-</select>
+      </option>
+    }
+  </select>
+</app-label-input>

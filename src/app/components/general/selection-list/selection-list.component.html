@@ -1,21 +1,22 @@
-<label>{{ label }}:</label>
-@if (tooltip) {
-  <app-icon icon="info" [title]="tooltip"></app-icon>
-}
-<div class="buttons">
-  @for (item of values; track item.id) {
-    <button (click)="selectValue(item)" [class.selected]="item.id === value.id">
-      @if (item.name && item.name !== "") {
-        {{ item.name }}
-      } @else {
-        @if (item.name$ | async; as name) {
-          {{ name }}
+<app-label-input [label]="label" [info]="tooltip">
+  <div class="buttons">
+    @for (item of values; track item.id) {
+      <button
+        (click)="selectValue(item)"
+        [class.selected]="item.id === value.id"
+      >
+        @if (item.name && item.name !== "") {
+          {{ item.name }}
         } @else {
-          @if (item.i18nKey) {
-            {{ item.i18nKey.key | translate: item.i18nKey.params }}
+          @if (item.name$ | async; as name) {
+            {{ name }}
+          } @else {
+            @if (item.i18nKey) {
+              {{ item.i18nKey.key | translate: item.i18nKey.params }}
+            }
           }
         }
-      }
-    </button>
-  }
-</div>
+      </button>
+    }
+  </div>
+</app-label-input>

@@ -1,22 +1,12 @@
 @use "_mixins" as *;
 
 :host {
-  width: 100%;
-}
-
-.inputs {
-  margin-top: 0.5em;
-
-  display: grid;
-  grid-template-columns: max-content max-content auto;
+  display: flex;
+  flex-direction: column;
   gap: 0.5em;
-  align-items: center;
+  align-items: flex-start;
 
-  app-number-input {
-    display: contents;
-  }
-
-  button {
-    grid-column: 1 / -1;
+  * {
+    width: 100%;
   }
 }
