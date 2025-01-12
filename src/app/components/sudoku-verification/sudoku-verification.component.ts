@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, HostBinding, Input } from "@angular/core";
 import { smoothHeightAnimation } from "@app/animations/smooth-height.directive";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/types/nullable";
@@ -10,14 +10,16 @@ import { Nullable } from "@app/types/nullable";
   animations: [smoothHeightAnimation],
 })
 export class SudokuVerificationComponent {
-  protected show: boolean;
+  @HostBinding("class.hidden")
+  protected hidden: boolean;
+  @HostBinding("class.valid")
   protected valid: boolean;
   protected errors: VerificationResult["errors"];
   protected heightChangeTrigger: string;
 
   @Input({ required: true })
   set verification(verification: Nullable<VerificationResult>) {
-    this.show = verification != null;
+    this.hidden = verification == null;
     this.valid = verification?.isValid() ?? true;
     const verificationErrors = verification?.getErrors() ?? [];
     this.errors = [...verificationErrors];

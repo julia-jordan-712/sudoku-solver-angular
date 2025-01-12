@@ -35,7 +35,7 @@ describe(MainComponent.name, () => {
     devFunctions.dropdown.get().should("be.visible");
     puzzleInput.sizeSelector.get().should("be.visible");
     puzzleInput.sudoku.get().should("be.visible");
-    puzzleInput.sudoku.verification.valid.get().should("be.visible");
+    puzzleInput.sudoku.verification.shouldBeValid();
     stateSwitch.buttonConfirm.get().click();
 
     solverSettings.delay.input.get().should("be.visible");

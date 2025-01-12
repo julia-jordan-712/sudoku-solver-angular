@@ -1,24 +1,22 @@
 @if (_grid && sqrt) {
-  <div class="overflow">
-    <div class="grid">
-      @for (
-        row of _grid.rows;
-        track row.id;
-        let i = $index;
-        let first = $first;
-        let last = $last
-      ) {
-        <app-sudoku-grid-row
-          [row]="row"
-          [borderTop]="first"
-          [borderBottom]="last || (sqrt ? (i + 1) % sqrt === 0 : false)"
-          [highlightNumber]="highlightNumber"
-          [readonly]="readonly"
-          (valueChange)="onRowChanged($event, i)"
-          (valueSubmit)="onRowSubmitted($event, i)"
-        ></app-sudoku-grid-row>
-      }
-    </div>
+  <div class="grid">
+    @for (
+      row of _grid.rows;
+      track row.id;
+      let i = $index;
+      let first = $first;
+      let last = $last
+    ) {
+      <app-sudoku-grid-row
+        [row]="row"
+        [borderTop]="first"
+        [borderBottom]="last || (sqrt ? (i + 1) % sqrt === 0 : false)"
+        [highlightNumber]="highlightNumber"
+        [readonly]="readonly"
+        (valueChange)="onRowChanged($event, i)"
+        (valueSubmit)="onRowSubmitted($event, i)"
+      ></app-sudoku-grid-row>
+    }
   </div>
   @if (showVerification) {
     <app-sudoku-verification

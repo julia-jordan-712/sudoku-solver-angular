@@ -1,12 +1,26 @@
 @use "_constants" as *;
 
+:host {
+  border-radius: $border-radius;
+  width: 10em;
+
+  &.hidden {
+    display: none;
+  }
+
+  background-color: $invalid-background-color;
+  color: $invalid-color;
+  &.valid {
+    background-color: $valid-background-color;
+    color: $valid-color;
+  }
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  padding: 0.5em;
   gap: 0.5em;
-  border-radius: $border-radius;
-  width: 10em;
+  margin: 0.5em;
 }
 
 .bold {
@@ -14,14 +28,4 @@
   display: flex;
   align-items: center;
   gap: 0.5em;
-}
-
-.valid {
-  background-color: $valid-background-color;
-  color: $valid-color;
-}
-
-.invalid {
-  background-color: $invalid-background-color;
-  color: $invalid-color;
 }

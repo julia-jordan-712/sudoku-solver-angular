@@ -8,6 +8,7 @@
 app-section {
   flex-direction: column;
   gap: 1em;
+  overflow: auto;
 }
 
 .sudoku-grid {
