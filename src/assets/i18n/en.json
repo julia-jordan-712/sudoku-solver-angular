@@ -59,7 +59,8 @@
       "START": "Start solving the Sudoku",
       "PAUSE": "Pause solving the Sudoku",
       "NEXT": "Solve next step",
-      "RESTART": "Restart solving the Sudoku"
+      "RESTART": "Restart solving the Sudoku",
+      "TITLE": "Controls"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -132,6 +133,9 @@
     "USE_KEYBOARD": "You can enter values by clicking on a cell and typing on the keyboard.",
     "ENTER_VALUES": "Enter the known values of the sudoku.",
     "SET_SIZE": "Select the size of the sudoku you want to solve.",
-    "CONTINUE_TO_SOLVER": "Press the button \"{{buttonName}}\" when you are done."
+    "CONTINUE_TO_SOLVER": "Press the button \"{{buttonName}}\" when you are done.",
+    "CHANGE_PUZZLE": "Press the button \"{{buttonName}}\" to go back to change your input.",
+    "ACTION_BUTTONS": "Use the buttons in section \"{{name}}\" to control the solver (start, pause, etc).",
+    "SEE_CHANGES": "The changes from the last step are visible by hovering over the highlighted cells."
   }
 }

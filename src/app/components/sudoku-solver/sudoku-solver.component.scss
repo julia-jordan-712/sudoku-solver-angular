@@ -8,12 +8,15 @@
   gap: 1em;
 }
 
-.solver {
-  grid-row: 1 / span 4;
-
+app-section {
   display: flex;
   flex-direction: column;
   gap: 1em;
+}
+
+.solver {
+  grid-row: 1 / span 4;
+
   overflow: auto;
 }
 

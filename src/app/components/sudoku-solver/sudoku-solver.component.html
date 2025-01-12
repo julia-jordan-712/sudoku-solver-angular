@@ -25,11 +25,18 @@
   </app-section>
   <app-sudoku-puzzle-solver-switch></app-sudoku-puzzle-solver-switch>
   <app-section>
+    <h2>{{ "SOLVER.ACTIONS.TITLE" | translate }}</h2>
     <app-sudoku-solver-actions></app-sudoku-solver-actions>
   </app-section>
   <app-section class="status">
     <app-sudoku-solver-status></app-sudoku-solver-status>
     <app-sudoku-solver-branches></app-sudoku-solver-branches>
     <app-sudoku-solver-steps></app-sudoku-solver-steps>
+  </app-section>
+  <app-section>
+    <app-hint-list
+      [title]="'HINTS.TITLE' | translate"
+      [hints]="hints"
+    ></app-hint-list>
   </app-section>
 }

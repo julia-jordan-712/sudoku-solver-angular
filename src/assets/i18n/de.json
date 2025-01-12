@@ -59,7 +59,8 @@
       "PAUSE": "Lösen des Sudokus pausieren",
       "START": "Lösen des Sudokus starten",
       "NEXT": "Nächsten Schritt lösen",
-      "RESTART": "Sudoku erneut lösen"
+      "RESTART": "Sudoku erneut lösen",
+      "TITLE": "Steuerung"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -132,6 +133,9 @@
     "USE_KEYBOARD": "Sie können Werte eingeben, indem Sie auf eine Zelle klicken und auf der Tastatur etwas eingeben.",
     "ENTER_VALUES": "Geben Sie die bekannten Werte des Sudokus ein.",
     "SET_SIZE": "Wählen Sie die Größe des Sudokus aus, das Sie lösen möchten.",
-    "CONTINUE_TO_SOLVER": "Drücken Sie die Schaltfläche „{{buttonName}}“, wenn Sie fertig sind."
+    "CONTINUE_TO_SOLVER": "Drücken Sie die Schaltfläche „{{buttonName}}“, wenn Sie fertig sind.",
+    "CHANGE_PUZZLE": "Drücken Sie die Schaltfläche „{{buttonName}}“, um zurückzugehen und Ihre Eingabe zu ändern.",
+    "ACTION_BUTTONS": "Verwenden Sie die Schaltflächen im Abschnitt „{{name}}“, um den Solver zu steuern (Start, Pause usw.).",
+    "SEE_CHANGES": "Die Änderungen gegenüber dem letzten Schritt werden sichtbar, wenn Sie mit der Maus über die hervorgehobenen Zellen fahren."
   }
 }
