@@ -23,6 +23,9 @@ export class DropdownComponent<T> implements OnChanges {
   @Input()
   label: Nullable<string>;
 
+  @Input()
+  tooltip: Nullable<string>;
+
   @Input({ required: true })
   value: Nullable<SingleSelectionInputOption<T>>;
 

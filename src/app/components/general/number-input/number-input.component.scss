@@ -1,17 +1,12 @@
 @use "_constants" as *;
 
-:host {
-  display: flex;
-  align-items: center;
-  gap: 0.25em;
-}
-
 input {
   border: none;
   outline: none;
   border-bottom: 2px solid $primary-color;
   min-width: 3em;
   text-align: right;
+  flex-grow: 1;
 
   &::before,
   &::after {
