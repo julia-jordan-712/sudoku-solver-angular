@@ -32,9 +32,6 @@ export class SudokuGridComponent {
   @Input()
   readonly: Nullable<boolean>;
 
-  @Input()
-  showVerification = true;
-
   @Output()
   valueChange: EventEmitter<SudokuGrid> = new EventEmitter();
 

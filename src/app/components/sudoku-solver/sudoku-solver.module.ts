@@ -9,6 +9,7 @@ import { SudokuSolverBranchesModule } from "@app/components/sudoku-solver-branch
 import { SudokuSolverStatusModule } from "@app/components/sudoku-solver-status/sudoku-solver-status.module";
 import { SudokuSolverStepsModule } from "@app/components/sudoku-solver-steps/sudoku-solver-steps.module";
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
+import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
@@ -23,6 +24,7 @@ import { TranslateModule } from "@ngx-translate/core";
     SudokuSolverBranchesModule,
     SudokuSolverStatusModule,
     SudokuSolverStepsModule,
+    SudokuVerificationModule,
     TranslateModule,
   ],
   exports: [SudokuSolverComponent],

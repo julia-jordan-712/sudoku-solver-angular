@@ -16,6 +16,21 @@
   gap: 1em;
 }
 
+.grids-with-verification {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  overflow: hidden;
+
+  .grids {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    overflow: auto;
+    height: 100%;
+  }
+}
+
 .status {
   display: grid;
   grid-template-columns: max-content auto;

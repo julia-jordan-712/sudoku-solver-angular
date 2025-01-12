@@ -13,3 +13,15 @@ app-section {
 .sudoku-grid {
   grid-row: 1 / span 2;
 }
+
+.grid-with-verification {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  overflow: hidden;
+
+  app-sudoku-grid {
+    overflow: auto;
+    height: 100%;
+  }
+}

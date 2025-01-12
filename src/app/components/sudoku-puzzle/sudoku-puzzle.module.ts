@@ -8,6 +8,7 @@ import { SelectionListModule } from "@app/components/general/selection-list/sele
 import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
 import { SudokuPuzzleSolverSwitchModule } from "@app/components/sudoku-puzzle-solver-switch/sudoku-puzzle-solver-switch.module";
 import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzzle.component";
+import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
@@ -21,6 +22,7 @@ import { TranslateModule } from "@ngx-translate/core";
     SelectionListModule,
     SudokuGridModule,
     SudokuPuzzleSolverSwitchModule,
+    SudokuVerificationModule,
     TranslateModule,
   ],
   exports: [SudokuPuzzleComponent],
