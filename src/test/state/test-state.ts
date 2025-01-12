@@ -2,7 +2,6 @@ import {
   DevelopmentState,
   DevelopmentStateKey,
 } from "@app/components/development/state/development.state";
-import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import {
   SudokuDropdownSelectionItem,
   SudokuPuzzleState,
@@ -17,6 +16,7 @@ import { AppState } from "@app/state/app-state";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { SudokuPuzzleSelectionTestData } from "@test/puzzles/sudoku-puzzle-selection-test-data";
 
 export class TestState {
   public static createEmptyAppState(): AppState {
