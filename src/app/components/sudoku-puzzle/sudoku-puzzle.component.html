@@ -1,23 +1,15 @@
 @if (show$ | async) {
   <app-section class="sudoku-grid">
-    @if (grid$ | async; as grid) {
-      <div class="grid-with-verification">
-        <app-sudoku-grid
-          class="grid"
-          [grid]="grid"
-          (valueChange)="onCellChange($event)"
-          (valueSubmit)="onCellSubmit($event)"
-        >
-        </app-sudoku-grid>
-        <app-sudoku-verification
-          [verification]="grid.data.verificationResult"
-        ></app-sudoku-verification>
+    <app-sudoku-grid
+      [grid]="grid$ | async"
+      (valueChange)="onCellChange($event)"
+      (valueSubmit)="onCellSubmit($event)"
+    >
+    </app-sudoku-grid>
+    @if (((grid$ | async)?.rows?.length ?? 0) > 0) {
+      <div>
+        {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
       </div>
-      @if ((grid?.rows?.length ?? 0) > 0) {
-        <div>
-          {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
-        </div>
-      }
     }
   </app-section>
   <app-sudoku-puzzle-solver-switch></app-sudoku-puzzle-solver-switch>
