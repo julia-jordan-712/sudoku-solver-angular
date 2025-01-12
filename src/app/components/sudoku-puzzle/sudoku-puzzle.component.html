@@ -17,13 +17,9 @@
   </app-section>
   <app-sudoku-puzzle-solver-switch></app-sudoku-puzzle-solver-switch>
   <app-section>
-    <app-selection-list
-      data-cy="sudoku-size-selection"
-      id="sizeInput"
-      [label]="'SETTINGS.SIZE' | translate"
-      [value]="size$ | async"
-      [values]="selectionSizes"
-      (valueChange)="setSize($event)"
-    ></app-selection-list>
+    <app-sudoku-size-selection
+      [selected]="size$ | async"
+      (sizeChange)="setSize($event)"
+    ></app-sudoku-size-selection>
   </app-section>
 }

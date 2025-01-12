@@ -1,13 +1,12 @@
 import { Component, inject } from "@angular/core";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
-import { Nullable } from "@app/types/nullable";
-import { SingleSelectionInputOption } from "@app/types/single-selection-input-option";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
+import { SudokuSize } from "@app/types/sudoku-size";
 import { isDefined } from "@app/util/is-defined";
 import { Store } from "@ngrx/store";
-import { Observable, filter, map } from "rxjs";
+import { Observable, filter } from "rxjs";
 
 @Component({
   selector: "app-sudoku-puzzle",
@@ -20,24 +19,12 @@ export class SudokuPuzzleComponent {
   protected show$: Observable<boolean> = this.store.select(
     SudokuPuzzleSelectors.selectIsShown,
   );
-  protected size$: Observable<Nullable<SudokuSizeSelectionItem>> = this.store
-    .select(SudokuPuzzleSelectors.selectHeight)
-    .pipe(map((size: number) => this.toSizeSelectionItem(size)));
+  protected size$: Observable<SudokuSize> = this.store.select(
+    SudokuPuzzleSelectors.selectSize,
+  );
   protected grid$: Observable<SudokuGridViewModel> = this.store
     .select(SudokuPuzzleSelectors.selectViewModel)
     .pipe(filter(isDefined));
-
-  protected selectionSizes: SudokuSizeSelectionItem[] = [4, 9, 16, 25].map(
-    (size: number) => this.toSizeSelectionItem(size),
-  );
-
-  private toSizeSelectionItem(size: number): SudokuSizeSelectionItem {
-    return {
-      id: size.toString(),
-      data: size,
-      name: `${size}\u2009\u00d7\u2009${size}`,
-    };
-  }
 
   protected onCellChange(grid: SudokuGrid): void {
     this.store.dispatch(SudokuPuzzleActions.setSudoku({ sudoku: grid }));
@@ -47,14 +34,7 @@ export class SudokuPuzzleComponent {
     this.store.dispatch(SudokuPuzzleActions.setSudoku({ sudoku: grid }));
   }
 
-  protected setSize(size: SudokuSizeSelectionItem): void {
-    const newSize = size.data;
-    if (newSize != undefined) {
-      this.store.dispatch(
-        SudokuPuzzleActions.userChangeSize({ height: newSize, width: newSize }),
-      );
-    }
+  protected setSize(size: SudokuSize): void {
+    this.store.dispatch(SudokuPuzzleActions.userChangeSize(size));
   }
 }
-
-type SudokuSizeSelectionItem = SingleSelectionInputOption<number>;
