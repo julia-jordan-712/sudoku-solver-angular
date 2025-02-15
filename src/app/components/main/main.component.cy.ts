@@ -2,7 +2,7 @@ import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
-import { CyButton } from "@cypress/selectors/cy-button";
+import { CyButtonWithIcon } from "@cypress/selectors/cy-button-with-icon";
 import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
@@ -87,8 +87,12 @@ describe(MainComponent.name, () => {
   });
 
   it("should show usage hints after clicking on 'help' button and be able to close them", () => {
-    const helpButton = new CyButton({ dataCy: "show-help" });
+    const helpButton = new CyButtonWithIcon({
+      dataCy: "show-help",
+      icon: "question",
+    });
     helpButton.get().should("be.visible");
+    helpButton.icon.get().should("be.visible");
 
     // initially: usage hints are not visible
     puzzleInput.hintList.hints.get().should("not.exist");
