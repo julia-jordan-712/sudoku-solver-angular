@@ -15,12 +15,12 @@ import { MockStore, provideMockStore } from "@ngrx/store/testing";
 import { IconTestComponent } from "@test/components/icon-test.component";
 import { TestState } from "@test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { DevelopmentComponent } from "./development.component";
-import { DevelopmentSelectors } from "./state/development.selectors";
-import { TestSudokusComponent } from "./test-sudokus/test-sudokus.component";
+import { DevelopmentSelectors } from "../state/development.selectors";
+import { TestSudokusComponent } from "../test-sudokus/test-sudokus.component";
+import { DevelopmentFunctionsComponent } from "./development-functions.component";
 
-describe(DevelopmentComponent.name, () => {
-  let fixture: ComponentFixture<DevelopmentComponent>;
+describe(DevelopmentFunctionsComponent.name, () => {
+  let fixture: ComponentFixture<DevelopmentFunctionsComponent>;
   let clipboardService: ClipboardService;
   let store: MockStore<AppState>;
 
@@ -28,7 +28,7 @@ describe(DevelopmentComponent.name, () => {
     await TestBed.configureTestingModule({
       declarations: [
         RestartComponent,
-        DevelopmentComponent,
+        DevelopmentFunctionsComponent,
         IconTestComponent,
         TestSudokusComponent,
       ],
@@ -59,7 +59,7 @@ describe(DevelopmentComponent.name, () => {
       isDevelopment,
     );
 
-    fixture = TestBed.createComponent(DevelopmentComponent);
+    fixture = TestBed.createComponent(DevelopmentFunctionsComponent);
     fixture.detectChanges();
   }
 

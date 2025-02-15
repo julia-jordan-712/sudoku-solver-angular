@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { DevelopmentActions } from "@app/components/development/state/development.actions";
-import { DevelopmentState } from "@app/components/development/state/development.state";
+import { DevelopmentActions } from "./development.actions";
+import { DevelopmentState } from "./development.state";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { AppActions } from "@app/state/app-state";
 import { ActionReducer, createReducer, on } from "@ngrx/store";
 import { SudokuPuzzleSelectionTestData } from "@test/puzzles/sudoku-puzzle-selection-test-data";
-import { environment } from "src/environments/environment";
+import { environment } from "../../../../environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class DevelopmentReducer {

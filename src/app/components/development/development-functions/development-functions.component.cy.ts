@@ -1,5 +1,4 @@
 import { appStoreImports } from "@app/app.module";
-import { DevelopmentComponent } from "./development.component";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { ClipboardService } from "@app/core/clipboard/clipboard.service";
@@ -13,8 +12,9 @@ import { ClipboardServiceMock } from "@test/clipboard/clipboard-service.mock";
 import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { DevelopmentFunctionsComponent } from "./development-functions.component";
 
-describe(DevelopmentComponent.name, () => {
+describe(DevelopmentFunctionsComponent.name, () => {
   const devFunctions: CyDevFunctions = new CyDevFunctions();
   const puzzleInput: CyPuzzleInput = new CyPuzzleInput();
   const stateSwitch: CyStateSwitch = new CyStateSwitch();
