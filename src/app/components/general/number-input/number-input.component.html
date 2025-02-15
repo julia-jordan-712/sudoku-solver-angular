@@ -1,11 +1,9 @@
-<label for="inputField">{{ label }}:</label>
-@if (tooltip) {
-  <app-icon icon="info" [title]="tooltip"></app-icon>
-}
-<input
-  type="number"
-  #inputField
-  [ngModel]="_value"
-  (ngModelChange)="onChange($event)"
-  [style.width]="inputWidth ?? ''"
-/>
+<app-label-input [label]="label" [info]="tooltip">
+  <input
+    type="number"
+    #inputField
+    [ngModel]="_value"
+    (ngModelChange)="onChange($event)"
+    [style.width]="inputWidth ?? ''"
+  />
+</app-label-input>

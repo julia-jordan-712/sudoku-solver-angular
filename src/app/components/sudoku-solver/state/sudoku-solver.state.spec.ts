@@ -8,13 +8,10 @@ import {
 import { appStoreImports } from "@app/app.module";
 import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
-import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
-import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SudokuSolverService } from "@app/core/solver/sudoku-solver.service";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
-import { EffectsModule } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { PuzzleAdvanced } from "@test/puzzles/puzzle-advanced";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
@@ -27,11 +24,7 @@ describe("SudokuSolverState", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ...appStoreImports,
-        EffectsModule.forFeature([SudokuPuzzleEffects]),
-        EffectsModule.forFeature([SudokuSolverEffects]),
-      ],
+      imports: appStoreImports,
       providers: [...SOLVER_TEST_PROVIDERS],
     });
 

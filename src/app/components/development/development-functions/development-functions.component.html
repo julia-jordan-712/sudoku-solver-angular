@@ -2,12 +2,7 @@
   <app-section>
     <div class="title">
       <h2>{{ "DEVELOPMENT.TITLE" | translate }}</h2>
-      <app-icon
-        class="close"
-        icon="close"
-        type="mat"
-        (click)="hideDevFunctions()"
-      ></app-icon>
+      <app-close-button (click)="hideDevFunctions()"></app-close-button>
     </div>
     <app-sudoku-copy></app-sudoku-copy>
     <app-sudoku-paste></app-sudoku-paste>

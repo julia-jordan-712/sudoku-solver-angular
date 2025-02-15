@@ -1,0 +1,19 @@
+@use "_constants" as *;
+
+:host {
+  display: flex;
+  align-items: center;
+  height: 1em;
+  width: 1em;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}
+
+app-icon {
+  color: $primary-color;
+  cursor: pointer;
+  font-size: 12px;
+  margin: auto;
+}

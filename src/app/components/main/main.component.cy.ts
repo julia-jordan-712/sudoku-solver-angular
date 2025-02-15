@@ -2,6 +2,7 @@ import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { CyButtonWithIcon } from "@cypress/selectors/cy-button-with-icon";
 import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
@@ -32,10 +33,11 @@ describe(MainComponent.name, () => {
   it("should have all components", () => {
     stateSwitch.buttonReopen.get().should("not.exist");
     stateSwitch.buttonConfirm.get().should("be.visible");
+    devFunctions.open.get().click();
     devFunctions.dropdown.get().should("be.visible");
     puzzleInput.sizeSelector.get().should("be.visible");
     puzzleInput.sudoku.get().should("be.visible");
-    puzzleInput.sudoku.verification.valid.get().should("be.visible");
+    puzzleInput.sudoku.verification.shouldBeValid();
     stateSwitch.buttonConfirm.get().click();
 
     solverSettings.delay.input.get().should("be.visible");
@@ -57,6 +59,7 @@ describe(MainComponent.name, () => {
 
   it("should re-initialize puzzle input with the previous state after confirm, solve and change-settings again", () => {
     // pre-assert puzzle input
+    devFunctions.open.get().click();
     devFunctions.dropdown.dropdown.select("9x9 | Simple | Puzzle 3");
     devFunctions.dropdown
       .get()
@@ -83,5 +86,31 @@ describe(MainComponent.name, () => {
     puzzleInput.sizeSelector.text("9").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
     puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
+  });
+
+  it("should show usage hints after clicking on 'help' button and be able to close them", () => {
+    const helpButton = new CyButtonWithIcon({
+      dataCy: "show-help",
+      icon: "question",
+    });
+    helpButton.get().should("be.visible");
+    helpButton.icon.get().should("be.visible");
+
+    // initially: usage hints are not visible
+    puzzleInput.hintList.hints.get().should("not.exist");
+    stateSwitch.buttonConfirm.get().click();
+    solver.hintList.hints.get().should("not.exist");
+
+    // click on "help" button
+    helpButton.get().click();
+    solver.hintList.hints.get().should("be.visible");
+    stateSwitch.buttonReopen.get().click();
+    puzzleInput.hintList.hints.get().should("be.visible");
+
+    // close usage hints
+    puzzleInput.hintList.closeButton.get().click();
+    puzzleInput.hintList.hints.get().should("not.exist");
+    stateSwitch.buttonConfirm.get().click();
+    solver.hintList.hints.get().should("not.exist");
   });
 });

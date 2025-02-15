@@ -1,5 +1,1 @@
-@if (type === "svg") {
-  <app-svg-icon class="icon" [icon]="icon"></app-svg-icon>
-} @else {
-  <mat-icon class="icon">{{ icon }}</mat-icon>
-}
+<div class="icon" [style.mask-image]="url"></div>

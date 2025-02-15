@@ -1,42 +1,43 @@
 {
   "GENERAL": {
-    "TITLE": "Sudoku lösen"
+    "TITLE": "Sudoku lösen",
+    "HEIGHT": "Höhe",
+    "SIZE": "Größe",
+    "WIDTH": "Breite",
+    "HELP": "Hilfe"
   },
   "SETTINGS": {
     "CHANGE": "Rätsel ändern",
-    "DONE": "Fertig",
-    "HEIGHT": "Höhe",
-    "WIDTH": "Breite",
-    "SIZE": "Größe",
-    "HINTS": {
-      "ENTER_VALUES": "Werte können eingegeben werden, indem man auf eine Zelle klickt und sie auf der Tastatur eingibt."
-    }
+    "DONE": "weiter zum Lösen"
   },
   "PUZZLE": {
-    "4x4": {
-      "EMPTY": "4x4 | Leer",
-      "COMPLETE": "4x4 | Gelöst"
+    "TEST_DATA": {
+      "4x4": {
+        "EMPTY": "4x4 | Leer",
+        "COMPLETE": "4x4 | Gelöst"
+      },
+      "ADVANCED": {
+        "PUZZLE": "9x9 | Fortgeschritten | Rätsel {{number}}",
+        "SOLVED": "9x9 | Fortgeschritten | Rätsel {{number}} - gelöst"
+      },
+      "EXTREME": {
+        "PUZZLE": "9x9 | Extrem | Rätsel {{number}}",
+        "SOLVED": "9x9 | Extrem | Rätsel {{number}} - gelöst"
+      },
+      "HARD": {
+        "PUZZLE": "9x9 | Schwer | Rätsel {{number}}",
+        "SOLVED": "9x9 | Schwer | Rätsel {{number}} - gelöst"
+      },
+      "MEDIUM": {
+        "PUZZLE": "9x9 | Mittel | Rätsel {{number}}",
+        "SOLVED": "9x9 | Mittel | Rätsel {{number}} - gelöst"
+      },
+      "SIMPLE": {
+        "PUZZLE": "9x9 | Einfach | Rätsel {{number}}",
+        "SOLVED": "9x9 | Einfach | Rätsel {{number}} - gelöst"
+      }
     },
-    "ADVANCED": {
-      "PUZZLE": "9x9 | Fortgeschritten | Rätsel {{number}}",
-      "SOLVED": "9x9 | Fortgeschritten | Rätsel {{number}} - gelöst"
-    },
-    "EXTREME": {
-      "PUZZLE": "9x9 | Extrem | Rätsel {{number}}",
-      "SOLVED": "9x9 | Extrem | Rätsel {{number}} - gelöst"
-    },
-    "HARD": {
-      "PUZZLE": "9x9 | Schwer | Rätsel {{number}}",
-      "SOLVED": "9x9 | Schwer | Rätsel {{number}} - gelöst"
-    },
-    "MEDIUM": {
-      "PUZZLE": "9x9 | Mittel | Rätsel {{number}}",
-      "SOLVED": "9x9 | Mittel | Rätsel {{number}} - gelöst"
-    },
-    "SIMPLE": {
-      "PUZZLE": "9x9 | Einfach | Rätsel {{number}}",
-      "SOLVED": "9x9 | Einfach | Rätsel {{number}} - gelöst"
-    }
+    "TITLE": "Sudoku-Eingabe"
   },
   "VERIFY": {
     "ERROR": {
@@ -59,7 +60,8 @@
       "PAUSE": "Lösen des Sudokus pausieren",
       "START": "Lösen des Sudokus starten",
       "NEXT": "Nächsten Schritt lösen",
-      "RESTART": "Sudoku erneut lösen"
+      "RESTART": "Sudoku erneut lösen",
+      "TITLE": "Steuerung"
     },
     "STATUS": {
       "TITLE": "Status",
@@ -117,7 +119,7 @@
       "TITLE": "Aktuelle Lösung"
     },
     "ADDITIONAL": {
-      "TITLE": "Kopie des Zustands vor der Erstellung des neuen Zweigs"
+      "TITLE": "Zustand vor der Erstellung des neuen Zweigs"
     }
   },
   "DEVELOPMENT": {
@@ -126,5 +128,15 @@
     "PASTE_FROM_CLIPBOARD": "Sudoku aus der Zwischenablage einfügen",
     "TITLE": "Entwicklungsfunktionen",
     "EXISTING_SUDOKU": "Testdaten"
+  },
+  "HINTS": {
+    "TITLE": "Nutzungshinweise",
+    "USE_KEYBOARD": "Sie können Werte eingeben, indem Sie auf eine Zelle klicken und auf der Tastatur etwas eingeben.",
+    "ENTER_VALUES": "Geben Sie die bekannten Werte des Sudokus ein.",
+    "SET_SIZE": "Wählen Sie die Größe des Sudokus aus, das Sie lösen möchten.",
+    "CONTINUE_TO_SOLVER": "Drücken Sie die Schaltfläche „{{buttonName}}“, wenn Sie fertig sind.",
+    "CHANGE_PUZZLE": "Drücken Sie die Schaltfläche „{{buttonName}}“, um zurückzugehen und Ihre Eingabe zu ändern.",
+    "ACTION_BUTTONS": "Verwenden Sie die Schaltflächen im Abschnitt „{{name}}“, um den Solver zu steuern (Start, Pause usw.).",
+    "SEE_CHANGES": "Die Änderungen gegenüber dem letzten Schritt werden sichtbar, wenn Sie mit der Maus über die hervorgehobenen Zellen fahren."
   }
 }

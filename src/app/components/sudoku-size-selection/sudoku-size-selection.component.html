@@ -1,0 +1,9 @@
+<app-selection-list
+  data-cy="sudoku-size-selection"
+  id="sizeInput"
+  [label]="'GENERAL.SIZE' | translate"
+  [tooltip]="'HINTS.SET_SIZE' | translate"
+  [value]="selectedSize"
+  [values]="selectionSizes"
+  (valueChange)="setSize($event)"
+></app-selection-list>

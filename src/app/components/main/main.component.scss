@@ -12,6 +12,12 @@
   padding: 1em;
 }
 
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
 $content-height: calc(100vh - 32px - 4em);
 
 .content {
@@ -24,7 +30,7 @@ $content-height: calc(100vh - 32px - 4em);
     max-height: inherit;
   }
 
-  app-development {
+  app-development-functions {
     margin-left: 1em;
   }
 }

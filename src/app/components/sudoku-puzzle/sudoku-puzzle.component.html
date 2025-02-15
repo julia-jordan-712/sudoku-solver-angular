@@ -1,26 +1,26 @@
 @if (show$ | async) {
   <app-section class="sudoku-grid">
+    <h2 class="header-with-hint">
+      {{ "PUZZLE.TITLE" | translate }}
+      <app-icon
+        icon="info"
+        [title]="'HINTS.USE_KEYBOARD' | translate"
+      ></app-icon>
+    </h2>
     <app-sudoku-grid
+      class="grid"
       [grid]="grid$ | async"
       (valueChange)="onCellChange($event)"
       (valueSubmit)="onCellSubmit($event)"
     >
     </app-sudoku-grid>
-    @if (((grid$ | async)?.rows?.length ?? 0) > 0) {
-      <div>
-        {{ "SETTINGS.HINTS.ENTER_VALUES" | translate }}
-      </div>
-    }
   </app-section>
   <app-sudoku-puzzle-solver-switch></app-sudoku-puzzle-solver-switch>
   <app-section>
-    <app-selection-list
-      data-cy="sudoku-size-selection"
-      id="sizeInput"
-      [label]="'SETTINGS.SIZE' | translate"
-      [value]="size$ | async"
-      [values]="selectionSizes"
-      (valueChange)="setSize($event)"
-    ></app-selection-list>
+    <app-sudoku-size-selection
+      [selected]="size$ | async"
+      (sizeChange)="setSize($event)"
+    ></app-sudoku-size-selection>
   </app-section>
+  <app-hint-list [hints]="hints"></app-hint-list>
 }

@@ -2,7 +2,6 @@ import {
   DevelopmentState,
   DevelopmentStateKey,
 } from "@app/components/development/state/development.state";
-import { SudokuPuzzleSelectionTestData } from "@app/components/sudoku-puzzle/state/sudoku-puzzle-selection-test-data";
 import {
   SudokuDropdownSelectionItem,
   SudokuPuzzleState,
@@ -14,9 +13,11 @@ import {
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { AppState } from "@app/state/app-state";
+import { ViewState, ViewStateKey } from "@app/state/view-state/view.state";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
+import { SudokuPuzzleSelectionTestData } from "@test/puzzles/sudoku-puzzle-selection-test-data";
 
 export class TestState {
   public static createEmptyAppState(): AppState {
@@ -24,6 +25,7 @@ export class TestState {
       [DevelopmentStateKey]: this.createDevelopmentState(),
       [SudokuPuzzleStateKey]: this.createEmptySudokuPuzzleState(),
       [SudokuSolverStateKey]: this.createEmptySudokuSolverState(),
+      [ViewStateKey]: this.createViewState(),
     };
   }
 
@@ -38,17 +40,24 @@ export class TestState {
         currentGrid,
         previousGrid,
       ),
+      [ViewStateKey]: this.createViewState(),
     };
   }
 
   private static createDevelopmentState(): DevelopmentState {
     const selectionOptions = TestState.createTestSudokuDropdownSelectionItems();
     return {
-      isDev: true,
+      show: true,
       testSudokus: {
         options: selectionOptions.options,
         selectedId: selectionOptions.selectedId,
       },
+    };
+  }
+
+  private static createViewState(): ViewState {
+    return {
+      showHelp: false,
     };
   }
 

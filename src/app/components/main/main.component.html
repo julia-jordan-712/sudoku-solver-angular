@@ -1,6 +1,10 @@
 <div class="header">
   <h1>{{ "GENERAL.TITLE" | translate }}</h1>
-  <app-language-selection></app-language-selection>
+  <div class="right">
+    <app-development-open></app-development-open>
+    <app-help></app-help>
+    <app-language-selection></app-language-selection>
+  </div>
 </div>
 <div class="content">
   @if (showPuzzle$ | async) {
@@ -8,5 +12,5 @@
   } @else {
     <app-sudoku-solver></app-sudoku-solver>
   }
-  <app-development></app-development>
+  <app-development-functions></app-development-functions>
 </div>

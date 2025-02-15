@@ -1,3 +1,4 @@
+import { CyHintList } from "@cypress/selectors/cy-hint-list";
 import { CySudoku } from "@cypress/selectors/cy-sudoku";
 import { CySelectable } from "@cypress/types/cy-selectable";
 import { CySolverActions } from "@cypress/views/cy-solver-actions";
@@ -13,6 +14,7 @@ export class CySolver extends CySelectable {
     { tag: "app-sudoku-solver-branches" },
     this.elementSelector,
   );
+  public readonly hintList: CyHintList = new CyHintList(this.elementSelector);
   public readonly status: CySolverStatus = new CySolverStatus(
     {},
     this.elementSelector,

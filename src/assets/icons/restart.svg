@@ -1,0 +1,8 @@
+<svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <mask id="cut-out">
+    <rect x="0" y="0" width="16" height="16" fill="white" />
+    <rect x="0" y="0" width="8" height="6" />
+  </mask>
+  <circle cx="8" cy="9" r="5.5" mask="url(#cut-out)" fill="transparent" stroke-width="1" stroke="currentColor" />
+  <polygon points="8,1 8,6 4,3.5"/>
+</svg>
