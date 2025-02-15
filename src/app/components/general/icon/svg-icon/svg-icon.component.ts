@@ -1,36 +1,26 @@
-import { HttpClient } from "@angular/common/http";
-import { Component, inject, Input, OnDestroy } from "@angular/core";
-import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { isDefined } from "@app/util/is-defined";
-import { BehaviorSubject, filter, map, Observable, switchMap } from "rxjs";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 
 @Component({
   selector: "app-svg-icon",
   templateUrl: "./svg-icon.component.html",
   styleUrl: "./svg-icon.component.scss",
 })
-export class SvgIconComponent implements OnDestroy {
-  private httpClient: HttpClient = inject(HttpClient);
-  private sanitizer: DomSanitizer = inject(DomSanitizer);
-
-  private icon$: BehaviorSubject<string | undefined> = new BehaviorSubject<
-    string | undefined
-  >(undefined);
-  svg$: Observable<SafeHtml> = this.icon$.pipe(
-    filter(isDefined),
-    switchMap((icon) =>
-      this.httpClient
-        .get(`assets/icons/${icon}.svg`, { responseType: "text" })
-        .pipe(map((svg) => this.sanitizer.bypassSecurityTrustHtml(svg))),
-    ),
-  );
+export class SvgIconComponent implements OnChanges {
+  private emptyIcon = "empty";
+  protected url: string = this.toUrl(this.emptyIcon);
 
   @Input({ required: true })
-  set icon(icon: string) {
-    this.icon$.next(icon);
+  icon: string;
+
+  ngOnChanges(_changes: SimpleChanges): void {
+    if (this.icon) {
+      this.url = this.toUrl(this.icon);
+    } else {
+      this.url = this.toUrl(this.emptyIcon);
+    }
   }
 
-  ngOnDestroy(): void {
-    this.icon$.complete();
+  private toUrl(icon: string): string {
+    return `url('assets/icons/${icon}.svg')`;
   }
 }
