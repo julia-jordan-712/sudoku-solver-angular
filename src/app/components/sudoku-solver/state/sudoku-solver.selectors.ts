@@ -110,6 +110,11 @@ const selectCanPause = createSelector(
   (status: SolverExecution) => status === "RUNNING",
 );
 
+const selectIsPaused = createSelector(
+  selectExecutionStatus,
+  (status: SolverExecution) => status === "PAUSED",
+);
+
 const selectHighlightNumber = createSelector(
   selectSettings,
   (settings: SudokuSolverStateSettings) => settings.highlightNumber,
@@ -211,6 +216,7 @@ export const SudokuSolverSelectors = {
   selectCanPause,
   selectCanRestart,
   selectCanStart,
+  selectIsPaused,
   selectExecutedSteps,
   selectExecutionStatus,
   selectHighlightNumber,
