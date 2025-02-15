@@ -1,3 +1,5 @@
+@use "constants" as *;
+
 :host {
   display: grid;
   grid-template-columns: auto minmax(min-content, 1fr);
@@ -13,4 +15,14 @@ app-section {
 
 .sudoku-grid {
   grid-row: 1 / span 3;
+}
+
+.header-with-hint {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+
+  app-icon {
+    color: $label-color;
+  }
 }

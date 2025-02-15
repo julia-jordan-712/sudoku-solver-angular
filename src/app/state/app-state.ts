@@ -14,6 +14,8 @@ import {
   SudokuSolverState,
   SudokuSolverStateKey,
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
+import { ViewReducer } from "@app/state/view-state/view.reducer";
+import { ViewState, ViewStateKey } from "@app/state/view-state/view.state";
 import {
   Action,
   ActionReducerMap,
@@ -36,6 +38,7 @@ export interface AppState {
   [DevelopmentStateKey]: DevelopmentState;
   [SudokuPuzzleStateKey]: SudokuPuzzleState;
   [SudokuSolverStateKey]: SudokuSolverState;
+  [ViewStateKey]: ViewState;
 }
 
 export const reducer: InjectionToken<
@@ -45,6 +48,7 @@ export const reducer: InjectionToken<
     [DevelopmentStateKey]: inject(DevelopmentReducer).getReducer(),
     [SudokuPuzzleStateKey]: inject(SudokuPuzzleReducer).getReducer(),
     [SudokuSolverStateKey]: inject(SudokuSolverReducer).getReducer(),
+    [ViewStateKey]: inject(ViewReducer).getReducer(),
   }),
 });
 

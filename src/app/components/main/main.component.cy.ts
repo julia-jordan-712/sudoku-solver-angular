@@ -2,6 +2,7 @@ import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { CyButton } from "@cypress/selectors/cy-button";
 import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
@@ -83,5 +84,27 @@ describe(MainComponent.name, () => {
     puzzleInput.sizeSelector.text("9").expect("selected");
     puzzleInput.sudoku.verification.shouldBeValid();
     puzzleInput.sudoku.shouldEqual(PuzzleSimple.PUZZLE_3.puzzle);
+  });
+
+  it("should show usage hints after clicking on 'help' button and be able to close them", () => {
+    const helpButton = new CyButton({ dataCy: "show-help" });
+    helpButton.get().should("be.visible");
+
+    // initially: usage hints are not visible
+    puzzleInput.hintList.hints.get().should("not.exist");
+    stateSwitch.buttonConfirm.get().click();
+    solver.hintList.hints.get().should("not.exist");
+
+    // click on "help" button
+    helpButton.get().click();
+    solver.hintList.hints.get().should("be.visible");
+    stateSwitch.buttonReopen.get().click();
+    puzzleInput.hintList.hints.get().should("be.visible");
+
+    // close usage hints
+    puzzleInput.hintList.closeButton.get().click();
+    puzzleInput.hintList.hints.get().should("not.exist");
+    stateSwitch.buttonConfirm.get().click();
+    solver.hintList.hints.get().should("not.exist");
   });
 });

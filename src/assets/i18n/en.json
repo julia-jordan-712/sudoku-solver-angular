@@ -3,7 +3,8 @@
     "TITLE": "Sudoku solver",
     "HEIGHT": "Height",
     "SIZE": "Size",
-    "WIDTH": "Width"
+    "WIDTH": "Width",
+    "HELP": "Help"
   },
   "SETTINGS": {
     "CHANGE": "change puzzle",

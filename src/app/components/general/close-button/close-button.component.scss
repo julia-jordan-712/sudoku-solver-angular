@@ -1,0 +1,11 @@
+@use "_constants" as *;
+
+app-icon {
+  color: $primary-color;
+  cursor: pointer;
+  padding: 0.25em;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}

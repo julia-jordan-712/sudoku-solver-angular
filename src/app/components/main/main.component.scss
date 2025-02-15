@@ -12,6 +12,11 @@
   padding: 1em;
 }
 
+.right {
+  display: flex;
+  gap: 1em;
+}
+
 $content-height: calc(100vh - 32px - 4em);
 
 .content {

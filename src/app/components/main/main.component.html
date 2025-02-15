@@ -1,6 +1,9 @@
 <div class="header">
   <h1>{{ "GENERAL.TITLE" | translate }}</h1>
-  <app-language-selection></app-language-selection>
+  <div class="right">
+    <app-help></app-help>
+    <app-language-selection></app-language-selection>
+  </div>
 </div>
 <div class="content">
   @if (showPuzzle$ | async) {

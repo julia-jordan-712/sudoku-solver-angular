@@ -3,7 +3,8 @@
     "TITLE": "Sudoku lösen",
     "HEIGHT": "Höhe",
     "SIZE": "Größe",
-    "WIDTH": "Breite"
+    "WIDTH": "Breite",
+    "HELP": "Hilfe"
   },
   "SETTINGS": {
     "CHANGE": "Rätsel ändern",

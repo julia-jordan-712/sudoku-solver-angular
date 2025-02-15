@@ -1,6 +1,7 @@
 import { provideHttpClient } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { CloseButtonModule } from "@app/components/general/close-button/close-button.module";
 import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
 import { SectionModule } from "@app/components/general/section/section.module";
 import { RestartComponent } from "@app/components/restart/restart.component";
@@ -32,6 +33,7 @@ describe(DevelopmentComponent.name, () => {
         TestSudokusComponent,
       ],
       imports: [
+        CloseButtonModule,
         DropdownModule,
         RestartModule,
         SectionModule,

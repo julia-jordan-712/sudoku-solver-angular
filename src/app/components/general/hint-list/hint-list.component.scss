@@ -2,6 +2,16 @@
   width: 100%;
 }
 
+app-section {
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
 @counter-style thumbs {
   system: cyclic;
   symbols: "\1F784";

@@ -1,12 +1,17 @@
-@if (title) {
-  <h2>{{ title }}</h2>
-}
-@if (hints.length > 0) {
-  <ul>
-    @for (hint of hints; track hint.id) {
-      <li>
-        {{ hint.hint | i18nKey }}
-      </li>
-    }
-  </ul>
+@if (show$ | async) {
+  @if (hints.length > 0) {
+    <app-section>
+      <div class="title">
+        <h2>{{ title ?? ("HINTS.TITLE" | i18nKey) }}</h2>
+        <app-close-button (click)="hide()"></app-close-button>
+      </div>
+      <ul>
+        @for (hint of hints; track hint.id) {
+          <li>
+            {{ hint.hint | i18nKey }}
+          </li>
+        }
+      </ul>
+    </app-section>
+  }
 }

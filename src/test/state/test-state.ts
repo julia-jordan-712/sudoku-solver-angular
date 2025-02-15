@@ -13,6 +13,7 @@ import {
 } from "@app/components/sudoku-solver/state/sudoku-solver.state";
 import { SolverBranch } from "@app/core/solver/types/solver-branch";
 import { AppState } from "@app/state/app-state";
+import { ViewState, ViewStateKey } from "@app/state/view-state/view.state";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
@@ -24,6 +25,7 @@ export class TestState {
       [DevelopmentStateKey]: this.createDevelopmentState(),
       [SudokuPuzzleStateKey]: this.createEmptySudokuPuzzleState(),
       [SudokuSolverStateKey]: this.createEmptySudokuSolverState(),
+      [ViewStateKey]: this.createViewState(),
     };
   }
 
@@ -38,6 +40,7 @@ export class TestState {
         currentGrid,
         previousGrid,
       ),
+      [ViewStateKey]: this.createViewState(),
     };
   }
 
@@ -49,6 +52,12 @@ export class TestState {
         options: selectionOptions.options,
         selectedId: selectionOptions.selectedId,
       },
+    };
+  }
+
+  private static createViewState(): ViewState {
+    return {
+      showHelp: false,
     };
   }
 
