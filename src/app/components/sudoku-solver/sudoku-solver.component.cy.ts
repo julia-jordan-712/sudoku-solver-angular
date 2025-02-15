@@ -61,7 +61,7 @@ describe(SudokuSolverComponent.name, () => {
 
   describe("solver action buttons", () => {
     it("should allow to start initially", () => {
-      setup({ grid: Puzzle4x4.EMPTY, delay: 200 });
+      setup({ grid: Puzzle4x4.EMPTY });
       underTest.status.get().should("contain.text", "Ready to start");
       underTest.actions.start.get().should("be.enabled");
       underTest.actions.pause.get().should("be.disabled");
@@ -70,7 +70,7 @@ describe(SudokuSolverComponent.name, () => {
     });
 
     it("should allow to pause but not to go to next step while running", () => {
-      setup({ grid: Puzzle4x4.EMPTY, delay: 200 });
+      setup({ grid: Puzzle4x4.EMPTY, delay: 1000 });
       underTest.clickStart();
 
       underTest.status.get().should("contain.text", "Calculating solution");
@@ -83,7 +83,7 @@ describe(SudokuSolverComponent.name, () => {
     });
 
     it("should allow to continue and to go to next step while paused", () => {
-      setup({ grid: Puzzle4x4.EMPTY, delay: 200 });
+      setup({ grid: Puzzle4x4.EMPTY, delay: 1000 });
       underTest.clickStart();
       underTest.clickPause();
 
@@ -95,7 +95,7 @@ describe(SudokuSolverComponent.name, () => {
     });
 
     it("should allow to continue and to go to next step after going to next step", () => {
-      setup({ grid: Puzzle4x4.EMPTY, delay: 200 });
+      setup({ grid: Puzzle4x4.EMPTY });
       underTest.clickNext();
 
       underTest.status.get().should("contain.text", "Paused");

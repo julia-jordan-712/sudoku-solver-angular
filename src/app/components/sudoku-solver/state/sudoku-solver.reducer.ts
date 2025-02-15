@@ -33,7 +33,7 @@ export class SudokuSolverReducer {
       puzzle: undefined,
       response: this.createInitialSolverResponse(),
       settings: {
-        delay: 0,
+        delay: 600,
         highlightNumber: null,
         maxSteps: 1_000,
         pauseAfterStep: null,
@@ -142,6 +142,27 @@ export class SudokuSolverReducer {
         (state): SudokuSolverState =>
           this.toNewExecutionInfo(state, {
             status: "PAUSED",
+          }),
+      ),
+      on(
+        SudokuSolverActions.speedFaster,
+        (state, action): SudokuSolverState =>
+          this.toNewSettings(state, {
+            delay: Math.max(state.settings.delay - Math.abs(action.ms), 0),
+          }),
+      ),
+      on(
+        SudokuSolverActions.speedNormal,
+        (state): SudokuSolverState =>
+          this.toNewSettings(state, {
+            delay: this.createInitialState().settings.delay,
+          }),
+      ),
+      on(
+        SudokuSolverActions.speedSlower,
+        (state, action): SudokuSolverState =>
+          this.toNewSettings(state, {
+            delay: state.settings.delay + Math.abs(action.ms),
           }),
       ),
       on(

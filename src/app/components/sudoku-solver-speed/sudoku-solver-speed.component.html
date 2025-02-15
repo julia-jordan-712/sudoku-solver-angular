@@ -1,0 +1,26 @@
+<button
+  id="slower"
+  class="icon"
+  [title]="'SOLVER.SPEED.SLOWER' | translate"
+  (click)="slower()"
+>
+  <app-icon icon="speed_slower"></app-icon>
+</button>
+<button
+  id="normal"
+  class="icon"
+  [disabled]="isNormalSpeed$ | async"
+  [title]="'SOLVER.SPEED.NORMAL' | translate"
+  (click)="normal()"
+>
+  <app-icon icon="speed_normal"></app-icon>
+</button>
+<button
+  id="faster"
+  class="icon"
+  [disabled]="(canGoFaster$ | async) === false"
+  [title]="'SOLVER.SPEED.FASTER' | translate"
+  (click)="faster()"
+>
+  <app-icon icon="speed_faster"></app-icon>
+</button>

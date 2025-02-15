@@ -112,6 +112,12 @@
     },
     "BRANCHES": {
       "REQUIRED": "Branches"
+    },
+    "SPEED": {
+      "TITLE": "Speed",
+      "SLOWER": "slower",
+      "NORMAL": "normal",
+      "FASTER": "faster"
     }
   },
   "BRANCH": {

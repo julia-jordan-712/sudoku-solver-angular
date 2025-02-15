@@ -1,6 +1,8 @@
+import { Component, inject, OnInit } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
+import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { CyButtonWithIcon } from "@cypress/selectors/cy-button-with-icon";
 import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
@@ -9,6 +11,7 @@ import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
 import { CySolver } from "@cypress/views/cy-solver";
 import { CySolverSettings } from "@cypress/views/cy-solver-settings";
 import { CyStateSwitch } from "@cypress/views/cy-state-switch";
+import { Store } from "@ngrx/store";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
 
 describe(MainComponent.name, () => {
@@ -20,7 +23,7 @@ describe(MainComponent.name, () => {
 
   beforeEach(() => {
     cy.mount(
-      MainComponent,
+      MainWrapperComponent,
       MainModule,
       {},
       {
@@ -114,3 +117,15 @@ describe(MainComponent.name, () => {
     solver.hintList.hints.get().should("not.exist");
   });
 });
+
+@Component({
+  selector: "app-test-wrapper",
+  template: `<app-main></app-main>`,
+})
+class MainWrapperComponent implements OnInit {
+  private store: Store = inject(Store);
+
+  ngOnInit(): void {
+    this.store.dispatch(SudokuSolverActions.setDelay({ delay: 0 }));
+  }
+}

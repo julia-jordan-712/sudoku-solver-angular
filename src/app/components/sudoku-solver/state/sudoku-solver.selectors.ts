@@ -133,6 +133,16 @@ const selectMaxSteps = createSelector(
   (settings: SudokuSolverStateSettings) => settings.maxSteps,
 );
 
+const selectSpeedIsNormal = createSelector(
+  selectDelay,
+  (delay: number) => delay === 800,
+);
+
+const selectSpeedCanIncrease = createSelector(
+  selectDelay,
+  (delay: number) => delay > 0,
+);
+
 const selectStepToBePausedAfter = createSelector(
   selectSettings,
   (settings: SudokuSolverStateSettings) => settings.pauseAfterStep,
@@ -226,6 +236,8 @@ export const SudokuSolverSelectors = {
   selectMaxSteps,
   selectResponse,
   selectStepToBePausedAfter,
+  selectSpeedIsNormal,
+  selectSpeedCanIncrease,
   selectTimeElapsedMilliseconds,
   selectTimeElapsedSeconds,
 };
