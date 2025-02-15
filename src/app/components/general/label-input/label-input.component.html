@@ -1,5 +1,9 @@
-<label>{{ label }}:</label>
-@if (info) {
-  <app-icon icon="info" [title]="info"></app-icon>
-}
-<ng-content></ng-content>
+<div class="label">
+  <label>{{ label }}</label>
+  @if (info) {
+    <app-icon icon="info" [title]="info"></app-icon>
+  }
+</div>
+<div class="content">
+  <ng-content></ng-content>
+</div>
