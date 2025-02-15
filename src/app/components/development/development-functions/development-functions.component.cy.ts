@@ -1,4 +1,5 @@
 import { appStoreImports } from "@app/app.module";
+import { DevelopmentFunctionsComponent } from "@app/components/development/development-functions/development-functions.component";
 import { MainComponent } from "@app/components/main/main.component";
 import { MainModule } from "@app/components/main/main.module";
 import { ClipboardService } from "@app/core/clipboard/clipboard.service";
@@ -12,7 +13,6 @@ import { ClipboardServiceMock } from "@test/clipboard/clipboard-service.mock";
 import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 import { Puzzle9x9 } from "@test/puzzles/puzzle-9x9";
 import { PuzzleSimple } from "@test/puzzles/puzzle-simple";
-import { DevelopmentFunctionsComponent } from "./development-functions.component";
 
 describe(DevelopmentFunctionsComponent.name, () => {
   const devFunctions: CyDevFunctions = new CyDevFunctions();
@@ -36,7 +36,42 @@ describe(DevelopmentFunctionsComponent.name, () => {
     );
   });
 
+  function openDevFunctions(): void {
+    devFunctions.open.get().click();
+  }
+
+  it("should show development function after clicking on button and be able to close them", () => {
+    // development functions are not visible
+    devFunctions.clearState.get().should("not.exist");
+    devFunctions.close.get().should("not.exist");
+    devFunctions.copySudoku.get().should("not.exist");
+    devFunctions.dropdown.get().should("not.exist");
+    devFunctions.pasteSudoku.get().should("not.exist");
+
+    // button to open development functions is visible
+    devFunctions.open.get().should("be.visible");
+    devFunctions.open.get().click();
+
+    // development functions are visible
+    devFunctions.clearState.get().should("be.visible");
+    devFunctions.close.get().should("be.visible");
+    devFunctions.copySudoku.get().should("be.visible");
+    devFunctions.dropdown.get().should("be.visible");
+    devFunctions.pasteSudoku.get().should("be.visible");
+
+    // close development functions
+    devFunctions.close.get().click();
+
+    devFunctions.clearState.get().should("not.exist");
+    devFunctions.close.get().should("not.exist");
+    devFunctions.copySudoku.get().should("not.exist");
+    devFunctions.dropdown.get().should("not.exist");
+    devFunctions.pasteSudoku.get().should("not.exist");
+  });
+
   describe("maximum steps limit", () => {
+    beforeEach(() => openDevFunctions());
+
     function selectEmptySudoku(): void {
       devFunctions.dropdown.dropdown.select("4x4 | Empty");
       stateSwitch.buttonConfirm.get().click();
@@ -92,6 +127,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
 
   describe("pause after step", () => {
     beforeEach(() => {
+      openDevFunctions();
       devFunctions.dropdown.dropdown.select(4);
       stateSwitch.buttonConfirm.get().click();
 
@@ -127,6 +163,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
 
   it("should reset to initial state when clicking button", () => {
     // pre-act setup some state
+    openDevFunctions();
     devFunctions.dropdown.dropdown.select("4x4 | Empty");
     stateSwitch.buttonConfirm.get().click();
 
@@ -137,6 +174,8 @@ describe(DevelopmentFunctionsComponent.name, () => {
 
     // act
     devFunctions.clearState.get().click();
+    devFunctions.clearState.get().should("not.exist");
+    openDevFunctions();
 
     // assert
     solver.actions.get().should("not.exist");
@@ -148,6 +187,8 @@ describe(DevelopmentFunctionsComponent.name, () => {
   });
 
   describe("paste sudoku", () => {
+    beforeEach(() => openDevFunctions());
+
     it("should work only in puzzle mode", () => {
       stateSwitch.buttonConfirm.get().should("be.enabled");
       devFunctions.pasteSudoku.get().should("be.enabled");
@@ -184,6 +225,8 @@ describe(DevelopmentFunctionsComponent.name, () => {
   });
 
   describe("test sudokus", () => {
+    beforeEach(() => openDevFunctions());
+
     it("should update the grid and other fields when dropdown changes", () => {
       devFunctions.dropdown.dropdown.select("4x4 | Solved");
 

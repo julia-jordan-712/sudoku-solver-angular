@@ -1,12 +1,13 @@
-import { DevelopmentState, DevelopmentStateKey } from "./development.state";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { environment } from "src/environments/environment";
+import { DevelopmentState, DevelopmentStateKey } from "./development.state";
 
 const selectState =
   createFeatureSelector<DevelopmentState>(DevelopmentStateKey);
 
-const selectIsDevelopment = createSelector(
+const selectShowDevelopmentFunctions = createSelector(
   selectState,
-  (state: DevelopmentState) => state.isDev,
+  (state: DevelopmentState) => state.show && !environment.production,
 );
 
 const selectTestSudokus = createSelector(
@@ -25,7 +26,7 @@ const selectSelectedTestSudoku = createSelector(
 );
 
 export const DevelopmentSelectors = {
-  selectIsDevelopment,
+  selectShowDevelopmentFunctions,
   selectTestSudokus,
   selectSelectedTestSudoku,
 };

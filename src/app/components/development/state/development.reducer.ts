@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
-import { DevelopmentActions } from "./development.actions";
-import { DevelopmentState } from "./development.state";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
 import { AppActions } from "@app/state/app-state";
 import { ActionReducer, createReducer, on } from "@ngrx/store";
 import { SudokuPuzzleSelectionTestData } from "@test/puzzles/sudoku-puzzle-selection-test-data";
-import { environment } from "../../../../environments/environment";
+import { DevelopmentActions } from "./development.actions";
+import { DevelopmentState } from "./development.state";
 
 @Injectable({ providedIn: "root" })
 export class DevelopmentReducer {
@@ -14,7 +13,7 @@ export class DevelopmentReducer {
       ...SudokuPuzzleSelectionTestData.createItems(),
     ];
     return {
-      isDev: !environment.production,
+      show: false,
       testSudokus: {
         options: items,
         selectedId: null,
@@ -31,11 +30,11 @@ export class DevelopmentReducer {
       ),
       on(
         AppActions.initFromState,
-        (_state, _action): DevelopmentState => this.createInitialState(),
+        (_state, action): DevelopmentState => action.state.development,
       ),
       on(
-        DevelopmentActions.hide,
-        (state, _action): DevelopmentState => ({ ...state, isDev: false }),
+        DevelopmentActions.showDevelopmentFunctions,
+        (state, action): DevelopmentState => ({ ...state, show: action.show }),
       ),
       on(
         DevelopmentActions.setTestSudoku,

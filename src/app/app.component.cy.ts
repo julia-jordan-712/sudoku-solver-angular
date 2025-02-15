@@ -20,7 +20,6 @@ describe(AppComponent.name, () => {
         },
       },
     );
-    new CyDevFunctions().close.get().click();
   });
 
   it("should create component", () => {

@@ -55,7 +55,7 @@ describe(DevelopmentFunctionsComponent.name, () => {
 
   function setUp(isDevelopment: boolean): void {
     store.overrideSelector(
-      DevelopmentSelectors.selectIsDevelopment,
+      DevelopmentSelectors.selectShowDevelopmentFunctions,
       isDevelopment,
     );
 

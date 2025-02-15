@@ -33,6 +33,7 @@ describe(MainComponent.name, () => {
   it("should have all components", () => {
     stateSwitch.buttonReopen.get().should("not.exist");
     stateSwitch.buttonConfirm.get().should("be.visible");
+    devFunctions.open.get().click();
     devFunctions.dropdown.get().should("be.visible");
     puzzleInput.sizeSelector.get().should("be.visible");
     puzzleInput.sudoku.get().should("be.visible");
@@ -58,6 +59,7 @@ describe(MainComponent.name, () => {
 
   it("should re-initialize puzzle input with the previous state after confirm, solve and change-settings again", () => {
     // pre-assert puzzle input
+    devFunctions.open.get().click();
     devFunctions.dropdown.dropdown.select("9x9 | Simple | Puzzle 3");
     devFunctions.dropdown
       .get()

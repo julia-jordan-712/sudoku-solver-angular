@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { DevelopmentFunctionsComponent } from "@app/components/development/development-functions/development-functions.component";
+import { DevelopmentOpenComponent } from "@app/components/development/development-open/development-open.component";
 import { TestSudokusComponent } from "@app/components/development/test-sudokus/test-sudokus.component";
 import { CloseButtonModule } from "@app/components/general/close-button/close-button.module";
 import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
@@ -12,7 +13,11 @@ import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settin
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [DevelopmentFunctionsComponent, TestSudokusComponent],
+  declarations: [
+    DevelopmentFunctionsComponent,
+    DevelopmentOpenComponent,
+    TestSudokusComponent,
+  ],
   imports: [
     CommonModule,
     CloseButtonModule,
@@ -24,6 +29,6 @@ import { TranslateModule } from "@ngx-translate/core";
     SudokuSolverSettingsModule,
     TranslateModule,
   ],
-  exports: [DevelopmentFunctionsComponent],
+  exports: [DevelopmentFunctionsComponent, DevelopmentOpenComponent],
 })
 export class DevelopmentModule {}

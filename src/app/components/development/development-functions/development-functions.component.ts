@@ -13,10 +13,12 @@ export class DevelopmentFunctionsComponent {
   private store = inject(Store);
 
   protected show$: Observable<boolean> = this.store.select(
-    DevelopmentSelectors.selectIsDevelopment,
+    DevelopmentSelectors.selectShowDevelopmentFunctions,
   );
 
   protected hideDevFunctions(): void {
-    this.store.dispatch(DevelopmentActions.hide());
+    this.store.dispatch(
+      DevelopmentActions.showDevelopmentFunctions({ show: false }),
+    );
   }
 }

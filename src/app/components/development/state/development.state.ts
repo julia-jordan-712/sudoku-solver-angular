@@ -4,7 +4,7 @@ import { Nullable } from "@app/types/nullable";
 export const DevelopmentStateKey = "development";
 
 export interface DevelopmentState {
-  isDev: boolean;
+  show: boolean;
   testSudokus: {
     options: SudokuDropdownSelectionItem[];
     selectedId: Nullable<string>;

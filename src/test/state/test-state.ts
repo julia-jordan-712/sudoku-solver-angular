@@ -47,7 +47,7 @@ export class TestState {
   private static createDevelopmentState(): DevelopmentState {
     const selectionOptions = TestState.createTestSudokuDropdownSelectionItems();
     return {
-      isDev: true,
+      show: true,
       testSudokus: {
         options: selectionOptions.options,
         selectedId: selectionOptions.selectedId,
