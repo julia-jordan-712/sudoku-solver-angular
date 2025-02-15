@@ -30,7 +30,7 @@ describe(SudokuSolverSettingsComponent.name, () => {
 
   it("should display an input field for the delay", () => {
     setup({ grid: Puzzle4x4.COMPLETE, delay: 100 });
-    underTest.delay.label.get().should("have.text", "Delay:");
+    underTest.delay.label.get().should("have.text", "Delay");
     underTest.delay.icon.get().should("be.visible");
     underTest.delay.icon
       .get()
@@ -44,7 +44,7 @@ describe(SudokuSolverSettingsComponent.name, () => {
 
   it("should display an input field for the maximum steps", () => {
     setup({ grid: Puzzle4x4.COMPLETE, maxSteps: 10000 });
-    underTest.maxSteps.label.get().should("have.text", "Maximum steps:");
+    underTest.maxSteps.label.get().should("have.text", "Maximum steps");
     underTest.maxSteps.icon.get().should("be.visible");
     underTest.maxSteps.icon
       .get()
@@ -58,7 +58,7 @@ describe(SudokuSolverSettingsComponent.name, () => {
 
   it("should display an input field for the step to pause at", () => {
     setup({ grid: Puzzle4x4.COMPLETE, pause: 7 });
-    underTest.pauseAtStep.label.get().should("have.text", "Pause at step:");
+    underTest.pauseAtStep.label.get().should("have.text", "Pause at step");
     underTest.pauseAtStep.icon.get().should("be.visible");
     underTest.pauseAtStep.icon
       .get()
@@ -74,7 +74,7 @@ describe(SudokuSolverSettingsComponent.name, () => {
     setup({ grid: Puzzle4x4.COMPLETE, highlight: 2 });
     underTest.highlightNumber.label
       .get()
-      .should("have.text", "Highlight number:");
+      .should("have.text", "Highlight number");
     underTest.highlightNumber.icon.get().should("be.visible");
     underTest.highlightNumber.icon
       .get()

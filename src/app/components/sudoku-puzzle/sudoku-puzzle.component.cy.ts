@@ -31,7 +31,7 @@ describe(SudokuPuzzleComponent.name, () => {
     stateSwitch.buttonConfirm.get().should("be.visible").should("be.enabled");
 
     underTest.sizeSelector.get().should("be.visible");
-    underTest.sizeSelector.label.get().should("have.text", "Size:");
+    underTest.sizeSelector.label.get().should("have.text", "Size");
     underTest.sizeSelector.icon.get().should("not.exist");
     underTest.sizeSelector
       .index(0)
