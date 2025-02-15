@@ -10,7 +10,7 @@ export class CyDevFunctions {
     { tag: this.hostSelector },
   );
 
-  public readonly close: CyIcon = new CyIcon("close", {
+  public readonly close: CyIcon = new CyIcon("cross", {
     tag: this.hostSelector,
   });
 

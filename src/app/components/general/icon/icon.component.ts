@@ -1,15 +1,33 @@
-import { Component, HostBinding, Input } from "@angular/core";
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from "@angular/core";
 
 @Component({
   selector: "app-icon",
   templateUrl: "./icon.component.html",
   styleUrls: ["./icon.component.scss"],
 })
-export class IconComponent {
-  @HostBinding("attr.data-cy")
+export class IconComponent implements OnChanges {
+  private emptyIcon = "empty";
+  protected url: string = this.toUrl(this.emptyIcon);
+
   @Input({ required: true })
+  @HostBinding("attr.data-cy")
   icon: string;
 
-  @Input()
-  type: "mat" | "svg" = "svg";
+  ngOnChanges(_changes: SimpleChanges): void {
+    if (this.icon) {
+      this.url = this.toUrl(this.icon);
+    } else {
+      this.url = this.toUrl(this.emptyIcon);
+    }
+  }
+
+  private toUrl(icon: string): string {
+    return `url('assets/icons/${icon}.svg')`;
+  }
 }
