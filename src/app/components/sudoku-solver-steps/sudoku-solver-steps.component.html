@@ -1,17 +1,6 @@
-<span>{{ "SOLVER.STEPS.CALCULATED" | translate }}: </span>
+<span>{{ "SOLVER.STEPS.CALCULATED" | i18nKey }}: </span>
 <span>{{ steps$ | async }} </span>
-<span>{{ "SOLVER.STEPS.LAST" | translate }}: </span>
-@if (lastStepI18nKey$ | async; as lastStepI18nKey) {
-  @if (
-    lastStepI18nKey.key | translate: lastStepI18nKey.params;
-    as lastStepText
-  ) {
-    <span class="last-step" [appSmoothHeight]="lastStepText">{{
-      lastStepText
-    }}</span>
-  } @else {
-    <span class="last-step">-</span>
-  }
-} @else {
-  <span class="last-step">-</span>
-}
+<span>{{ "SOLVER.STEPS.LAST" | i18nKey }}: </span>
+<app-sudoku-solver-last-step-description
+  [description]="(lastStepI18nKey$ | async | i18nKey) ?? ''"
+></app-sudoku-solver-last-step-description>

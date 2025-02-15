@@ -5,7 +5,7 @@ export interface I18nKey {
 }
 
 export function isI18nKey(key: any): key is I18nKey {
-  return !!(key as I18nKey).key;
+  return !!(key as I18nKey)?.key;
 }
 
 export function i18nKeyEqual(key1: I18nKey, key2: I18nKey): boolean {
