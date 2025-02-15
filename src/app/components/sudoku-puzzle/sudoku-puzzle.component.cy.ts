@@ -32,7 +32,7 @@ describe(SudokuPuzzleComponent.name, () => {
 
     underTest.sizeSelector.get().should("be.visible");
     underTest.sizeSelector.label.get().should("have.text", "Size");
-    underTest.sizeSelector.icon.get().should("not.exist");
+    underTest.sizeSelector.icon.get().should("be.visible");
     underTest.sizeSelector
       .index(0)
       .get()
