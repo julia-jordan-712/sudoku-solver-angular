@@ -10,7 +10,7 @@ import {
 @Component({
   selector: "app-sudoku-grid-cell-multiple-values",
   templateUrl: "./sudoku-grid-cell-multiple-values.component.html",
-  styleUrls: ["./sudoku-grid-cell-multiple-values.component.scss"],
+  styleUrl: "./sudoku-grid-cell-multiple-values.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuGridCellMultipleValuesComponent implements OnChanges {

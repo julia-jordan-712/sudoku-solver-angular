@@ -12,7 +12,7 @@ import { Observable, filter } from "rxjs";
 @Component({
   selector: "app-sudoku-puzzle",
   templateUrl: "./sudoku-puzzle.component.html",
-  styleUrls: ["./sudoku-puzzle.component.scss"],
+  styleUrl: "./sudoku-puzzle.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuPuzzleComponent {

@@ -20,7 +20,7 @@ import { Observable } from "rxjs";
 @Component({
   selector: "app-sudoku-grid-row",
   templateUrl: "./sudoku-grid-row.component.html",
-  styleUrls: ["./sudoku-grid-row.component.scss"],
+  styleUrl: "./sudoku-grid-row.component.scss",
   providers: [SudokuGridRowComponentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

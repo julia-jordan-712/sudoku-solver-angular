@@ -17,7 +17,7 @@ import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 @Component({
   selector: "app-sudoku-grid",
   templateUrl: "./sudoku-grid.component.html",
-  styleUrls: ["./sudoku-grid.component.scss"],
+  styleUrl: "./sudoku-grid.component.scss",
   providers: [SudokuGridComponentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

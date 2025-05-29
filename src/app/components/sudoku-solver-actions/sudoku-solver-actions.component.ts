@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 @Component({
   selector: "app-sudoku-solver-actions",
   templateUrl: "./sudoku-solver-actions.component.html",
-  styleUrls: ["./sudoku-solver-actions.component.scss"],
+  styleUrl: "./sudoku-solver-actions.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuSolverActionsComponent {

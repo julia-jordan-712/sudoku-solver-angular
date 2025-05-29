@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 @Component({
   selector: "app-main",
   templateUrl: "./main.component.html",
-  styleUrls: ["./main.component.scss"],
+  styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {

@@ -11,7 +11,7 @@ import { Nullable } from "@app/types/nullable";
 @Component({
   selector: "app-sudoku-verification",
   templateUrl: "./sudoku-verification.component.html",
-  styleUrls: ["./sudoku-verification.component.scss"],
+  styleUrl: "./sudoku-verification.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [smoothHeightAnimation],
 })

@@ -12,7 +12,7 @@ import { Nullable } from "@app/types/nullable";
 @Component({
   selector: "app-number-input",
   templateUrl: "./number-input.component.html",
-  styleUrls: ["./number-input.component.scss"],
+  styleUrl: "./number-input.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NumberInputComponent implements OnChanges {

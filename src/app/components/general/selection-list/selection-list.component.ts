@@ -11,7 +11,7 @@ import { SingleSelectionInputOption } from "@app/types/single-selection-input-op
 @Component({
   selector: "app-selection-list",
   templateUrl: "./selection-list.component.html",
-  styleUrls: ["./selection-list.component.scss"],
+  styleUrl: "./selection-list.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectionListComponent<T> {

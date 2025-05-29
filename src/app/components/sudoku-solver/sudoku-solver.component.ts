@@ -10,7 +10,7 @@ import { filter, Observable } from "rxjs";
 @Component({
   selector: "app-sudoku-solver",
   templateUrl: "./sudoku-solver.component.html",
-  styleUrls: ["./sudoku-solver.component.scss"],
+  styleUrl: "./sudoku-solver.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuSolverComponent {
