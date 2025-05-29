@@ -40,7 +40,27 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/prefer-on-push-component-change-detection": "warn"
+      }
+    },
+    {
+      "files": ["*-test.component.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.eslint.json"],
+        "sourceType": "module"
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/stylistic",
+        "prettier"
+      ],
+      "rules": {
+        "@typescript-eslint/consistent-generic-constructors": "off",
+        "@angular-eslint/prefer-on-push-component-change-detection": "off"
       }
     },
     {
@@ -59,6 +79,7 @@
       ],
       "rules": {
         "no-sparse-arrays": "off",
+        "@angular-eslint/prefer-on-push-component-change-detection": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off"
@@ -81,6 +102,7 @@
       ],
       "rules": {
         "no-unused-vars": "off",
+        "@angular-eslint/prefer-on-push-component-change-detection": "off",
         "@ngrx/avoid-dispatching-multiple-actions-sequentially": "off",
         "@typescript-eslint/no-empty-function": "off"
       }
