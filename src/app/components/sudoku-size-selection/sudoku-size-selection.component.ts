@@ -8,12 +8,16 @@ import {
 import { Nullable } from "@app/types/nullable";
 import { SingleSelectionInputOption } from "@app/types/single-selection-input-option";
 import { SudokuSize } from "@app/types/sudoku-size";
+import { SelectionListComponent } from "../general/selection-list/selection-list.component";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "app-sudoku-size-selection",
-  templateUrl: "./sudoku-size-selection.component.html",
-  styleUrl: "./sudoku-size-selection.component.scss",
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: "app-sudoku-size-selection",
+    templateUrl: "./sudoku-size-selection.component.html",
+    styleUrl: "./sudoku-size-selection.component.scss",
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [SelectionListComponent, TranslateModule],
 })
 export class SudokuSizeSelectionComponent {
   protected selectionSizes: SudokuSizeSelectionItem[] = [4, 9, 16, 25].map(

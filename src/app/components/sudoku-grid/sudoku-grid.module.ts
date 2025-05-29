@@ -5,8 +5,7 @@ import { SudokuGridComponent } from "@app/components/sudoku-grid/sudoku-grid.com
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 
 @NgModule({
-  declarations: [SudokuGridComponent],
-  imports: [CommonModule, SudokuGridRowModule, SudokuVerificationModule],
-  exports: [SudokuGridComponent],
+    imports: [CommonModule, SudokuGridRowModule, SudokuVerificationModule, SudokuGridComponent],
+    exports: [SudokuGridComponent],
 })
 export class SudokuGridModule {}

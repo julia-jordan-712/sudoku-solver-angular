@@ -6,8 +6,7 @@ import { SudokuVerificationComponent } from "@app/components/sudoku-verification
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [SudokuVerificationComponent],
-  imports: [AnimationsModule, CommonModule, IconModule, TranslateModule],
-  exports: [SudokuVerificationComponent],
+    imports: [AnimationsModule, CommonModule, IconModule, TranslateModule, SudokuVerificationComponent],
+    exports: [SudokuVerificationComponent],
 })
 export class SudokuVerificationModule {}

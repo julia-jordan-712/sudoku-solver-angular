@@ -5,8 +5,7 @@ import { SelectionListComponent } from "@app/components/general/selection-list/s
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [SelectionListComponent],
-  imports: [CommonModule, LabelInputModule, TranslateModule],
-  exports: [SelectionListComponent],
+    imports: [CommonModule, LabelInputModule, TranslateModule, SelectionListComponent],
+    exports: [SelectionListComponent],
 })
 export class SelectionListModule {}

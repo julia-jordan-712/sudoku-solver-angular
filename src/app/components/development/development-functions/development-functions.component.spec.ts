@@ -26,13 +26,8 @@ describe(DevelopmentFunctionsComponent.name, () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        RestartComponent,
-        DevelopmentFunctionsComponent,
-        IconTestComponent,
-        TestSudokusComponent,
-      ],
-      imports: [
+    declarations: [IconTestComponent],
+    imports: [
         CloseButtonModule,
         DropdownModule,
         RestartModule,
@@ -41,12 +36,15 @@ describe(DevelopmentFunctionsComponent.name, () => {
         SudokuPasteModule,
         SudokuSolverSettingsModule,
         TranslateTestingModule.withTranslations({}),
-      ],
-      providers: [
+        RestartComponent,
+        DevelopmentFunctionsComponent,
+        TestSudokusComponent,
+    ],
+    providers: [
         provideHttpClient(),
         provideMockStore({ initialState: TestState.createTestAppState() }),
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
     clipboardService = TestBed.inject(ClipboardService);
     store = TestBed.inject(MockStore);
 

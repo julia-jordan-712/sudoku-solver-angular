@@ -7,12 +7,21 @@ import {
 } from "@angular/core";
 import { Nullable } from "@app/types/nullable";
 import { SingleSelectionInputOption } from "@app/types/single-selection-input-option";
+import { LabelInputComponent } from "../label-input/label-input.component";
+import { AsyncPipe } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "app-selection-list",
-  templateUrl: "./selection-list.component.html",
-  styleUrl: "./selection-list.component.scss",
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: "app-selection-list",
+    templateUrl: "./selection-list.component.html",
+    styleUrl: "./selection-list.component.scss",
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        LabelInputComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class SelectionListComponent<T> {
   @Input()

@@ -5,8 +5,7 @@ import { SudokuCopyComponent } from "@app/components/sudoku-copy/sudoku-copy.com
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [SudokuCopyComponent],
-  imports: [CommonModule, IconModule, TranslateModule],
-  exports: [SudokuCopyComponent],
+    imports: [CommonModule, IconModule, TranslateModule, SudokuCopyComponent],
+    exports: [SudokuCopyComponent],
 })
 export class SudokuCopyModule {}

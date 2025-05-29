@@ -9,8 +9,9 @@ import { I18nKey, isI18nKey } from "@app/types/i18n-key";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 @Pipe({
-  name: "i18nKey",
-  pure: false,
+    name: "i18nKey",
+    pure: false,
+    standalone: true,
 })
 export class I18nKeyPipe implements PipeTransform, OnDestroy {
   private translate: TranslatePipe;

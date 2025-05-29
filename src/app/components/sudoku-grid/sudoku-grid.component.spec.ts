@@ -19,17 +19,15 @@ describe(SudokuGridComponent.name, () => {
 
   function setUp(grid: SudokuGridViewModel): void {
     TestBed.configureTestingModule({
-      declarations: [
-        SudokuGridComponent,
-        SudokuGridRowComponent,
-        SudokuGridCellTestComponent,
-      ],
-      imports: [
+    declarations: [SudokuGridCellTestComponent],
+    imports: [
         SudokuVerificationModule,
         TranslateTestingModule.withTranslations({}),
-      ],
-      providers: [SudokuGridComponentService],
-    }).compileComponents();
+        SudokuGridComponent,
+        SudokuGridRowComponent,
+    ],
+    providers: [SudokuGridComponentService],
+}).compileComponents();
 
     fixture = TestBed.createComponent(SudokuGridComponent);
     component = fixture.componentInstance;

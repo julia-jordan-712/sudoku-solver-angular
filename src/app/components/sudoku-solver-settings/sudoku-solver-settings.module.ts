@@ -6,8 +6,7 @@ import { SudokuSolverSettingsComponent } from "@app/components/sudoku-solver-set
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [SudokuSolverSettingsComponent],
-  imports: [CommonModule, IconModule, NumberInputModule, TranslateModule],
-  exports: [SudokuSolverSettingsComponent],
+    imports: [CommonModule, IconModule, NumberInputModule, TranslateModule, SudokuSolverSettingsComponent],
+    exports: [SudokuSolverSettingsComponent],
 })
 export class SudokuSolverSettingsModule {}

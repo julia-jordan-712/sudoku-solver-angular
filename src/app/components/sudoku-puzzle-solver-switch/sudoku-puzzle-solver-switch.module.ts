@@ -6,8 +6,7 @@ import { SudokuPuzzleSolverSwitchComponent } from "@app/components/sudoku-puzzle
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [SudokuPuzzleSolverSwitchComponent],
-  imports: [CommonModule, IconModule, SectionModule, TranslateModule],
-  exports: [SudokuPuzzleSolverSwitchComponent],
+    imports: [CommonModule, IconModule, SectionModule, TranslateModule, SudokuPuzzleSolverSwitchComponent],
+    exports: [SudokuPuzzleSolverSwitchComponent],
 })
 export class SudokuPuzzleSolverSwitchModule {}

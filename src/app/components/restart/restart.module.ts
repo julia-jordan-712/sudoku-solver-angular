@@ -5,8 +5,7 @@ import { RestartComponent } from "@app/components/restart/restart.component";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [RestartComponent],
-  imports: [CommonModule, IconModule, TranslateModule],
-  exports: [RestartComponent],
+    imports: [CommonModule, IconModule, TranslateModule, RestartComponent],
+    exports: [RestartComponent],
 })
 export class RestartModule {}

@@ -10,16 +10,18 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SudokuGridCellValidator } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.validator";
 import { Nullable } from "@app/types/nullable";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: "app-sudoku-grid-cell-single-value",
-  templateUrl: "./sudoku-grid-cell-single-value.component.html",
-  styleUrl: "./sudoku-grid-cell-single-value.component.scss",
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: "app-sudoku-grid-cell-single-value",
+    templateUrl: "./sudoku-grid-cell-single-value.component.html",
+    styleUrl: "./sudoku-grid-cell-single-value.component.scss",
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule],
 })
 export class SudokuGridCellSingleValueComponent
   implements OnInit, OnChanges, OnDestroy

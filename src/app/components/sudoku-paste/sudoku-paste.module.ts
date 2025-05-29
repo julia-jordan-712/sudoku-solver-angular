@@ -5,8 +5,7 @@ import { SudokuPasteComponent } from "@app/components/sudoku-paste/sudoku-paste.
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [SudokuPasteComponent],
-  imports: [CommonModule, IconModule, TranslateModule],
-  exports: [SudokuPasteComponent],
+    imports: [CommonModule, IconModule, TranslateModule, SudokuPasteComponent],
+    exports: [SudokuPasteComponent],
 })
 export class SudokuPasteModule {}

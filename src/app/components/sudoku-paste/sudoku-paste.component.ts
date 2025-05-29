@@ -7,12 +7,21 @@ import { SudokuGrid } from "@app/types/sudoku-grid";
 import { isSudoku } from "@app/util/is-sudoku-grid";
 import { Store } from "@ngrx/store";
 import { catchError, EMPTY, filter, map, Observable } from "rxjs";
+import { IconComponent } from "../general/icon/icon.component";
+import { AsyncPipe } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "app-sudoku-paste",
-  templateUrl: "./sudoku-paste.component.html",
-  styleUrl: "./sudoku-paste.component.scss",
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: "app-sudoku-paste",
+    templateUrl: "./sudoku-paste.component.html",
+    styleUrl: "./sudoku-paste.component.scss",
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        IconComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class SudokuPasteComponent {
   private logger = new Logger(SudokuPasteComponent.name);

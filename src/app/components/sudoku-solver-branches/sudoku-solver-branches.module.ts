@@ -4,8 +4,7 @@ import { SudokuSolverBranchesComponent } from "@app/components/sudoku-solver-bra
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [SudokuSolverBranchesComponent],
-  imports: [CommonModule, TranslateModule],
-  exports: [SudokuSolverBranchesComponent],
+    imports: [CommonModule, TranslateModule, SudokuSolverBranchesComponent],
+    exports: [SudokuSolverBranchesComponent],
 })
 export class SudokuSolverBranchesModule {}

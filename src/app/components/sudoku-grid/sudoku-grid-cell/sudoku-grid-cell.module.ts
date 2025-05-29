@@ -5,12 +5,12 @@ import { SudokuGridCellSingleValueModule } from "@app/components/sudoku-grid/sud
 import { SudokuGridCellComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.component";
 
 @NgModule({
-  declarations: [SudokuGridCellComponent],
-  imports: [
-    CommonModule,
-    SudokuGridCellMultipleValuesModule,
-    SudokuGridCellSingleValueModule,
-  ],
-  exports: [SudokuGridCellComponent],
+    imports: [
+        CommonModule,
+        SudokuGridCellMultipleValuesModule,
+        SudokuGridCellSingleValueModule,
+        SudokuGridCellComponent,
+    ],
+    exports: [SudokuGridCellComponent],
 })
 export class SudokuGridCellModule {}

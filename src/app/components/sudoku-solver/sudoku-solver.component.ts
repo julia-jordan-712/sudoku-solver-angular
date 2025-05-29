@@ -6,12 +6,37 @@ import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 import { isDefined } from "@app/util/is-defined";
 import { Store } from "@ngrx/store";
 import { filter, Observable } from "rxjs";
+import { SectionComponent } from "../general/section/section.component";
+import { SudokuGridComponent } from "../sudoku-grid/sudoku-grid.component";
+import { SudokuPuzzleSolverSwitchComponent } from "../sudoku-puzzle-solver-switch/sudoku-puzzle-solver-switch.component";
+import { SudokuSolverActionsComponent } from "../sudoku-solver-actions/sudoku-solver-actions.component";
+import { SudokuSolverSpeedComponent } from "../sudoku-solver-speed/sudoku-solver-speed.component";
+import { SudokuSolverStatusComponent } from "../sudoku-solver-status/sudoku-solver-status.component";
+import { SudokuSolverBranchesComponent } from "../sudoku-solver-branches/sudoku-solver-branches.component";
+import { SudokuSolverStepsComponent } from "../sudoku-solver-steps/sudoku-solver-steps.component";
+import { HintListComponent } from "../general/hint-list/hint-list.component";
+import { AsyncPipe } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "app-sudoku-solver",
-  templateUrl: "./sudoku-solver.component.html",
-  styleUrl: "./sudoku-solver.component.scss",
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: "app-sudoku-solver",
+    templateUrl: "./sudoku-solver.component.html",
+    styleUrl: "./sudoku-solver.component.scss",
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        SectionComponent,
+        SudokuGridComponent,
+        SudokuPuzzleSolverSwitchComponent,
+        SudokuSolverActionsComponent,
+        SudokuSolverSpeedComponent,
+        SudokuSolverStatusComponent,
+        SudokuSolverBranchesComponent,
+        SudokuSolverStepsComponent,
+        HintListComponent,
+        AsyncPipe,
+        TranslateModule,
+    ],
 })
 export class SudokuSolverComponent {
   private store = inject(Store);

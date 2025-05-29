@@ -12,13 +12,22 @@ import { SudokuGridCellComponentService } from "@app/components/sudoku-grid/sudo
 import { Nullable } from "@app/types/nullable";
 import { SudokuGridCellViewModel } from "@app/types/sudoku-grid-view-model";
 import { Observable } from "rxjs";
+import { SudokuGridCellMultipleValuesComponent } from "./sudoku-grid-cell-multiple-values/sudoku-grid-cell-multiple-values.component";
+import { SudokuGridCellSingleValueComponent } from "./sudoku-grid-cell-single-value/sudoku-grid-cell-single-value.component";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
-  selector: "app-sudoku-grid-cell",
-  templateUrl: "./sudoku-grid-cell.component.html",
-  styleUrl: "./sudoku-grid-cell.component.scss",
-  providers: [SudokuGridCellComponentService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: "app-sudoku-grid-cell",
+    templateUrl: "./sudoku-grid-cell.component.html",
+    styleUrl: "./sudoku-grid-cell.component.scss",
+    providers: [SudokuGridCellComponentService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        SudokuGridCellMultipleValuesComponent,
+        SudokuGridCellSingleValueComponent,
+        AsyncPipe,
+    ],
 })
 export class SudokuGridCellComponent {
   private componentService: SudokuGridCellComponentService = inject(

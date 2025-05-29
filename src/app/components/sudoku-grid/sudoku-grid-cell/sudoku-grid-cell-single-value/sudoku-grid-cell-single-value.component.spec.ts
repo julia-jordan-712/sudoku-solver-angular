@@ -11,9 +11,8 @@ describe(SudokuGridCellSingleValueComponent.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SudokuGridCellSingleValueComponent],
-      imports: [ReactiveFormsModule],
-    });
+    imports: [ReactiveFormsModule, SudokuGridCellSingleValueComponent],
+});
     fixture = TestBed.createComponent(SudokuGridCellSingleValueComponent);
     component = fixture.componentInstance;
     component.maxValue = 9;
