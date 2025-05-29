@@ -11,6 +11,7 @@ import { CyComponentInput } from "@cypress/types/cy-component";
 import { CySolver } from "@cypress/views/cy-solver";
 import { Store } from "@ngrx/store";
 import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
+import { PuzzleExtreme } from "@test/puzzles/puzzle-extreme";
 
 describe(SudokuSolverComponent.name, () => {
   const underTest: CySolver = new CySolver();
@@ -138,6 +139,31 @@ describe(SudokuSolverComponent.name, () => {
         [4, 3, 2, 1],
       ]);
       underTest.sudoku.verification.shouldBeValid();
+    });
+  });
+
+  describe("speed buttons", () => {
+    it("should disable the 'normal speed' button when in normal speed", () => {
+      setup({ grid: PuzzleExtreme.PUZZLE_4.puzzle });
+
+      underTest.speed.normal.get().click();
+      underTest.speed.normal.get().should("be.disabled");
+
+      underTest.speed.slower.get().click();
+      underTest.speed.normal.get().should("be.enabled");
+
+      underTest.speed.normal.get().click();
+      underTest.speed.normal.get().should("be.disabled");
+
+      underTest.speed.faster.get().click();
+      underTest.speed.normal.get().should("be.enabled");
+    });
+
+    it("should disable the 'faster speed' button when delay is zero", () => {
+      setup({ grid: PuzzleExtreme.PUZZLE_4.puzzle, delay: 0 });
+      underTest.speed.faster.get().should("be.disabled");
+      underTest.speed.slower.get().click();
+      underTest.speed.faster.get().should("be.enabled");
     });
   });
 });
