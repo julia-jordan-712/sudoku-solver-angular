@@ -42,16 +42,16 @@ export const appStoreImports: ModuleWithProviders<StoreRootModule>[] = [
     BrowserModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot({
-        defaultLanguage: "en",
-        loader: {
-            provide: TranslateLoader,
-            useFactory: TranslateHttpLoaderFactory,
-            deps: [HttpClient],
-        },
+      defaultLanguage: "en",
+      loader: {
+        provide: TranslateLoader,
+        useFactory: TranslateHttpLoaderFactory,
+        deps: [HttpClient],
+      },
     }),
     ...appStoreImports,
     environment.production ? [] : StoreDevtoolsModule.instrument(),
-],
+  ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true },
