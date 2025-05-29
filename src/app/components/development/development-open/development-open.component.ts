@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { DevelopmentActions } from "@app/components/development/state/development.actions";
 import { Store } from "@ngrx/store";
 import { environment } from "src/environments/environment";
@@ -7,6 +7,7 @@ import { environment } from "src/environments/environment";
   selector: "app-development-open",
   templateUrl: "./development-open.component.html",
   styleUrl: "./development-open.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DevelopmentOpenComponent {
   private store = inject(Store);

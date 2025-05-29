@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { DevelopmentActions } from "@app/components/development/state/development.actions";
 import { DevelopmentSelectors } from "@app/components/development/state/development.selectors";
 import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.state";
@@ -10,6 +10,7 @@ import { Observable } from "rxjs";
   selector: "app-test-sudokus",
   templateUrl: "./test-sudokus.component.html",
   styleUrl: "./test-sudokus.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TestSudokusComponent {
   private store: Store = inject(Store);

@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { SudokuPuzzleSelectors } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.selectors";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { ClipboardService } from "@app/core/clipboard/clipboard.service";
@@ -9,6 +9,7 @@ import { take, withLatestFrom } from "rxjs";
   selector: "app-sudoku-copy",
   templateUrl: "./sudoku-copy.component.html",
   styleUrl: "./sudoku-copy.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuCopyComponent {
   private store = inject(Store);

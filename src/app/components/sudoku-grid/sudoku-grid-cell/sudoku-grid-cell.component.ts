@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   HostBinding,
@@ -17,6 +18,7 @@ import { Observable } from "rxjs";
   templateUrl: "./sudoku-grid-cell.component.html",
   styleUrls: ["./sudoku-grid-cell.component.scss"],
   providers: [SudokuGridCellComponentService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuGridCellComponent {
   private componentService: SudokuGridCellComponentService = inject(

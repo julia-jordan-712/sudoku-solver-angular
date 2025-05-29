@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   inject,
@@ -21,6 +22,7 @@ import { Observable } from "rxjs";
   templateUrl: "./sudoku-grid-row.component.html",
   styleUrls: ["./sudoku-grid-row.component.scss"],
   providers: [SudokuGridRowComponentService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuGridRowComponent implements OnChanges {
   private componentService: SudokuGridRowComponentService = inject(

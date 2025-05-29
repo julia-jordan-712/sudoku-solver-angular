@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -13,6 +14,7 @@ import { SingleSelectionInputOption } from "@app/types/single-selection-input-op
   selector: "app-dropdown",
   templateUrl: "./dropdown.component.html",
   styleUrls: ["./dropdown.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownComponent<T> implements OnChanges {
   private readonly NO_SELECTION_ITEM: SingleSelectionInputOption<any> = {

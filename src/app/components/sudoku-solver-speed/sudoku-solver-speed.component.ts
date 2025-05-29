@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Store } from "@ngrx/store";
@@ -8,6 +8,7 @@ import { Observable } from "rxjs";
   selector: "app-sudoku-solver-speed",
   templateUrl: "./sudoku-solver-speed.component.html",
   styleUrl: "./sudoku-solver-speed.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuSolverSpeedComponent {
   private store = inject(Store);

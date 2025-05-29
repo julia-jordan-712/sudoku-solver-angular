@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { ClipboardService } from "@app/core/clipboard/clipboard.service";
@@ -12,6 +12,7 @@ import { catchError, EMPTY, filter, map, Observable } from "rxjs";
   selector: "app-sudoku-paste",
   templateUrl: "./sudoku-paste.component.html",
   styleUrl: "./sudoku-paste.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuPasteComponent {
   private logger = new Logger(SudokuPasteComponent.name);

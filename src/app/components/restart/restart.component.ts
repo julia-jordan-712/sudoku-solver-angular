@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { AppActions } from "@app/state/app-state";
 import { Store } from "@ngrx/store";
 
@@ -6,6 +6,7 @@ import { Store } from "@ngrx/store";
   selector: "app-restart",
   templateUrl: "./restart.component.html",
   styleUrl: "./restart.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RestartComponent {
   private store: Store = inject(Store);

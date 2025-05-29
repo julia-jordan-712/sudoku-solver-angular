@@ -1,4 +1,9 @@
-import { Component, HostBinding, Input } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Input,
+} from "@angular/core";
 import { smoothHeightAnimation } from "@app/animations/smooth-height.directive";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/types/nullable";
@@ -7,6 +12,7 @@ import { Nullable } from "@app/types/nullable";
   selector: "app-sudoku-verification",
   templateUrl: "./sudoku-verification.component.html",
   styleUrls: ["./sudoku-verification.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [smoothHeightAnimation],
 })
 export class SudokuVerificationComponent {

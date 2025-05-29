@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   HostBinding,
@@ -18,6 +19,7 @@ import { Subscription } from "rxjs";
   selector: "app-sudoku-grid-cell-single-value",
   templateUrl: "./sudoku-grid-cell-single-value.component.html",
   styleUrls: ["./sudoku-grid-cell-single-value.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuGridCellSingleValueComponent
   implements OnInit, OnChanges, OnDestroy

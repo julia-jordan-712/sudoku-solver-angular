@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { DevelopmentActions } from "../state/development.actions";
@@ -8,6 +8,7 @@ import { DevelopmentSelectors } from "../state/development.selectors";
   selector: "app-development-functions",
   templateUrl: "./development-functions.component.html",
   styleUrl: "./development-functions.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DevelopmentFunctionsComponent {
   private store = inject(Store);

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   HostBinding,
   Input,
@@ -10,6 +11,7 @@ import {
   selector: "app-icon",
   templateUrl: "./icon.component.html",
   styleUrls: ["./icon.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent implements OnChanges {
   private emptyIcon = "empty";
