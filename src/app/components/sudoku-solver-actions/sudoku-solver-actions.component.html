@@ -1,6 +1,7 @@
 <button
   id="start"
-  class="icon primary"
+  class="icon"
+  [class.primary]="(canStart$ | async) && (isPaused$ | async) === false"
   [disabled]="(canStart$ | async) === false"
   [title]="'SOLVER.ACTIONS.START' | translate"
   (click)="start()"
@@ -9,7 +10,8 @@
 </button>
 <button
   id="pause"
-  class="icon primary"
+  class="icon"
+  [class.primary]="canPause$ | async"
   [disabled]="(canPause$ | async) === false"
   [title]="'SOLVER.ACTIONS.PAUSE' | translate"
   (click)="pause()"
@@ -19,6 +21,7 @@
 <button
   id="next"
   class="icon primary"
+  [class.primary]="(canGoToNext$ | async) && (isPaused$ | async)"
   [disabled]="(canGoToNext$ | async) === false"
   [title]="'SOLVER.ACTIONS.NEXT' | translate"
   (click)="next()"
@@ -34,4 +37,6 @@
   >
     <app-icon icon="restart"></app-icon>
   </button>
+} @else {
+  <div class="icon"></div>
 }

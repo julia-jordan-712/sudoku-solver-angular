@@ -24,10 +24,16 @@
     }
   </app-section>
   <app-sudoku-puzzle-solver-switch></app-sudoku-puzzle-solver-switch>
-  <app-section>
-    <h2>{{ "SOLVER.ACTIONS.TITLE" | translate }}</h2>
-    <app-sudoku-solver-actions></app-sudoku-solver-actions>
-  </app-section>
+  <div class="actions-and-speed">
+    <app-section>
+      <h2>{{ "SOLVER.ACTIONS.TITLE" | translate }}</h2>
+      <app-sudoku-solver-actions></app-sudoku-solver-actions>
+    </app-section>
+    <app-section class="speed">
+      <h2>{{ "SOLVER.SPEED.TITLE" | translate }}</h2>
+      <app-sudoku-solver-speed></app-sudoku-solver-speed>
+    </app-section>
+  </div>
   <app-section class="status">
     <app-sudoku-solver-status></app-sudoku-solver-status>
     <app-sudoku-solver-branches></app-sudoku-solver-branches>

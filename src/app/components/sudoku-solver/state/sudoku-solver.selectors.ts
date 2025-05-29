@@ -110,6 +110,11 @@ const selectCanPause = createSelector(
   (status: SolverExecution) => status === "RUNNING",
 );
 
+const selectIsPaused = createSelector(
+  selectExecutionStatus,
+  (status: SolverExecution) => status === "PAUSED",
+);
+
 const selectHighlightNumber = createSelector(
   selectSettings,
   (settings: SudokuSolverStateSettings) => settings.highlightNumber,
@@ -126,6 +131,16 @@ const selectLastStepI18nKey = createSelector(
 const selectMaxSteps = createSelector(
   selectSettings,
   (settings: SudokuSolverStateSettings) => settings.maxSteps,
+);
+
+const selectSpeedIsNormal = createSelector(
+  selectDelay,
+  (delay: number) => delay === 800,
+);
+
+const selectSpeedCanIncrease = createSelector(
+  selectDelay,
+  (delay: number) => delay > 0,
 );
 
 const selectStepToBePausedAfter = createSelector(
@@ -211,6 +226,7 @@ export const SudokuSolverSelectors = {
   selectCanPause,
   selectCanRestart,
   selectCanStart,
+  selectIsPaused,
   selectExecutedSteps,
   selectExecutionStatus,
   selectHighlightNumber,
@@ -220,6 +236,8 @@ export const SudokuSolverSelectors = {
   selectMaxSteps,
   selectResponse,
   selectStepToBePausedAfter,
+  selectSpeedIsNormal,
+  selectSpeedCanIncrease,
   selectTimeElapsedMilliseconds,
   selectTimeElapsedSeconds,
 };

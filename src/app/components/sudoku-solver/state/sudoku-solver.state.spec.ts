@@ -30,6 +30,7 @@ describe("SudokuSolverState", () => {
 
     solver = TestBed.inject(SudokuSolverService);
     store = TestBed.inject(Store);
+    store.dispatch(SudokuSolverActions.setDelay({ delay: 0 }));
   });
 
   describe("calling solver", () => {

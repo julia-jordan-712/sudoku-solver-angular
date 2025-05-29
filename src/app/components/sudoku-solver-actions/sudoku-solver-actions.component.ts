@@ -23,6 +23,9 @@ export class SudokuSolverActionsComponent {
   canRestart$: Observable<boolean> = this.store.select(
     SudokuSolverSelectors.selectCanRestart,
   );
+  isPaused$: Observable<boolean> = this.store.select(
+    SudokuSolverSelectors.selectIsPaused,
+  );
 
   start(): void {
     this.store.dispatch(SudokuSolverActions.solverStart());

@@ -687,6 +687,55 @@ describe(SudokuSolverReducer.name, () => {
     });
   });
 
+  describe("speed", () => {
+    let testState: SudokuSolverState;
+
+    beforeEach(() => {
+      testState = TestState.createTestSudokuSolverState();
+      testState.settings.delay = 500;
+    });
+
+    describe(SudokuSolverActions.speedNormal.type, () => {
+      it("should set the delay to '600'", () => {
+        expect(
+          underTest.getReducer()(testState, SudokuSolverActions.speedNormal())
+            .settings.delay,
+        ).toEqual(600);
+      });
+    });
+
+    describe(SudokuSolverActions.speedSlower.type, () => {
+      it("should increase the delay by the action value", () => {
+        expect(
+          underTest.getReducer()(
+            testState,
+            SudokuSolverActions.speedSlower({ ms: 333 }),
+          ).settings.delay,
+        ).toEqual(500 + 333);
+      });
+    });
+
+    describe(SudokuSolverActions.speedFaster.type, () => {
+      it("should reduce the delay by the action value", () => {
+        expect(
+          underTest.getReducer()(
+            testState,
+            SudokuSolverActions.speedFaster({ ms: 423 }),
+          ).settings.delay,
+        ).toEqual(500 - 423);
+      });
+
+      it("should not reduce the delay below zero", () => {
+        expect(
+          underTest.getReducer()(
+            testState,
+            SudokuSolverActions.speedFaster({ ms: 712 }),
+          ).settings.delay,
+        ).toEqual(0);
+      });
+    });
+  });
+
   function expectExecutionInfoToBeReset(
     result: SudokuSolverState,
     testState: SudokuSolverState,

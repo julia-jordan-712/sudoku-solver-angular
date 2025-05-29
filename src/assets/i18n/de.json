@@ -112,6 +112,12 @@
     },
     "BRANCHES": {
       "REQUIRED": "Zweige"
+    },
+    "SPEED": {
+      "TITLE": "Geschwindigkeit",
+      "FASTER": "schneller",
+      "NORMAL": "normal",
+      "SLOWER": "langsamer"
     }
   },
   "BRANCH": {
