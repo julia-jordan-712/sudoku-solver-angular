@@ -33,29 +33,3 @@ export const appStoreImports: ModuleWithProviders<StoreRootModule>[] = [
   EffectsModule.forFeature([SudokuPuzzleEffects]),
   EffectsModule.forFeature([SudokuSolverEffects]),
 ];
-
-@NgModule({
-  declarations: [AppComponent],
-  bootstrap: [AppComponent],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    TranslateModule.forRoot({
-      defaultLanguage: "en",
-      loader: {
-        provide: TranslateLoader,
-        useFactory: TranslateHttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
-    ...appStoreImports,
-    environment.production ? [] : StoreDevtoolsModule.instrument(),
-  ],
-  providers: [
-    provideHttpClient(withInterceptorsFromDi()),
-    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true },
-    ...SOLVER_PROVIDERS,
-  ],
-})
-export class AppModule {}

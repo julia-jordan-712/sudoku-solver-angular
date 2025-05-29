@@ -12,6 +12,7 @@ import { TranslateService } from "@ngx-translate/core";
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class AppComponent {
   private translate: TranslateService = inject(TranslateService);
