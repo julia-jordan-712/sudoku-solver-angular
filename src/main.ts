@@ -1,33 +1,25 @@
 import {
-  enableProdMode,
   APP_INITIALIZER,
-  ModuleWithProviders,
+  enableProdMode,
   importProvidersFrom,
 } from "@angular/core";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
-import { environment } from "src/environments/environment";
 import {
+  HttpClient,
   provideHttpClient,
   withInterceptorsFromDi,
-  HttpClient,
 } from "@angular/common/http";
-import { appInitializer } from "@app/state/app-initialization.service";
-import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
-import { AppRoutingModule } from "@app/app-routing.module";
 import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { AppRoutingModule } from "@app/app-routing.module";
+import { AppComponent } from "@app/app.component";
+import { appStoreImports } from "@app/app.module";
+import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { TranslateHttpLoaderFactory } from "@app/core/translate/translate-loader-factory";
-import { appStoreImports } from "./app/app.module";
-import { StoreRootModule, StoreModule } from "@ngrx/store";
-import { reducer, metaReducers } from "@app/state/app-state";
-import { EffectsModule } from "@ngrx/effects";
-import { DevelopmentEffects } from "@app/components/development/state/development.effects";
-import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
-import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
+import { appInitializer } from "@app/state/app-initialization.service";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-import { AppComponent } from "./app/app.component";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { environment } from "src/environments/environment";
 
 if (environment.production) {
   enableProdMode();
