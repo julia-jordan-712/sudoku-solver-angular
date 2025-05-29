@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from "@angular/core";
 import { Nullable } from "@app/types/nullable";
 import { SingleSelectionInputOption } from "@app/types/single-selection-input-option";
 import { SudokuSize } from "@app/types/sudoku-size";
@@ -7,6 +13,7 @@ import { SudokuSize } from "@app/types/sudoku-size";
   selector: "app-sudoku-size-selection",
   templateUrl: "./sudoku-size-selection.component.html",
   styleUrl: "./sudoku-size-selection.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuSizeSelectionComponent {
   protected selectionSizes: SudokuSizeSelectionItem[] = [4, 9, 16, 25].map(

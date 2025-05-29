@@ -5,6 +5,7 @@ import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-
 import { SudokuGridComponent } from "@app/components/sudoku-grid/sudoku-grid.component";
 import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { SudokuGrid } from "@app/types/sudoku-grid";
+import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { SudokuGridCellTestComponent } from "@test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
@@ -16,8 +17,8 @@ describe(SudokuGridComponent.name, () => {
   let component: SudokuGridComponent;
   let fixture: ComponentFixture<SudokuGridComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  function setUp(grid: SudokuGridViewModel): void {
+    TestBed.configureTestingModule({
       declarations: [
         SudokuGridComponent,
         SudokuGridRowComponent,
@@ -32,16 +33,18 @@ describe(SudokuGridComponent.name, () => {
 
     fixture = TestBed.createComponent(SudokuGridComponent);
     component = fixture.componentInstance;
+    component.grid = grid;
     fixture.detectChanges();
-  });
+  }
 
   it("should set borders of cells correctly", () => {
-    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
-      Puzzle4x4.COMPLETE,
-      randomUUID(),
-      SudokuGridViewModelMock.DATA,
+    setUp(
+      SudokuGridViewModelConverter.createViewModelFromGrid(
+        Puzzle4x4.COMPLETE,
+        randomUUID(),
+        SudokuGridViewModelMock.DATA,
+      ),
     );
-    fixture.detectChanges();
 
     // first row
     expect(getCellComponent(0).borderTop).toEqual(true);
@@ -129,12 +132,13 @@ describe(SudokuGridComponent.name, () => {
   });
 
   it("should set the allowed maximum value of a cell correctly", () => {
-    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
-      Puzzle4x4.COMPLETE,
-      randomUUID(),
-      SudokuGridViewModelMock.DATA,
+    setUp(
+      SudokuGridViewModelConverter.createViewModelFromGrid(
+        Puzzle4x4.COMPLETE,
+        randomUUID(),
+        SudokuGridViewModelMock.DATA,
+      ),
     );
-    fixture.detectChanges();
 
     expect(getCellComponent(0).maxValue).toEqual(4);
     expect(getCellComponent(1).maxValue).toEqual(4);
@@ -155,12 +159,13 @@ describe(SudokuGridComponent.name, () => {
       [undefined, undefined, 4, 1],
       [4, undefined, 2, 3],
     ];
-    component.grid = SudokuGridViewModelConverter.createViewModelFromGrid(
-      input,
-      randomUUID(),
-      SudokuGridViewModelMock.DATA,
+    setUp(
+      SudokuGridViewModelConverter.createViewModelFromGrid(
+        input,
+        randomUUID(),
+        SudokuGridViewModelMock.DATA,
+      ),
     );
-    fixture.detectChanges();
     const changeSpy = spyOn(component.valueChange, "emit");
 
     getCellComponent(12).change(4);

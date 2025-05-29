@@ -1,4 +1,9 @@
-import { Component, inject, Input } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+} from "@angular/core";
 import { AppState } from "@app/state/app-state";
 import { ViewActions } from "@app/state/view-state/view.actions";
 import { ViewSelectors } from "@app/state/view-state/view.selectors";
@@ -12,6 +17,7 @@ import { Observable } from "rxjs";
   selector: "app-hint-list",
   templateUrl: "./hint-list.component.html",
   styleUrl: "./hint-list.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HintListComponent {
   private store: Store<AppState> = inject(Store);

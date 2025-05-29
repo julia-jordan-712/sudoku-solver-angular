@@ -1,11 +1,18 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from "@angular/core";
 import { Nullable } from "@app/types/nullable";
 import { SingleSelectionInputOption } from "@app/types/single-selection-input-option";
 
 @Component({
   selector: "app-selection-list",
   templateUrl: "./selection-list.component.html",
-  styleUrls: ["./selection-list.component.scss"],
+  styleUrl: "./selection-list.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectionListComponent<T> {
   @Input()

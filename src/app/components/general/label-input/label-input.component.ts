@@ -1,10 +1,11 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { Nullable } from "@app/types/nullable";
 
 @Component({
   selector: "app-label-input",
   templateUrl: "./label-input.component.html",
   styleUrl: "./label-input.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LabelInputComponent {
   @Input({ required: true })

@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 @Component({
   selector: "app-section",
   templateUrl: "./section.component.html",
   styleUrl: "./section.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionComponent {}

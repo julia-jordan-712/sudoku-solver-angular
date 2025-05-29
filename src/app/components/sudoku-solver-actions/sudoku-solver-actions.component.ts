@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Store } from "@ngrx/store";
@@ -7,7 +7,8 @@ import { Observable } from "rxjs";
 @Component({
   selector: "app-sudoku-solver-actions",
   templateUrl: "./sudoku-solver-actions.component.html",
-  styleUrls: ["./sudoku-solver-actions.component.scss"],
+  styleUrl: "./sudoku-solver-actions.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuSolverActionsComponent {
   private store = inject(Store);

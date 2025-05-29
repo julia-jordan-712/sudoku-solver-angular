@@ -1,11 +1,17 @@
-import { Component, HostListener, inject } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  inject,
+} from "@angular/core";
 import { StateInBrowserStorageService } from "@app/state/state-in-browser-storage.service";
 import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
+  styleUrl: "./app.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   private translate: TranslateService = inject(TranslateService);

@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SolverExecution } from "@app/types/solver-execution";
 import { Store } from "@ngrx/store";
@@ -8,7 +8,8 @@ import { Observable } from "rxjs";
 @Component({
   selector: "app-sudoku-solver-status",
   templateUrl: "./sudoku-solver-status.component.html",
-  styleUrls: ["./sudoku-solver-status.component.scss"],
+  styleUrl: "./sudoku-solver-status.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SudokuSolverStatusComponent {
   translate = inject(TranslateService);
