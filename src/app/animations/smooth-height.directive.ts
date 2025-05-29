@@ -35,6 +35,7 @@ interface SmoothHeight {
 
 @Directive({
   selector: "[appSmoothHeight]",
+  standalone: true,
 })
 export class SmoothHeightDirective implements OnChanges {
   @Input()

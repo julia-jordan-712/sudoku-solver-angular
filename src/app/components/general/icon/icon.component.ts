@@ -12,6 +12,7 @@ import {
   templateUrl: "./icon.component.html",
   styleUrl: "./icon.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class IconComponent implements OnChanges {
   private emptyIcon = "empty";

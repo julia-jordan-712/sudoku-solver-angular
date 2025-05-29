@@ -16,6 +16,8 @@ import { Nullable } from "@app/types/nullable";
 import { SudokuGridCell, SudokuGridRow } from "@app/types/sudoku-grid";
 import { SudokuGridRowViewModel } from "@app/types/sudoku-grid-view-model";
 import { Observable } from "rxjs";
+import { SudokuGridCellComponent } from "../sudoku-grid-cell/sudoku-grid-cell.component";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
   selector: "app-sudoku-grid-row",
@@ -23,6 +25,8 @@ import { Observable } from "rxjs";
   styleUrl: "./sudoku-grid-row.component.scss",
   providers: [SudokuGridRowComponentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SudokuGridCellComponent, AsyncPipe],
 })
 export class SudokuGridRowComponent implements OnChanges {
   private componentService: SudokuGridRowComponentService = inject(

@@ -7,6 +7,8 @@ import {
 import { smoothHeightAnimation } from "@app/animations/smooth-height.directive";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { Nullable } from "@app/types/nullable";
+import { IconComponent } from "../general/icon/icon.component";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-sudoku-verification",
@@ -14,6 +16,8 @@ import { Nullable } from "@app/types/nullable";
   styleUrl: "./sudoku-verification.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [smoothHeightAnimation],
+  standalone: true,
+  imports: [IconComponent, TranslateModule],
 })
 export class SudokuVerificationComponent {
   @HostBinding("class.hidden")

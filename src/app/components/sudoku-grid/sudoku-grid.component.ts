@@ -13,6 +13,8 @@ import {
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid, SudokuGridRow } from "@app/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
+import { SudokuGridRowComponent } from "./sudoku-grid-row/sudoku-grid-row.component";
+import { SudokuVerificationComponent } from "../sudoku-verification/sudoku-verification.component";
 
 @Component({
   selector: "app-sudoku-grid",
@@ -20,6 +22,8 @@ import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
   styleUrl: "./sudoku-grid.component.scss",
   providers: [SudokuGridComponentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SudokuGridRowComponent, SudokuVerificationComponent],
 })
 export class SudokuGridComponent {
   protected _grid: Nullable<SudokuGridViewModel>;

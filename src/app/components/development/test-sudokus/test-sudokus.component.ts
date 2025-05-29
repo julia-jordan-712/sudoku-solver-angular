@@ -5,12 +5,17 @@ import { SudokuDropdownSelectionItem } from "@app/components/sudoku-puzzle/state
 import { Nullable } from "@app/types/nullable";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
+import { DropdownComponent } from "../../general/dropdown/dropdown.component";
+import { AsyncPipe } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-test-sudokus",
   templateUrl: "./test-sudokus.component.html",
   styleUrl: "./test-sudokus.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [DropdownComponent, AsyncPipe, TranslateModule],
 })
 export class TestSudokusComponent {
   private store: Store = inject(Store);

@@ -35,6 +35,7 @@ interface SmoothWidth {
 
 @Directive({
   selector: "[appSmoothWidth]",
+  standalone: true,
 })
 export class SmoothWidthDirective implements OnChanges {
   @Input()

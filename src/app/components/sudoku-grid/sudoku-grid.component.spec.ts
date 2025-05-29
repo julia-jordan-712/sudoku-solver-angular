@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { SudokuGridCellComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.component";
 import { SudokuGridComponentService } from "@app/components/sudoku-grid/sudoku-grid-component.service";
 import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row.component";
 import { SudokuGridComponent } from "@app/components/sudoku-grid/sudoku-grid.component";
-import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { SudokuGridViewModel } from "@app/types/sudoku-grid-view-model";
 import { SudokuGridViewModelConverter } from "@app/util/sudoku-grid-view-model-converter";
 import { SudokuGridCellTestComponent } from "@test/components/sudoku-grid-cell-test.component";
 import { Puzzle4x4 } from "@test/puzzles/puzzle-4x4";
 import { SudokuGridViewModelMock } from "@test/sudoku/sudoku-grid-view-model.mock";
-import { TranslateTestingModule } from "ngx-translate-testing";
 import { v4 as randomUUID } from "uuid";
 
 describe(SudokuGridComponent.name, () => {
@@ -19,17 +18,14 @@ describe(SudokuGridComponent.name, () => {
 
   function setUp(grid: SudokuGridViewModel): void {
     TestBed.configureTestingModule({
-      declarations: [
-        SudokuGridComponent,
-        SudokuGridRowComponent,
-        SudokuGridCellTestComponent,
-      ],
-      imports: [
-        SudokuVerificationModule,
-        TranslateTestingModule.withTranslations({}),
-      ],
+      imports: [SudokuGridComponent],
       providers: [SudokuGridComponentService],
-    }).compileComponents();
+    })
+      .overrideComponent(SudokuGridRowComponent, {
+        remove: { imports: [SudokuGridCellComponent] },
+        add: { imports: [SudokuGridCellTestComponent] },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(SudokuGridComponent);
     component = fixture.componentInstance;

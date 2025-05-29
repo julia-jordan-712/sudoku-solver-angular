@@ -8,12 +8,31 @@ import { SudokuSize } from "@app/types/sudoku-size";
 import { isDefined } from "@app/util/is-defined";
 import { Store } from "@ngrx/store";
 import { Observable, filter } from "rxjs";
+import { SectionComponent } from "../general/section/section.component";
+import { IconComponent } from "../general/icon/icon.component";
+import { SudokuGridComponent } from "../sudoku-grid/sudoku-grid.component";
+import { SudokuPuzzleSolverSwitchComponent } from "../sudoku-puzzle-solver-switch/sudoku-puzzle-solver-switch.component";
+import { SudokuSizeSelectionComponent } from "../sudoku-size-selection/sudoku-size-selection.component";
+import { HintListComponent } from "../general/hint-list/hint-list.component";
+import { AsyncPipe } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-sudoku-puzzle",
   templateUrl: "./sudoku-puzzle.component.html",
   styleUrl: "./sudoku-puzzle.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    SectionComponent,
+    IconComponent,
+    SudokuGridComponent,
+    SudokuPuzzleSolverSwitchComponent,
+    SudokuSizeSelectionComponent,
+    HintListComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class SudokuPuzzleComponent {
   private store: Store = inject(Store);

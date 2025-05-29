@@ -11,6 +11,7 @@ import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 @Pipe({
   name: "i18nKey",
   pure: false,
+  standalone: true,
 })
 export class I18nKeyPipe implements PipeTransform, OnDestroy {
   private translate: TranslatePipe;

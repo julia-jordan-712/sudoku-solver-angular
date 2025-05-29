@@ -3,12 +3,17 @@ import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
+import { IconComponent } from "../general/icon/icon.component";
+import { AsyncPipe } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-sudoku-solver-speed",
   templateUrl: "./sudoku-solver-speed.component.html",
   styleUrl: "./sudoku-solver-speed.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [IconComponent, AsyncPipe, TranslateModule],
 })
 export class SudokuSolverSpeedComponent {
   private store = inject(Store);

@@ -5,6 +5,7 @@ import { SudokuGridCellViewModel } from "@app/types/sudoku-grid-view-model";
 @Component({
   selector: "app-sudoku-grid-cell",
   template: `{{ _cell }}`,
+  standalone: true,
 })
 export class SudokuGridCellTestComponent {
   size: number | undefined;

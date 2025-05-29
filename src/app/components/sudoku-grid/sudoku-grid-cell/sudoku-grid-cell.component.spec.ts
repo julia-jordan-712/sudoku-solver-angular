@@ -1,8 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ReactiveFormsModule } from "@angular/forms";
 import { SudokuGridCellComponentService } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-component.service";
-import { SudokuGridCellMultipleValuesComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-multiple-values/sudoku-grid-cell-multiple-values.component";
-import { SudokuGridCellSingleValueComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-single-value/sudoku-grid-cell-single-value.component";
 import { SudokuGridCellComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell.component";
 import { CellPosition } from "@app/types/cell-position";
 import { SudokuGridCellViewModel } from "@app/types/sudoku-grid-view-model";
@@ -14,12 +11,7 @@ describe(SudokuGridCellComponent.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        SudokuGridCellComponent,
-        SudokuGridCellSingleValueComponent,
-        SudokuGridCellMultipleValuesComponent,
-      ],
-      imports: [ReactiveFormsModule],
+      imports: [SudokuGridCellComponent],
       providers: [SudokuGridCellComponentService],
     });
     fixture = TestBed.createComponent(SudokuGridCellComponent);

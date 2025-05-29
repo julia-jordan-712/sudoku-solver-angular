@@ -1,5 +1,4 @@
 import { AppComponent } from "@app/app.component";
-import { AppModule } from "@app/app.module";
 import { CyDevFunctions } from "@cypress/views/cy-dev-functions";
 import { CyLanguageSelector } from "@cypress/views/cy-language-selector";
 import { CyPuzzleInput } from "@cypress/views/cy-puzzle-input";
@@ -11,7 +10,6 @@ describe(AppComponent.name, () => {
   beforeEach(() => {
     cy.mount(
       AppComponent,
-      AppModule,
       {},
       {
         translations: {

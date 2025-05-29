@@ -9,12 +9,18 @@ import {
 } from "@angular/core";
 import { Nullable } from "@app/types/nullable";
 import { SingleSelectionInputOption } from "@app/types/single-selection-input-option";
+import { LabelInputComponent } from "../label-input/label-input.component";
+import { FormsModule } from "@angular/forms";
+import { AsyncPipe } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-dropdown",
   templateUrl: "./dropdown.component.html",
   styleUrl: "./dropdown.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LabelInputComponent, FormsModule, AsyncPipe, TranslateModule],
 })
 export class DropdownComponent<T> implements OnChanges {
   private readonly NO_SELECTION_ITEM: SingleSelectionInputOption<any> = {

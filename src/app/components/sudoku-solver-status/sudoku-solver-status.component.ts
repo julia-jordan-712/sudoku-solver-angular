@@ -2,14 +2,17 @@ import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { SudokuSolverSelectors } from "@app/components/sudoku-solver/state/sudoku-solver.selectors";
 import { SolverExecution } from "@app/types/solver-execution";
 import { Store } from "@ngrx/store";
-import { TranslateService } from "@ngx-translate/core";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Observable } from "rxjs";
+import { AsyncPipe, DecimalPipe } from "@angular/common";
 
 @Component({
   selector: "app-sudoku-solver-status",
   templateUrl: "./sudoku-solver-status.component.html",
   styleUrl: "./sudoku-solver-status.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [AsyncPipe, DecimalPipe, TranslateModule],
 })
 export class SudokuSolverStatusComponent {
   translate = inject(TranslateService);

@@ -3,7 +3,6 @@ import { appStoreImports } from "@app/app.module";
 import { SudokuPuzzleSolverSwitchActions } from "@app/components/sudoku-puzzle-solver-switch/state/sudoku-puzzle-solver-switch.actions";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solver.component";
-import { SudokuSolverModule } from "@app/components/sudoku-solver/sudoku-solver.module";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid } from "@app/types/sudoku-grid";
@@ -17,7 +16,7 @@ describe(SudokuSolverComponent.name, () => {
   const underTest: CySolver = new CySolver();
 
   function setup(input: CyComponentInput<SudokuSolverWrapperComponent>): void {
-    cy.mount(SudokuSolverWrapperComponent, SudokuSolverModule, input, {
+    cy.mount(SudokuSolverWrapperComponent, input, {
       imports: appStoreImports,
       providers: SOLVER_PROVIDERS,
     });
@@ -171,6 +170,8 @@ describe(SudokuSolverComponent.name, () => {
 @Component({
   selector: "app-test-wrapper",
   template: `<app-sudoku-solver></app-sudoku-solver>`,
+  standalone: true,
+  imports: [SudokuSolverComponent],
 })
 class SudokuSolverWrapperComponent implements OnChanges {
   private store: Store = inject(Store);

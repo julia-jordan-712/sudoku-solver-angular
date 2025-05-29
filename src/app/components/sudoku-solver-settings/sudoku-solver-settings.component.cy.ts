@@ -1,7 +1,6 @@
 import { Component, inject, Input, OnChanges } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
 import { SudokuSolverSettingsComponent } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.component";
-import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.module";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid } from "@app/types/sudoku-grid";
@@ -17,15 +16,10 @@ describe(SudokuSolverSettingsComponent.name, () => {
   function setup(
     input: CyComponentInput<SudokuSolverSettingsWrapperComponent>,
   ): void {
-    cy.mount(
-      SudokuSolverSettingsWrapperComponent,
-      SudokuSolverSettingsModule,
-      input,
-      {
-        imports: appStoreImports,
-        providers: SOLVER_TEST_PROVIDERS,
-      },
-    );
+    cy.mount(SudokuSolverSettingsWrapperComponent, input, {
+      imports: appStoreImports,
+      providers: SOLVER_TEST_PROVIDERS,
+    });
   }
 
   it("should display an input field for the delay", () => {
@@ -90,6 +84,8 @@ describe(SudokuSolverSettingsComponent.name, () => {
 @Component({
   selector: "app-test-wrapper",
   template: `<app-sudoku-solver-settings></app-sudoku-solver-settings>`,
+  standalone: true,
+  imports: [SudokuSolverSettingsComponent],
 })
 class SudokuSolverSettingsWrapperComponent implements OnChanges {
   private store: Store = inject(Store);
