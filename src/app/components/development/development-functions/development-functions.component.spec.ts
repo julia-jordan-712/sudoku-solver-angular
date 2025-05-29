@@ -1,22 +1,12 @@
 import { provideHttpClient } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { CloseButtonModule } from "@app/components/general/close-button/close-button.module";
-import { DropdownModule } from "@app/components/general/dropdown/dropdown.module";
-import { SectionModule } from "@app/components/general/section/section.module";
-import { RestartComponent } from "@app/components/restart/restart.component";
-import { RestartModule } from "@app/components/restart/restart.module";
-import { SudokuCopyModule } from "@app/components/sudoku-copy/sudoku-copy.module";
-import { SudokuPasteModule } from "@app/components/sudoku-paste/sudoku-paste.module";
-import { SudokuSolverSettingsModule } from "@app/components/sudoku-solver-settings/sudoku-solver-settings.module";
 import { ClipboardService } from "@app/core/clipboard/clipboard.service";
 import { AppState } from "@app/state/app-state";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
-import { IconTestComponent } from "@test/components/icon-test.component";
 import { TestState } from "@test/state/test-state";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { DevelopmentSelectors } from "../state/development.selectors";
-import { TestSudokusComponent } from "../test-sudokus/test-sudokus.component";
 import { DevelopmentFunctionsComponent } from "./development-functions.component";
 
 describe(DevelopmentFunctionsComponent.name, () => {
@@ -26,19 +16,9 @@ describe(DevelopmentFunctionsComponent.name, () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IconTestComponent],
       imports: [
-        CloseButtonModule,
-        DropdownModule,
-        RestartModule,
-        SectionModule,
-        SudokuCopyModule,
-        SudokuPasteModule,
-        SudokuSolverSettingsModule,
-        TranslateTestingModule.withTranslations({}),
-        RestartComponent,
         DevelopmentFunctionsComponent,
-        TestSudokusComponent,
+        TranslateTestingModule.withTranslations({}),
       ],
       providers: [
         provideHttpClient(),

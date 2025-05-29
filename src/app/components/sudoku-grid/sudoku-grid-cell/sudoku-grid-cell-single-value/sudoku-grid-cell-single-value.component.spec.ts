@@ -1,6 +1,5 @@
 import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ReactiveFormsModule } from "@angular/forms";
 import { SudokuGridCellSingleValueComponent } from "@app/components/sudoku-grid/sudoku-grid-cell/sudoku-grid-cell-single-value/sudoku-grid-cell-single-value.component";
 
 describe(SudokuGridCellSingleValueComponent.name, () => {
@@ -11,7 +10,7 @@ describe(SudokuGridCellSingleValueComponent.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, SudokuGridCellSingleValueComponent],
+      imports: [SudokuGridCellSingleValueComponent],
     });
     fixture = TestBed.createComponent(SudokuGridCellSingleValueComponent);
     component = fixture.componentInstance;
