@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "@app/app-routing.module";
 import { AppComponent } from "@app/app.component";
 import { DevelopmentEffects } from "@app/components/development/state/development.effects";
-import { MainModule } from "@app/components/main/main.module";
+
 import { SudokuPuzzleEffects } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.effects";
 import { SudokuSolverEffects } from "@app/components/sudoku-solver/state/sudoku-solver.effects";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
@@ -42,17 +42,16 @@ export const appStoreImports: ModuleWithProviders<StoreRootModule>[] = [
     BrowserModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot({
-      defaultLanguage: "en",
-      loader: {
-        provide: TranslateLoader,
-        useFactory: TranslateHttpLoaderFactory,
-        deps: [HttpClient],
-      },
+        defaultLanguage: "en",
+        loader: {
+            provide: TranslateLoader,
+            useFactory: TranslateHttpLoaderFactory,
+            deps: [HttpClient],
+        },
     }),
-    MainModule,
     ...appStoreImports,
     environment.production ? [] : StoreDevtoolsModule.instrument(),
-  ],
+],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true },
