@@ -135,7 +135,7 @@ const selectMaxSteps = createSelector(
 
 const selectSpeedIsNormal = createSelector(
   selectDelay,
-  (delay: number) => delay === 800,
+  (delay: number) => delay === 600,
 );
 
 const selectSpeedCanIncrease = createSelector(
