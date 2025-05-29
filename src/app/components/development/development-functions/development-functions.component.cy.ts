@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
 import { DevelopmentFunctionsComponent } from "@app/components/development/development-functions/development-functions.component";
-import { MainModule } from "@app/components/main/main.module";
+import { MainComponent } from "@app/components/main/main.component";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { ClipboardService } from "@app/core/clipboard/clipboard.service";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
@@ -26,7 +26,6 @@ describe(DevelopmentFunctionsComponent.name, () => {
   beforeEach(() => {
     cy.mount(
       MainWrapperComponent,
-      MainModule,
       {},
       {
         imports: appStoreImports,
@@ -253,6 +252,8 @@ describe(DevelopmentFunctionsComponent.name, () => {
 @Component({
   selector: "app-test-wrapper",
   template: `<app-main></app-main>`,
+  standalone: true,
+  imports: [MainComponent],
 })
 class MainWrapperComponent implements OnInit {
   private store: Store = inject(Store);

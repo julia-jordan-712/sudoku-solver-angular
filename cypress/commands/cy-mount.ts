@@ -1,6 +1,14 @@
-import { provideHttpClient } from "@angular/common/http";
-import { Type } from "@angular/core";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from "@angular/common/http";
+import { APP_INITIALIZER, Type } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { AppRoutingModule } from "@app/app-routing.module";
+import { appStoreImports } from "@app/app.module";
+import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
+import { appInitializer } from "@app/state/app-initialization.service";
 import { Objects } from "@app/util/objects";
 import { CyChainable } from "@cypress/types/cy-chainable";
 import { CyComponentInput } from "@cypress/types/cy-component";
@@ -22,13 +30,15 @@ declare global {
 
 function mount<T>(
   component: Type<T>,
-  module: Type<any>,
   componentInput?: CyComponentInput<T>,
   config?: CyMountConfig<T>,
 ): CyChainable<MountResponse<T>> {
   const mountConfig: MountConfig<T> = { ...(config ?? {}) };
 
   mountConfig.imports = [
+    AppRoutingModule,
+    BrowserModule,
+    ...appStoreImports,
     ...(mountConfig.imports ?? []),
     TranslateTestingModule.withTranslations(
       Objects.mergeDeep<Translations>(config?.translations ?? {}, {
@@ -40,11 +50,13 @@ function mount<T>(
     ).withDefaultLanguage("en"),
     NoopAnimationsModule,
   ];
-  mountConfig.imports.push(module);
+  mountConfig.imports.push(component);
 
   mountConfig.providers = [
     // providing http client is necessary to be able to load SVG icons
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true },
+    ...SOLVER_PROVIDERS,
     ...(mountConfig.providers ?? []),
   ];
 

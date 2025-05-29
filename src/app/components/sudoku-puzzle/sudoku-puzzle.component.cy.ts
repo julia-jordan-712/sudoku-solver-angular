@@ -2,7 +2,6 @@ import { Component, inject, Input } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
 import { SudokuPuzzleActions } from "@app/components/sudoku-puzzle/state/sudoku-puzzle.actions";
 import { SudokuPuzzleComponent } from "@app/components/sudoku-puzzle/sudoku-puzzle.component";
-import { SudokuPuzzleModule } from "@app/components/sudoku-puzzle/sudoku-puzzle.module";
 import { Nullable } from "@app/types/nullable";
 import { SudokuGrid } from "@app/types/sudoku-grid";
 import { CyComponentInput } from "@cypress/types/cy-component";
@@ -19,7 +18,7 @@ describe(SudokuPuzzleComponent.name, () => {
   const stateSwitch: CyStateSwitch = new CyStateSwitch();
 
   function setup(input: CyComponentInput<SudokuPuzzleWrapperComponent>): void {
-    cy.mount(SudokuPuzzleWrapperComponent, SudokuPuzzleModule, input, {
+    cy.mount(SudokuPuzzleWrapperComponent, input, {
       imports: appStoreImports,
       providers: SOLVER_TEST_PROVIDERS,
     });
@@ -246,6 +245,8 @@ describe(SudokuPuzzleComponent.name, () => {
 @Component({
   selector: "app-test-wrapper",
   template: `<app-sudoku-puzzle></app-sudoku-puzzle>`,
+  standalone: true,
+  imports: [SudokuPuzzleComponent],
 })
 class SudokuPuzzleWrapperComponent {
   private store: Store = inject(Store);

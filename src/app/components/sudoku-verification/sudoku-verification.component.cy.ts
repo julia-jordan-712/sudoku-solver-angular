@@ -1,6 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { SudokuVerificationComponent } from "@app/components/sudoku-verification/sudoku-verification.component";
-import { SudokuVerificationModule } from "@app/components/sudoku-verification/sudoku-verification.module";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
 import { Nullable } from "@app/types/nullable";
@@ -11,11 +10,7 @@ describe(SudokuVerificationComponent.name, () => {
   const underTest: CySudokuVerification = new CySudokuVerification();
 
   function setup(input: CyComponentInput<SudokuVerificationComponent>): void {
-    cy.mount(
-      SudokuVerificationWrapperComponent,
-      SudokuVerificationModule,
-      input,
-    );
+    cy.mount(SudokuVerificationWrapperComponent, input);
   }
 
   describe("empty", () => {
@@ -58,6 +53,8 @@ describe(SudokuVerificationComponent.name, () => {
   template: `<app-sudoku-verification
     [verification]="verification"
   ></app-sudoku-verification>`,
+  standalone: true,
+  imports: [SudokuVerificationComponent],
 })
 class SudokuVerificationWrapperComponent {
   @Input({ required: true })

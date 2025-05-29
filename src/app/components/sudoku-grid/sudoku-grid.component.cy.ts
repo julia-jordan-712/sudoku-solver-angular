@@ -1,6 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { SudokuGridComponent } from "@app/components/sudoku-grid/sudoku-grid.component";
-import { SudokuGridModule } from "@app/components/sudoku-grid/sudoku-grid.module";
 import { VerifySolution } from "@app/core/verification/services/verify-solution";
 import { VerificationResult } from "@app/core/verification/types/verification-result";
 import { VerifyI18nKey } from "@app/core/verification/types/verify-i18n-keys";
@@ -25,7 +24,7 @@ describe(SudokuGridComponent.name, () => {
 
   function setup(input: TestInput): CyComponent<SudokuGridWrapperComponent> {
     return new CyComponent(
-      cy.mount(SudokuGridWrapperComponent, SudokuGridModule, {
+      cy.mount(SudokuGridWrapperComponent, {
         ...input,
         grid: createViewModel(input),
       }),
@@ -429,6 +428,8 @@ describe(SudokuGridComponent.name, () => {
     (valueChange)="onValueChange($event)"
     (onValueSubmit)="onValueSubmit($event)"
   ></app-sudoku-grid>`,
+  standalone: true,
+  imports: [SudokuGridComponent],
 })
 class SudokuGridWrapperComponent {
   @Input({ required: true })

@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { appStoreImports } from "@app/app.module";
 import { MainComponent } from "@app/components/main/main.component";
-import { MainModule } from "@app/components/main/main.module";
 import { SudokuSolverActions } from "@app/components/sudoku-solver/state/sudoku-solver.actions";
 import { SOLVER_PROVIDERS } from "@app/core/solver/sudoku-solver.provider";
 import { CyButtonWithIcon } from "@cypress/selectors/cy-button-with-icon";
@@ -24,7 +23,6 @@ describe(MainComponent.name, () => {
   beforeEach(() => {
     cy.mount(
       MainWrapperComponent,
-      MainModule,
       {},
       {
         imports: appStoreImports,
@@ -121,6 +119,8 @@ describe(MainComponent.name, () => {
 @Component({
   selector: "app-test-wrapper",
   template: `<app-main></app-main>`,
+  standalone: true,
+  imports: [MainComponent],
 })
 class MainWrapperComponent implements OnInit {
   private store: Store = inject(Store);
