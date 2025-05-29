@@ -26,8 +26,8 @@ describe(DevelopmentFunctionsComponent.name, () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [IconTestComponent],
-    imports: [
+      declarations: [IconTestComponent],
+      imports: [
         CloseButtonModule,
         DropdownModule,
         RestartModule,
@@ -39,12 +39,12 @@ describe(DevelopmentFunctionsComponent.name, () => {
         RestartComponent,
         DevelopmentFunctionsComponent,
         TestSudokusComponent,
-    ],
-    providers: [
+      ],
+      providers: [
         provideHttpClient(),
         provideMockStore({ initialState: TestState.createTestAppState() }),
-    ],
-}).compileComponents();
+      ],
+    }).compileComponents();
     clipboardService = TestBed.inject(ClipboardService);
     store = TestBed.inject(MockStore);
 

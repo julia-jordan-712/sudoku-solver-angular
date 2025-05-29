@@ -8,11 +8,11 @@ import {
 } from "@angular/core";
 
 @Component({
-    selector: "app-sudoku-grid-cell-multiple-values",
-    templateUrl: "./sudoku-grid-cell-multiple-values.component.html",
-    styleUrl: "./sudoku-grid-cell-multiple-values.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
+  selector: "app-sudoku-grid-cell-multiple-values",
+  templateUrl: "./sudoku-grid-cell-multiple-values.component.html",
+  styleUrl: "./sudoku-grid-cell-multiple-values.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SudokuGridCellMultipleValuesComponent implements OnChanges {
   @Input({ required: true })

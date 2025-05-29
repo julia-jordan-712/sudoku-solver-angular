@@ -6,12 +6,12 @@ import { IconComponent } from "../general/icon/icon.component";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-help",
-    templateUrl: "./help.component.html",
-    styleUrl: "./help.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IconComponent, TranslateModule],
+  selector: "app-help",
+  templateUrl: "./help.component.html",
+  styleUrl: "./help.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [IconComponent, TranslateModule],
 })
 export class HelpComponent {
   private store: Store<AppState> = inject(Store);

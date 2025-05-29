@@ -12,21 +12,21 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-main",
-    templateUrl: "./main.component.html",
-    styleUrl: "./main.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        DevelopmentOpenComponent,
-        HelpComponent,
-        LanguageSelectionComponent,
-        SudokuPuzzleComponent,
-        SudokuSolverComponent,
-        DevelopmentFunctionsComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-main",
+  templateUrl: "./main.component.html",
+  styleUrl: "./main.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    DevelopmentOpenComponent,
+    HelpComponent,
+    LanguageSelectionComponent,
+    SudokuPuzzleComponent,
+    SudokuSolverComponent,
+    DevelopmentFunctionsComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class MainComponent {
   private store: Store = inject(Store);

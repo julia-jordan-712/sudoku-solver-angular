@@ -12,16 +12,12 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-selection-list",
-    templateUrl: "./selection-list.component.html",
-    styleUrl: "./selection-list.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        LabelInputComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-selection-list",
+  templateUrl: "./selection-list.component.html",
+  styleUrl: "./selection-list.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LabelInputComponent, AsyncPipe, TranslateModule],
 })
 export class SelectionListComponent<T> {
   @Input()

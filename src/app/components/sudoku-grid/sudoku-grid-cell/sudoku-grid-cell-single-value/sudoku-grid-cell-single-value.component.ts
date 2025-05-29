@@ -16,12 +16,12 @@ import { Nullable } from "@app/types/nullable";
 import { Subscription } from "rxjs";
 
 @Component({
-    selector: "app-sudoku-grid-cell-single-value",
-    templateUrl: "./sudoku-grid-cell-single-value.component.html",
-    styleUrl: "./sudoku-grid-cell-single-value.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [FormsModule, ReactiveFormsModule],
+  selector: "app-sudoku-grid-cell-single-value",
+  templateUrl: "./sudoku-grid-cell-single-value.component.html",
+  styleUrl: "./sudoku-grid-cell-single-value.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule],
 })
 export class SudokuGridCellSingleValueComponent
   implements OnInit, OnChanges, OnDestroy

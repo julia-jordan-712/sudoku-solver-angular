@@ -9,16 +9,16 @@ import { SudokuSolverModule } from "@app/components/sudoku-solver/sudoku-solver.
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        DevelopmentModule,
-        HelpModule,
-        LanguageSelectionModule,
-        SudokuPuzzleModule,
-        SudokuSolverModule,
-        TranslateModule,
-        MainComponent,
-    ],
-    exports: [MainComponent],
+  imports: [
+    CommonModule,
+    DevelopmentModule,
+    HelpModule,
+    LanguageSelectionModule,
+    SudokuPuzzleModule,
+    SudokuSolverModule,
+    TranslateModule,
+    MainComponent,
+  ],
+  exports: [MainComponent],
 })
 export class MainModule {}

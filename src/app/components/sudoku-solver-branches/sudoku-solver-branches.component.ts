@@ -6,12 +6,12 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-solver-branches",
-    templateUrl: "./sudoku-solver-branches.component.html",
-    styleUrl: "./sudoku-solver-branches.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [AsyncPipe, TranslateModule],
+  selector: "app-sudoku-solver-branches",
+  templateUrl: "./sudoku-solver-branches.component.html",
+  styleUrl: "./sudoku-solver-branches.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [AsyncPipe, TranslateModule],
 })
 export class SudokuSolverBranchesComponent {
   private store = inject(Store);

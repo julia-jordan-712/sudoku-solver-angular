@@ -9,16 +9,12 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-solver-settings",
-    templateUrl: "./sudoku-solver-settings.component.html",
-    styleUrl: "./sudoku-solver-settings.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        NumberInputComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-sudoku-solver-settings",
+  templateUrl: "./sudoku-solver-settings.component.html",
+  styleUrl: "./sudoku-solver-settings.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NumberInputComponent, AsyncPipe, TranslateModule],
 })
 export class SudokuSolverSettingsComponent {
   private store = inject(Store);

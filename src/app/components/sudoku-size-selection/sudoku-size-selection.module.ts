@@ -5,7 +5,12 @@ import { SudokuSizeSelectionComponent } from "@app/components/sudoku-size-select
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-    imports: [CommonModule, SelectionListModule, TranslateModule, SudokuSizeSelectionComponent],
-    exports: [SudokuSizeSelectionComponent],
+  imports: [
+    CommonModule,
+    SelectionListModule,
+    TranslateModule,
+    SudokuSizeSelectionComponent,
+  ],
+  exports: [SudokuSizeSelectionComponent],
 })
 export class SudokuSizeSelectionModule {}

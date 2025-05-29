@@ -15,17 +15,12 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-dropdown",
-    templateUrl: "./dropdown.component.html",
-    styleUrl: "./dropdown.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        LabelInputComponent,
-        FormsModule,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-dropdown",
+  templateUrl: "./dropdown.component.html",
+  styleUrl: "./dropdown.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LabelInputComponent, FormsModule, AsyncPipe, TranslateModule],
 })
 export class DropdownComponent<T> implements OnChanges {
   private readonly NO_SELECTION_ITEM: SingleSelectionInputOption<any> = {

@@ -4,7 +4,7 @@ import { SudokuGridCellModule } from "@app/components/sudoku-grid/sudoku-grid-ce
 import { SudokuGridRowComponent } from "@app/components/sudoku-grid/sudoku-grid-row/sudoku-grid-row.component";
 
 @NgModule({
-    imports: [CommonModule, SudokuGridCellModule, SudokuGridRowComponent],
-    exports: [SudokuGridRowComponent],
+  imports: [CommonModule, SudokuGridCellModule, SudokuGridRowComponent],
+  exports: [SudokuGridRowComponent],
 })
 export class SudokuGridRowModule {}

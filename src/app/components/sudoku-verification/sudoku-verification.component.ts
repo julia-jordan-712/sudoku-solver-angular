@@ -11,13 +11,13 @@ import { IconComponent } from "../general/icon/icon.component";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-verification",
-    templateUrl: "./sudoku-verification.component.html",
-    styleUrl: "./sudoku-verification.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    animations: [smoothHeightAnimation],
-    standalone: true,
-    imports: [IconComponent, TranslateModule],
+  selector: "app-sudoku-verification",
+  templateUrl: "./sudoku-verification.component.html",
+  styleUrl: "./sudoku-verification.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [smoothHeightAnimation],
+  standalone: true,
+  imports: [IconComponent, TranslateModule],
 })
 export class SudokuVerificationComponent {
   @HostBinding("class.hidden")

@@ -14,11 +14,14 @@ describe(SudokuGridCellComponent.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [ReactiveFormsModule, SudokuGridCellComponent,
+      imports: [
+        ReactiveFormsModule,
+        SudokuGridCellComponent,
         SudokuGridCellSingleValueComponent,
-        SudokuGridCellMultipleValuesComponent],
-    providers: [SudokuGridCellComponentService],
-});
+        SudokuGridCellMultipleValuesComponent,
+      ],
+      providers: [SudokuGridCellComponentService],
+    });
     fixture = TestBed.createComponent(SudokuGridCellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

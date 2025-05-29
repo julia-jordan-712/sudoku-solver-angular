@@ -8,11 +8,11 @@ import {
 } from "@angular/core";
 
 @Component({
-    selector: "app-icon",
-    templateUrl: "./icon.component.html",
-    styleUrl: "./icon.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
+  selector: "app-icon",
+  templateUrl: "./icon.component.html",
+  styleUrl: "./icon.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class IconComponent implements OnChanges {
   private emptyIcon = "empty";

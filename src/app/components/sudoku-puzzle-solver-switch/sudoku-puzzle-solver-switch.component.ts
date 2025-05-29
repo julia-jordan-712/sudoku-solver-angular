@@ -9,17 +9,12 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-puzzle-solver-switch",
-    templateUrl: "./sudoku-puzzle-solver-switch.component.html",
-    styleUrl: "./sudoku-puzzle-solver-switch.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        SectionComponent,
-        IconComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-sudoku-puzzle-solver-switch",
+  templateUrl: "./sudoku-puzzle-solver-switch.component.html",
+  styleUrl: "./sudoku-puzzle-solver-switch.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SectionComponent, IconComponent, AsyncPipe, TranslateModule],
 })
 export class SudokuPuzzleSolverSwitchComponent {
   private store: Store = inject(Store);

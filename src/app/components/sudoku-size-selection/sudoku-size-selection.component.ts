@@ -12,12 +12,12 @@ import { SelectionListComponent } from "../general/selection-list/selection-list
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-size-selection",
-    templateUrl: "./sudoku-size-selection.component.html",
-    styleUrl: "./sudoku-size-selection.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [SelectionListComponent, TranslateModule],
+  selector: "app-sudoku-size-selection",
+  templateUrl: "./sudoku-size-selection.component.html",
+  styleUrl: "./sudoku-size-selection.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SelectionListComponent, TranslateModule],
 })
 export class SudokuSizeSelectionComponent {
   protected selectionSizes: SudokuSizeSelectionItem[] = [4, 9, 16, 25].map(

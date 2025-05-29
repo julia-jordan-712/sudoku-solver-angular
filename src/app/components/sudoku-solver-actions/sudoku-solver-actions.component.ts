@@ -8,16 +8,12 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-solver-actions",
-    templateUrl: "./sudoku-solver-actions.component.html",
-    styleUrl: "./sudoku-solver-actions.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        IconComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-sudoku-solver-actions",
+  templateUrl: "./sudoku-solver-actions.component.html",
+  styleUrl: "./sudoku-solver-actions.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [IconComponent, AsyncPipe, TranslateModule],
 })
 export class SudokuSolverActionsComponent {
   private store = inject(Store);

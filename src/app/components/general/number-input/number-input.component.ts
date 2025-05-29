@@ -12,12 +12,12 @@ import { LabelInputComponent } from "../label-input/label-input.component";
 import { FormsModule } from "@angular/forms";
 
 @Component({
-    selector: "app-number-input",
-    templateUrl: "./number-input.component.html",
-    styleUrl: "./number-input.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [LabelInputComponent, FormsModule],
+  selector: "app-number-input",
+  templateUrl: "./number-input.component.html",
+  styleUrl: "./number-input.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LabelInputComponent, FormsModule],
 })
 export class NumberInputComponent implements OnChanges {
   @Input()

@@ -5,7 +5,7 @@ import { TranslateModule } from "@ngx-translate/core";
 import { HelpComponent } from "./help.component";
 
 @NgModule({
-    imports: [CommonModule, IconModule, TranslateModule, HelpComponent],
-    exports: [HelpComponent],
+  imports: [CommonModule, IconModule, TranslateModule, HelpComponent],
+  exports: [HelpComponent],
 })
 export class HelpModule {}

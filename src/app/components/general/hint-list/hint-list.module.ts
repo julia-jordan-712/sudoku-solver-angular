@@ -6,13 +6,13 @@ import { TranslateI18nKeyModule } from "@app/pipes/translate-i18n-key/translate-
 import { HintListComponent } from "./hint-list.component";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        CloseButtonModule,
-        SectionModule,
-        TranslateI18nKeyModule,
-        HintListComponent,
-    ],
-    exports: [HintListComponent],
+  imports: [
+    CommonModule,
+    CloseButtonModule,
+    SectionModule,
+    TranslateI18nKeyModule,
+    HintListComponent,
+  ],
+  exports: [HintListComponent],
 })
 export class HintListModule {}

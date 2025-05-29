@@ -10,17 +10,17 @@ import { SudokuSizeSelectionModule } from "@app/components/sudoku-size-selection
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        HintListModule,
-        IconModule,
-        SectionModule,
-        SudokuGridModule,
-        SudokuPuzzleSolverSwitchModule,
-        SudokuSizeSelectionModule,
-        TranslateModule,
-        SudokuPuzzleComponent,
-    ],
-    exports: [SudokuPuzzleComponent],
+  imports: [
+    CommonModule,
+    HintListModule,
+    IconModule,
+    SectionModule,
+    SudokuGridModule,
+    SudokuPuzzleSolverSwitchModule,
+    SudokuSizeSelectionModule,
+    TranslateModule,
+    SudokuPuzzleComponent,
+  ],
+  exports: [SudokuPuzzleComponent],
 })
 export class SudokuPuzzleModule {}

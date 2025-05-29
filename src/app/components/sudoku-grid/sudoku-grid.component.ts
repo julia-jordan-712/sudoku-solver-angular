@@ -17,13 +17,13 @@ import { SudokuGridRowComponent } from "./sudoku-grid-row/sudoku-grid-row.compon
 import { SudokuVerificationComponent } from "../sudoku-verification/sudoku-verification.component";
 
 @Component({
-    selector: "app-sudoku-grid",
-    templateUrl: "./sudoku-grid.component.html",
-    styleUrl: "./sudoku-grid.component.scss",
-    providers: [SudokuGridComponentService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [SudokuGridRowComponent, SudokuVerificationComponent],
+  selector: "app-sudoku-grid",
+  templateUrl: "./sudoku-grid.component.html",
+  styleUrl: "./sudoku-grid.component.scss",
+  providers: [SudokuGridComponentService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SudokuGridRowComponent, SudokuVerificationComponent],
 })
 export class SudokuGridComponent {
   protected _grid: Nullable<SudokuGridViewModel>;

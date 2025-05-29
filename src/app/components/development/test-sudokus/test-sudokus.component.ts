@@ -10,16 +10,12 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-test-sudokus",
-    templateUrl: "./test-sudokus.component.html",
-    styleUrl: "./test-sudokus.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        DropdownComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-test-sudokus",
+  templateUrl: "./test-sudokus.component.html",
+  styleUrl: "./test-sudokus.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [DropdownComponent, AsyncPipe, TranslateModule],
 })
 export class TestSudokusComponent {
   private store: Store = inject(Store);

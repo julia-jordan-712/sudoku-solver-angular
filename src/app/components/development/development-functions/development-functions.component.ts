@@ -14,22 +14,22 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-development-functions",
-    templateUrl: "./development-functions.component.html",
-    styleUrl: "./development-functions.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        SectionComponent,
-        CloseButtonComponent,
-        SudokuCopyComponent,
-        SudokuPasteComponent,
-        RestartComponent,
-        TestSudokusComponent,
-        SudokuSolverSettingsComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-development-functions",
+  templateUrl: "./development-functions.component.html",
+  styleUrl: "./development-functions.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    SectionComponent,
+    CloseButtonComponent,
+    SudokuCopyComponent,
+    SudokuPasteComponent,
+    RestartComponent,
+    TestSudokusComponent,
+    SudokuSolverSettingsComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class DevelopmentFunctionsComponent {
   private store = inject(Store);

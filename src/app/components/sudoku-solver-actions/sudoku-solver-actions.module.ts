@@ -5,7 +5,12 @@ import { SudokuSolverActionsComponent } from "@app/components/sudoku-solver-acti
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-    imports: [CommonModule, IconModule, TranslateModule, SudokuSolverActionsComponent],
-    exports: [SudokuSolverActionsComponent],
+  imports: [
+    CommonModule,
+    IconModule,
+    TranslateModule,
+    SudokuSolverActionsComponent,
+  ],
+  exports: [SudokuSolverActionsComponent],
 })
 export class SudokuSolverActionsModule {}

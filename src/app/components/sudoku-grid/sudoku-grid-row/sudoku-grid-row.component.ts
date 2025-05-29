@@ -20,13 +20,13 @@ import { SudokuGridCellComponent } from "../sudoku-grid-cell/sudoku-grid-cell.co
 import { AsyncPipe } from "@angular/common";
 
 @Component({
-    selector: "app-sudoku-grid-row",
-    templateUrl: "./sudoku-grid-row.component.html",
-    styleUrl: "./sudoku-grid-row.component.scss",
-    providers: [SudokuGridRowComponentService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [SudokuGridCellComponent, AsyncPipe],
+  selector: "app-sudoku-grid-row",
+  templateUrl: "./sudoku-grid-row.component.html",
+  styleUrl: "./sudoku-grid-row.component.scss",
+  providers: [SudokuGridRowComponentService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SudokuGridCellComponent, AsyncPipe],
 })
 export class SudokuGridRowComponent implements OnChanges {
   private componentService: SudokuGridRowComponentService = inject(

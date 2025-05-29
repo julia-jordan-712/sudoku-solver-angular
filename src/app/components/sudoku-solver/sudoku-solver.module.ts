@@ -13,20 +13,20 @@ import { SudokuSolverComponent } from "@app/components/sudoku-solver/sudoku-solv
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        HintListModule,
-        SectionModule,
-        SudokuGridModule,
-        SudokuPuzzleSolverSwitchModule,
-        SudokuSolverActionsModule,
-        SudokuSolverBranchesModule,
-        SudokuSolverSpeedModule,
-        SudokuSolverStatusModule,
-        SudokuSolverStepsModule,
-        TranslateModule,
-        SudokuSolverComponent,
-    ],
-    exports: [SudokuSolverComponent],
+  imports: [
+    CommonModule,
+    HintListModule,
+    SectionModule,
+    SudokuGridModule,
+    SudokuPuzzleSolverSwitchModule,
+    SudokuSolverActionsModule,
+    SudokuSolverBranchesModule,
+    SudokuSolverSpeedModule,
+    SudokuSolverStatusModule,
+    SudokuSolverStepsModule,
+    TranslateModule,
+    SudokuSolverComponent,
+  ],
+  exports: [SudokuSolverComponent],
 })
 export class SudokuSolverModule {}

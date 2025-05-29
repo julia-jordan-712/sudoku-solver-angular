@@ -8,12 +8,12 @@ import { IconComponent } from "../general/icon/icon.component";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-copy",
-    templateUrl: "./sudoku-copy.component.html",
-    styleUrl: "./sudoku-copy.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IconComponent, TranslateModule],
+  selector: "app-sudoku-copy",
+  templateUrl: "./sudoku-copy.component.html",
+  styleUrl: "./sudoku-copy.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [IconComponent, TranslateModule],
 })
 export class SudokuCopyComponent {
   private store = inject(Store);

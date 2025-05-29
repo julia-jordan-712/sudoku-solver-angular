@@ -5,12 +5,12 @@ import { environment } from "src/environments/environment";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-development-open",
-    templateUrl: "./development-open.component.html",
-    styleUrl: "./development-open.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [TranslateModule],
+  selector: "app-development-open",
+  templateUrl: "./development-open.component.html",
+  styleUrl: "./development-open.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [TranslateModule],
 })
 export class DevelopmentOpenComponent {
   private store = inject(Store);

@@ -6,7 +6,13 @@ import { LabelInputModule } from "@app/components/general/label-input/label-inpu
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-    imports: [CommonModule, FormsModule, LabelInputModule, TranslateModule, DropdownComponent],
-    exports: [DropdownComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    LabelInputModule,
+    TranslateModule,
+    DropdownComponent,
+  ],
+  exports: [DropdownComponent],
 })
 export class DropdownModule {}

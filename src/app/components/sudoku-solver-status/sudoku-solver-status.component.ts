@@ -7,16 +7,12 @@ import { Observable } from "rxjs";
 import { AsyncPipe, DecimalPipe } from "@angular/common";
 
 @Component({
-    selector: "app-sudoku-solver-status",
-    templateUrl: "./sudoku-solver-status.component.html",
-    styleUrl: "./sudoku-solver-status.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        AsyncPipe,
-        DecimalPipe,
-        TranslateModule,
-    ],
+  selector: "app-sudoku-solver-status",
+  templateUrl: "./sudoku-solver-status.component.html",
+  styleUrl: "./sudoku-solver-status.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [AsyncPipe, DecimalPipe, TranslateModule],
 })
 export class SudokuSolverStatusComponent {
   translate = inject(TranslateService);

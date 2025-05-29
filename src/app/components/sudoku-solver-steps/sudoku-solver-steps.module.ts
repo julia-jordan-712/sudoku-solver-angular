@@ -6,8 +6,13 @@ import { TranslateI18nKeyModule } from "@app/pipes/translate-i18n-key/translate-
 import { SudokuSolverLastStepDescriptionComponent } from "./sudoku-solver-last-step-description/sudoku-solver-last-step-description.component";
 
 @NgModule({
-    imports: [AnimationsModule, CommonModule, TranslateI18nKeyModule, SudokuSolverStepsComponent,
-        SudokuSolverLastStepDescriptionComponent],
-    exports: [SudokuSolverStepsComponent],
+  imports: [
+    AnimationsModule,
+    CommonModule,
+    TranslateI18nKeyModule,
+    SudokuSolverStepsComponent,
+    SudokuSolverLastStepDescriptionComponent,
+  ],
+  exports: [SudokuSolverStepsComponent],
 })
 export class SudokuSolverStepsModule {}

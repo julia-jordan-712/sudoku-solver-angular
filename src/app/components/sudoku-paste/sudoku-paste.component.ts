@@ -12,16 +12,12 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-paste",
-    templateUrl: "./sudoku-paste.component.html",
-    styleUrl: "./sudoku-paste.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        IconComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-sudoku-paste",
+  templateUrl: "./sudoku-paste.component.html",
+  styleUrl: "./sudoku-paste.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [IconComponent, AsyncPipe, TranslateModule],
 })
 export class SudokuPasteComponent {
   private logger = new Logger(SudokuPasteComponent.name);

@@ -5,7 +5,12 @@ import { SudokuSolverSpeedComponent } from "@app/components/sudoku-solver-speed/
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-    imports: [CommonModule, IconModule, TranslateModule, SudokuSolverSpeedComponent],
-    exports: [SudokuSolverSpeedComponent],
+  imports: [
+    CommonModule,
+    IconModule,
+    TranslateModule,
+    SudokuSolverSpeedComponent,
+  ],
+  exports: [SudokuSolverSpeedComponent],
 })
 export class SudokuSolverSpeedModule {}

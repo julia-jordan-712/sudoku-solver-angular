@@ -18,21 +18,21 @@ import { AsyncPipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-    selector: "app-sudoku-puzzle",
-    templateUrl: "./sudoku-puzzle.component.html",
-    styleUrl: "./sudoku-puzzle.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        SectionComponent,
-        IconComponent,
-        SudokuGridComponent,
-        SudokuPuzzleSolverSwitchComponent,
-        SudokuSizeSelectionComponent,
-        HintListComponent,
-        AsyncPipe,
-        TranslateModule,
-    ],
+  selector: "app-sudoku-puzzle",
+  templateUrl: "./sudoku-puzzle.component.html",
+  styleUrl: "./sudoku-puzzle.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    SectionComponent,
+    IconComponent,
+    SudokuGridComponent,
+    SudokuPuzzleSolverSwitchComponent,
+    SudokuSizeSelectionComponent,
+    HintListComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class SudokuPuzzleComponent {
   private store: Store = inject(Store);

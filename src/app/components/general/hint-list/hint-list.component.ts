@@ -18,17 +18,12 @@ import { AsyncPipe } from "@angular/common";
 import { I18nKeyPipe } from "@app/pipes/translate-i18n-key/i18n-key.pipe";
 
 @Component({
-    selector: "app-hint-list",
-    templateUrl: "./hint-list.component.html",
-    styleUrl: "./hint-list.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        SectionComponent,
-        CloseButtonComponent,
-        AsyncPipe,
-        I18nKeyPipe,
-    ],
+  selector: "app-hint-list",
+  templateUrl: "./hint-list.component.html",
+  styleUrl: "./hint-list.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SectionComponent, CloseButtonComponent, AsyncPipe, I18nKeyPipe],
 })
 export class HintListComponent {
   private store: Store<AppState> = inject(Store);
