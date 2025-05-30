@@ -1,5 +1,15 @@
 # Sudoku Solver (in Angular)
 
+## About
+
+The solver allows to enter a Sudoku which is not solved yet.
+![Enter puzzle](./readme/SudokuSolver_About_1.png)
+
+It then solves it step by step. Every step updates the UI and gives a note what was done in the last step.
+![Solve Sudoku](./readme/SudokuSolver_About_2.png)
+
+My motivation behind developing this was to answer the question "When I solve a Sudoku, my brain follows certain algorithms to find a solution. Can I write them down as source code? Also I want a nice UI for it."
+
 ## Prerequisites
 
 The following prerequisites need to be fulfilled to work with the project:
