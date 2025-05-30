@@ -17,6 +17,7 @@
     "generate-effect": "ng generate @ngrx/schematics:effect",
     "lint": "ng lint",
     "prettier": "prettier --write  \"./**/*\"",
+    "server": "npm run build && sh ./scripts/start-server.sh",
     "start": "ng serve",
     "test": "ng test",
     "watch": "ng build --watch --configuration development"
