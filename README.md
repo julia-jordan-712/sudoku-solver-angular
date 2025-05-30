@@ -2,9 +2,6 @@
 
 ## Prerequisites
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.5.  
-It is running on Angular 18.2.0.
-
 The following prerequisites need to be fulfilled to work with the project:
 
 1. [NodeJS](https://nodejs.org/en/about) is installed.
