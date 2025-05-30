@@ -92,7 +92,7 @@ Hit CTRL-C to stop the server
 Open: http://127.0.0.1:9999
 ```
 
-This script [builds](###build) the application and implements the MDN instructions to [set up a local testing server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/set_up_a_local_testing_server).  
+This script builds the application and implements the MDN instructions to [set up a local testing server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/set_up_a_local_testing_server).  
 Setting up a local testing server is necessary due to [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS/Errors/CORSRequestNotHttp#loading_a_local_file) protection policies of modern web browsers. Building the application makes the index.html available, however just opening this file in the web browser will result in CORS errors.
 
 ## Development
