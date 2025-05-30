@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "sudoku-solver-angular:build:production"
+              "buildTarget": "sudoku-solver-angular:build:production"
             },
             "development": {
-              "browserTarget": "sudoku-solver-angular:build:development"
+              "buildTarget": "sudoku-solver-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sudoku-solver-angular:build"
+            "buildTarget": "sudoku-solver-angular:build"
           }
         },
         "test": {
