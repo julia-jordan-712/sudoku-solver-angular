@@ -41,4 +41,5 @@ startServer() {
 }
 
 checkVersions
+npm run build
 startServer
