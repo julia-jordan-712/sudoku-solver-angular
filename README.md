@@ -1,7 +1,36 @@
 # Sudoku Solver (in Angular)
 
+## Prerequisites
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.5.  
 It is running on Angular 18.2.0.
+
+The following prerequisites need to be fulfilled to work with the project:
+
+1. [NodeJS](https://nodejs.org/en/about) is installed.
+   - Open a command line and execute `node -v` to check your node installation. The result should look similar to this:
+     ```
+     $ node -v
+     v20.11.1
+     ```
+   - If node is not installed, follow the installation instructions:
+     - https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+     - https://nodejs.org/en/download
+2. [npm](https://docs.npmjs.com/about-npm) is installed.
+   - Open a command line and execute `npm -v` to check your node installation. The result should look similar to this:
+     ```
+     $ npm -v
+     10.2.4
+     ```
+   - If npm is not installed, follow the installation instructions:
+     - https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+3. [npx](https://docs.npmjs.com/cli/v8/commands/npx) is installed.
+   - Open a command line and execute `npx -v` to check your node installation. The result should look similar to this:
+     ```
+     $ npx -v
+     10.2.4
+     ```
+   - If npx is not installed, execute `npm i -g npx` to install.
 
 ## Development
 
