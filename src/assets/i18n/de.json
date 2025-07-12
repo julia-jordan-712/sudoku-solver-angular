@@ -94,7 +94,8 @@
         "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_PAIR": "Eliminierung anderer möglicher Werte aus Paaren, die nur zweimal möglich sind",
         "BRANCH_CLOSE": "Aktuellen Zweig schließen, da er ungültig geworden ist",
         "BRANCH_OPEN": "Neuen Zweig öffnen, da bei diesem Schritt kein Fortschritt erzielt wurde",
-        "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_MULTIPLES": "Eliminierung anderer möglicher Werte aus Kombinationen, die nur in bestimmten Zellen möglich sind"
+        "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_MULTIPLES": "Eliminierung anderer möglicher Werte aus Kombinationen, die nur in bestimmten Zellen möglich sind",
+        "ELIMINATE_POSSIBLE_MULTIPLES_FROM_OTHER_CELLS": "Eliminierung von Kombinationen, die nur in bestimmten Zellen möglich sind, aus anderen Zellen"
       },
       "PAUSE_AT_STEP": {
         "LABEL": "Pausiere bei Schritt ",
