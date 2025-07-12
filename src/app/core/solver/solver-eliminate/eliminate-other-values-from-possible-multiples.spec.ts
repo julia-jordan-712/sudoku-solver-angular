@@ -207,7 +207,9 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         [2, 4, 5, 6, 8, 9],
       ],
     ];
-    new EliminateOtherValuesFromPossibleMultiples().run(sudoku);
+    expect(
+      new EliminateOtherValuesFromPossibleMultiples().run(sudoku),
+    ).toBeTrue();
 
     // In the 8th column the values [1,7,9] are possible in the 1st, 8th and 9th row - and nowhere else.
     // So the other values can be removed from these cells.
