@@ -61,21 +61,35 @@ export class EliminateOtherValuesFromPossibleMultiples
     grid: SudokuGrid,
     squarePositionsMap: CellPositionMap,
   ): PossibleMultiplesResult {
+    return {
+      values: combinationValues,
+      rows: this.findRowPositionsContainingThisCombination(
+        combinationValues,
+        grid,
+      ),
+      columns: this.findColumnPositionsContainingThisCombination(
+        combinationValues,
+        grid,
+      ),
+      squares: this.findSquarePositionsContainingThisCombination(
+        combinationValues,
+        grid,
+        squarePositionsMap,
+      ),
+    };
+  }
+
+  private findRowPositionsContainingThisCombination(
+    combinationValues: number[],
+    grid: SudokuGrid,
+  ): Set<CellPosition> {
     const rows: Set<CellPosition> = new Set();
-    const columns: Set<CellPosition> = new Set();
-    const squares: Set<CellPosition> = new Set();
 
     for (let i = 0; i < grid.length; i++) {
       const rowPositionsContainingCombinationValues: CellPosition[] = [];
       const combinationValuesFoundInRow: Set<number> = new Set();
-      const columnPositionsContainingCombinationValues: CellPosition[] = [];
-      const combinationValuesFoundInColumn: Set<number> = new Set();
 
       const rowCells: SudokuGridCell[] = grid[i]!;
-      const columnCells: SudokuGridCell[] = SudokuGridUtil.getColumnCells(
-        grid,
-        i,
-      );
       for (let j = 0; j < grid.length; j++) {
         const containedInRow = this.containedCombinationValues(
           combinationValues,
@@ -85,6 +99,33 @@ export class EliminateOtherValuesFromPossibleMultiples
           containedInRow.forEach((v) => combinationValuesFoundInRow.add(v));
           rowPositionsContainingCombinationValues.push(new CellPosition(i, j));
         }
+      }
+      if (
+        rowPositionsContainingCombinationValues.length ===
+          combinationValues.length &&
+        combinationValuesFoundInRow.size === combinationValues.length
+      ) {
+        rowPositionsContainingCombinationValues.forEach((p) => rows.add(p));
+      }
+    }
+    return rows;
+  }
+
+  private findColumnPositionsContainingThisCombination(
+    combinationValues: number[],
+    grid: SudokuGrid,
+  ): Set<CellPosition> {
+    const columns: Set<CellPosition> = new Set();
+
+    for (let i = 0; i < grid.length; i++) {
+      const columnPositionsContainingCombinationValues: CellPosition[] = [];
+      const combinationValuesFoundInColumn: Set<number> = new Set();
+
+      const columnCells: SudokuGridCell[] = SudokuGridUtil.getColumnCells(
+        grid,
+        i,
+      );
+      for (let j = 0; j < grid.length; j++) {
         const containedInColumn = this.containedCombinationValues(
           combinationValues,
           columnCells[j],
@@ -98,7 +139,27 @@ export class EliminateOtherValuesFromPossibleMultiples
           );
         }
       }
+      if (
+        columnPositionsContainingCombinationValues.length ===
+          combinationValues.length &&
+        combinationValuesFoundInColumn.size === combinationValues.length
+      ) {
+        columnPositionsContainingCombinationValues.forEach((p) =>
+          columns.add(p),
+        );
+      }
+    }
+    return columns;
+  }
 
+  private findSquarePositionsContainingThisCombination(
+    combinationValues: number[],
+    grid: SudokuGrid,
+    squarePositionsMap: CellPositionMap,
+  ): Set<CellPosition> {
+    const squares: Set<CellPosition> = new Set();
+
+    for (let i = 0; i < grid.length; i++) {
       const squarePositionsContainingCombinationValues: CellPosition[] = [];
       const combinationValuesFoundInSquare: Set<number> = new Set();
       squarePositionsMap.getForSquareIndex(i).forEach((position) => {
@@ -113,23 +174,6 @@ export class EliminateOtherValuesFromPossibleMultiples
           squarePositionsContainingCombinationValues.push(position);
         }
       });
-
-      if (
-        rowPositionsContainingCombinationValues.length ===
-          combinationValues.length &&
-        combinationValuesFoundInRow.size === combinationValues.length
-      ) {
-        rowPositionsContainingCombinationValues.forEach((p) => rows.add(p));
-      }
-      if (
-        columnPositionsContainingCombinationValues.length ===
-          combinationValues.length &&
-        combinationValuesFoundInColumn.size === combinationValues.length
-      ) {
-        columnPositionsContainingCombinationValues.forEach((p) =>
-          columns.add(p),
-        );
-      }
       if (
         squarePositionsContainingCombinationValues.length ===
           combinationValues.length &&
@@ -140,7 +184,7 @@ export class EliminateOtherValuesFromPossibleMultiples
         );
       }
     }
-    return { values: combinationValues, rows, columns, squares };
+    return squares;
   }
 
   private containedCombinationValues(
