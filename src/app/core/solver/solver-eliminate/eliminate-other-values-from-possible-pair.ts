@@ -97,7 +97,7 @@ export class EliminateOtherValuesFromPossiblePair implements SolverRunnable {
         if (this.containsSearchedPair(v1, v2, columnCells[j])) {
           columnPositionsContainingPair.push(new CellPosition(j, i));
         } else if (this.containsOneButNotTheOther(v1, v2, columnCells[j])) {
-          columnPositionsContainingOneOfBothValues.push(new CellPosition(i, j));
+          columnPositionsContainingOneOfBothValues.push(new CellPosition(j, i));
         }
       }
 

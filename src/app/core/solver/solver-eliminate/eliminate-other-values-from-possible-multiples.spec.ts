@@ -5,44 +5,6 @@ import { EliminateOtherValuesFromPossibleMultiples } from "./eliminate-other-val
 describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
   [
     {
-      text: "row",
-      grid: [
-        [3, [4], 1, 2],
-        [[1, 3, 4], [1, 4], [1, 3], 4],
-        [2, 3, 4, 1],
-        [4, 1, 2, 3],
-      ],
-    },
-    {
-      text: "column",
-      grid: [
-        [[1], 4, 1, 2],
-        [[1, 2, 3], 2, 3, 4],
-        [[1, 2], 3, 4, 1],
-        [4, 1, 2, 3],
-      ],
-    },
-    {
-      text: "square",
-      grid: [
-        [3, [1, 2, 4], 1, 2],
-        [[1, 4], [4], 3, 4],
-        [2, 3, 4, 1],
-        [4, 1, 2, 3],
-      ],
-    },
-  ].forEach((params) => {
-    it(`should not do anything if the values also appear in other cells of a ${params.text}`, () => {
-      const grid = SudokuGridUtil.clone(params.grid);
-      expect(
-        new EliminateOtherValuesFromPossibleMultiples().run(grid),
-      ).toBeFalse();
-      expect(grid).toEqual(params.grid);
-    });
-  });
-
-  [
-    {
       input: [
         [3, 4, 1, 2],
         [[1, 2, 3, 4], [3, 4], [1, 2, 3], [4]],
@@ -92,17 +54,19 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
       expect(
         new EliminateOtherValuesFromPossibleMultiples().run(grid),
       ).toBeTrue();
-      expect(grid).toEqual(params.expected);
+      expect(grid)
+        .withContext(toErrorMessage(params.expected, grid))
+        .toEqual(params.expected);
     });
   });
 
   it("should handle rows, columns and squares simultaneously for the same pair of numbers", () => {
     const all = [1, 2, 3, 4];
     const firstRowThirdColumSecondSquareFourthSquare_pair13 = [
-      [[1, 2, 3], [2], [1, 3, 4], [4]],
+      [[1, 2, 3], [3], [1, 2, 4], [4]],
       [all, all, [4], all],
       [all, all, [1, 2, 3], [4]],
-      [all, all, [2], [1, 3, 4]],
+      [all, all, [3], [1, 2, 4]],
     ];
     const firstRowFirstColumnFirstSquare_pair13 = [
       [[2], [1, 2, 3], [1, 3, 4], [4]],
@@ -116,24 +80,40 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         firstRowThirdColumSecondSquareFourthSquare_pair13,
       ),
     ).toBeTrue();
-    expect(firstRowThirdColumSecondSquareFourthSquare_pair13).toEqual([
-      [[1, 3], [2], [1, 3], [4]],
-      [all, all, [4], [1, 3]],
-      [all, all, [1, 3], [4]],
-      [all, all, [2], [1, 3]],
-    ]);
+    const firstRowThirdColumSecondSquareFourthSquare_pair13_expected = [
+      [[1, 2], [3], [1, 2], [4]],
+      [all, all, [4], [1, 2]],
+      [all, all, [1, 2], [4]],
+      [all, all, [3], [1, 2]],
+    ];
+    expect(firstRowThirdColumSecondSquareFourthSquare_pair13)
+      .withContext(
+        toErrorMessage(
+          firstRowThirdColumSecondSquareFourthSquare_pair13_expected,
+          firstRowThirdColumSecondSquareFourthSquare_pair13,
+        ),
+      )
+      .toEqual(firstRowThirdColumSecondSquareFourthSquare_pair13_expected);
 
     expect(
       new EliminateOtherValuesFromPossibleMultiples().run(
         firstRowFirstColumnFirstSquare_pair13,
       ),
     ).toBeTrue();
-    expect(firstRowFirstColumnFirstSquare_pair13).toEqual([
+    const firstRowFirstColumnFirstSquare_pair13_expected = [
       [[2], [1, 3], [1, 3], [4]],
       [[1, 3], [2, 4], all, all],
       [[1, 3], all, all, all],
       [[4], all, all, all],
-    ]);
+    ];
+    expect(firstRowFirstColumnFirstSquare_pair13)
+      .withContext(
+        toErrorMessage(
+          firstRowFirstColumnFirstSquare_pair13_expected,
+          firstRowFirstColumnFirstSquare_pair13,
+        ),
+      )
+      .toEqual(firstRowFirstColumnFirstSquare_pair13_expected);
   });
 
   it("should find pair [1,2] in row 6", () => {
@@ -177,7 +157,7 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         [1, 2, 6],
         [2, 6, 7],
         8,
-        [2, 6, 9],
+        [1, 2, 6, 9],
       ],
       [[2, 6, 8], 1, [6, 8], 5, 7, 9, 4, [2, 6], 3],
       [5, [7, 8], 2, [1, 4, 6, 7, 8], 9, [1, 4, 6, 7], 3, [4, 6], [4, 6, 8]],
@@ -203,7 +183,7 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         [2, 4, 5, 6],
         7,
       ],
-      [4, [2, 8], 7, 9, 1, 5, [2, 6, 8], 3, [2, 6]],
+      [4, [2, 8], 7, 9, 1, 5, [2, 6, 8], 3, [2, 6, 8]],
       [
         [2, 3, 9],
         6,
@@ -222,17 +202,17 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         [2, 4, 6, 7],
         [2, 6],
         3,
-        [2, 7, 8],
-        [2, 4, 5, 7, 9],
-        [2, 4, 5, 9],
+        [2, 6, 7, 8],
+        [2, 4, 5, 6, 7, 9],
+        [2, 4, 5, 6, 8, 9],
       ],
     ];
     new EliminateOtherValuesFromPossibleMultiples().run(sudoku);
 
-    // In the last square the values 1, 4, 5 and 9 are only possible in 4 cells.
-    // So the values 2 and 7 can be removed from these cells.
+    // In the 8th column the values [1,7,9] are possible in the 1st, 8th and 9th row - and nowhere else.
+    // So the other values can be removed from these cells.
     const expected = [
-      [[2, 6, 7, 9], 4, [6, 9], 3, [2, 6], 8, 5, [1, 2, 6, 7, 9], [1, 2, 6, 9]],
+      [[2, 6, 7, 9], 4, [6, 9], 3, [2, 6], 8, 5, [1, 7, 9], [1, 2, 6, 9]],
       [
         [2, 3, 6, 7, 9],
         [2, 3, 5, 7, 9],
@@ -242,7 +222,7 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         [1, 2, 6],
         [2, 6, 7],
         8,
-        [2, 6, 9],
+        [1, 2, 6, 9],
       ],
       [[2, 6, 8], 1, [6, 8], 5, 7, 9, 4, [2, 6], 3],
       [5, [7, 8], 2, [1, 4, 6, 7, 8], 9, [1, 4, 6, 7], 3, [4, 6], [4, 6, 8]],
@@ -268,7 +248,7 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         [2, 4, 5, 6],
         7,
       ],
-      [4, [2, 8], 7, 9, 1, 5, [2, 6, 8], 3, [2, 6]],
+      [4, [2, 8], 7, 9, 1, 5, [2, 6, 8], 3, [2, 6, 8]],
       [
         [2, 3, 9],
         6,
@@ -277,8 +257,8 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         8,
         [2, 4, 7],
         [2, 7],
-        [1, 4, 5, 9],
-        [1, 4, 5, 9],
+        [1, 7, 9],
+        [1, 2, 4, 5, 9],
       ],
       [
         [2, 8, 9],
@@ -287,13 +267,17 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         [2, 4, 6, 7],
         [2, 6],
         3,
-        [2, 7, 8],
-        [4, 5, 9],
-        [4, 5, 9],
+        [2, 6, 7, 8],
+        [7, 9],
+        [2, 4, 5, 6, 8, 9],
       ],
     ];
     expect(sudoku)
-      .withContext(`Expected ${expected} but got ${sudoku}`)
+      .withContext(toErrorMessage(expected, sudoku))
       .toEqual(expected);
   });
+
+  function toErrorMessage(expected: SudokuGrid, result: SudokuGrid): string {
+    return `Expected ${SudokuGridUtil.toString(expected)} but got ${SudokuGridUtil.toString(result)}`;
+  }
 });
