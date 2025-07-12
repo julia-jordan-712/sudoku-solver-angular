@@ -29,43 +29,52 @@ export class EliminateOtherValuesFromPossibleMultiples
   implements SolverRunnable
 {
   run(grid: SudokuGrid): boolean {
-    return this.eliminateNextPossibleMultiples(grid);
+    return this.iteratePossibleMultiples(grid);
   }
 
-  private eliminateNextPossibleMultiples(grid: SudokuGrid): boolean {
+  private iteratePossibleMultiples(grid: SudokuGrid): boolean {
     const squarePositionsMap: CellPositionMap =
       SudokuGridUtil.getCellPositionsOfSquares(grid.length);
 
     for (let v1 = 1; v1 <= grid.length; v1++) {
       for (let v2 = v1 + 1; v2 <= grid.length; v2++) {
         const combinationValues: number[] = [v1, v2];
-
-        const possibleMultiplesResult: PossibleMultiplesResult =
-          this.isPossibleMultiple(combinationValues, grid, squarePositionsMap);
-        let valuesEliminated = this.eliminateRows(
-          possibleMultiplesResult,
-          combinationValues,
+        const valuesEliminated = this.eliminateNextPossibleMultiples(
           grid,
+          squarePositionsMap,
+          combinationValues,
         );
-        valuesEliminated =
-          this.eliminateColumns(
-            possibleMultiplesResult,
-            combinationValues,
-            grid,
-          ) || valuesEliminated;
-        valuesEliminated =
-          this.eliminateSquares(
-            squarePositionsMap,
-            possibleMultiplesResult,
-            combinationValues,
-            grid,
-          ) || valuesEliminated;
         if (valuesEliminated) {
           return true;
         }
       }
     }
     return false;
+  }
+
+  private eliminateNextPossibleMultiples(
+    grid: SudokuGrid,
+    squarePositionsMap: CellPositionMap,
+    combinationValues: number[],
+  ): boolean {
+    const possibleMultiplesResult: PossibleMultiplesResult =
+      this.isPossibleMultiple(combinationValues, grid, squarePositionsMap);
+    let valuesEliminated = this.eliminateRows(
+      possibleMultiplesResult,
+      combinationValues,
+      grid,
+    );
+    valuesEliminated =
+      this.eliminateColumns(possibleMultiplesResult, combinationValues, grid) ||
+      valuesEliminated;
+    valuesEliminated =
+      this.eliminateSquares(
+        squarePositionsMap,
+        possibleMultiplesResult,
+        combinationValues,
+        grid,
+      ) || valuesEliminated;
+    return valuesEliminated;
   }
 
   private isPossibleMultiple(
