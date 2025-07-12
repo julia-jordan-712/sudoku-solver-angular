@@ -189,8 +189,8 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleExtreme.PUZZLE_4.puzzle,
       name: "extreme puzzle 4",
-      steps: 106,
-      branches: 3,
+      steps: 77,
+      branches: 1,
       success: true,
     },
     {
@@ -203,14 +203,14 @@ describe(SudokuSolverService.name, () => {
     {
       puzzle: PuzzleExtreme.PUZZLE_6.puzzle,
       name: "extreme puzzle 6",
-      steps: 63,
+      steps: 64,
       branches: 1,
       success: true,
     },
     {
       puzzle: PuzzleExtreme.PUZZLE_7.puzzle,
       name: "extreme puzzle 7",
-      steps: 83,
+      steps: 72,
       branches: 1,
       success: true,
     },

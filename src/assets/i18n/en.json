@@ -93,7 +93,8 @@
         "ELIMINATE_POSSIBLE_PAIR_FROM_OTHER_CELLS": "Eliminate pairs, which are possible only twice, from other cells",
         "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_PAIR": "Eliminate other possible values from pairs, which are possible only twice",
         "BRANCH_CLOSE": "Close current branch because it became invalid",
-        "BRANCH_OPEN": "Open new branch because no progress was made during this step"
+        "BRANCH_OPEN": "Open new branch because no progress was made during this step",
+        "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_MULTIPLES": "Eliminate other possible values from combinations, which are possible only in certain cells"
       },
       "PAUSE_AT_STEP": {
         "LABEL": "Pause at step",
