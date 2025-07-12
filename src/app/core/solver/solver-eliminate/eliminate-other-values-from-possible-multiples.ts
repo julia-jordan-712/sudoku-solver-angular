@@ -5,9 +5,8 @@ import { SudokuGrid, SudokuGridCell } from "@app/types/sudoku-grid";
 import { isArray } from "@app/util/is-array";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
-  v1: number;
-  v2: number;
 interface PossibleMultiplesResult {
+  values: number[];
   rows: number[];
   columns: number[];
   squares: number[];
@@ -39,23 +38,26 @@ export class EliminateOtherValuesFromPossibleMultiples
 
     for (let v1 = 1; v1 <= grid.length; v1++) {
       for (let v2 = v1 + 1; v2 <= grid.length; v2++) {
+        const combinationValues: number[] = [v1, v2];
+
         const possibleMultiplesResult: PossibleMultiplesResult =
-          this.isPossibleMultiple(v1, v2, grid, squarePositionsMap);
+          this.isPossibleMultiple(combinationValues, grid, squarePositionsMap);
         let valuesEliminated = this.eliminateRows(
           possibleMultiplesResult,
-          v1,
-          v2,
+          combinationValues,
           grid,
         );
         valuesEliminated =
-          this.eliminateColumns(possibleMultiplesResult, v1, v2, grid) ||
-          valuesEliminated;
+          this.eliminateColumns(
+            possibleMultiplesResult,
+            combinationValues,
+            grid,
+          ) || valuesEliminated;
         valuesEliminated =
           this.eliminateSquares(
             squarePositionsMap,
             possibleMultiplesResult,
-            v1,
-            v2,
+            combinationValues,
             grid,
           ) || valuesEliminated;
         if (valuesEliminated) {
@@ -67,8 +69,7 @@ export class EliminateOtherValuesFromPossibleMultiples
   }
 
   private isPossibleMultiple(
-    v1: number,
-    v2: number,
+    combinationValues: number[],
     grid: SudokuGrid,
     squarePositionsMap: CellPositionMap,
   ): PossibleMultiplesResult {
@@ -88,23 +89,31 @@ export class EliminateOtherValuesFromPossibleMultiples
         i,
       );
       for (let j = 0; j < grid.length; j++) {
-        if (this.containsAllCombinationValues(v1, v2, rowCells[j])) {
+        if (this.containsAllCombinationValues(combinationValues, rowCells[j])) {
           rowPositionsContainingAllCombinationValues.push(
             new CellPosition(i, j),
           );
         } else if (
-          this.containsSomeButNotAllCombinationValues(v1, v2, rowCells[j])
+          this.containsSomeButNotAllCombinationValues(
+            combinationValues,
+            rowCells[j],
+          )
         ) {
           rowPositionsContainingSomeCombinationValues.push(
             new CellPosition(i, j),
           );
         }
-        if (this.containsAllCombinationValues(v1, v2, columnCells[j])) {
+        if (
+          this.containsAllCombinationValues(combinationValues, columnCells[j])
+        ) {
           columnPositionsContainingAllCombinationValues.push(
             new CellPosition(j, i),
           );
         } else if (
-          this.containsSomeButNotAllCombinationValues(v1, v2, columnCells[j])
+          this.containsSomeButNotAllCombinationValues(
+            combinationValues,
+            columnCells[j],
+          )
         ) {
           columnPositionsContainingSomeCombinationValues.push(
             new CellPosition(i, j),
@@ -117,16 +126,14 @@ export class EliminateOtherValuesFromPossibleMultiples
       squarePositionsMap.getForSquareIndex(i).forEach((position) => {
         if (
           this.containsAllCombinationValues(
-            v1,
-            v2,
+            combinationValues,
             grid[position.x][position.y],
           )
         ) {
           squarePositionsContainingAllCombinationValues.push(position);
         } else if (
           this.containsSomeButNotAllCombinationValues(
-            v1,
-            v2,
+            combinationValues,
             grid[position.x][position.y],
           )
         ) {
@@ -153,41 +160,39 @@ export class EliminateOtherValuesFromPossibleMultiples
         squares.push(i);
       }
     }
-    return { v1, v2, rows, columns, squares };
+    return { values: combinationValues, rows, columns, squares };
   }
 
   private containsAllCombinationValues(
-    v1: number,
-    v2: number,
+    combinationValues: number[],
     cell: SudokuGridCell,
   ): boolean {
-    return isArray(cell) && cell.includes(v1) && cell.includes(v2);
+    return isArray(cell) && combinationValues.every((v) => cell.includes(v));
   }
 
   private containsSomeButNotAllCombinationValues(
-    v1: number,
-    v2: number,
+    combinationValues: number[],
     cell: SudokuGridCell,
   ): boolean {
+    // [].every -> true
+    // [].some -> false
     return (
       isArray(cell) &&
-      ((cell.includes(v1) && !cell.includes(v2)) ||
-        (cell.includes(v2) && !cell.includes(v1)))
+      combinationValues.some((v) => cell.includes(v)) &&
+      !combinationValues.every((v) => cell.includes(v))
     );
   }
 
   private eliminateRows(
     possibleCombinationResult: PossibleMultiplesResult,
-    v1: number,
-    v2: number,
+    combinationValues: number[],
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
     for (const row of possibleCombinationResult.rows) {
       for (let i = 0; i < grid.length; i++) {
         const keptCombinationValues = this.keepOnlyCombinationValuesInCell(
-          v1,
-          v2,
+          combinationValues,
           grid[row][i],
         );
         grid[row][i] = keptCombinationValues.cell;
@@ -200,16 +205,14 @@ export class EliminateOtherValuesFromPossibleMultiples
 
   private eliminateColumns(
     possibleCombinationResult: PossibleMultiplesResult,
-    v1: number,
-    v2: number,
+    combinationValues: number[],
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
     for (const column of possibleCombinationResult.columns) {
       for (let i = 0; i < grid.length; i++) {
         const keptCombinationValues = this.keepOnlyCombinationValuesInCell(
-          v1,
-          v2,
+          combinationValues,
           grid[i][column],
         );
         grid[i][column] = keptCombinationValues.cell;
@@ -223,16 +226,14 @@ export class EliminateOtherValuesFromPossibleMultiples
   private eliminateSquares(
     squarePositionsMap: CellPositionMap,
     possibleMultiplesResult: PossibleMultiplesResult,
-    v1: number,
-    v2: number,
+    combinationValues: number[],
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
     for (const square of possibleMultiplesResult.squares) {
       squarePositionsMap.getForSquareIndex(square).forEach((cellPosition) => {
         const keptCombinationValues = this.keepOnlyCombinationValuesInCell(
-          v1,
-          v2,
+          combinationValues,
           grid[cellPosition.x][cellPosition.y],
         );
         grid[cellPosition.x][cellPosition.y] = keptCombinationValues.cell;
@@ -244,14 +245,13 @@ export class EliminateOtherValuesFromPossibleMultiples
   }
 
   private keepOnlyCombinationValuesInCell(
-    v1: number,
-    v2: number,
+    combinationValues: number[],
     cell: SudokuGridCell,
   ): { cell: SudokuGridCell; valuesEliminated: boolean } {
     if (isArray(cell)) {
-      if (this.containsAllCombinationValues(v1, v2, cell)) {
+      if (this.containsAllCombinationValues(combinationValues, cell)) {
         const lengthBeforeFilter = cell.length;
-        const filteredCell = cell.filter((v) => v === v1 || v === v2);
+        const filteredCell = cell.filter((v) => combinationValues.includes(v));
         return {
           cell: filteredCell,
           valuesEliminated: lengthBeforeFilter !== filteredCell.length,
