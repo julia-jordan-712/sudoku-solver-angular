@@ -167,7 +167,7 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
 
   it("should work also for multiples > pairs", () => {
     const sudoku: SudokuGrid = [
-      [[2, 6, 7, 9], 4, 6, 3, [2, 6], 8, 5, [1, 2, 6, 7, 9], [1, 2, 6, 9]],
+      [[2, 6, 7, 9], 4, [6, 9], 3, [2, 6], 8, 5, [1, 2, 6, 7, 9], [1, 2, 6, 9]],
       [
         [2, 3, 6, 7, 9],
         [2, 3, 5, 7, 9],
@@ -231,8 +231,8 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
 
     // In the last square the values 1, 4, 5 and 9 are only possible in 4 cells.
     // So the values 2 and 7 can be removed from these cells.
-    expect(sudoku).toEqual([
-      [[2, 6, 7, 9], 4, 6, 3, [2, 6], 8, 5, [1, 2, 6, 7, 9], [1, 2, 6, 9]],
+    const expected = [
+      [[2, 6, 7, 9], 4, [6, 9], 3, [2, 6], 8, 5, [1, 2, 6, 7, 9], [1, 2, 6, 9]],
       [
         [2, 3, 6, 7, 9],
         [2, 3, 5, 7, 9],
@@ -291,6 +291,9 @@ describe(EliminateOtherValuesFromPossibleMultiples.name, () => {
         [4, 5, 9],
         [4, 5, 9],
       ],
-    ]);
+    ];
+    expect(sudoku)
+      .withContext(`Expected ${expected} but got ${sudoku}`)
+      .toEqual(expected);
   });
 });
