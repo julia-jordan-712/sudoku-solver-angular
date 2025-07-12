@@ -1,4 +1,4 @@
-import { NextMultipleValuesCombination } from "@app/core/solver/solver-eliminate/util/next-multiple-values-combination";
+import { PossibleValuesIterator } from "@app/core/solver/solver-eliminate/util/possible-multiples-iterator";
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
 import { CellPosition } from "@app/types/cell-position";
 import { CellPositionMap } from "@app/types/cell-position-map";
@@ -30,46 +30,10 @@ export class EliminateOtherValuesFromPossibleMultiples
   implements SolverRunnable
 {
   run(grid: SudokuGrid): boolean {
-    const squarePositionsMap: CellPositionMap =
-      SudokuGridUtil.getCellPositionsOfSquares(grid.length);
-    return this.iteratePossibleMultiples(grid, squarePositionsMap, 2);
-  }
-
-  private iteratePossibleMultiples(
-    grid: SudokuGrid,
-    squarePositionsMap: CellPositionMap,
-    amountOfValuesInCombination: number,
-  ): boolean {
-    const amount = Math.min(
-      grid.length,
-      Math.max(amountOfValuesInCombination, 2),
+    return new PossibleValuesIterator().iterate(
+      (g, p, c) => this.eliminateNextPossibleMultiples(g, p, c),
+      grid,
     );
-    const nextMultipleValuesCombination: NextMultipleValuesCombination =
-      new NextMultipleValuesCombination(amount, grid.length);
-    let combinationValues: number[] | null =
-      nextMultipleValuesCombination.get();
-    while (combinationValues != null) {
-      if (
-        this.eliminateNextPossibleMultiples(
-          grid,
-          squarePositionsMap,
-          combinationValues,
-        )
-      ) {
-        return true;
-      }
-      combinationValues = nextMultipleValuesCombination.get();
-    }
-    if (amount >= grid.length) {
-      // end recursive calls
-      return false;
-    } else {
-      return this.iteratePossibleMultiples(
-        grid,
-        squarePositionsMap,
-        amount + 1,
-      );
-    }
   }
 
   private eliminateNextPossibleMultiples(
