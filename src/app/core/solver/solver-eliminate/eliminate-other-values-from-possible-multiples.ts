@@ -14,7 +14,7 @@ interface PossibleMultiplesResult {
 }
 
 /**
- * Identifies combinations of N possible values (= pairs/triplets/etc) which can only occur in N cells
+ * Identifies combinations of N possible values (= pairs/triples/etc) which can only occur in N cells
  * of a row/column/square and eliminates other possible values from these cells.
  *
  * Only one elimination is done and then the solver returns. The first checked combination
