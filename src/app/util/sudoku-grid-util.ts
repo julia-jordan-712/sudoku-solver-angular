@@ -114,4 +114,14 @@ export class SudokuGridUtil {
     }
     return cellPositionMap;
   }
+
+  static toString(grid: SudokuGrid): string {
+    return `\n[\n${grid.map((row) => SudokuGridUtil.rowToString(row)).join("\n")}\n]\n`;
+  }
+  private static rowToString(row: SudokuGridRow): string {
+    return `[ ${row.map((cell) => SudokuGridUtil.cellToString(cell)).join(", ")} ]`;
+  }
+  private static cellToString(cell: SudokuGridCell): string {
+    return isArray(cell) ? `[${cell.toString()}]` : cell.toString();
+  }
 }

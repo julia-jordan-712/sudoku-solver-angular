@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Solver } from "@app/core/solver/solver";
 import { EliminateFromRowOrColumn } from "@app/core/solver/solver-eliminate/eliminate-from-row-column";
 import { EliminateFromSquare } from "@app/core/solver/solver-eliminate/eliminate-from-square";
-import { EliminateOtherValuesFromPossiblePair } from "@app/core/solver/solver-eliminate/eliminate-other-values-from-possible-pair";
-import { EliminatePossiblePairFromOtherCells } from "@app/core/solver/solver-eliminate/eliminate-possible-pair-from-other-cells";
+import { EliminateOtherValuesFromPossibleMultiples } from "@app/core/solver/solver-eliminate/eliminate-other-values-from-possible-multiples";
+import { EliminatePossibleMultiplesFromOtherCells } from "@app/core/solver/solver-eliminate/eliminate-possible-multiples-from-other-cells";
 import {
   SolverResponse,
   SolverStepResponse,
@@ -40,15 +40,9 @@ export class SolverEliminate extends Solver {
       return { stepId: "ELIMINATE", failed: true };
     }
 
-    if (new EliminatePossiblePairFromOtherCells().run(grid)) {
+    if (new EliminatePossibleMultiplesFromOtherCells().run(grid)) {
       return {
-        stepId: "ELIMINATE_POSSIBLE_PAIR_FROM_OTHER_CELLS",
-        failed: false,
-      };
-    }
-    if (new EliminateOtherValuesFromPossiblePair().run(grid)) {
-      return {
-        stepId: "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_PAIR",
+        stepId: "ELIMINATE_POSSIBLE_MULTIPLES_FROM_OTHER_CELLS",
         failed: false,
       };
     }
@@ -57,6 +51,12 @@ export class SolverEliminate extends Solver {
     }
     if (new EliminateFromRowOrColumn().run(grid)) {
       return { stepId: "ELIMINATE_FROM_ROW_OR_COLUMN", failed: false };
+    }
+    if (new EliminateOtherValuesFromPossibleMultiples().run(grid)) {
+      return {
+        stepId: "ELIMINATE_OTHER_VALUES_FROM_POSSIBLE_MULTIPLES",
+        failed: false,
+      };
     }
 
     return { stepId: "ELIMINATE", failed: true };
