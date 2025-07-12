@@ -5,9 +5,9 @@ import { SudokuGrid, SudokuGridCell } from "@app/types/sudoku-grid";
 import { isArray } from "@app/util/is-array";
 import { SudokuGridUtil } from "@app/util/sudoku-grid-util";
 
-interface PossiblePairResult {
   v1: number;
   v2: number;
+interface PossibleMultiplesResult {
   rows: number[];
   columns: number[];
   squares: number[];
@@ -30,34 +30,30 @@ export class EliminateOtherValuesFromPossibleMultiples
   implements SolverRunnable
 {
   run(grid: SudokuGrid): boolean {
-    return this.eliminateNextPossiblePair(grid);
+    return this.eliminateNextPossibleMultiples(grid);
   }
 
-  private eliminateNextPossiblePair(grid: SudokuGrid): boolean {
+  private eliminateNextPossibleMultiples(grid: SudokuGrid): boolean {
     const squarePositionsMap: CellPositionMap =
       SudokuGridUtil.getCellPositionsOfSquares(grid.length);
 
     for (let v1 = 1; v1 <= grid.length; v1++) {
       for (let v2 = v1 + 1; v2 <= grid.length; v2++) {
-        const possiblePairResult: PossiblePairResult = this.isPossiblePair(
-          v1,
-          v2,
-          grid,
-          squarePositionsMap,
-        );
+        const possibleMultiplesResult: PossibleMultiplesResult =
+          this.isPossibleMultiple(v1, v2, grid, squarePositionsMap);
         let valuesEliminated = this.eliminateRows(
-          possiblePairResult,
+          possibleMultiplesResult,
           v1,
           v2,
           grid,
         );
         valuesEliminated =
-          this.eliminateColumns(possiblePairResult, v1, v2, grid) ||
+          this.eliminateColumns(possibleMultiplesResult, v1, v2, grid) ||
           valuesEliminated;
         valuesEliminated =
           this.eliminateSquares(
             squarePositionsMap,
-            possiblePairResult,
+            possibleMultiplesResult,
             v1,
             v2,
             grid,
@@ -70,21 +66,21 @@ export class EliminateOtherValuesFromPossibleMultiples
     return false;
   }
 
-  private isPossiblePair(
+  private isPossibleMultiple(
     v1: number,
     v2: number,
     grid: SudokuGrid,
     squarePositionsMap: CellPositionMap,
-  ): PossiblePairResult {
+  ): PossibleMultiplesResult {
     const rows: number[] = [];
     const columns: number[] = [];
     const squares: number[] = [];
 
     for (let i = 0; i < grid.length; i++) {
-      const rowPositionsContainingPair: CellPosition[] = [];
-      const rowPositionsContainingOneOfBothValues: CellPosition[] = [];
-      const columnPositionsContainingPair: CellPosition[] = [];
-      const columnPositionsContainingOneOfBothValues: CellPosition[] = [];
+      const rowPositionsContainingAllCombinationValues: CellPosition[] = [];
+      const rowPositionsContainingSomeCombinationValues: CellPosition[] = [];
+      const columnPositionsContainingAllCombinationValues: CellPosition[] = [];
+      const columnPositionsContainingSomeCombinationValues: CellPosition[] = [];
 
       const rowCells: SudokuGridCell[] = grid[i]!;
       const columnCells: SudokuGridCell[] = SudokuGridUtil.getColumnCells(
@@ -92,45 +88,67 @@ export class EliminateOtherValuesFromPossibleMultiples
         i,
       );
       for (let j = 0; j < grid.length; j++) {
-        if (this.containsSearchedPair(v1, v2, rowCells[j])) {
-          rowPositionsContainingPair.push(new CellPosition(i, j));
-        } else if (this.containsOneButNotTheOther(v1, v2, rowCells[j])) {
-          rowPositionsContainingOneOfBothValues.push(new CellPosition(i, j));
+        if (this.containsAllCombinationValues(v1, v2, rowCells[j])) {
+          rowPositionsContainingAllCombinationValues.push(
+            new CellPosition(i, j),
+          );
+        } else if (
+          this.containsSomeButNotAllCombinationValues(v1, v2, rowCells[j])
+        ) {
+          rowPositionsContainingSomeCombinationValues.push(
+            new CellPosition(i, j),
+          );
         }
-        if (this.containsSearchedPair(v1, v2, columnCells[j])) {
-          columnPositionsContainingPair.push(new CellPosition(j, i));
-        } else if (this.containsOneButNotTheOther(v1, v2, columnCells[j])) {
-          columnPositionsContainingOneOfBothValues.push(new CellPosition(i, j));
+        if (this.containsAllCombinationValues(v1, v2, columnCells[j])) {
+          columnPositionsContainingAllCombinationValues.push(
+            new CellPosition(j, i),
+          );
+        } else if (
+          this.containsSomeButNotAllCombinationValues(v1, v2, columnCells[j])
+        ) {
+          columnPositionsContainingSomeCombinationValues.push(
+            new CellPosition(i, j),
+          );
         }
       }
 
-      const squarePositionsContainingPair: CellPosition[] = [];
-      const squarePositionsContainingOneOfBothValues: CellPosition[] = [];
+      const squarePositionsContainingAllCombinationValues: CellPosition[] = [];
+      const squarePositionsContainingSomeCombinationValues: CellPosition[] = [];
       squarePositionsMap.getForSquareIndex(i).forEach((position) => {
-        if (this.containsSearchedPair(v1, v2, grid[position.x][position.y])) {
-          squarePositionsContainingPair.push(position);
-        } else if (
-          this.containsOneButNotTheOther(v1, v2, grid[position.x][position.y])
+        if (
+          this.containsAllCombinationValues(
+            v1,
+            v2,
+            grid[position.x][position.y],
+          )
         ) {
-          squarePositionsContainingOneOfBothValues.push(position);
+          squarePositionsContainingAllCombinationValues.push(position);
+        } else if (
+          this.containsSomeButNotAllCombinationValues(
+            v1,
+            v2,
+            grid[position.x][position.y],
+          )
+        ) {
+          squarePositionsContainingSomeCombinationValues.push(position);
         }
       });
 
       if (
-        rowPositionsContainingPair.length === 2 &&
-        rowPositionsContainingOneOfBothValues.length === 0
+        rowPositionsContainingAllCombinationValues.length === 2 &&
+        rowPositionsContainingSomeCombinationValues.length === 0
       ) {
         rows.push(i);
       }
       if (
-        columnPositionsContainingPair.length === 2 &&
-        columnPositionsContainingOneOfBothValues.length === 0
+        columnPositionsContainingAllCombinationValues.length === 2 &&
+        columnPositionsContainingSomeCombinationValues.length === 0
       ) {
         columns.push(i);
       }
       if (
-        squarePositionsContainingPair.length === 2 &&
-        squarePositionsContainingOneOfBothValues.length === 0
+        squarePositionsContainingAllCombinationValues.length === 2 &&
+        squarePositionsContainingSomeCombinationValues.length === 0
       ) {
         squares.push(i);
       }
@@ -138,7 +156,7 @@ export class EliminateOtherValuesFromPossibleMultiples
     return { v1, v2, rows, columns, squares };
   }
 
-  private containsSearchedPair(
+  private containsAllCombinationValues(
     v1: number,
     v2: number,
     cell: SudokuGridCell,
@@ -146,7 +164,7 @@ export class EliminateOtherValuesFromPossibleMultiples
     return isArray(cell) && cell.includes(v1) && cell.includes(v2);
   }
 
-  private containsOneButNotTheOther(
+  private containsSomeButNotAllCombinationValues(
     v1: number,
     v2: number,
     cell: SudokuGridCell,
@@ -159,42 +177,44 @@ export class EliminateOtherValuesFromPossibleMultiples
   }
 
   private eliminateRows(
-    possiblePairResult: PossiblePairResult,
+    possibleCombinationResult: PossibleMultiplesResult,
     v1: number,
     v2: number,
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    for (const row of possiblePairResult.rows) {
+    for (const row of possibleCombinationResult.rows) {
       for (let i = 0; i < grid.length; i++) {
-        const keptPairValues = this.keepOnlyPairValuesInCell(
+        const keptCombinationValues = this.keepOnlyCombinationValuesInCell(
           v1,
           v2,
           grid[row][i],
         );
-        grid[row][i] = keptPairValues.cell;
-        valuesEliminated = valuesEliminated || keptPairValues.valuesEliminated;
+        grid[row][i] = keptCombinationValues.cell;
+        valuesEliminated =
+          valuesEliminated || keptCombinationValues.valuesEliminated;
       }
     }
     return valuesEliminated;
   }
 
   private eliminateColumns(
-    possiblePairResult: PossiblePairResult,
+    possibleCombinationResult: PossibleMultiplesResult,
     v1: number,
     v2: number,
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    for (const column of possiblePairResult.columns) {
+    for (const column of possibleCombinationResult.columns) {
       for (let i = 0; i < grid.length; i++) {
-        const keptPairValues = this.keepOnlyPairValuesInCell(
+        const keptCombinationValues = this.keepOnlyCombinationValuesInCell(
           v1,
           v2,
           grid[i][column],
         );
-        grid[i][column] = keptPairValues.cell;
-        valuesEliminated = valuesEliminated || keptPairValues.valuesEliminated;
+        grid[i][column] = keptCombinationValues.cell;
+        valuesEliminated =
+          valuesEliminated || keptCombinationValues.valuesEliminated;
       }
     }
     return valuesEliminated;
@@ -202,33 +222,34 @@ export class EliminateOtherValuesFromPossibleMultiples
 
   private eliminateSquares(
     squarePositionsMap: CellPositionMap,
-    possiblePairResult: PossiblePairResult,
+    possibleMultiplesResult: PossibleMultiplesResult,
     v1: number,
     v2: number,
     grid: SudokuGrid,
   ): boolean {
     let valuesEliminated = false;
-    for (const square of possiblePairResult.squares) {
+    for (const square of possibleMultiplesResult.squares) {
       squarePositionsMap.getForSquareIndex(square).forEach((cellPosition) => {
-        const keptPairValues = this.keepOnlyPairValuesInCell(
+        const keptCombinationValues = this.keepOnlyCombinationValuesInCell(
           v1,
           v2,
           grid[cellPosition.x][cellPosition.y],
         );
-        grid[cellPosition.x][cellPosition.y] = keptPairValues.cell;
-        valuesEliminated = valuesEliminated || keptPairValues.valuesEliminated;
+        grid[cellPosition.x][cellPosition.y] = keptCombinationValues.cell;
+        valuesEliminated =
+          valuesEliminated || keptCombinationValues.valuesEliminated;
       });
     }
     return valuesEliminated;
   }
 
-  private keepOnlyPairValuesInCell(
+  private keepOnlyCombinationValuesInCell(
     v1: number,
     v2: number,
     cell: SudokuGridCell,
   ): { cell: SudokuGridCell; valuesEliminated: boolean } {
     if (isArray(cell)) {
-      if (this.containsSearchedPair(v1, v2, cell)) {
+      if (this.containsAllCombinationValues(v1, v2, cell)) {
         const lengthBeforeFilter = cell.length;
         const filteredCell = cell.filter((v) => v === v1 || v === v2);
         return {
