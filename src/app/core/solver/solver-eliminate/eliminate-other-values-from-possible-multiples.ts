@@ -1,3 +1,4 @@
+import { NextMultipleValuesCombination } from "@app/core/solver/solver-eliminate/util/next-multiple-values-combination";
 import { SolverRunnable } from "@app/core/solver/types/solver-runnable";
 import { CellPosition } from "@app/types/cell-position";
 import { CellPositionMap } from "@app/types/cell-position-map";
@@ -31,34 +32,44 @@ export class EliminateOtherValuesFromPossibleMultiples
   run(grid: SudokuGrid): boolean {
     const squarePositionsMap: CellPositionMap =
       SudokuGridUtil.getCellPositionsOfSquares(grid.length);
-    return this.iteratePossibleMultiples(grid, squarePositionsMap, 1);
+    return this.iteratePossibleMultiples(grid, squarePositionsMap, 2);
   }
 
   private iteratePossibleMultiples(
     grid: SudokuGrid,
     squarePositionsMap: CellPositionMap,
-    v1: number,
+    amountOfValuesInCombination: number,
   ): boolean {
-    // [...Array(3).keys()] -> [0,1,2]
-    // [...Array(v1 + 1).keys()] -> array containing values 0 to v1
-    const oneToV1: number[] = [...Array(v1 + 1).keys()].filter((v) => v > 0);
-
-    let valuesEliminated = false;
-    for (let v2 = v1 + 1; v2 <= grid.length; v2++) {
-      const combinationValues: number[] = [...oneToV1, v2];
-      valuesEliminated = this.eliminateNextPossibleMultiples(
-        grid,
-        squarePositionsMap,
-        combinationValues,
-      );
-      if (valuesEliminated) {
+    const amount = Math.min(
+      grid.length,
+      Math.max(amountOfValuesInCombination, 2),
+    );
+    const nextMultipleValuesCombination: NextMultipleValuesCombination =
+      new NextMultipleValuesCombination(amount, grid.length);
+    let combinationValues: number[] | null =
+      nextMultipleValuesCombination.get();
+    while (combinationValues != null) {
+      if (
+        this.eliminateNextPossibleMultiples(
+          grid,
+          squarePositionsMap,
+          combinationValues,
+        )
+      ) {
         return true;
       }
+      combinationValues = nextMultipleValuesCombination.get();
     }
-    if (!valuesEliminated && v1 < grid.length) {
-      return this.iteratePossibleMultiples(grid, squarePositionsMap, v1 + 1);
+    if (amount >= grid.length) {
+      // end recursive calls
+      return false;
+    } else {
+      return this.iteratePossibleMultiples(
+        grid,
+        squarePositionsMap,
+        amount + 1,
+      );
     }
-    return false;
   }
 
   private eliminateNextPossibleMultiples(
